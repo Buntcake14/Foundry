@@ -1,0 +1,41 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cmake --version)",
+      "Bash(clang++ --version)",
+      "Bash(g++ --version)",
+      "Bash(sudo apt update)",
+      "Bash(sudo apt install -y git build-essential clang cmake libgl1-mesa-dev libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev libicu-dev)",
+      "Bash(cmake -B build . -DCMAKE_BUILD_TYPE=Debug)",
+      "Bash(cmake --build build --parallel --target AliceIncremental)",
+      "Bash(tee /tmp/claude-1000/-run-media-seth-Games-Projects-Foundry/f876dc71-8cef-4292-bd9b-564fddca5e44/scratchpad/build_incremental.log)",
+      "Bash(rm -rf /run/media/seth/Games/Projects/Foundry/build)",
+      "Bash(cmake -B build . -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++)",
+      "Bash(set -o pipefail)",
+      "Bash(cmake --build build --parallel --target launch_alice)",
+      "Bash(tee /tmp/claude-1000/-run-media-seth-Games-Projects-Foundry/f876dc71-8cef-4292-bd9b-564fddca5e44/scratchpad/build_launcher.log)",
+      "Bash(ls -la \"/run/media/seth/Games/SteamLibrary/steamapps/common/Victoria 2/\" | head -30 *)",
+      "Read(//run/media/seth/Games/SteamLibrary/steamapps/common/Victoria 2/**)",
+      "Read(//run/media/seth/Games/SteamLibrary/steamapps/common/Victoria 2/mod/**)",
+      "Bash(find \"/run/media/seth/Games/SteamLibrary/steamapps/common/Victoria 2/mod/\" -maxdepth 1 *)",
+      "Read(//run/media/seth/Games/Projects/Rise-of-Nations/**)",
+      "Bash(read f *)",
+      "Bash([ -e \"/run/media/seth/Games/SteamLibrary/steamapps/common/Victoria 2/$f\" ])",
+      "Bash(cp -rn /run/media/seth/Games/Projects/Foundry/assets/. \"/run/media/seth/Games/SteamLibrary/steamapps/common/Victoria 2/\")",
+      "Bash(echo \"exit: $?\")",
+      "Bash(timeout 15 /run/media/seth/Games/Projects/Foundry/build/Launcher/launch_alice)",
+      "Bash(echo \"exit code: $?\")",
+      "Bash(sudo -n apt install -y gdb)",
+      "Bash(spectacle -b -n -o /tmp/claude-1000/-run-media-seth-Games-Projects-Foundry/f876dc71-8cef-4292-bd9b-564fddca5e44/scratchpad/launcher_screenshot.png)",
+      "Bash(wmctrl -l)",
+      "Bash(xdotool search *)",
+      "Bash(qdbus org.kde.KWin /KWin org.kde.KWin.queryWindowInfo)",
+      "Bash(qdbus)",
+      "Bash(spectacle --help)",
+      "Bash(spectacle -b -n -a -o /tmp/claude-1000/-run-media-seth-Games-Projects-Foundry/f876dc71-8cef-4292-bd9b-564fddca5e44/scratchpad/active_window.png)",
+      "Bash(gdbus call *)",
+      "Bash(spectacle -b -n -o /tmp/claude-1000/-run-media-seth-Games-Projects-Foundry/f876dc71-8cef-4292-bd9b-564fddca5e44/scratchpad/launcher_screenshot2.png)",
+      "Bash(kill 36498)"
+    ]
+  }
+}

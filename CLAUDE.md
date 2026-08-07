@@ -35,7 +35,7 @@ Nothing has been implemented yet — this section is a design-intent record from
 
 ## Build
 
-**Confirmed real native Linux support** (not just a Windows binary run through Proton/Wine) — `src/entry_point_nix.cpp` exists alongside `entry_point_win.cpp`, and upstream ships a GitHub Actions AppImage build. CI (`.github/workflows/appimage.yml`) validates against **clang-20 on Ubuntu 24.04**; this machine is Ubuntu 26.04, close enough that it should be fine but worth knowing if a compiler-version issue ever surfaces.
+**Confirmed real native Linux support** (not just a Windows binary run through Proton/Wine) — `src/entry_point_nix.cpp` exists alongside `entry_point_win.cpp`, and upstream ships a GitHub Actions AppImage build. CI (`.github/workflows/appimage.yml`) validates against **clang-20 on Ubuntu 24.04**; this machine (Ubuntu 26.04) has **clang 21.1.8** (`llvm-21`) and **cmake 4.2.3** via apt — both newer than CI's baseline, and no issues surfaced from that gap.
 
 Debian/Ubuntu build deps (matches both `docs/contributing.md` and the actual CI workflow):
 ```
@@ -45,20 +45,35 @@ sudo apt install git build-essential clang cmake libgl1-mesa-dev libxrandr-dev l
 
 **Known gotcha, already satisfied by this clone's location**: the bundled Intel TBB library fails to compile if the project's own path contains any spaces. `/run/media/seth/Games/Projects/Foundry` has none. (Victoria 2's own install path *does* have a space — `.../steamapps/common/Victoria 2` — but that's irrelevant to this gotcha, which is specifically about Foundry's own source path, not the game install it points at.)
 
+**Compiler pitfall (hit and fixed 2026-08-07)**: plain `cmake -B build .` picks up the system default `cc`/`c++`, which on this machine resolve to **GCC 15**, not clang, even with clang installed side by side. The project passes clang-specific flags (e.g. `-ffp-model=precise`), so a GCC-configured build fails partway through with `unrecognized command-line option`. Always configure explicitly:
+```
+cmake -B build . -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++
+```
+If a build was already configured with the wrong compiler, `rm -rf build` and reconfigure — switching `CMAKE_C_COMPILER`/`CMAKE_CXX_COMPILER` on an existing cache doesn't reliably take.
+
 Build commands (from `docs/contributing.md`, "Linux (Generic)" section):
 ```
-cmake -B build . -DCMAKE_BUILD_TYPE=Debug
 cmake --build build --parallel --target launch_alice   # the launcher
 cmake --build build --parallel --target Alice          # the main game (full rebuild every time)
 cmake --build build --parallel --target AliceIncremental  # same, but split into smaller translation units for fast iterative rebuilds — prefer this one day-to-day
 ```
-`SaveEditor` is Windows-only per the docs, skip it. The full `Alice` target combines nearly all source into one translation unit — a single-line change can mean a ~10 minute rebuild — so use `AliceIncremental` for actual development; GitHub CI builds the plain `Alice` target, so that's still worth doing at least once before considering something done, to catch anything that only breaks under the combined build.
+`SaveEditor` is Windows-only per the docs, skip it. The full `Alice` target combines nearly all source into one translation unit — a single-line change can mean a ~10 minute rebuild — so use `AliceIncremental` for actual development; GitHub CI builds the plain `Alice` target, so that's still worth doing at least once before considering something done, to catch anything that only breaks under the combined build. Both `AliceIncremental` and `launch_alice` build clean with only harmless warnings (`-Wnontrivial-memcall` in `serialization.hpp`, a `-Wformat-security` in the nix launcher) — no errors.
 
-**"Final touches" step (from the docs, not yet done here)**: Alice needs to find Victoria 2's actual game files (graphics, etc.) to run. This machine's Victoria 2 install is at `/run/media/seth/Games/SteamLibrary/steamapps/common/Victoria 2/` (confirmed — this is also where `mod/Rise of Nations` is symlinked per the mod repo's own CLAUDE.md). The docs describe copying this repo's `assets/` folder into that directory and configuring the build/debug launcher's working directory to point there — needs to be actually done and this section updated once it has been.
+**Runtime linking gotcha**: the built binaries (`build/AliceIncremental`, `build/Launcher/launch_alice`) dynamically link against LuaJIT, but the fetched LuaJIT build only installs its `.so` under `build/dependencies/luajit/luajit-prefix/lib/`, which isn't on the default loader path. Running either binary needs:
+```
+export LD_LIBRARY_PATH=<repo>/build/dependencies/luajit/luajit-prefix/lib:$LD_LIBRARY_PATH
+```
+or the binary fails immediately with `error while loading shared libraries: libluajit-5.1.so.2: cannot open shared object file`.
+
+**"Final touches" step — done 2026-08-07**: Alice needs to find Victoria 2's actual game files (graphics, etc.) to run, via its working directory at launch. This machine's Victoria 2 install is at `/run/media/seth/Games/SteamLibrary/steamapps/common/Victoria 2/`. **Correction to an earlier claim in this file**: nothing is actually symlinked into that install's `mod/` folder — it contains only Paradox's own placeholder `dummy.txt`, not a `Rise of Nations` symlink. That still needs to be set up whenever mod-loading work actually starts; it doesn't block vanilla-Alice from building or running.
+
+The docs say "copy the assets folder to your V2 directory" — read literally, that means the copy must land as `<V2 dir>/assets/`, preserving the folder itself, because engine code opens paths like `assets/fonts/LibreCaslonText-Regular.ttf` *relative to the V2 root*. (First attempt here merged the folder's *contents* straight into the V2 root instead, which builds/launches without error but segfaults on the first text render — `hb_ft_face_create` on a null font buffer — because `assets/fonts/...` didn't resolve. Fixed by re-copying so the `assets/` folder itself sits under the V2 root.) Confirmed working: with `LD_LIBRARY_PATH` set as above and cwd set to the V2 directory, `build/Launcher/launch_alice` opens and renders its full UI correctly (mod list, Create Scenario, Singleplayer/Multiplayer panels) — verified visually via screenshot.
+
+No IDE launch-configuration (`launch.json`/CMake debug config) has been set up yet to make this automatic; for now, running from a shell with the working directory and `LD_LIBRARY_PATH` set as described above is the way to launch.
 
 ## Current status (as of 2026-08-07)
 
-Cloned and confirmed clean (`git status` clean, on `main`, tracking `origin/main`). **Not yet built.** Build dependencies not yet installed on this machine (`cmake`, `clang++`/`g++` all confirmed absent before this session). Next concrete step: install the apt dependencies above, run the CMake configure + build, then do the "Final touches" step to point it at the real Vic2 install and confirm it actually launches — before any code changes are attempted.
+Build dependencies installed, CMake configured with clang explicitly, and both `AliceIncremental` and `launch_alice` build clean. Assets copied correctly into the real Victoria 2 install, and the launcher has been confirmed to actually open and render (screenshot-verified) — Foundry runs vanilla Project Alice end to end on this machine now. Not yet done: wiring in the actual Rise of Nations mod content (the `mod/` symlink referenced above doesn't exist yet), setting up a proper IDE/debug launch config instead of manual shell env vars, and running the full non-incremental `Alice` target at least once (CI parity check, not yet done this session — only `AliceIncremental` has been verified). No engine code changes have been made yet; the two target features under "design intent" above are still unstarted.
 
 ## Process notes
 
