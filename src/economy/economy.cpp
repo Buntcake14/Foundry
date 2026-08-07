@@ -796,8 +796,14 @@ void initialize(sys::state& state) {
 			// distribution of rgo land per good
 			state.world.for_each_commodity([&](dcon::commodity_id c) {
 				assert(std::isfinite(true_distribution[c.index()]));
-				auto major_mine_base_max_size = state.defines.alice_base_rgo_employment_bonus * 300'000.f;
-				auto secondary_mine_base_max_size = state.defines.alice_base_rgo_employment_bonus * 50'000.f;
+				// Mine potential was previously flat regardless of province size, unlike the
+				// farm formula above (max_agriculture_size) which is already area-derived --
+				// a tiny province could support the same mine capacity as a huge one. Clamped
+				// to 1 so provinces at/above the reference area are unaffected; only smaller
+				// provinces scale down.
+				auto mine_area_scale = std::min(1.f, state.map_state.map_data.province_area_km2[province::to_map_id(p)] / state.defines.alice_mine_size_reference_area_km2);
+				auto major_mine_base_max_size = state.defines.alice_base_rgo_employment_bonus * 300'000.f * mine_area_scale;
+				auto secondary_mine_base_max_size = state.defines.alice_base_rgo_employment_bonus * 50'000.f * mine_area_scale;
 
 				auto max_size = 0.f;
 				auto efficiency = (0.2f + 5.f * true_distribution[c.index()]);
