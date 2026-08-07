@@ -39,7 +39,9 @@
       "Bash(cp \"/run/media/seth/Games/Projects/Rise-of-Nations/mod file/Rise of Nations.mod\" \"/run/media/seth/Games/Projects/Foundry/mod/Rise of Nations.mod\" *)",
       "Bash(ln -s '/run/media/seth/Games/Projects/Foundry/mod/Rise of Nations' '/run/media/seth/Games/SteamLibrary/steamapps/common/Victoria 2/mod/Rise of Nations')",
       "Bash(ln -s '/run/media/seth/Games/Projects/Foundry/mod/Rise of Nations.mod' '/run/media/seth/Games/SteamLibrary/steamapps/common/Victoria 2/mod/Rise of Nations.mod')",
-      "Bash(spectacle -b -n -o /tmp/claude-1000/-run-media-seth-Games-Projects-Foundry/f876dc71-8cef-4292-bd9b-564fddca5e44/scratchpad/mod_list_screenshot2.png)"
+      "Bash(spectacle -b -n -o /tmp/claude-1000/-run-media-seth-Games-Projects-Foundry/f876dc71-8cef-4292-bd9b-564fddca5e44/scratchpad/mod_list_screenshot2.png)",
+      "Bash(pkill -f launch_alice)",
+      "Bash(tee /tmp/claude-1000/-run-media-seth-Games-Projects-Foundry/f876dc71-8cef-4292-bd9b-564fddca5e44/scratchpad/build_launcher_symlinkfix.log)"
     ],
     "additionalDirectories": [
       "/run/media/seth/Games/Projects/Rise-of-Nations/mod file"

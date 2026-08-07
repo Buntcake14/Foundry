@@ -12,6 +12,28 @@
 
 namespace simple_fs {
 
+// readdir() reports symlinks as DT_LNK regardless of what they point to, so a plain
+// d_type check would silently skip symlinked mod files/directories. Resolve those
+// (and DT_UNKNOWN, for filesystems that don't support d_type) via stat() instead.
+bool dtype_resolves_to_regular_file(native_string const& full_path, unsigned char d_type) {
+	if(d_type == DT_REG)
+		return true;
+	if(d_type == DT_LNK || d_type == DT_UNKNOWN) {
+		struct stat sb;
+		return stat(full_path.c_str(), &sb) == 0 && S_ISREG(sb.st_mode);
+	}
+	return false;
+}
+bool dtype_resolves_to_directory(native_string const& full_path, unsigned char d_type) {
+	if(d_type == DT_DIR)
+		return true;
+	if(d_type == DT_LNK || d_type == DT_UNKNOWN) {
+		struct stat sb;
+		return stat(full_path.c_str(), &sb) == 0 && S_ISDIR(sb.st_mode);
+	}
+	return false;
+}
+
 char to_lowercase(unsigned char c) {
 	return std::tolower(c);
 }
@@ -233,7 +255,7 @@ std::vector<unopened_file> list_files(directory const& dir, native_char const* e
 				struct dirent* dir_ent = nullptr;
 				while((dir_ent = readdir(d)) != nullptr) {
 					// Check if it's a file. Not POSIX standard but included in Linux
-					if(dir_ent->d_type != DT_REG)
+					if(!dtype_resolves_to_regular_file(appended_path + NATIVE("/") + dir_ent->d_name, dir_ent->d_type))
 						continue;
 
 					// Check if the file is of the right extension
@@ -265,7 +287,7 @@ std::vector<unopened_file> list_files(directory const& dir, native_char const* e
 			struct dirent* dir_ent = nullptr;
 			while((dir_ent = readdir(d)) != nullptr) {
 				// Check if it's a file. Not POSIX standard but included in Linux
-				if(dir_ent->d_type != DT_REG)
+				if(!dtype_resolves_to_regular_file(appended_path + NATIVE("/") + dir_ent->d_name, dir_ent->d_type))
 					continue;
 
 				// Check if the file is of the right extension
@@ -305,7 +327,7 @@ std::vector<directory> list_subdirectories(directory const& dir) {
 				struct dirent* dir_ent = nullptr;
 				while((dir_ent = readdir(d)) != nullptr) {
 					// Check if it's a directory. Not POSIX standard but included in Linux
-					if(dir_ent->d_type != DT_DIR)
+					if(!dtype_resolves_to_directory(appended_path + NATIVE("/") + dir_ent->d_name, dir_ent->d_type))
 						continue;
 
 					if(impl::contains_non_ascii(dir_ent->d_name))
@@ -330,7 +352,7 @@ std::vector<directory> list_subdirectories(directory const& dir) {
 			struct dirent* dir_ent = nullptr;
 			while((dir_ent = readdir(d)) != nullptr) {
 				// Check if it's a directory. Not POSIX standard but included in Linux
-				if(dir_ent->d_type != DT_DIR)
+				if(!dtype_resolves_to_directory(appended_path + NATIVE("/") + dir_ent->d_name, dir_ent->d_type))
 					continue;
 
 				if(impl::contains_non_ascii(dir_ent->d_name))
