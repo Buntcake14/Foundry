@@ -1,0 +1,8 @@
+name = "Rise of Nations"
+path = "mod/Rise of Nations"
+user_dir = "Rise of Nations"
+replace_path = "history"
+replace_path = "events"
+replace_path = "decisions"
+replace_path = "gfx"
+replace_path = "tutorial"

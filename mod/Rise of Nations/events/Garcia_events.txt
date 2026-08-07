@@ -1,0 +1,1227 @@
+country_event = {
+	id = 4206978
+	title = "The $YEAR$ Rice Riots"
+	desc = "EVTDESC4206978"
+	picture = "1918_rice_riots"
+	fire_only_once = yes
+
+	trigger = {
+		year = 1918
+		tag = JAP
+		month = 7
+	}
+
+	mean_time_to_happen = { days = 1 }
+
+	option = {
+		name = "There is nothing we can do."
+		all_core = {
+			any_pop = {
+				limit = {
+					type = farmers
+				}
+				militancy = 3
+				consciousness = 1
+			}
+		}
+	}
+}
+
+country_event = {
+	id = 4206987
+	title = "The Warsaw Massacre"
+	desc = "EVTDESC4206987"
+	picture = "warsaw_massacre"
+	fire_only_once = yes
+
+	trigger = {
+		owns = 706
+		year = 1861
+        OR = {
+            POL = { exists = no }
+			LIT = { exists = no }
+            is_our_vassal = POL
+        }
+		month = 2
+        NOT = { is_culture_group = polish_culture_group }
+        NOT = { accepted_culture = polish }
+	}
+
+	mean_time_to_happen = { days = 1 }
+
+	option = {
+		name = "EVTOPTA4206987"
+		any_pop = {
+			limit = {
+				has_pop_culture = polish
+			}
+			consciousness = 6
+			militancy = 3
+		}
+		country_event = { id = 500001 days = 30 }
+		ai_chance = { factor = 0 }
+	}
+
+	option = {
+		name = "EVTOPTB4206987"
+		prestige = -10
+		set_country_flag = promised_reforms_poland
+		any_pop = {
+			limit = {
+				has_pop_culture = polish
+			}
+			consciousness = 4
+			militancy = 2
+		}
+		ai_chance = { factor = 100 }
+	}
+}
+
+#This event is wonky and silly. Do not reinstate it without reworking it. You can't just give someone free land like this.
+#country_event = {
+#	id = 4207007
+#	title = "The Mississippi Watershed"
+#	desc = "EVTDESC4207007"
+#	picture = "mississippi_river"
+#	fire_only_once = yes
+#
+#	trigger = {
+#		owns = 115
+#		has_country_flag = oregon_claimed
+#		CAN_13 = { owned_by = THIS }
+#		OR = {
+#			tag = MEX
+#			AND = {
+#				primary_culture = mexican
+#				capital = 2172
+#			}
+#		}
+#	}
+#
+#	mean_time_to_happen = { days = 1 }
+#
+#	option = {
+#		name = "Nice."
+#		24 = {
+#			remove_core = CAN
+#			remove_core = RPL
+#			secede_province = THIS
+#			add_core = THIS
+#		}
+#		30 = {
+#			remove_core = CAN
+#			remove_core = RPL
+#			secede_province = THIS
+#			add_core = THIS
+#		}
+#	}
+#}
+
+country_event = {
+	id = 4207008
+	title = "Renaming"
+	desc = "EVTDESC4207008"
+	picture = "renaming_explained"
+	
+	is_triggered_only = yes
+
+	option = {
+		name = "Rename every 12 months (standard)."
+        random_owned = { limit = { owner = { tag = FRA } } owner = { country_event = 60168150 } }
+        random_owned = { limit = { owner = { tag = BOR } } owner = { country_event = 60178150 } }
+        random_owned = { limit = { owner = { OR = { tag = SOK tag = ILO AND = { year = 1845 tag = ADW } AND = { year = 1831 tag = KEB } } } } owner = { country_event = 184824329 } }
+        random_owned = { limit = { owner = { tech_school = confederation_tech_school } } owner = { country_event = 341534553 } }
+        random_owned = { limit = { owner = { OR = { tag = KBO tag = CMR } } } owner = { country_event = 184824349 } }
+        random_owned = { limit = { owner = { tag = BRZ } } owner = { country_event = 60168152 } }
+		random_owned = { limit = { owner = { tag = KAL } } owner = { country_event = 800941 } }
+            CLN = {
+                country_event = 566777743
+            }
+			set_global_flag = renaming_setup
+	}
+	option = {
+		name = "Rename every 6 months."
+		set_global_flag = rename_six_months
+        random_owned = { limit = { owner = { tag = FRA } } owner = { country_event = 60168150 } }
+        random_owned = { limit = { owner = { tag = BOR } } owner = { country_event = 60178150 } }
+        random_owned = { limit = { owner = { OR = { tag = SOK tag = ILO AND = { year = 1845 tag = ADW } AND = { year = 1831 tag = KEB } } } } owner = { country_event = 184824329 } }
+        random_owned = { limit = { owner = { tech_school = confederation_tech_school } } owner = { country_event = 341534553 } }
+        random_owned = { limit = { owner = { OR = { tag = KBO tag = CMR } } } owner = { country_event = 184824349 } }
+        random_owned = { limit = { owner = { tag = BRZ } } owner = { country_event = 60168152 } }
+		random_owned = { limit = { owner = { tag = KAL } } owner = { country_event = 800941 } }
+            CLN = {
+                country_event = 566777743
+            }
+			set_global_flag = renaming_setup
+	}
+	option = {
+		name = "Rename every 4 months."
+		set_global_flag = rename_four_months
+        random_owned = { limit = { owner = { tag = FRA } } owner = { country_event = 60168150 } }
+        random_owned = { limit = { owner = { tag = BOR } } owner = { country_event = 60178150 } }
+        random_owned = { limit = { owner = { OR = { tag = SOK tag = ILO AND = { year = 1845 tag = ADW } AND = { year = 1831 tag = KEB } } } } owner = { country_event = 184824329 } }
+        random_owned = { limit = { owner = { tech_school = confederation_tech_school } } owner = { country_event = 341534553 } }
+        random_owned = { limit = { owner = { OR = { tag = KBO tag = CMR } } } owner = { country_event = 184824349 } }
+        random_owned = { limit = { owner = { tag = BRZ } } owner = { country_event = 60168152 } }
+		random_owned = { limit = { owner = { tag = KAL } } owner = { country_event = 800941 } }
+            CLN = {
+                country_event = 566777743
+            }
+			set_global_flag = renaming_setup
+	}
+	option = {
+		name = "Rename every 2 months."
+		set_global_flag = rename_two_months
+        random_owned = { limit = { owner = { tag = FRA } } owner = { country_event = 60168150 } }
+        random_owned = { limit = { owner = { tag = BOR } } owner = { country_event = 60178150 } }
+        random_owned = { limit = { owner = { OR = { tag = SOK tag = ILO AND = { year = 1845 tag = ADW } AND = { year = 1831 tag = KEB } } } } owner = { country_event = 184824329 } }
+        random_owned = { limit = { owner = { tech_school = confederation_tech_school } } owner = { country_event = 341534553 } }
+        random_owned = { limit = { owner = { OR = { tag = KBO tag = CMR } } } owner = { country_event = 184824349 } }
+        random_owned = { limit = { owner = { tag = BRZ } } owner = { country_event = 60168152 } }
+		random_owned = { limit = { owner = { tag = KAL } } owner = { country_event = 800941 } }
+            CLN = {
+                country_event = 566777743
+            }
+			set_global_flag = renaming_setup
+	}
+	option = {
+		name = "Rename every 30 days."
+		set_global_flag = rename_thirty_days
+        random_owned = { limit = { owner = { tag = FRA } } owner = { country_event = 60168150 } }
+        random_owned = { limit = { owner = { tag = BOR } } owner = { country_event = 60178150 } }
+        random_owned = { limit = { owner = { OR = { tag = SOK tag = ILO AND = { year = 1845 tag = ADW } AND = { year = 1831 tag = KEB } } } } owner = { country_event = 184824329 } }
+        random_owned = { limit = { owner = { tech_school = confederation_tech_school } } owner = { country_event = 341534553 } }
+        random_owned = { limit = { owner = { OR = { tag = KBO tag = CMR } } } owner = { country_event = 184824349 } }
+        random_owned = { limit = { owner = { tag = BRZ } } owner = { country_event = 60168152 } }
+		random_owned = { limit = { owner = { tag = KAL } } owner = { country_event = 800941 } }
+            CLN = {
+                country_event = 566777743
+            }
+			set_global_flag = renaming_setup
+	}
+}
+
+#4207010, 4207011, 4207012 and 4207013 used in 1830 submod
+
+country_event = {
+    id = 4207018
+    title = "More Land for Colonization"
+    desc = "EVTDESC4207018"
+	picture = "ranchos"
+	
+	allow_multiple_instances = no
+
+    trigger = {
+		has_country_flag = MEX_colonization_law
+		OR = {
+			any_owned_province = {
+				OR = {
+					province_id = 97 #Salt Lake City
+					province_id = 89 #Los Angeles
+					province_id = 104 #San Francisco
+					province_id = 96 #Las Vegas
+					province_id = 100 #Phoenix
+					province_id = 105 #Santa Fe
+					province_id = 137 #San Antonio
+					province_id = 133 #Austin
+					province_id = 132 #Houston
+					province_id = 106 #Denver
+					province_id = 126 #Topeka
+					province_id = 123 #Omaha
+					province_id = 91 #Boise
+					province_id = 78 #STL
+					province_id = 81 #Portland
+					province_id = 3317 #Cheyenne
+					province_id = 156 #Minneapolis
+					province_id = 151 #Des Moines
+					province_id = 146 #Saint Louis
+					province_id = 143 #Little Rock
+					province_id = 139 #New Orleans
+					province_id = 199 #Saint Augustine
+					province_id = 13 #Vancouver
+					province_id = 2149 #Monterrey
+					province_id = 2150 #Ciudad Victoria
+					province_id = 2155 #Torreon
+					province_id = 2142 #Chihuahua
+					province_id = 2140 #Hermosillo
+				}
+				NOT = { has_province_modifier = colonization_law_mex_prov_big }
+			}
+		}
+		NOT = { year = 1880 }
+    }
+
+    mean_time_to_happen = {
+        months = 3
+    }
+
+    option = {
+        name = "Huzzah!"
+		any_owned = {
+			limit = {
+				OR = {
+					province_id = 97 #Salt Lake City
+					province_id = 89 #Los Angeles
+					province_id = 104 #San Francisco
+					province_id = 96 #Las Vegas
+					province_id = 100 #Phoenix
+					province_id = 105 #Santa Fe
+					province_id = 137 #San Antonio
+					province_id = 133 #Austin
+					province_id = 132 #Houston
+					province_id = 106 #Denver
+					province_id = 126 #Topeka
+					province_id = 123 #Omaha
+					province_id = 91 #Boise
+					province_id = 78 #STL
+					province_id = 81 #Portland
+					province_id = 3317 #Cheyenne
+					province_id = 156 #Minneapolis
+					province_id = 151 #Des Moines
+					province_id = 146 #Saint Louis
+					province_id = 143 #Little Rock
+					province_id = 139 #New Orleans
+					province_id = 199 #Saint Augustine
+					province_id = 13 #Vancouver
+					province_id = 2149 #Monterrey
+					province_id = 2150 #Ciudad Victoria
+					province_id = 2155 #Torreon
+					province_id = 2142 #Chihuahua
+					province_id = 2140 #Hermosillo
+				}
+			}
+			remove_province_modifier = indian_lands
+			add_province_modifier = { name = colonization_law_mex_prov_big duration = -1 }
+		}
+    }
+}
+
+country_event = {
+	id = 4207019
+	title = "The Mier Expedition"
+	desc = "EVTDESC4207019"
+	picture = "mier_expedition"
+	
+	fire_only_once = yes
+
+	trigger = {
+		tag = TEX
+		year = 1842
+		MEX = { owns = 138 }
+		war = no
+	}
+
+	mean_time_to_happen = {
+		months = 11
+	}
+
+	option = {
+		name = "Send the expedition."
+		MEX = { country_event = 4207020 }
+		ai_chance = { factor = 1 }
+	}
+
+	option = {
+		name = "Don't bother."
+		prestige = -5
+		ai_chance = { factor = 0 }
+	}
+}
+
+country_event = {
+	id = 4207020
+	title = "The Mier Expedition"
+	desc = "EVTDESC4207020"
+	picture = "mier_expedition"
+	
+	is_triggered_only = yes
+
+	option = {
+		name = "Repel them!"
+		any_pop = {
+			limit = {
+				has_pop_culture = dixie
+			}
+			militancy = 3
+			consciousness = 1
+		}
+		ai_chance = { factor = 95 }
+	}
+
+	option = {
+		name = "This means war!"
+		war = {
+			target = TEX
+			attacker_goal = { casus_belli = annex_core_country }
+			defender_goal = { casus_belli = acquire_core_state state_province_id = 138 }
+		}
+		ai_chance = { factor = 3 }
+	}
+}
+
+#4207040 for mp MAW treaty
+
+country_event = {
+	id = 4207055
+	title = "Texas, oh Texas..."
+	desc = "EVTDESC4207055"
+	picture = "1854_Alamo"
+	
+	fire_only_once = yes
+
+	trigger = {
+		year = 1848
+		owns = 133
+		has_country_flag = new_world_nation
+		133 = { is_colonial = no }
+		war = no
+	}
+
+	option = {
+		name = "Giddy-up, cowboy!"
+		prestige = 5
+		TEX_132 = { add_province_modifier = { name = texas_boom_small duration = 1825 } }
+	}
+}
+
+country_event = {
+	id = 4207057
+	title = "Retour des cendres?"
+	desc = "EVTDESC4207057"
+	picture = "napoleon_transport"
+	fire_only_once = yes
+
+	trigger = {
+		year = 1840
+		tag = FRA
+		exists = ENG
+		NOT = { war_with = ENG }
+		month = 5
+		NOT = { year = 1845 }
+	}
+
+	mean_time_to_happen = { days = 1 }
+
+	option = {
+		name = "The Emperor must rest in France."
+		ENG = { country_event = 4207058 }
+		ai_chance = { factor = 1 }
+	}
+
+	option = {
+		name = "Let us not pursue this matter."
+		prestige = -5
+		ai_chance = { factor = 0 }
+	}
+}
+
+country_event = {
+	id = 4207058
+	title = "Napoleon's Repatriation"
+	desc = "EVTDESC4207058"
+	picture = "napoleon_transport"
+	
+	is_triggered_only = yes
+
+	option = {
+		name = "Return him to France."
+		relation = {
+			who = FRA
+			value = 40
+		}
+		FRA = { country_event = 4207059 }
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 0
+				OR = {
+					truce_with = FRA
+					relation = { who = FROM value = 0 }
+				}
+			}
+		}
+	}
+
+	option = {
+		name = "He will remain on Saint Helena."
+		prestige = 5
+		FRA = { country_event = 4207060 }
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 0
+				OR = {
+					alliance_with = FRA
+					relation = { who = FROM value = 200 }
+				}
+			}
+		}
+	}
+}
+
+country_event = {
+	id = 4207059
+	title = "Napoleon's Repatriation"
+	desc = "EVTDESC4207059"
+	picture = "napoleon_returned"
+	
+    news = yes
+    news_desc_long = "EVTDESC37204_NEWS_LONG"
+    news_desc_medium = "EVTDESC37204_NEWS_MEDIUM"
+    news_desc_short = "EVTDESC37204_NEWS_SHORT"
+	
+	is_triggered_only = yes
+
+	option = {
+		name = "Huzzah!"
+		prestige = 5
+		any_pop = { consciousness = -1 }
+	}
+}
+
+country_event = {
+	id = 4207060
+	title = "Britain refuses"
+	desc = "EVTDESC4207060"
+	picture = "uk_response"
+	
+	is_triggered_only = yes
+
+	option = {
+		name = "Perfidious Albion."
+		casus_belli = {
+			target = ENG
+			type = humiliate_no_infamy
+			months = 12
+		}
+	}
+}
+
+#country_event = {
+#	id = 4207063
+#	title = "Adelsverein"
+#	desc = "EVTDESC4207063"
+#	picture = "1854_Alamo"
+#
+#	fire_only_once = yes
+#
+#	mean_time_to_happen = {
+#		months = 4
+#	}
+#
+#	trigger = {
+#		year = 1842
+#		owns = 133
+#	}
+#	option = {
+#		name = "Let's hope these settlers have success."
+#		3116 = { any_pop = { limit = { has_pop_culture = north_german } move_pop = 134 } }
+#		3115 = { any_pop = { limit = { has_pop_culture = north_german } move_pop = 43 } }
+#	}
+#}
+
+ country_event = {
+ 	id = 4207064
+ 	title = "The Slap of Tunis"
+ 	desc = "EVTDESC4207064"
+ 	picture = "tunislap"
+ 	fire_only_once = yes
+
+ 	trigger = {
+        tag = ITA
+ 		1725 = { is_colonial = yes }
+ 		OR = { 1725 = { owned_by = FRA } 1725 = { owned_by = BOR } }
+ 	}
+
+ 	mean_time_to_happen = { months = 3 }
+
+ 	option = {
+ 		name = "We must begrudgingly accept French rule over Tunis."
+ 		prestige = -5
+ 		random_owned = { limit = { owner = { exists = FRA FRA = { owns = 425 } } } owner = { relation = { who = FRA value = -100 } } }
+ 		random_owned = { limit = { owner = { exists = BOR BOR = { owns = 425 } } } owner = { relation = { who = BOR value = -100 } } }
+ 		any_pop = { consciousness = 1 }
+ 		ai_chance = { factor = 90 }
+ 	}
+
+ 	option = {
+ 		name = "Tunis is rightfully Italian! Send an ultimatum to the French! §RGain 3 infamy§W"
+ 		badboy = 3
+ 		random_owned = { limit = { owner = { exists = FRA FRA = { owns = 425 } } } owner = { FRA = { country_event = 4207065 } } }
+ 		random_owned = { limit = { owner = { exists = BOR BOR = { owns = 425 } } } owner = { BOR = { country_event = 4207065 } } }
+ 		ai_chance = { factor = 10 }
+ 	}
+ }
+
+country_event = {
+	id = 4207065
+	title = "The Italian Ultimatum"
+	desc = "EVTDESC4207065"
+	picture = "tunislap"
+	fire_only_once = yes
+	is_triggered_only = yes
+
+ 	option = {
+ 		name = "If it's a war they want..."
+ 		FROM = {
+ 			casus_belli = { target = THIS type = place_in_the_sun months = 12 }
+ 			war = {
+ 				target = THIS
+ 				attacker_goal = {
+ 					casus_belli = place_in_the_sun
+ 					state_province_id = 1725
+ 				}
+ 				defender_goal = {
+ 					casus_belli = humiliate_no_infamy
+ 				}
+ 			}
+ 		}
+ 		ai_chance = { factor = 90 }
+ 	}
+
+ 	option = {
+ 		name = "Tunisia is not worth a war with Italy."
+ 		prestige = -10
+ 		relation = { who = FROM value = 200 }
+ 		any_owned = { limit = { is_core = TUN } secede_province = FROM }
+ 		any_pop = { consciousness = 1 }
+ 		ai_chance = { factor = 10 }
+ 	}
+ }
+
+country_event = {
+	id = 4207066
+	title = "The Banana Massacre"
+	desc = "EVTDESC4207066"
+	picture = "bananamassacre"
+	fire_only_once = yes
+
+	trigger = {
+		year = 1928
+		OR = {
+			tag = CLM
+			tag = GCO
+		}
+		owns = 2255
+		OR = {
+			in_sphere = USA
+			trade_policy = free_trade
+			economic_policy = interventionism
+		}
+	}
+
+	mean_time_to_happen = { months = 10 }
+
+	option = {
+		name = "All for bananas..."
+		any_pop = { consciousness = 1 }
+	}
+}
+
+country_event = {
+	id = 4207070
+	title = "The Northern Alta California Purchase"
+	desc = "EVTDESC4207070"
+	picture = "treaty"
+	fire_only_once = yes
+	is_triggered_only = yes
+
+	option = {
+		name = "Accept the offer."
+		treasury = 300000
+		prestige = -15
+		relation = {
+			who = USA
+			value = 100
+		}
+		any_pop = { militancy = 6.5 }
+		MEX_97 = {
+			remove_core = MEX
+			add_core = USA
+			secede_province = USA
+		}
+		TEX = {
+		  all_core = {
+		    remove_core = MEX 
+			add_core = USA 
+		  }
+		}
+		any_owned = {
+		  limit = {
+		    is_core = TEX
+		  }
+		  secede_province = USA
+		}
+		any_country = {
+		  limit = {
+		    tag = TEX
+			exists = yes
+		  }
+		  annex_to = USA
+		}
+		any_owned = {
+			limit = {
+				OR = {
+					province_id = 128
+					province_id = 103
+					province_id = 109
+					province_id = 108
+					province_id = 3560
+					province_id = 110
+					province_id = 107
+					province_id = 94
+					province_id = 95
+					province_id = 3457
+					province_id = 3458
+					province_id = 84
+					province_id = 85
+					province_id = 86
+					province_id = 104
+					province_id = 3448
+					province_id = 3452
+					province_id = 3340
+					province_id = 3453
+					province_id = 3454
+					province_id = 3455
+				}
+			}
+			remove_core = MEX
+			add_core = USA
+			secede_province = UTI
+		}
+		USA = { inherit = UTI country_event = 42070712 } #MEX accepts
+		ai_chance = { factor = 3 }
+	}
+	
+	option = {
+		name = "Reject the offer."
+		prestige = 5
+		relation = {
+			who = USA
+			value = -100
+		}
+		USA = { country_event = 4207072 } #MEX rejects
+		ai_chance = { factor = 1 }
+	}
+}
+
+country_event = {
+	id = 42070712
+	title = "The Mexicans accept"
+	desc = "EVTDESC4207071"
+	picture = "treaty"
+	fire_only_once = yes
+	is_triggered_only = yes
+
+	option = {
+		name = "Perfect!"
+		set_country_flag = bought_alta
+		clr_country_flag = negotiating_alta
+		treasury = -300000
+	}
+}
+
+country_event = {
+	id = 4207072
+	title = "The Mexicans refuse"
+	desc = "EVTDESC4207072"
+	picture = "treaty"
+	fire_only_once = yes
+	is_triggered_only = yes
+
+	option = {
+		name = "We tried."
+		clr_country_flag = negotiating_alta
+		set_country_flag = alta_failed
+	}
+}
+
+#Rebellions of 1837
+country_event = {
+	id = 4207073
+	title = "The Canadian Rebellions of 1837-38"
+    desc = "EVTDESC44305"
+    news = yes
+    news_title = "EVTNAME44305_NEWS_TITLE"
+    news_desc_long = "EVTDESC44305_NEWS_LONG"
+    news_desc_medium = "EVTDESC44305_NEWS_MEDIUM"
+    news_desc_short = "EVTDESC44305_NEWS_SHORT"
+	picture = "canada_revolt"
+	fire_only_once = yes
+
+	trigger = {
+		owns = 46
+        year = 1837
+		owns = 65
+        owns = 57
+        OR = {
+            tag = ENG
+            tag = ENL
+        }
+        NOT = {
+            exists = CAN
+            has_country_flag = rebellion_1837_begun
+        }
+		month = 11
+	}
+
+	mean_time_to_happen = { days = 1 }
+
+	option = {
+		name = "EVT44305OPTA"
+		USA = { country_event = { id = 4207074 days = 28 } }
+        set_country_flag = rebellion_1837_begun
+        any_pop = {
+            limit = {
+                has_pop_culture = anglo_canadian
+                location = { is_core = CAN }
+            }
+            consciousness = 6
+            militancy = 8
+            ideology = {
+                value = liberal
+                factor = 0.3
+            }
+            ideology = {
+                value = radical
+                factor = 0.1
+            }
+        }
+        any_pop = {
+            limit = {
+                has_pop_culture = french_canadian
+                location = { is_core = QUE }
+            }
+            consciousness = 6
+            militancy = 8
+            ideology = {
+                value = liberal
+                factor = 0.3
+            }
+            ideology = {
+                value = radical
+                factor = 0.1
+            }
+        }
+        any_owned = {
+            limit = {
+                OR = {
+                    is_core = CAN
+                    is_core = QUE
+                }
+            }
+            add_province_modifier = {
+                name = nationalist_agitation
+                duration = 365
+            }
+        }
+	}
+}
+
+country_event = {
+	id = 4207074
+	title = "The Caroline Affair"
+	desc = "EVTDESC4207074"
+	picture = "caroline_affair"
+	fire_only_once = yes
+	is_triggered_only = yes
+
+	option = {
+		name = "Keep shut and don't bother them."
+		prestige = -8
+		relation = {
+			who = ENG
+			value = 15
+		}
+		ai_chance = { factor = 9 }
+	}
+
+	option = {
+		name = "Demand reparations."
+		ENG = { country_event = 4207075 }
+		ai_chance = { factor = 1 }
+	}
+
+	option = {
+		name = "Seize Upper Canada! §RGain 5 infamy§W"
+		badboy = 5
+		ENG = { country_event = 4207080 }
+		158 = { add_core = THIS secede_province = THIS }
+		3616 = { add_core = THIS }
+		50 = { add_core = THIS }
+		51 = { add_core = THIS }
+		52 = { add_core = THIS }
+		56 = { add_core = THIS }
+		57 = { add_core = THIS }
+		46 = { add_core = THIS }
+		53 = { add_core = THIS }
+		54 = { add_core = THIS }
+		55 = { add_core = THIS }
+		set_global_flag = us_ontario
+		war = {
+            target = ENG
+            attacker_goal = {
+				casus_belli = acquire_core_state 
+				state_province_id = 57
+            }
+			defender_goal = {
+				casus_belli = humiliate_no_infamy
+			}
+            call_ally = no
+        }
+		ai_chance = { factor = 0 }
+	}
+}
+
+country_event = { 
+	id = 4207075
+	title = "The Caroline Affair"
+	desc = "EVTDESC4207075"
+	picture = "caroline_affair"
+	fire_only_once = yes
+	is_triggered_only = yes
+
+	option = {
+		name = "It's only fair to pay compensation."
+		prestige = -10
+		treasury = -14000
+		USA = { country_event = 4207076 }
+		ai_chance = {
+			factor = 80
+			modifier = {
+				factor = 0
+				NOT = { money = 14000 }
+			}
+		}
+	}
+
+	option = {
+		name = "Nonsense! We owe America nothing."
+		USA = { country_event = 4207078 }
+		ai_chance = { factor = 20 }
+	}
+}
+
+country_event = { 
+	id = 4207076
+	title = "British Reparations"
+	desc = "EVTDESC4207076"
+	picture = "caroline_affair"
+	fire_only_once = yes
+	is_triggered_only = yes
+
+	option = {
+		name = "Perfect."
+		prestige = 10
+		treasury = 14000
+	}
+}
+
+country_event = { 
+	id = 4207078
+	title = "Britain refuses"
+	desc = "EVTDESC4207078"
+	picture = "caroline_affair"
+	fire_only_once = yes
+	is_triggered_only = yes
+
+	option = {
+		name = "Don't risk war."
+		prestige = -10
+		ENG = { country_event = 4207079 }
+		ai_chance = { factor = 85 }
+	}
+
+	option = {
+		name = "Then it's up to us to take it!"
+		war = {
+            target = ENG
+            attacker_goal = { casus_belli = war_reparations }
+            call_ally = no
+        }
+		ENG = { country_event = 4207081 }
+		ai_chance = { factor = 15 }
+	}
+
+	option = {
+		name = "Seize Upper Canada! §RGain 5 infamy§W"
+		badboy = 5
+		ENG = { country_event = 4207080 }
+		158 = { add_core = THIS secede_province = THIS }
+		3616 = { add_core = THIS }
+		50 = { add_core = THIS }
+		51 = { add_core = THIS }
+		52 = { add_core = THIS }
+		56 = { add_core = THIS }
+		57 = { add_core = THIS }
+		46 = { add_core = THIS }
+		53 = { add_core = THIS }
+		54 = { add_core = THIS }
+		55 = { add_core = THIS }
+		set_global_flag = us_ontario
+		war = {
+            target = ENG
+            attacker_goal = {
+				casus_belli = acquire_core_state
+				state_province_id = 57
+            }
+			defender_goal = {
+				casus_belli = humiliate_no_infamy
+			}
+            call_ally = no
+        }
+		ai_chance = { factor = 0 }
+	}
+}
+
+country_event = { 
+	id = 4207079
+	title = "America backs down"
+	desc = "EVTDESC4207079"
+	picture = "caroline_affair"
+	fire_only_once = yes
+	is_triggered_only = yes
+
+	option = {
+		name = "We knew they did not have the guts."
+		prestige = 10
+	}
+}
+
+country_event = { 
+	id = 4207081
+	title = "War with America"
+	desc = "EVTDESC4207081"
+	picture = "windmill_battle"
+	fire_only_once = yes
+	is_triggered_only = yes
+
+	option = {
+		name = "A meaningless conflict over pride, eh?"
+	}
+}
+
+country_event = {
+	id = 4207080
+	title = "War with America"
+	desc = "EVTDESC4207080"
+	picture = "windmill_battle"
+	fire_only_once = yes
+	is_triggered_only = yes
+
+	option = {
+		name = "They will have to come and take it!"
+	}
+}
+
+country_event = {
+	id = 4207082
+	title = "$FROMCOUNTRY$ Surrenders"
+	desc = "EVTDESC4207082"
+	picture = "surrenderhaha"
+	is_triggered_only = yes
+
+	option = {
+		name = "GG!"
+		any_country = {
+			limit = {
+				tag = FROM
+			}
+			FROM = { any_owned = { change_controller = THIS } }
+		}
+	}
+	
+	option = {
+		name = "We don't accept their surrender."
+	}
+}
+
+country_event = {
+	id = 4207097
+	title = "Rio Grande cedes Laredo!"
+	desc = "EVTDESC4207097"
+	picture = "treaty"
+	is_triggered_only = yes
+	
+	option = {
+		name = "Perfect!"
+		prestige = 5
+		treasury = -100000
+		relation = {
+			who = RGR
+			value = 25
+		}
+	}
+}
+
+country_event = {
+	id = 4207098
+	title = "Rio Grande refuses!"
+	desc = "EVTDESC4207098"
+	picture = "treaty"
+	is_triggered_only = yes
+	
+	option = {
+		name = "By sword it's gonna be then."
+		badboy = 2
+		relation = {
+			who = RGR
+			value = -75
+		}
+		leave_alliance = RGR
+		ai_chance = {
+			factor = 85
+			modifier = {
+				factor = 0
+				relation = { who = RGR value = 185 }
+			}
+		}
+	}
+	
+	option = {
+		name = "We must give up on Laredo."
+		relation = {
+			who = RGR
+			value = 75
+		}
+		138 = { remove_core = TEX remove_core = USA }
+		ai_chance = {
+			factor = 15
+			modifier = {
+				factor = 100
+				relation = { who = RGR value = 185 }
+			}
+		}
+	}
+}
+
+country_event = {
+    id = 62025
+    title = "The Americans demand Laredo!"
+    desc = "62025_desc"
+    is_triggered_only = yes
+	picture = "the_ultimatum"
+
+	option = {
+        name = "We have no other option."
+		prestige = -15
+		capital = 2149
+		treasury = 100000
+		relation = {
+			who = USA
+			value = 25
+		}
+		any_owned = { limit = { province_id = 138 } secede_province = USA }
+		USA = { country_event = 4207097 }
+		set_global_flag = gaveuplaredo
+		ai_chance = { factor = 50 }
+	}
+	
+	option = {
+        name = "Laredo is ours!"
+		prestige = 5
+		relation = {
+			who = USA
+			value = -75
+		}
+		USA = { country_event = 4207098 }
+		ai_chance = { factor = 50 }
+	}
+}
+
+country_event = {
+    id = 62018
+    title = "The Rio Grande Identity"
+    desc = "62018_desc"
+    fire_only_once = yes
+	picture = "mexico-us-treaty"
+    trigger = {
+		has_global_flag = rgr_stays_alive
+		tag = RGR
+		prestige = 10
+		war = no
+	}
+	
+    mean_time_to_happen = { months = 25 }
+	
+	option = {
+        name = "We will stand the test of time." #More Rio Grande LARP
+        prestige = 2
+		2147 = { change_province_name = "Carbajal" }
+		2155 = { change_province_name = "Cardenas" }
+        ai_chance = {
+            factor = 1
+		}
+	}
+}
+
+country_event = {
+    id = 62011
+    title = "Texan aid!"
+    desc = "62011_desc"
+    is_triggered_only = yes
+	picture = "mier_expedition"
+
+	option = {
+        name = "The Tejanos are our brothers and sisters!" #Flavor event for Texan volunteers
+		treasury = 1000
+		138 = {
+			sub_unit = { type = infantry value = current }
+			sub_unit = { type = artillery value = current }
+			sub_unit = { type = cavalry value = current }
+		}
+	}
+}
+
+country_event = {
+    id = 62017
+    title = "Settling the Laredo Dispute"
+    desc = "62017_desc"
+	picture = "treaty"
+    fire_only_once = yes
+    trigger = {
+		has_global_flag = RGR_Free
+		tag = RGR
+        138 = { owned_by = THIS }
+		war = no
+	}
+	
+    mean_time_to_happen = { 
+		months = 1
+	}
+
+	option = {
+        name = "Laredo will remain Riograndese, but we're open to compensate Texas." #Texan claim removed, US cant decision-steal
+        138 = { remove_core = TEX }
+		TEX = { 
+			treasury = 2000 
+			relation = {
+				who = RGR
+				value = -50
+		    }
+		}
+		RGR = { treasury = -2000 }
+		RGR = { set_country_flag = Laredo_RGR }
+		ai_chance = {
+            factor = 90
+		}
+	}
+	option = {
+        name = "The Texans will pay for Laredo if they want it." #Texas acquires Laredo
+        138 = { 
+			remove_core = RGR
+			secede_province = TEX 
+		}
+		TEX = { 
+			treasury = -2000
+			relation = {
+				who = RGR
+				value = 200
+		    }		
+		}
+		RGR = { treasury = 2000 }
+        ai_chance = {
+            factor = 10
+		}
+	}
+}

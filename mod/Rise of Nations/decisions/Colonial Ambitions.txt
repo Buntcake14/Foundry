@@ -1,0 +1,134 @@
+political_decisions = {
+
+    #Marks a nation as actively pursuing colonial expansion as a national goal,
+    #rather than passively drifting into it. Unlocks the repeatable colonial fleet
+    #investment decision below. Matches the vanilla colonisation eligibility
+    #threshold (COLONIAL_RANK = 16 in defines.lua), not an invented cutoff.
+    declare_colonial_ambition = {
+        potential = {
+            civilized = yes
+            rank = 16
+            NOT = { has_country_flag = colonial_ambition_declared }
+        }
+
+        allow = {
+            war = no
+        }
+
+        effect = {
+            set_country_flag = colonial_ambition_declared
+            prestige = 5
+        }
+
+        ai_will_do = {
+            factor = 1
+        }
+    }
+
+    #Two-step chain: commits state backing to expanding the colonial fleet, raising
+    #a coastal province's naval_base level -- and with it, real colonial point
+    #income (see common/buildings.txt's naval_base colonial_points table). This is
+    #the actual mechanism behind "colonies build faster for nations pursuing it".
+    #Deliberately mirrors decisions/building_military_infrastructure.txt's proven
+    #build_port_upto_level_X pattern *exactly*, including its cooldown-modifier
+    #gating and its documented naval_base-via-effect quirk (setting naval_base on a
+    #province that already has one requires target_level + 1, not target_level
+    #itself -- confirmed empirically by that existing, tested decision chain, not
+    #guessed here). Kept to 2 steps rather than mirroring the full 6-level vanilla
+    #chain, since going further would just duplicate that chain's own scope.
+    invest_in_colonial_fleet_1 = {
+        potential = {
+            has_country_flag = colonial_ambition_declared
+            NOT = { has_country_flag = colonial_naval_1 }
+            any_state = {
+                any_owned_province = {
+                    is_coastal = yes
+                }
+            }
+        }
+
+        allow = {
+            war = no
+            NOT = { has_country_modifier = colonial_investment }
+        }
+
+        effect = {
+            set_country_flag = colonial_naval_1
+            add_country_modifier = {
+                name = colonial_investment
+                duration = 1825
+            }
+            any_state = {
+                limit = {
+                    NOT = {
+                        any_owned_province = {
+                            has_building = naval_base
+                        }
+                    }
+                }
+                random_owned = {
+                    limit = {
+                        is_coastal = yes
+                        port = yes
+                    }
+                    naval_base = 1
+                }
+            }
+        }
+
+        ai_will_do = {
+            factor = 1
+        }
+    }
+
+    invest_in_colonial_fleet_2 = {
+        potential = {
+            has_country_flag = colonial_naval_1
+            NOT = { has_country_flag = colonial_naval_2 }
+            any_state = {
+                any_owned_province = {
+                    is_coastal = yes
+                }
+            }
+        }
+
+        allow = {
+            war = no
+            NOT = { has_country_modifier = colonial_investment }
+        }
+
+        effect = {
+            set_country_flag = colonial_naval_2
+            add_country_modifier = {
+                name = colonial_investment
+                duration = 1825
+            }
+            any_owned = {
+                limit = {
+                    has_building = naval_base
+                }
+                naval_base = 3
+            }
+            any_state = {
+                limit = {
+                    NOT = {
+                        any_owned_province = {
+                            has_building = naval_base
+                        }
+                    }
+                }
+                random_owned = {
+                    limit = {
+                        is_coastal = yes
+                        port = yes
+                    }
+                    naval_base = 2
+                }
+            }
+        }
+
+        ai_will_do = {
+            factor = 1
+        }
+    }
+}

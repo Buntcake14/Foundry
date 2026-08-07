@@ -1,0 +1,60 @@
+army = {
+    name = "Household Division"
+    location = 300
+
+    regiment = {
+        name = "1st Regiment of Foot Guards"
+        type = guard
+        home = 300
+    }
+    regiment = {
+        name = "Grenadier Guards"
+        type = guard
+        home = 300
+    }
+    regiment = {
+        name = "Royal Horse Guards"
+        type = cuirassier
+        home = 294
+    }
+    regiment = {
+        name = "1st Royal Dragoons"
+        type = dragoon
+        home = 291
+    }
+    regiment = {
+        name = "Royal Regiment of Artillery"
+        type = artillery
+        home = 295
+    }
+}
+
+navy = {
+    name = "Channel Fleet"
+    location = 3269
+
+    ship = {
+        name = "HMS Victory"
+        type = manowar
+    }
+    ship = {
+        name = "HMS Royal Sovereign"
+        type = manowar
+    }
+    ship = {
+        name = "HMS Britannia"
+        type = manowar
+    }
+    ship = {
+        name = "HMS Minotaur"
+        type = frigate
+    }
+    ship = {
+        name = "HMS Amphion"
+        type = frigate
+    }
+    ship = {
+        name = "HMS Racehorse"
+        type = commerce_raider
+    }
+}

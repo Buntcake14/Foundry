@@ -1,0 +1,549 @@
+#Hispanola Region (516000) #see Dominican Republic.txt for balance of region
+#Ruled by Haiti 1836
+#Port au Prince (312000/78000 POPS)
+2213 = {
+    aristocrats = {
+        culture = kreol
+        religion = catholic
+        size = 750
+    }
+
+    officers = {
+        culture = kreol
+        religion = catholic
+        size = 150
+    }
+
+    clergymen = {
+        culture = kreol
+        religion = catholic
+        size = 225
+    }
+
+    artisans = {
+        culture = afro_french
+        religion = catholic
+        size = 2412
+    }
+
+	artisans = {
+        culture = kreol
+        religion = catholic
+        size = 1608
+    }
+
+	artisans = {
+        culture = french_canadian
+        religion = catholic
+        size = 15
+    }
+
+	artisans = {
+        culture = kreol
+        religion = catholic
+        size = 765
+    }
+
+    soldiers = {
+        culture = kreol
+        religion = catholic
+        size = 900
+    }
+
+    soldiers = {
+        culture = polish
+        religion = catholic
+        size = 333
+    }
+
+	farmers = {
+        culture = polish
+        religion = catholic
+        size = 166
+    }
+
+    clergymen = {
+        culture = irish
+        religion = catholic
+        size = 375
+    }
+
+    farmers = {
+        culture = afro_french
+        religion = catholic
+        size = 8021
+    }
+
+	farmers = {
+        culture = kreol
+        religion = catholic
+        size = 5395
+    }
+
+    farmers = {
+        culture = bakongo
+        religion = animist
+        size = 202
+    }
+
+    farmers = {
+        culture = native_american_minor
+        religion = animist
+        size = 164
+    }
+
+	farmers = {
+        culture = native_american_minor
+        religion = catholic
+        size = 40
+    }
+}
+#Cap Haitien (204000/51000 POPS)
+2215 = {
+    aristocrats = {
+        culture = kreol
+        religion = catholic
+        size = 165
+    }
+
+    clergymen = {
+        culture = kreol
+        religion = catholic
+        size = 22
+    }
+
+    artisans = {
+        culture = afro_french
+        religion = catholic
+        size = 405
+    }
+
+    artisans = {
+        culture = kreol
+        religion = catholic
+        size = 270
+    }
+
+    soldiers = {
+        culture = kreol
+        religion = catholic
+        size = 210
+    }
+
+	soldiers = {
+        culture = afro_french
+        religion = catholic
+        size = 90
+    }
+
+	soldiers = {
+        culture = kreol
+        religion = catholic
+        size = 36
+    }
+
+    farmers = {
+        culture = afro_french
+        religion = catholic
+        size = 2712
+    }
+
+	farmers = {
+        culture = kreol
+        religion = catholic
+        size = 1688
+    }
+
+    farmers = {
+        culture = bakongo
+        religion = animist
+        size = 114
+    }
+
+    farmers = {
+        culture = native_american_minor
+        religion = animist
+        size = 92
+    }
+
+	farmers = {
+        culture = native_american_minor
+        religion = catholic
+        size = 22
+    }
+
+}
+
+#Môle St-Nicolas
+3284 = {
+    clergymen = {
+        culture = kreol
+        religion = catholic
+        size = 22
+    }
+
+    farmers = {
+        culture = afro_french
+        religion = catholic
+        size = 774
+    }
+
+	farmers = {
+        culture = kreol
+        religion = catholic
+        size = 516
+    }
+
+    artisans = {
+        culture = kreol
+        religion = catholic
+        size = 52
+    }
+
+	artisans = {
+        culture = afro_french
+        religion = catholic
+        size = 50
+    }
+
+	artisans = {
+        culture = kreol
+        religion = catholic
+        size = 33
+    }
+
+    farmers = {
+        culture = bakongo
+        religion = animist
+        size = 14
+    }
+
+    farmers = {
+        culture = native_american_minor
+        religion = animist
+        size = 14
+    }
+
+    farmers = {
+        culture = native_american_minor
+        religion = catholic
+        size = 3
+    }
+}
+3309 = {
+    clergymen = {
+        culture = kreol
+        religion = catholic
+        size = 22
+    }
+
+    farmers = {
+        culture = afro_french
+        religion = catholic
+        size = 612
+    }
+
+    farmers = {
+        culture = kreol
+        religion = catholic
+        size = 108
+    }
+
+    artisans = {
+        culture = kreol
+        religion = catholic
+        size = 18
+    }
+
+	artisans = {
+        culture = afro_french
+        religion = catholic
+        size = 125
+    }
+
+	artisans = {
+        culture = kreol
+        religion = catholic
+        size = 22
+    }
+
+    aristocrats = {
+        culture = afro_french
+        religion = catholic
+        size = 140
+    }
+
+	aristocrats = {
+        culture = kreol
+        religion = catholic
+        size = 26
+    }
+
+    clergymen = {
+        culture = afro_french
+        religion = catholic
+        size = 26
+    }
+
+    clergymen = {
+        culture = kreol
+        religion = catholic
+        size = 4
+    }
+
+    artisans = {
+        culture = afro_french
+        religion = catholic
+        size = 102
+    }
+
+    artisans = {
+        culture = kreol
+        religion = catholic
+        size = 18
+    }
+
+    soldiers = {
+        culture = afro_french
+        religion = catholic
+        size = 128
+    }
+
+	soldiers = {
+        culture = kreol
+        religion = catholic
+        size = 22
+    }
+
+    farmers = {
+        culture = caribeno
+        religion = catholic
+        size = 1754
+    }
+
+    farmers = {
+        culture = bakongo
+        religion = animist
+        size = 84
+    }
+
+    clergymen = {
+        culture = afro_french
+        religion = catholic
+        size = 12
+    }
+
+    clergymen = {
+        culture = kreol
+        religion = catholic
+        size = 3
+    }
+
+    artisans = {
+        culture = afro_french
+        religion = catholic
+        size = 75
+    }
+
+    artisans = {
+        culture = kreol
+        religion = catholic
+        size = 15
+    }
+
+    soldiers = {
+        culture = afro_french
+        religion = catholic
+        size = 180
+    }
+
+    soldiers = {
+        culture = kreol
+        religion = catholic
+        size = 45
+    }
+
+    farmers = {
+        culture = afro_latino
+        religion = catholic
+        size = 666
+    }
+
+    farmers = {
+        culture = native_american_minor
+        religion = animist
+        size = 68
+    }
+
+	farmers = {
+        culture = native_american_minor
+        religion = catholic
+        size = 16
+    }
+}
+3319 = {
+    aristocrats = {
+        culture = kreol
+        religion = catholic
+        size = 165
+    }
+
+    clergymen = {
+        culture = afro_french
+        religion = catholic
+        size = 13
+    }
+
+    clergymen = {
+        culture = kreol
+        religion = catholic
+        size = 10
+    }
+
+    artisans = {
+        culture = afro_french
+        religion = catholic
+        size = 459
+    }
+
+	artisans = {
+        culture = kreol
+        religion = catholic
+        size = 306
+    }
+
+    soldiers = {
+        culture = kreol
+        religion = catholic
+        size = 60
+    }
+
+    farmers = {
+        culture = afro_french
+        religion = catholic
+        size = 1595
+    }
+
+	farmers = {
+        culture = kreol
+        religion = catholic
+        size = 1063
+    }
+
+    soldiers = {
+        culture = polish
+        religion = catholic
+        size = 333
+    }
+
+	farmers = {
+        culture = polish
+        religion = catholic
+        size = 166
+    }
+
+	farmers = {
+        culture = acadian
+        religion = catholic
+        size = 90
+    }
+
+    farmers = {
+        culture = bakongo
+        religion = animist
+        size = 90
+    }
+
+    farmers = {
+        culture = native_american_minor
+        religion = animist
+        size = 72
+    }
+
+	farmers = {
+        culture = native_american_minor
+        religion = catholic
+        size = 18
+    }
+
+}
+3320 = {
+    aristocrats = {
+        culture = kreol
+        religion = catholic
+        size = 165
+    }
+
+    clergymen = {
+        culture = kreol
+        religion = catholic
+        size = 22
+    }
+
+    artisans = {
+        culture = kreol
+        religion = catholic
+        size = 465
+    }
+
+    soldiers = {
+        culture = kreol
+        religion = catholic
+        size = 60
+    }
+
+    farmers = {
+        culture = afro_french
+        religion = catholic
+        size = 1907
+    }
+
+	farmers = {
+        culture = kreol
+        religion = catholic
+        size = 1271
+    }
+
+    soldiers = {
+        culture = polish
+        religion = catholic
+        size = 333
+    }
+
+	farmers = {
+        culture = polish
+        religion = catholic
+        size = 166
+    }
+
+	farmers = {
+        culture = afro_american
+        religion = protestant
+        size = 150
+    }
+
+    farmers = {
+        culture = bakongo
+        religion = animist
+        size = 48
+    }
+
+    farmers = {
+        culture = native_american_minor
+        religion = animist
+        size = 75
+    }
+
+	farmers = {
+        culture = native_american_minor
+        religion = catholic
+        size = 20
+    }
+
+    farmers = {
+        culture = kreol
+        religion = catholic
+        size = 232
+    }
+
+}

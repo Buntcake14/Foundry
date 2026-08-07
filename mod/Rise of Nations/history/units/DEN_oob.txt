@@ -1,0 +1,100 @@
+leader = {
+    name = "Olaf Rye"
+    picture = european_general_24
+    date = 1830.1.1
+    type = land
+    personality = no_personality
+    background = attack_5.1
+    prestige = 0.3
+}
+leader = {
+    name = "Frederik af Hessen-Kassel"
+    picture = european_general_2
+    date = 1805.1.1
+    type = land
+    personality = no_personality
+    background = attack_3.1
+    prestige = 0.2
+}
+leader = {
+    name = "Christian Julius de Meza"
+    picture = european_general_17
+    date = 1830.1.1
+    type = land
+    personality = defence_3.1
+    background = attack_2.1
+    prestige = 0.4
+}
+leader = {
+    name = "Christoph von Krogh"
+    picture = european_general_30
+    date = 1830.1.1
+    type = land
+    personality = no_personality
+    background = attack_2.1
+    prestige = 0.3
+}
+leader = {
+    name = "Friderich Adolph Schleppegrell"
+    picture = european_general_50
+    date = 1830.1.1
+    type = land
+    personality = no_personality
+    background = attack_1.1
+    prestige = 0.3
+}
+leader = {
+    name = "Frederik Rubeck Henrik Bülow"
+    picture = european_general_16
+    date = 1830.1.1
+    type = land
+    personality = defence_3.1
+    background = attack_2.1
+    prestige = 0.3
+}
+leader = {
+    name = "Hans Hedemann"
+    picture = european_general_15
+    date = 1830.1.1
+    type = land
+    personality = no_personality
+    background = no_background
+    prestige = 0.3
+}
+leader = {
+    name = "Anton Frederik Tscherning"
+    picture = european_general_12
+    date = 1830.1.1
+    type = land
+    personality = no_personality
+    background = no_background
+    prestige = 0.3
+}
+leader = {
+    name = "Edouard Suenson"
+    picture = european_general_51
+    date = 1830.1.1
+    type = sea
+    personality = defence_2.1
+    background = attack_2.1
+    prestige = 0.3
+}
+leader = {
+
+    name = "Carl Edvard van Dockum"
+    picture = european_admiral_7
+    date = 1830.1.1
+    type = sea
+    personality = defence_minus_2.1
+    background = attack_3.1
+    prestige = 0.3
+}
+leader = {
+    name = "Steen Andersen Bille"
+    picture = european_admiral_0
+    date = 1830.1.1
+    type = sea
+    personality = no_personality
+    background = attack_2.1
+    prestige = 0.3
+}

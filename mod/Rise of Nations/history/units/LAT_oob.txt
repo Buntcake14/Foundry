@@ -1,0 +1,8 @@
+leader = {
+    name = "Georg Friedrich von Fölkersahm"
+    picture = european_general_25
+    date = 1814.1.1
+    type = land
+    personality = defence_1.1
+    background = attack_2.1
+}

@@ -1,0 +1,7 @@
+owner = EIC
+controller = EIC
+add_core = PRK
+add_core = SIA
+trade_goods = grain
+life_rating = 37
+terrain = jungle_farmland

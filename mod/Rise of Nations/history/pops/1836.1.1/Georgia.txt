@@ -1,0 +1,916 @@
+#Gruzhia Region (644000)
+#under the rule of Russia in 1836
+#Tblisi (232000/58000 POPS) #circassian-orthodox = Ossetian
+1090 = {
+    bureaucrats = {
+        culture = russian
+        religion = orthodox
+        size = 82
+    }
+
+    clergymen = {
+        culture = russian
+        religion = orthodox
+        size = 20
+    }
+
+    artisans = {
+        culture = russian
+        religion = orthodox
+        size = 20
+    }
+
+    soldiers = {
+        culture = russian
+        religion = orthodox
+        size = 205
+    }
+
+    aristocrats = {
+        culture = georgian
+        religion = orthodox
+        size = 902
+    }
+
+    bureaucrats = {
+        culture = georgian
+        religion = orthodox
+        size = 41
+    }
+
+    officers = {
+        culture = georgian
+        religion = orthodox
+        size = 144
+    }
+
+    clergymen = {
+        culture = georgian
+        religion = orthodox
+        size = 390
+    }
+
+    artisans = {
+        culture = armenian
+        religion = miaphysite
+        size = 594
+    }
+
+    soldiers = {
+        culture = georgian
+        religion = orthodox
+        size = 902
+    }
+
+    serfs = {
+        culture = georgian
+        religion = orthodox
+        size = 25112
+    }
+
+    farmers = {
+        culture = georgian
+        religion = orthodox
+        size = 3936
+    }
+
+    farmers = {
+        culture = gypsy
+        religion = orthodox
+        size = 164
+    }
+
+    aristocrats = {
+        culture = volga_german
+        religion = catholic
+        size = 20
+    }
+
+    clergymen = {
+        culture = volga_german
+        religion = catholic
+        size = 20
+    }
+
+    artisans = {
+        culture = volga_german
+        religion = catholic
+        size = 123
+    }
+
+    soldiers = {
+        culture = volga_german
+        religion = catholic
+        size = 20
+    }
+
+    farmers = {
+        culture = volga_german
+        religion = catholic
+        size = 636
+    }
+
+    aristocrats = {
+        culture = armenian
+        religion = miaphysite
+        size = 41
+    }
+
+    clergymen = {
+        culture = armenian
+        religion = miaphysite
+        size = 41
+    }
+
+    artisans = {
+        culture = armenian
+        religion = miaphysite
+        size = 369
+    }
+
+    soldiers = {
+        culture = armenian
+        religion = miaphysite
+        size = 41
+    }
+
+    farmers = {
+        culture = armenian
+        religion = miaphysite
+        size = 1968
+    }
+
+    farmers = {
+        culture = greek
+        religion = orthodox
+        size = 4920
+    }
+
+    aristocrats = {
+        culture = azerbaijani
+        religion = shiite
+        size = 20
+    }
+
+    clergymen = {
+        culture = azerbaijani
+        religion = shiite
+        size = 41
+    }
+
+    artisans = {
+        culture = azerbaijani
+        religion = shiite
+        size = 123
+    }
+
+    soldiers = {
+        culture = azerbaijani
+        religion = shiite
+        size = 20
+    }
+
+    farmers = {
+        culture = azerbaijani
+        religion = shiite
+        size = 8815
+    }
+
+    clergymen = {
+        culture = sephardic
+        religion = jewish
+        size = 8
+    }
+
+    artisans = {
+        culture = sephardic
+        religion = jewish
+        size = 566
+    }
+}
+#Pasanauri (76000/19000 POPS)
+1091 = {
+    aristocrats = {
+        culture = georgian
+        religion = orthodox
+        size = 164
+    }
+
+    clergymen = {
+        culture = georgian
+        religion = orthodox
+        size = 82
+    }
+
+    soldiers = {
+        culture = georgian
+        religion = orthodox
+        size = 82
+    }
+
+	farmers = {
+		culture = georgian
+		religion = orthodox
+		size = 2460
+	}
+
+    serfs = {
+        culture = ossetian
+        religion = orthodox
+        size = 7462
+    }
+
+    aristocrats = {
+        culture = ossetian
+        religion = orthodox
+        size = 82
+    }
+
+    clergymen = {
+        culture = ossetian
+        religion = orthodox
+        size = 41
+    }
+
+    artisans = {
+        culture = ossetian
+        religion = orthodox
+        size = 246
+    }
+
+    soldiers = {
+        culture = ossetian
+        religion = orthodox
+        size = 41
+    }
+
+    farmers = {
+        culture = ossetian
+        religion = orthodox
+        size = 4510
+    }
+
+    farmers = {
+        culture = armenian
+        religion = miaphysite
+        size = 410
+    }
+}
+#Kutaisi (120000/30000 POPS)
+1092 = {
+    aristocrats = {
+        culture = georgian
+        religion = orthodox
+        size = 451
+    }
+
+    clergymen = {
+        culture = georgian
+        religion = orthodox
+        size = 246
+    }
+
+    artisans = {
+        culture = georgian
+        religion = orthodox
+        size = 1066
+    }
+
+    soldiers = {
+        culture = georgian
+        religion = orthodox
+        size = 246
+    }
+
+    serfs = {
+        culture = georgian
+        religion = orthodox
+        size = 31160
+    }
+
+	serfs = {
+        culture = turkish
+        religion = sunni
+        size = 984
+    }
+
+    farmers = {
+        culture = gypsy
+        religion = orthodox
+        size = 82
+    }
+
+	farmers = {
+        culture = azerbaijani
+        religion = shiite
+        size = 1066
+    }
+
+    clergymen = {
+        culture = sephardic
+        religion = jewish
+        size = 4
+    }
+
+    artisans = {
+        culture = sephardic
+        religion = jewish
+        size = 201
+    }
+}
+
+#Gori
+3427 = {
+    aristocrats = {
+        culture = georgian
+        religion = orthodox
+        size = 45
+    }
+
+    clergymen = {
+        culture = georgian
+        religion = orthodox
+        size = 25
+    }
+
+    artisans = {
+        culture = georgian
+        religion = orthodox
+        size = 107
+    }
+
+    soldiers = {
+        culture = georgian
+        religion = orthodox
+        size = 25
+    }
+
+    serfs = {
+        culture = georgian
+        religion = orthodox
+        size = 5740
+    }
+
+	farmers = {
+		culture = georgian
+		religion = orthodox
+		size = 574
+	}
+
+	farmers = {
+		culture = azerbaijani
+		religion = shiite
+		size = 328
+	}
+
+	farmers = {
+		culture = armenian
+		religion = miaphysite
+		size = 164
+	}
+
+	farmers = {
+		culture = greek
+		religion = orthodox
+		size = 820
+	}
+
+    clergymen = {
+        culture = sephardic
+        religion = jewish
+        size = 4
+    }
+
+    artisans = {
+        culture = sephardic
+        religion = jewish
+        size = 82
+    }
+
+	farmers = {
+		culture = ossetian
+		religion = orthodox
+		size = 451
+	}
+}
+
+#Kakheti
+3429 = {
+    aristocrats = {
+        culture = georgian
+        religion = orthodox
+        size = 45
+    }
+
+    clergymen = {
+        culture = georgian
+        religion = orthodox
+        size = 25
+    }
+
+    artisans = {
+        culture = georgian
+        religion = orthodox
+        size = 107
+    }
+
+    soldiers = {
+        culture = georgian
+        religion = orthodox
+        size = 25
+    }
+
+    serfs = {
+        culture = georgian
+        religion = orthodox
+        size = 5551
+    }
+
+    serfs = {
+        culture = avar
+        religion = sunni
+        size = 189
+    }
+
+	farmers = {
+		culture = georgian
+		religion = orthodox
+		size = 1148
+	}
+
+	farmers = {
+		culture = azerbaijani
+		religion = shiite
+		size = 1435
+	}
+
+	farmers = {
+		culture = armenian
+		religion = miaphysite
+		size = 738
+	}
+}
+#Akhaltsikhle (40000/10000 POPS)
+1093 = {
+    aristocrats = {
+        culture = georgian
+        religion = orthodox
+        size = 41
+    }
+
+    clergymen = {
+        culture = georgian
+        religion = orthodox
+        size = 61
+    }
+
+    artisans = {
+        culture = georgian
+        religion = orthodox
+        size = 164
+    }
+
+    soldiers = {
+        culture = georgian
+        religion = orthodox
+        size = 41
+    }
+
+    serfs = {
+        culture = georgian
+        religion = orthodox
+        size = 1086
+    }
+
+    farmers = {
+        culture = georgian
+        religion = orthodox
+        size = 1804
+    }
+
+	 farmers = {
+        culture = kurdish
+        religion = sunni
+        size = 390
+    }
+
+    aristocrats = {
+        culture = armenian
+        religion = miaphysite
+        size = 82
+    }
+
+    clergymen = {
+        culture = armenian
+        religion = miaphysite
+        size = 41
+    }
+
+    artisans = {
+        culture = armenian
+        religion = miaphysite
+        size = 205
+    }
+
+    soldiers = {
+        culture = armenian
+        religion = miaphysite
+        size = 41
+    }
+
+    farmers = {
+        culture = armenian
+        religion = miaphysite
+        size = 2234
+    }
+
+    farmers = {
+        culture = gypsy
+        religion = miaphysite
+        size = 82
+    }
+
+    aristocrats = {
+        culture = azerbaijani
+        religion = shiite
+        size = 16
+    }
+
+    clergymen = {
+        culture = azerbaijani
+        religion = shiite
+        size = 16
+    }
+
+    artisans = {
+        culture = azerbaijani
+        religion = shiite
+        size = 41
+    }
+
+    soldiers = {
+        culture = azerbaijani
+        religion = shiite
+        size = 8
+    }
+
+    farmers = {
+        culture = azerbaijani
+        religion = shiite
+        size = 1660
+    }
+}
+#Poti (104000/26000 POPS)
+1094 = {
+    aristocrats = {
+        culture = georgian
+        religion = orthodox
+        size = 410
+    }
+
+    clergymen = {
+        culture = georgian
+        religion = orthodox
+        size = 205
+    }
+
+    artisans = {
+        culture = georgian
+        religion = orthodox
+        size = 1066
+    }
+
+    soldiers = {
+        culture = georgian
+        religion = orthodox
+        size = 226
+    }
+
+    farmers = {
+        culture = greek
+        religion = orthodox
+        size = 2870
+    }
+
+    serfs = {
+        culture = georgian
+        religion = orthodox
+        size = 16954
+    }
+
+    farmers = {
+        culture = georgian
+        religion = orthodox
+        size = 2460
+    }
+}
+#Sukhumi (72000/18000 POPS)
+1095 = {
+    aristocrats = {
+        culture = georgian
+        religion = orthodox
+        size = 61
+    }
+
+    clergymen = {
+        culture = georgian
+        religion = orthodox
+        size = 61
+    }
+
+    artisans = {
+        culture = georgian
+        religion = orthodox
+        size = 164
+    }
+
+    soldiers = {
+        culture = georgian
+        religion = orthodox
+        size = 41
+    }
+
+    farmers = {
+        culture = georgian
+        religion = orthodox
+        size = 6642
+    }
+
+	aristocrats = {
+        culture = greek
+        religion = orthodox
+        size = 61
+    }
+
+    clergymen = {
+        culture = greek
+        religion = orthodox
+        size = 61
+    }
+
+    artisans = {
+        culture = greek
+        religion = orthodox
+        size = 164
+    }
+
+    soldiers = {
+        culture = greek
+        religion = orthodox
+        size = 41
+    }
+
+    farmers = {
+        culture = greek
+        religion = orthodox
+        size = 1640
+    }
+
+    aristocrats = {
+        culture = circassian
+        religion = orthodox
+        size = 123
+    }
+
+    clergymen = {
+        culture = circassian
+        religion = orthodox
+        size = 61
+    }
+
+    artisans = {
+        culture = circassian
+        religion = orthodox
+        size = 369
+    }
+
+    soldiers = {
+        culture = circassian
+        religion = orthodox
+        size = 82
+    }
+
+    farmers = {
+        culture = circassian
+        religion = orthodox
+        size = 3280
+    }
+
+	aristocrats = {
+        culture = armenian
+        religion = miaphysite
+        size = 41
+    }
+
+    clergymen = {
+        culture = armenian
+        religion = miaphysite
+        size = 61
+    }
+
+    artisans = {
+        culture = armenian
+        religion = miaphysite
+        size = 369
+    }
+
+	farmers = {
+        culture = armenian
+        religion = miaphysite
+        size = 3464
+    }
+
+    aristocrats = {
+        culture = circassian
+        religion = sunni
+        size = 82
+    }
+
+    clergymen = {
+        culture = circassian
+        religion = sunni
+        size = 41
+    }
+
+    artisans = {
+        culture = circassian
+        religion = sunni
+        size = 205
+    }
+
+    soldiers = {
+        culture = circassian
+        religion = sunni
+        size = 41
+    }
+
+    farmers = {
+        culture = circassian
+        religion = sunni
+        size = 13571
+    }
+}
+#Kars Region (76000) #see Turkey.txt for balance of region
+#under the rule of Ottoman Empire in 1836
+#Batum (76000/19000 POPS) #now part of Georgia
+1096 = {
+    aristocrats = {
+        culture = armenian
+        religion = sunni
+        size = 41
+    }
+
+    clergymen = {
+        culture = armenian
+        religion = sunni
+        size = 49
+    }
+
+    artisans = {
+        culture = armenian
+        religion = sunni
+        size = 41
+    }
+
+    soldiers = {
+        culture = armenian
+        religion = sunni
+        size = 49
+    }
+
+    farmers = {
+        culture = armenian
+        religion = sunni
+        size = 414
+    }
+
+    soldiers = {
+        culture = georgian
+        religion = orthodox
+        size = 90
+    }
+
+    clergymen = {
+        culture = georgian
+        religion = orthodox
+        size = 90
+    }
+
+    artisans = {
+        culture = georgian
+        religion = orthodox
+        size = 164
+    }
+
+    farmers = {
+        culture = georgian
+        religion = orthodox
+        size = 2669
+    }
+	
+    farmers = {
+        culture = azerbaijani
+        religion = shiite
+        size = 156
+    }
+
+    soldiers = {
+        culture = greek
+        religion = orthodox
+        size = 90
+    }
+
+    clergymen = {
+        culture = greek
+        religion = orthodox
+        size = 90
+    }
+
+    artisans = {
+        culture = greek
+        religion = orthodox
+        size = 90
+    }
+
+    farmers = {
+        culture = greek
+        religion = orthodox
+        size = 410
+    }
+
+    aristocrats = {
+        culture = georgian
+        religion = sunni
+        size = 164
+    }
+
+    clergymen = {
+        culture = georgian
+        religion = sunni
+        size = 102
+    }
+
+    artisans = {
+        culture = georgian
+        religion = sunni
+        size = 164
+    }
+
+    soldiers = {
+        culture = georgian
+        religion = sunni
+        size = 102
+    }
+
+    farmers = {
+        culture = georgian
+        religion = sunni
+        size = 1099
+    }
+
+    farmers = {
+        culture = turkish
+        religion = sunni
+        size = 664
+    }
+
+}
+
+#Svaneti
+3274 = {
+    aristocrats = {
+        culture = georgian
+        religion = orthodox
+        size = 4
+    }
+
+    clergymen = {
+        culture = georgian
+        religion = orthodox
+        size = 8
+    }
+
+    artisans = {
+        culture = georgian
+        religion = orthodox
+        size = 41
+    }
+
+    serfs = {
+        culture = georgian
+        religion = orthodox
+        size = 1734
+    }
+	
+    serfs = {
+        culture = georgian
+        religion = animist
+        size = 152
+    }
+
+    farmers = {
+        culture = georgian
+        religion = orthodox
+        size = 205
+    }
+}

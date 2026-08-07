@@ -1,0 +1,8 @@
+owner = LUX
+controller = LUX
+add_core = BEL
+add_core = LUX
+add_core = NET
+trade_goods = iron
+life_rating = 35
+#Still held by Luxembourg in 1836

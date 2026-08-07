@@ -1,0 +1,15 @@
+owner = IRE
+controller = IRE
+add_core = ENG
+add_core = IRE
+trade_goods = iron
+life_rating = 35
+state_building = {
+    level = 1
+    building = musket_workshop
+    upgrade = yes
+}
+party_loyalty = {
+    ideology = liberal
+    loyalty_value = 20
+}

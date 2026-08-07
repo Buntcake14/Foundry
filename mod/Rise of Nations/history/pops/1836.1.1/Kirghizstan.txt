@@ -1,0 +1,348 @@
+#Semireche Region (292000) #see Kazakhstan.txt for balance of region
+#under the "rule" of Kokand in 1836
+#Bishkek (236000/59000 POPS) #now part of Kirghizstan
+1189 = {
+    aristocrats = {
+        culture = kirgiz
+        religion = sunni
+        size = 414
+    }
+
+    clergymen = {
+        culture = kirgiz
+        religion = sunni
+        size = 220
+    }
+
+    artisans = {
+        culture = kirgiz
+        religion = sunni
+        size = 1035
+    }
+
+    soldiers = {
+        culture = kirgiz
+        religion = sunni
+        size = 3622
+    }
+
+    farmers = {
+        culture = kirgiz
+        religion = sunni
+        size = 17474
+    }
+
+    aristocrats = {
+        culture = kazak
+        religion = sunni
+        size = 52
+    }
+
+    clergymen = {
+        culture = kazak
+        religion = sunni
+        size = 41
+    }
+
+    artisans = {
+        culture = kazak
+        religion = sunni
+        size = 156
+    }
+
+    soldiers = {
+        culture = kazak
+        religion = sunni
+        size = 41
+    }
+
+    farmers = {
+        culture = kazak
+        religion = sunni
+        size = 3337
+    }
+
+    aristocrats = {
+        culture = uighur
+        religion = sunni
+        size = 65
+    }
+
+    clergymen = {
+        culture = uighur
+        religion = sunni
+        size = 39
+    }
+
+    artisans = {
+        culture = uighur
+        religion = sunni
+        size = 180
+    }
+
+    soldiers = {
+        culture = uighur
+        religion = sunni
+        size = 39
+    }
+
+    farmers = {
+        culture = uighur
+        religion = sunni
+        size = 3817
+    }
+}
+3914 = {
+    aristocrats = {
+        culture = kirgiz
+        religion = sunni
+        size = 246
+    }
+
+    clergymen = {
+        culture = kirgiz
+        religion = sunni
+        size = 164
+    }
+
+    artisans = {
+        culture = kirgiz
+        religion = sunni
+        size = 492
+    }
+
+    soldiers = {
+        culture = kirgiz
+        religion = sunni
+        size = 902
+    }
+
+    farmers = {
+        culture = kirgiz
+        religion = sunni
+        size = 14596
+    }
+
+    aristocrats = {
+        culture = kazak
+        religion = sunni
+        size = 123
+    }
+
+    clergymen = {
+        culture = kazak
+        religion = sunni
+        size = 41
+    }
+
+    artisans = {
+        culture = kazak
+        religion = sunni
+        size = 82
+    }
+
+    soldiers = {
+        culture = kazak
+        religion = sunni
+        size = 41
+    }
+
+    farmers = {
+        culture = kazak
+        religion = sunni
+        size = 1435
+    }
+}
+#Naryn (56000/14000 POPS) #now part of Kirghizstan
+1190 = {
+    aristocrats = {
+        culture = kirgiz
+        religion = sunni
+        size = 41
+    }
+
+    clergymen = {
+        culture = kirgiz
+        religion = sunni
+        size = 41
+    }
+
+    artisans = {
+        culture = kirgiz
+        religion = sunni
+        size = 82
+    }
+
+    soldiers = {
+        culture = kirgiz
+        religion = sunni
+        size = 902
+    }
+
+    farmers = {
+        culture = kirgiz
+        religion = sunni
+        size = 2276
+    }
+
+    aristocrats = {
+        culture = kirgiz
+        religion = sunni
+        size = 82
+    }
+
+    clergymen = {
+        culture = kirgiz
+        religion = sunni
+        size = 41
+    }
+
+    artisans = {
+        culture = kirgiz
+        religion = sunni
+        size = 205
+    }
+
+    soldiers = {
+        culture = kirgiz
+        religion = sunni
+        size = 41
+    }
+
+    farmers = {
+        culture = kirgiz
+        religion = sunni
+        size = 3752
+    }
+
+    aristocrats = {
+        culture = kazak
+        religion = sunni
+        size = 82
+    }
+
+    clergymen = {
+        culture = kazak
+        religion = sunni
+        size = 41
+    }
+
+    artisans = {
+        culture = kazak
+        religion = sunni
+        size = 164
+    }
+
+    soldiers = {
+        culture = kazak
+        religion = sunni
+        size = 41
+    }
+
+    farmers = {
+        culture = kazak
+        religion = sunni
+        size = 3772
+    }
+}
+#Mawarannahr Region (112000) #see Kazakhstan.txt, Tajikistan.txt, Uzbekistan.txt for balance of region
+#under the rule of Kokand in 1836
+#Osh (112000/28000 POPS) #Now part of Kirghizstan
+1203 = {
+    aristocrats = {
+        culture = uzbek
+        religion = sunni
+        size = 144
+    }
+
+    clergymen = {
+        culture = uzbek
+        religion = sunni
+        size = 61
+    }
+
+    artisans = {
+        culture = uzbek
+        religion = sunni
+        size = 369
+    }
+
+    soldiers = {
+        culture = uzbek
+        religion = sunni
+        size = 82
+    }
+
+    farmers = {
+        culture = uzbek
+        religion = sunni
+        size = 6724
+    }
+
+    aristocrats = {
+        culture = kirgiz
+        religion = sunni
+        size = 308
+    }
+
+    clergymen = {
+        culture = kirgiz
+        religion = sunni
+        size = 144
+    }
+
+    artisans = {
+        culture = kirgiz
+        religion = sunni
+        size = 738
+    }
+
+    soldiers = {
+        culture = kirgiz
+        religion = sunni
+        size = 2460
+    }
+
+    soldiers = {
+        culture = kirgiz
+        religion = sunni
+        size = 820
+    }
+
+    farmers = {
+        culture = kirgiz
+        religion = sunni
+        size = 11111
+    }
+
+	aristocrats = {
+        culture = tajik
+        religion = sunni
+        size = 61
+    }
+
+    clergymen = {
+        culture = tajik
+        religion = sunni
+        size = 20
+    }
+
+    artisans = {
+        culture = tajik
+        religion = sunni
+        size = 738
+    }
+
+    soldiers = {
+        culture = tajik
+        religion = sunni
+        size = 410
+    }
+
+    farmers = {
+        culture = tajik
+        religion = sunni
+        size = 2911
+    }
+
+}

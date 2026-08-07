@@ -1,0 +1,35 @@
+name = "The Turkçe Rebellion"
+
+1835.10.2 = {
+    add_attacker = NYE
+    add_defender = TUR
+    add_defender = EGY
+    add_defender = TSI
+
+    # actor
+    # receiver
+    # casus_belli - cb type
+    # country - 3rd party
+    # state_province_id - target state capital
+    war_goal = {
+        casus_belli = acquire_substate_region
+		country = TSI
+		state_province_id = 3692
+        actor = NYE
+        receiver = EGY
+    }
+
+    war_goal = {
+        casus_belli = humiliate_no_infamy
+        actor = EGY
+        receiver = NYE
+    }
+
+}
+
+1836.6.6 = {
+    rem_attacker = NYE
+    rem_defender = TUR
+    rem_defender = EGY
+    rem_defender = TSI
+}

@@ -1,0 +1,7 @@
+owner = EGY
+controller = EGY
+add_core = SUD
+add_core = GJM
+life_rating = 30
+trade_goods = wool
+terrain = forest_hills

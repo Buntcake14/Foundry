@@ -1,0 +1,154 @@
+#Ruanda-Urundi Region (944000)
+#uncolonized in 1836/ruled by kingdom of Rwanda
+#Kigali (496000/124000 POPS)
+2034 = {
+    aristocrats = {
+        culture = ruanda
+        religion = animist
+        size = 2156
+    }
+
+    bureaucrats = {
+        culture = ruanda
+        religion = animist
+        size = 224
+    }
+
+    officers = {
+        culture = ruanda
+        religion = animist
+        size = 110
+    }
+
+    clergymen = {
+        culture = ruanda
+        religion = animist
+        size = 1540
+    }
+
+    artisans = {
+        culture = ruanda
+        religion = animist
+        size = 5456
+    }
+
+    soldiers = {
+        culture = ruanda
+        religion = animist
+        size = 1100
+    }
+
+    farmers = {
+        culture = ruanda
+        religion = animist
+        size = 95040
+    }
+
+    slaves = {
+        culture = ruanda
+        religion = animist
+        size = 4576
+    }
+}
+#uncolonized in 1836/ruled by kingdom of Burundi
+#Usumbura (448000/112000 POPS)
+2035 = {
+    aristocrats = {
+        culture = ruanda
+        religion = animist
+        size = 1914
+    }
+
+    bureaucrats = {
+        culture = ruanda
+        religion = animist
+        size = 154
+    }
+
+    officers = {
+        culture = ruanda
+        religion = animist
+        size = 70
+    }
+
+    clergymen = {
+        culture = ruanda
+        religion = animist
+        size = 990
+    }
+
+    artisans = {
+        culture = ruanda
+        religion = animist
+        size = 4048
+    }
+
+    soldiers = {
+        culture = ruanda
+        religion = animist
+        size = 4510
+    }
+
+    farmers = {
+        culture = ruanda
+        religion = animist
+        size = 55440
+    }
+
+    slaves = {
+        culture = ruanda
+        religion = animist
+        size = 3388
+    }
+
+}
+
+3878 = {
+    aristocrats = {
+        culture = ruanda
+        religion = animist
+        size = 330
+    }
+
+    bureaucrats = {
+        culture = ruanda
+        religion = animist
+        size = 110
+    }
+
+    officers = {
+        culture = ruanda
+        religion = animist
+        size = 48
+    }
+
+    clergymen = {
+        culture = ruanda
+        religion = animist
+        size = 198
+    }
+
+    artisans = {
+        culture = ruanda
+        religion = animist
+        size = 528
+    }
+
+    soldiers = {
+        culture = ruanda
+        religion = animist
+        size = 990
+    }
+
+    farmers = {
+        culture = ruanda
+        religion = animist
+        size = 26400
+    }
+
+	slaves = {
+        culture = ruanda
+        religion = animist
+        size = 1760
+    }
+}

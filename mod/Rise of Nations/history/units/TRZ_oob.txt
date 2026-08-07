@@ -1,0 +1,8 @@
+leader = {
+    name = "Muhammad al-Habib"
+    type = land
+    date = 1830.1.1
+    personality = defence_1.1
+    background = attack_2.1
+    prestige = 0.5
+}

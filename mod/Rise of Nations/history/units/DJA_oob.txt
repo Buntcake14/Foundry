@@ -1,0 +1,7 @@
+leader = {
+    name = "Sultan Facharudin"
+    date = 1830.1.1
+    type = land
+    personality = no_personality
+    background = no_background
+}

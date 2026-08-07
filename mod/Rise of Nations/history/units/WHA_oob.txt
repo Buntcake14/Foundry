@@ -1,0 +1,39 @@
+army = {
+    name = "Welsh Home Guard"
+    location = 273
+
+    regiment = {
+        name = "Royal Welch Fusiliers"
+        type = infantry
+        home = 273
+    }
+    regiment = {
+        name = "South Wales Borderers"
+        type = infantry
+        home = 274
+    }
+    regiment = {
+        name = "Welsh Yeomanry"
+        type = dragoon
+        home = 276
+    }
+    regiment = {
+        name = "Welsh Artillery Volunteers"
+        type = artillery
+        home = 275
+    }
+}
+
+navy = {
+    name = "Bristol Channel Flotilla"
+    location = 273
+
+    ship = {
+        name = "HMS Cambria"
+        type = frigate
+    }
+    ship = {
+        name = "HMS Taff"
+        type = commerce_raider
+    }
+}

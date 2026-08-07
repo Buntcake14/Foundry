@@ -1,0 +1,1593 @@
+#Cameroun Region (728000)
+#uncolonized in 1836/ruled by the Kings of Duala
+#Douala (328000/82000 POPS)
+1956 = {
+    aristocrats = {
+        culture = fang
+        religion = fetishist
+        size = 1474
+    }
+
+    officers = {
+        culture = fang
+        religion = fetishist
+        size = 132
+    }
+
+    clergymen = {
+        culture = fang
+        religion = fetishist
+        size = 726
+    }
+
+    artisans = {
+        culture = fang
+        religion = fetishist
+        size = 2904
+    }
+
+    soldiers = {
+        culture = fang
+        religion = fetishist
+        size = 2684
+    }
+
+    farmers = {
+        culture = fang
+        religion = fetishist
+        size = 47520
+    }
+
+    slaves = {
+        culture = fang
+        religion = fetishist
+        size = 21120
+    }
+}
+#Buea (224000/56000 POPS)
+1957 = {
+    aristocrats = {
+        culture = ibibio
+        religion = fetishist
+        size = 352
+    }
+
+    clergymen = {
+        culture = ibibio
+        religion = fetishist
+        size = 132
+    }
+
+    artisans = {
+        culture = ibibio
+        religion = fetishist
+        size = 1100
+    }
+
+    soldiers = {
+        culture = ibibio
+        religion = fetishist
+        size = 924
+    }
+
+    farmers = {
+        culture = ibibio
+        religion = fetishist
+        size = 20240
+    }
+
+    farmers = {
+        culture = ibibio
+        religion = sunni
+        size = 1936
+    }
+
+    farmers = {
+        culture = fang
+        religion = fetishist
+        size = 1760
+    }
+
+    farmers = {
+        culture = fang
+        religion = sunni
+        size = 880
+    }
+
+    slaves = {
+        culture = fang
+        religion = fetishist
+        size = 2640
+    }
+	
+    aristocrats = {
+        culture = ibibio
+        religion = fetishist
+        size = 308
+    }
+
+    clergymen = {
+        culture = ibibio
+        religion = fetishist
+        size = 220
+    }
+
+    artisans = {
+        culture = ibibio
+        religion = fetishist
+        size = 440
+    }
+
+    soldiers = {
+        culture = ibibio
+        religion = fetishist
+        size = 176
+    }
+
+    farmers = {
+        culture = ibibio
+        religion = fetishist
+        size = 12936
+    }
+	
+    aristocrats = {
+        culture = fang
+        religion = fetishist
+        size = 308
+    }
+
+    clergymen = {
+        culture = fang
+        religion = fetishist
+        size = 220
+    }
+
+    artisans = {
+        culture = fang
+        religion = fetishist
+        size = 440
+    }
+
+    soldiers = {
+        culture = fang
+        religion = fetishist
+        size = 176
+    }
+
+    farmers = {
+        culture = fang
+        religion = fetishist
+        size = 3256
+    }
+
+    slaves = {
+        culture = ibibio
+        religion = fetishist
+        size = 4400
+    }
+
+    farmers = {
+        culture = fulbe
+        religion = sunni
+        size = 1760
+    }
+
+    slaves = {
+        culture = ibibio
+        religion = fetishist
+        size = 1760
+    }
+}
+
+#Buea (224000/56000 POPS)
+3611 = {
+    aristocrats = {
+        culture = fang
+        religion = fetishist
+        size = 594
+    }
+
+    clergymen = {
+        culture = fang
+        religion = fetishist
+        size = 352
+    }
+
+    artisans = {
+        culture = fang
+        religion = fetishist
+        size = 880
+    }
+
+    soldiers = {
+        culture = fang
+        religion = fetishist
+        size = 968
+    }
+
+    farmers = {
+        culture = fang
+        religion = fetishist
+        size = 15840
+    }
+
+    slaves = {
+        culture = fang
+        religion = fetishist
+        size = 3850
+    }
+
+    slaves = {
+        culture = ibibio
+        religion = fetishist
+        size = 6160
+    }
+}
+#Kribi (176000/44000 POPS)
+1958 = {
+    aristocrats = {
+        culture = fang
+        religion = fetishist
+        size = 440
+    }
+
+    clergymen = {
+        culture = fang
+        religion = fetishist
+        size = 220
+    }
+
+    artisans = {
+        culture = fang
+        religion = fetishist
+        size = 924
+    }
+
+    soldiers = {
+        culture = fang
+        religion = fetishist
+        size = 242
+    }
+
+    farmers = {
+        culture = fang
+        religion = fetishist
+        size = 18414
+    }
+
+    slaves = {
+        culture = fang
+        religion = fetishist
+        size = 2640
+    }
+
+    aristocrats = {
+        culture = fang
+        religion = fetishist
+        size = 286
+    }
+
+    clergymen = {
+        culture = fang
+        religion = fetishist
+        size = 154
+    }
+
+    artisans = {
+        culture = fang
+        religion = fetishist
+        size = 638
+    }
+
+    soldiers = {
+        culture = fang
+        religion = fetishist
+        size = 154
+    }
+
+    farmers = {
+        culture = fang
+        religion = fetishist
+        size = 10208
+    }
+
+    slaves = {
+        culture = fang
+        religion = fetishist
+        size = 4400
+    }
+}
+#Sanaga-Kadei Region (940000)
+#uncolonized in 1836
+#Yaounde (344000/86000 POPS)
+1959 = {
+    aristocrats = {
+        culture = fang
+        religion = fetishist
+        size = 462
+    }
+
+    clergymen = {
+        culture = fang
+        religion = fetishist
+        size = 242
+    }
+
+    artisans = {
+        culture = fang
+        religion = fetishist
+        size = 990
+    }
+
+    soldiers = {
+        culture = fang
+        religion = fetishist
+        size = 242
+    }
+
+    farmers = {
+        culture = fang
+        religion = fetishist
+        size = 14784
+    }
+
+    slaves = {
+        culture = fang
+        religion = fetishist
+        size = 7920
+    }
+
+    aristocrats = {
+        culture = fang
+        religion = fetishist
+        size = 1012
+    }
+
+    clergymen = {
+        culture = fang
+        religion = fetishist
+        size = 506
+    }
+
+    artisans = {
+        culture = fang
+        religion = fetishist
+        size = 2046
+    }
+
+    soldiers = {
+        culture = fang
+        religion = fetishist
+        size = 528
+    }
+
+    farmers = {
+        culture = fang
+        religion = fetishist
+        size = 33308
+    }
+
+    farmers = {
+        culture = ubangian
+        religion = fetishist
+        size = 2200
+    }
+
+    slaves = {
+        culture = ubangian
+        religion = fetishist
+        size = 11440
+    }
+}
+#Bafoussam (276000/69000 POPS)
+1960 = {
+    aristocrats = {
+        culture = fang
+        religion = fetishist
+        size = 616
+    }
+
+    clergymen = {
+        culture = fang
+        religion = fetishist
+        size = 308
+    }
+
+    artisans = {
+        culture = fang
+        religion = fetishist
+        size = 1320
+    }
+
+    soldiers = {
+        culture = fang
+        religion = fetishist
+        size = 308
+    }
+
+    farmers = {
+        culture = fang
+        religion = fetishist
+        size = 14542
+    }
+
+    farmers = {
+        culture = ibibio
+        religion = fetishist
+        size = 7744
+    }
+
+    slaves = {
+        culture = fang
+        religion = fetishist
+        size = 4840
+    }
+
+    slaves = {
+        culture = ibibio
+        religion = fetishist
+        size = 3520
+    }
+}
+3801 = {
+    aristocrats = {
+        culture = ibibio
+        religion = fetishist
+        size = 660
+    }
+
+    bureaucrats = {
+        culture = ibibio
+        religion = fetishist
+        size = 123
+    }
+	
+    officers = {
+        culture = ibibio
+        religion = fetishist
+        size = 57
+    }
+
+    clergymen = {
+        culture = ibibio
+        religion = fetishist
+        size = 308
+    }
+
+    artisans = {
+        culture = ibibio
+        religion = fetishist
+        size = 1320
+    }
+
+    soldiers = {
+        culture = ibibio
+        religion = fetishist
+        size = 968
+    }
+
+    farmers = {
+        culture = ibibio
+        religion = fetishist
+        size = 31944
+    }
+
+    farmers = {
+        culture = fang
+        religion = sunni
+        size = 1320
+    }
+
+    farmers = {
+        culture = fulbe
+        religion = sunni
+        size = 3960
+    }
+
+    slaves = {
+        culture = ibibio
+        religion = fetishist
+        size = 7920
+    }
+	
+    aristocrats = {
+        culture = ibibio
+        religion = fetishist
+        size = 132
+    }
+
+    clergymen = {
+        culture = ibibio
+        religion = fetishist
+        size = 44
+    }
+
+    artisans = {
+        culture = ibibio
+        religion = fetishist
+        size = 176
+    }
+
+    soldiers = {
+        culture = ibibio
+        religion = fetishist
+        size = 176
+    }
+
+    farmers = {
+        culture = ibibio
+        religion = fetishist
+        size = 10560
+    }
+
+    farmers = {
+        culture = east_kwa
+        religion = fetishist
+        size = 5632
+    }
+
+    slaves = {
+        culture = fang
+        religion = fetishist
+        size = 1760
+    }
+
+    slaves = {
+        culture = fulbe
+        religion = fetishist
+        size = 1760
+    }
+}
+#Bertoua (320000/80000 POPS)
+3747 = {
+    aristocrats = {
+        culture = ubangian
+        religion = fetishist
+        size = 1078
+    }
+
+    clergymen = {
+        culture = ubangian
+        religion = fetishist
+        size = 550
+    }
+
+    artisans = {
+        culture = ubangian
+        religion = fetishist
+        size = 2200
+    }
+
+    soldiers = {
+        culture = ubangian
+        religion = fetishist
+        size = 550
+    }
+
+    farmers = {
+        culture = ubangian
+        religion = fetishist
+        size = 29238
+    }
+
+    slaves = {
+        culture = ubangian
+        religion = fetishist
+        size = 13200
+    }
+
+    slaves = {
+        culture = tiv
+        religion = fetishist
+        size = 2552
+    }
+
+    slaves = {
+        culture = ibibio
+        religion = fetishist
+        size = 2640
+    }
+
+    aristocrats = {
+        culture = fang
+        religion = fetishist
+        size = 286
+    }
+
+    clergymen = {
+        culture = fang
+        religion = fetishist
+        size = 154
+    }
+
+    artisans = {
+        culture = fang
+        religion = fetishist
+        size = 638
+    }
+
+    soldiers = {
+        culture = fang
+        religion = fetishist
+        size = 154
+    }
+
+    farmers = {
+        culture = fang
+        religion = fetishist
+        size = 12848
+    }
+
+    slaves = {
+        culture = fang
+        religion = fetishist
+        size = 4400
+    }
+}
+#Kwararafa Region (372000) #see Nigeria.txt for balance of region
+#uncolonized in 1836
+3927 = {
+    aristocrats = {
+        culture = ibibio
+        religion = fetishist
+        size = 352
+    }
+
+    bureaucrats = {
+        culture = ibibio
+        religion = fetishist
+        size = 88
+    }
+	
+    officers = {
+        culture = ibibio
+        religion = fetishist
+        size = 40
+    }
+
+    clergymen = {
+        culture = ibibio
+        religion = fetishist
+        size = 176
+    }
+
+    artisans = {
+        culture = ibibio
+        religion = fetishist
+        size = 308
+    }
+
+    soldiers = {
+        culture = ibibio
+        religion = fetishist
+        size = 924
+    }
+
+    farmers = {
+        culture = ibibio
+        religion = fetishist
+        size = 14080
+    }
+
+    farmers = {
+        culture = ibibio
+        religion = sunni
+        size = 880
+    }
+
+    farmers = {
+        culture = fulbe
+        religion = sunni
+        size = 3520
+    }
+
+    farmers = {
+        culture = tiv
+        religion = fetishist
+        size = 3520
+    }
+
+    slaves = {
+        culture = east_kwa
+        religion = fetishist
+        size = 3520
+    }
+	
+    aristocrats = {
+        culture = ibibio
+        religion = fetishist
+        size = 660
+    }
+
+    clergymen = {
+        culture = ibibio
+        religion = fetishist
+        size = 308
+    }
+
+    artisans = {
+        culture = ibibio
+        religion = fetishist
+        size = 1320
+    }
+
+    soldiers = {
+        culture = ibibio
+        religion = fetishist
+        size = 968
+    }
+
+    farmers = {
+        culture = ibibio
+        religion = fetishist
+        size = 2534
+    }
+
+    farmers = {
+        culture = east_kwa
+        religion = fetishist
+        size = 10050
+    }
+
+    farmers = {
+        culture = tiv
+        religion = sunni
+        size = 440
+    }
+
+    farmers = {
+        culture = fulbe
+        religion = sunni
+        size = 3080
+    }
+
+    slaves = {
+        culture = ibibio
+        religion = fetishist
+        size = 1646
+    }
+
+    slaves = {
+        culture = mandara
+        religion = fetishist
+        size = 1874
+    }
+}
+#Adamawa Region (268000) #see Nigeria.txt for balance of region
+#under the rule of Sokoto 1836
+#Ngaoundere (160000/40000 POPS) #now part of Cameroun
+1963 = {
+    aristocrats = {
+        culture = fulbe
+        religion = sunni
+        size = 440
+    }
+
+    bureaucrats = {
+        culture = fulbe
+        religion = sunni
+        size = 22
+    }
+
+    officers = {
+        culture = fulbe
+        religion = sunni
+        size = 66
+    }
+
+    clergymen = {
+        culture = fulbe
+        religion = sunni
+        size = 220
+    }
+
+    artisans = {
+        culture = fulbe
+        religion = sunni
+        size = 924
+    }
+
+    soldiers = {
+        culture = fulbe
+        religion = sunni
+        size = 242
+    }
+
+    farmers = {
+        culture = fulbe
+        religion = sunni
+        size = 9526
+    }
+
+    aristocrats = {
+        culture = ubangian
+        religion = fetishist
+        size = 242
+    }
+
+    clergymen = {
+        culture = ubangian
+        religion = fetishist
+        size = 132
+    }
+
+    artisans = {
+        culture = ubangian
+        religion = fetishist
+        size = 506
+    }
+
+    soldiers = {
+        culture = ubangian
+        religion = fetishist
+        size = 132
+    }
+
+    slaves = {
+        culture = ubangian
+        religion = fetishist
+        size = 4400
+    }
+	
+    aristocrats = {
+        culture = ubangian
+        religion = fetishist
+        size = 176
+    }
+
+    clergymen = {
+        culture = ubangian
+        religion = fetishist
+        size = 88
+    }
+
+    artisans = {
+        culture = ubangian
+        religion = fetishist
+        size = 220
+    }
+
+    soldiers = {
+        culture = ubangian
+        religion = fetishist
+        size = 132
+    }
+
+    farmers = {
+        culture = ubangian
+        religion = fetishist
+        size = 7744
+    }
+
+    farmers = {
+        culture = ubangian
+        religion = sunni
+        size = 440
+    }
+
+    slaves = {
+        culture = ubangian
+        religion = fetishist
+        size = 3520
+    }
+	
+    aristocrats = {
+        culture = ubangian
+        religion = fetishist
+        size = 308
+    }
+
+    clergymen = {
+        culture = ubangian
+        religion = fetishist
+        size = 220
+    }
+
+    artisans = {
+        culture = ubangian
+        religion = fetishist
+        size = 440
+    }
+
+    soldiers = {
+        culture = ubangian
+        religion = fetishist
+        size = 176
+    }
+
+    farmers = {
+        culture = ubangian
+        religion = fetishist
+        size = 4400
+    }
+
+    farmers = {
+        culture = ibibio
+        religion = fetishist
+        size = 4272
+    }
+
+    farmers = {
+        culture = fulbe
+        religion = sunni
+        size = 2640
+    }
+
+    slaves = {
+        culture = tiv
+        religion = fetishist
+        size = 5144
+    }
+}
+3751 = {
+    aristocrats = {
+        culture = fulbe
+        religion = sunni
+        size = 440
+    }
+
+    bureaucrats = {
+        culture = fulbe
+        religion = sunni
+        size = 110
+    }
+
+    officers = {
+        culture = fulbe
+        religion = sunni
+        size = 48
+    }
+
+    clergymen = {
+        culture = fulbe
+        religion = sunni
+        size = 220
+    }
+
+    artisans = {
+        culture = fulbe
+        religion = sunni
+        size = 924
+    }
+
+    soldiers = {
+        culture = fulbe
+        religion = sunni
+        size = 242
+    }
+
+    farmers = {
+        culture = fulbe
+        religion = sunni
+        size = 12760
+    }
+
+    farmers = {
+        culture = ibibio
+        religion = fetishist
+        size = 1760
+    }
+	
+    aristocrats = {
+        culture = tiv
+        religion = sunni
+        size = 176
+    }
+
+    clergymen = {
+        culture = tiv
+        religion = fetishist
+        size = 88
+    }
+
+    artisans = {
+        culture = tiv
+        religion = fetishist
+        size = 220
+    }
+
+    soldiers = {
+        culture = tiv
+        religion = fetishist
+        size = 132
+    }
+
+    farmers = {
+        culture = tiv
+        religion = fetishist
+        size = 11440
+    }
+
+    slaves = {
+        culture = tiv
+        religion = fetishist
+        size = 3256
+    }
+
+    farmers = {
+        culture = tiv
+        religion = sunni
+        size = 264
+    }
+
+    slaves = {
+        culture = tiv
+        religion = fetishist
+        size = 2200
+    }
+	
+    aristocrats = {
+        culture = tiv
+        religion = fetishist
+        size = 1628
+    }
+
+    bureaucrats = {
+        culture = fulbe
+        religion = fetishist
+        size = 110
+    }
+
+    officers = {
+        culture = fulbe
+        religion = fetishist
+        size = 53
+    }
+
+    clergymen = {
+        culture = tiv
+        religion = fetishist
+        size = 836
+    }
+
+    artisans = {
+        culture = tiv
+        religion = fetishist
+        size = 3278
+    }
+
+    soldiers = {
+        culture = tiv
+        religion = fetishist
+        size = 836
+    }
+
+    farmers = {
+        culture = tiv
+        religion = fetishist
+        size = 5280
+    }
+
+    farmers = {
+        culture = tiv
+        religion = sunni
+        size = 11440
+    }
+
+    slaves = {
+        culture = tiv
+        religion = fetishist
+        size = 3256
+    }
+
+    slaves = {
+        culture = fang
+        religion = fetishist
+        size = 968
+    }
+
+    slaves = {
+        culture = mandara
+        religion = fetishist
+        size = 2816
+    }
+
+    farmers = {
+        culture = fulbe
+        religion = sunni
+        size = 8800
+    }
+
+    farmers = {
+        culture = ibibio
+        religion = fetishist
+        size = 9680
+    }
+
+    slaves = {
+        culture = sara
+        religion = fetishist
+        size = 4026
+    }
+
+    slaves = {
+        culture = tiv
+        religion = fetishist
+        size = 4400
+    }
+}
+#under rule of Kanem-Borno in 1836
+#Maroua (433600/108400 POPS) #now part of Cameroun
+1964 = {
+    aristocrats = {
+        culture = fulbe
+        religion = sunni
+        size = 616
+    }
+
+    bureaucrats = {
+        culture = fulbe
+        religion = sunni
+        size = 18
+    }
+	
+    officers = {
+        culture = fulbe
+        religion = sunni
+        size = 9
+    }
+
+    clergymen = {
+        culture = fulbe
+        religion = sunni
+        size = 176
+    }
+
+    artisans = {
+        culture = fulbe
+        religion = sunni
+        size = 616
+    }
+
+    soldiers = {
+        culture = fulbe
+        religion = sunni
+        size = 352
+    }
+
+    farmers = {
+        culture = fulbe
+        religion = sunni
+        size = 8360
+    }
+
+    aristocrats = {
+        culture = kanuri
+        religion = sunni
+        size = 176
+    }
+
+    bureaucrats = {
+        culture = kanuri
+        religion = sunni
+        size = 31
+    }
+	
+    officers = {
+        culture = kanuri
+        religion = sunni
+        size = 13
+    }
+
+    clergymen = {
+        culture = kanuri
+        religion = sunni
+        size = 220
+    }
+
+    artisans = {
+        culture = kanuri
+        religion = sunni
+        size = 704
+    }
+
+    soldiers = {
+        culture = kanuri
+        religion = sunni
+        size = 176
+    }
+
+    farmers = {
+        culture = kanuri
+        religion = sunni
+        size = 10604
+    }
+
+	farmers = {
+        culture = kanuri
+        religion = fetishist
+        size = 1320
+    }
+
+    aristocrats = {
+        culture = bedouin
+        religion = sunni
+        size = 176
+    }
+
+    bureaucrats = {
+        culture = bedouin
+        religion = sunni
+        size = 9
+    }
+	
+    officers = {
+        culture = bedouin
+        religion = sunni
+        size = 4
+    }
+
+    clergymen = {
+        culture = bedouin
+        religion = sunni
+        size = 66
+    }
+
+    artisans = {
+        culture = bedouin
+        religion = sunni
+        size = 264
+    }
+
+    soldiers = {
+        culture = bedouin
+        religion = sunni
+        size = 88
+    }
+
+    farmers = {
+        culture = bedouin
+        religion = sunni
+        size = 3806
+    }
+
+    slaves = {
+        culture = mandara
+        religion = fetishist
+        size = 880
+    }
+
+    slaves = {
+        culture = sara
+        religion = fetishist
+        size = 3960
+    }
+	
+    aristocrats = {
+        culture = mandara
+        religion = sunni
+        size = 3432
+    }
+
+    bureaucrats = {
+        culture = mandara
+        religion = sunni
+        size = 97
+    }
+	
+    officers = {
+        culture = mandara
+        religion = sunni
+        size = 48
+    }
+
+    clergymen = {
+        culture = mandara
+        religion = sunni
+        size = 1056
+    }
+
+    artisans = {
+        culture = mandara
+        religion = sunni
+        size = 4312
+    }
+
+    soldiers = {
+        culture = mandara
+        religion = sunni
+        size = 2728
+    }
+
+    farmers = {
+        culture = mandara
+        religion = sunni
+        size = 42240
+    }
+
+    farmers = {
+        culture = mandara
+        religion = fetishist
+        size = 8360
+    }
+
+    slaves = {
+        culture = kanuri
+        religion = sunni
+        size = 14837
+    }
+
+    slaves = {
+        culture = kanuri
+        religion = fetishist
+        size = 7163
+    }
+
+    aristocrats = {
+        culture = bedouin
+        religion = sunni
+        size = 88
+    }
+
+    clergymen = {
+        culture = bedouin
+        religion = sunni
+        size = 88
+    }
+
+    artisans = {
+        culture = bedouin
+        religion = sunni
+        size = 352
+    }
+
+    soldiers = {
+        culture = bedouin
+        religion = sunni
+        size = 88
+    }
+
+    farmers = {
+        culture = bedouin
+        religion = sunni
+        size = 2024
+    }
+
+    aristocrats = {
+        culture = east_kwa
+        religion = fetishist
+        size = 616
+    }
+
+    bureaucrats = {
+        culture = mandara
+        religion = sunni
+        size = 9
+    }
+	
+    officers = {
+        culture = mandara
+        religion = sunni
+        size = 4
+    }
+
+    clergymen = {
+        culture = east_kwa
+        religion = fetishist
+        size = 176
+    }
+
+    artisans = {
+        culture = east_kwa
+        religion = fetishist
+        size = 704
+    }
+
+    soldiers = {
+        culture = east_kwa
+        religion = fetishist
+        size = 352
+    }
+
+    farmers = {
+        culture = east_kwa
+        religion = fetishist
+        size = 2816
+    }
+
+    aristocrats = {
+        culture = east_kwa
+        religion = sunni
+        size = 44
+    }
+
+    bureaucrats = {
+        culture = east_kwa
+        religion = sunni
+        size = 4
+    }
+	
+    officers = {
+        culture = east_kwa
+        religion = sunni
+        size = 2
+    }
+
+    clergymen = {
+        culture = east_kwa
+        religion = sunni
+        size = 44
+    }
+
+    artisans = {
+        culture = east_kwa
+        religion = sunni
+        size = 44
+    }
+
+    soldiers = {
+        culture = east_kwa
+        religion = sunni
+        size = 44
+    }
+
+    farmers = {
+        culture = east_kwa
+        religion = sunni
+        size = 88
+    }
+}
+3752 = {
+    aristocrats = {
+        culture = fulbe
+        religion = sunni
+        size = 440
+    }
+
+    bureaucrats = {
+        culture = fulbe
+        religion = sunni
+        size = 97
+    }
+	
+    officers = {
+        culture = fulbe
+        religion = sunni
+        size = 48
+    }
+
+    clergymen = {
+        culture = fulbe
+        religion = sunni
+        size = 176
+    }
+
+    artisans = {
+        culture = fulbe
+        religion = sunni
+        size = 616
+    }
+
+    soldiers = {
+        culture = fulbe
+        religion = sunni
+        size = 968
+    }
+
+    farmers = {
+        culture = fulbe
+        religion = sunni
+        size = 24288
+    }
+
+    slaves = {
+        culture = fulbe
+        religion = fetishist
+        size = 2640
+    }
+	
+    aristocrats = {
+        culture = mandara
+        religion = sunni
+        size = 880
+    }
+
+    bureaucrats = {
+        culture = mandara
+        religion = sunni
+        size = 62
+    }
+	
+    officers = {
+        culture = mandara
+        religion = sunni
+        size = 31
+    }
+
+    clergymen = {
+        culture = mandara
+        religion = sunni
+        size = 616
+    }
+
+    artisans = {
+        culture = mandara
+        religion = sunni
+        size = 1232
+    }
+
+    soldiers = {
+        culture = mandara
+        religion = sunni
+        size = 1056
+    }
+
+    farmers = {
+        culture = mandara
+        religion = sunni
+        size = 15264
+    }
+
+    farmers = {
+        culture = tiv
+        religion = sunni
+        size = 8188
+    }
+
+    farmers = {
+        culture = tiv
+        religion = fetishist
+        size = 3520
+    }
+
+	slaves = {
+        culture = mandara
+        religion = fetishist
+        size = 3872
+    }
+
+	slaves = {
+        culture = tiv
+        religion = fetishist
+        size = 3520
+    }
+
+    aristocrats = {
+        culture = mandara
+        religion = fetishist
+        size = 528
+    }
+
+    bureaucrats = {
+        culture = mandara
+        religion = fetishist
+        size = 35
+    }
+	
+    officers = {
+        culture = mandara
+        religion = fetishist
+        size = 18
+    }
+
+    clergymen = {
+        culture = mandara
+        religion = fetishist
+        size = 176
+    }
+
+    artisans = {
+        culture = mandara
+        religion = fetishist
+        size = 264
+    }
+
+    soldiers = {
+        culture = mandara
+        religion = fetishist
+        size = 176
+    }
+
+    farmers = {
+        culture = mandara
+        religion = fetishist
+        size = 6160
+    }
+
+    farmers = {
+        culture = tiv
+        religion = fetishist
+        size = 8712
+    }
+
+}

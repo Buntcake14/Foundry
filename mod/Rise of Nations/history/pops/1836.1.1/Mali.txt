@@ -1,0 +1,4058 @@
+#Mali Region (1304000)
+#under the rule of Segu in 1836
+#Bamako (296000/74000 POPS)
+1794 = {
+    aristocrats = {
+        culture = bambara
+        religion = fetishist
+        size = 748
+    }
+
+    bureaucrats = {
+        culture = bambara
+        religion = fetishist
+        size = 132
+    }
+	
+    officers = {
+        culture = bambara
+        religion = sunni
+        size = 44
+    }
+
+    clergymen = {
+        culture = bambara
+        religion = fetishist
+        size = 396
+    }
+
+    artisans = {
+        culture = bambara
+        religion = fetishist
+        size = 1672
+    }
+
+    soldiers = {
+        culture = bambara
+        religion = fetishist
+        size = 968
+    }
+
+    farmers = {
+        culture = bambara
+        religion = fetishist
+        size = 19976
+    }
+	
+    aristocrats = {
+        culture = bambara
+        religion = sunni
+        size = 132
+    }
+
+    bureaucrats = {
+        culture = bambara
+        religion = sunni
+        size = 26
+    }
+	
+    officers = {
+        culture = bambara
+        religion = sunni
+        size = 13
+    }
+
+    clergymen = {
+        culture = bambara
+        religion = sunni
+        size = 132
+    }
+
+    artisans = {
+        culture = bambara
+        religion = sunni
+        size = 88
+    }
+
+    soldiers = {
+        culture = bambara
+        religion = sunni
+        size = 88
+    }
+
+    farmers = {
+        culture = bambara
+        religion = sunni
+        size = 7744
+    }
+
+    farmers = {
+        culture = senufo
+        religion = fetishist
+        size = 3432
+    }
+
+    aristocrats = {
+        culture = fulbe
+        religion = sunni
+        size = 220
+    }
+
+    bureaucrats = {
+        culture = fulbe
+        religion = sunni
+        size = 9
+    }
+	
+    officers = {
+        culture = fulbe
+        religion = sunni
+        size = 4
+    }
+
+    clergymen = {
+        culture = fulbe
+        religion = sunni
+        size = 132
+    }
+
+    artisans = {
+        culture = fulbe
+        religion = sunni
+        size = 616
+    }
+
+    soldiers = {
+        culture = fulbe
+        religion = sunni
+        size = 132
+    }
+
+    farmers = {
+        culture = fulbe
+        religion = sunni
+        size = 1980
+    }
+
+    aristocrats = {
+        culture = dyula
+        religion = fetishist
+        size = 220
+    }
+
+    bureaucrats = {
+        culture = dyula
+        religion = fetishist
+        size = 9
+    }
+	
+    officers = {
+        culture = dyula
+        religion = fetishist
+        size = 4
+    }
+
+    clergymen = {
+        culture = dyula
+        religion = fetishist
+        size = 132
+    }
+
+    artisans = {
+        culture = dyula
+        religion = fetishist
+        size = 616
+    }
+
+    soldiers = {
+        culture = dyula
+        religion = fetishist
+        size = 132
+    }
+
+    farmers = {
+        culture = dyula
+        religion = fetishist
+        size = 1804
+    }
+
+    aristocrats = {
+        culture = dyula
+        religion = sunni
+        size = 88
+    }
+
+    bureaucrats = {
+        culture = dyula
+        religion = sunni
+        size = 9
+    }
+	
+    officers = {
+        culture = dyula
+        religion = sunni
+        size = 4
+    }
+
+    clergymen = {
+        culture = dyula
+        religion = sunni
+        size = 44
+    }
+
+    artisans = {
+        culture = dyula
+        religion = sunni
+        size = 88
+    }
+
+    soldiers = {
+        culture = dyula
+        religion = sunni
+        size = 44
+    }
+
+    farmers = {
+        culture = dyula
+        religion = sunni
+        size = 616
+    }
+
+    slaves = {
+        culture = dyula
+        religion = fetishist
+        size = 1496
+    }
+	
+    aristocrats = {
+        culture = soninke
+        religion = fetishist
+        size = 88
+    }
+
+    bureaucrats = {
+        culture = soninke
+        religion = fetishist
+        size = 4
+    }
+	
+    officers = {
+        culture = soninke
+        religion = fetishist
+        size = 4
+    }
+
+    clergymen = {
+        culture = soninke
+        religion = fetishist
+        size = 88
+    }
+
+    artisans = {
+        culture = soninke
+        religion = fetishist
+        size = 44
+    }
+
+    soldiers = {
+        culture = soninke
+        religion = fetishist
+        size = 44
+    }
+
+    farmers = {
+        culture = soninke
+        religion = fetishist
+        size = 176
+    }
+	
+    aristocrats = {
+        culture = soninke
+        religion = sunni
+        size = 88
+    }
+
+    bureaucrats = {
+        culture = soninke
+        religion = sunni
+        size = 4
+    }
+	
+    officers = {
+        culture = soninke
+        religion = sunni
+        size = 4
+    }
+
+    clergymen = {
+        culture = soninke
+        religion = sunni
+        size = 88
+    }
+
+    artisans = {
+        culture = soninke
+        religion = sunni
+        size = 44
+    }
+
+    soldiers = {
+        culture = soninke
+        religion = sunni
+        size = 44
+    }
+
+    farmers = {
+        culture = soninke
+        religion = sunni
+        size = 176
+    }
+}
+3770 = {
+    aristocrats = {
+        culture = dyula
+        religion = fetishist
+        size = 396
+    }
+
+    bureaucrats = {
+        culture = dyula
+        religion = fetishist
+        size = 53
+    }
+	
+    officers = {
+        culture = dyula
+        religion = fetishist
+        size = 22
+    }
+
+    clergymen = {
+        culture = dyula
+        religion = fetishist
+        size = 220
+    }
+
+    artisans = {
+        culture = dyula
+        religion = fetishist
+        size = 792
+    }
+
+    soldiers = {
+        culture = dyula
+        religion = fetishist
+        size = 968
+    }
+
+    farmers = {
+        culture = dyula
+        religion = fetishist
+        size = 9425
+    }
+
+    slaves = {
+        culture = dyula
+        religion = fetishist
+        size = 880
+    }
+	
+    aristocrats = {
+        culture = dyula
+        religion = sunni
+        size = 132
+    }
+
+    bureaucrats = {
+        culture = dyula
+        religion = sunni
+        size = 18
+    }
+	
+    officers = {
+        culture = dyula
+        religion = sunni
+        size = 9
+    }
+
+    clergymen = {
+        culture = dyula
+        religion = sunni
+        size = 66
+    }
+
+    artisans = {
+        culture = dyula
+        religion = sunni
+        size = 132
+    }
+
+    soldiers = {
+        culture = dyula
+        religion = sunni
+        size = 88
+    }
+
+    farmers = {
+        culture = dyula
+        religion = sunni
+        size = 2178
+    }
+	
+    aristocrats = {
+        culture = soninke
+        religion = fetishist
+        size = 44
+    }
+
+    bureaucrats = {
+        culture = soninke
+        religion = fetishist
+        size = 9
+    }
+	
+    officers = {
+        culture = soninke
+        religion = fetishist
+        size = 4
+    }
+
+    clergymen = {
+        culture = soninke
+        religion = fetishist
+        size = 26
+    }
+
+    artisans = {
+        culture = soninke
+        religion = fetishist
+        size = 88
+    }
+
+    soldiers = {
+        culture = soninke
+        religion = fetishist
+        size = 88
+    }
+
+    farmers = {
+        culture = soninke
+        religion = fetishist
+        size = 616
+    }
+
+    slaves = {
+        culture = soninke
+        religion = fetishist
+        size = 880
+    }
+	
+    aristocrats = {
+        culture = soninke
+        religion = sunni
+        size = 53
+    }
+
+    bureaucrats = {
+        culture = soninke
+        religion = sunni
+        size = 9
+    }
+	
+    officers = {
+        culture = soninke
+        religion = sunni
+        size = 4
+    }
+
+    clergymen = {
+        culture = soninke
+        religion = sunni
+        size = 44
+    }
+
+    artisans = {
+        culture = soninke
+        religion = sunni
+        size = 88
+    }
+
+    soldiers = {
+        culture = soninke
+        religion = sunni
+        size = 44
+    }
+
+    farmers = {
+        culture = soninke
+        religion = sunni
+        size = 554
+    }
+
+    aristocrats = {
+        culture = fulbe
+        religion = sunni
+        size = 220
+    }
+
+    clergymen = {
+        culture = fulbe
+        religion = sunni
+        size = 88
+    }
+
+    artisans = {
+        culture = fulbe
+        religion = sunni
+        size = 440
+    }
+
+    farmers = {
+        culture = fulbe
+        religion = sunni
+        size = 176
+    }
+
+    aristocrats = {
+        culture = bambara
+        religion = fetishist
+        size = 132
+    }
+
+    clergymen = {
+        culture = bambara
+        religion = fetishist
+        size = 66
+    }
+
+    artisans = {
+        culture = bambara
+        religion = fetishist
+        size = 154
+    }
+
+    soldiers = {
+        culture = bambara
+        religion = fetishist
+        size = 88
+    }
+
+    farmers = {
+        culture = bambara
+        religion = sunni
+        size = 440
+    }
+
+    slaves = {
+        culture = bambara
+        religion = fetishist
+        size = 880
+    }
+}
+#Segu (520000/130000 POPS)
+1800 = {
+    aristocrats = {
+        culture = bambara
+        religion = fetishist
+        size = 1628
+    }
+
+    bureaucrats = {
+        culture = bambara
+        religion = fetishist
+        size = 220
+    }
+
+    officers = {
+        culture = bambara
+        religion = fetishist
+        size = 110
+    }
+
+    artisans = {
+        culture = bambara
+        religion = fetishist
+        size = 1760
+    }
+
+    soldiers = {
+        culture = bambara
+        religion = fetishist
+        size = 968
+    }
+
+    farmers = {
+        culture = bambara
+        religion = fetishist
+        size = 39600
+    }
+	
+    aristocrats = {
+        culture = soninke
+        religion = fetishist
+        size = 88
+    }
+
+    bureaucrats = {
+        culture = soninke
+        religion = fetishist
+        size = 9
+    }
+	
+    officers = {
+        culture = soninke
+        religion = fetishist
+        size = 4
+    }
+
+    clergymen = {
+        culture = soninke
+        religion = fetishist
+        size = 88
+    }
+
+    artisans = {
+        culture = soninke
+        religion = fetishist
+        size = 44
+    }
+
+    soldiers = {
+        culture = soninke
+        religion = fetishist
+        size = 44
+    }
+
+    farmers = {
+        culture = soninke
+        religion = fetishist
+        size = 1496
+    }
+
+    farmers = {
+        culture = senufo
+        religion = fetishist
+        size = 3520
+    }
+
+    slaves = {
+        culture = bambara
+        religion = fetishist
+        size = 4400
+    }
+	
+    aristocrats = {
+        culture = bambara
+        religion = sunni
+        size = 132
+    }
+
+    bureaucrats = {
+        culture = bambara
+        religion = sunni
+        size = 53
+    }
+
+    officers = {
+        culture = bambara
+        religion = sunni
+        size = 26
+    }
+
+    clergymen = {
+        culture = bambara
+        religion = sunni
+        size = 836
+    }
+
+    artisans = {
+        culture = bambara
+        religion = sunni
+        size = 352
+    }
+
+    soldiers = {
+        culture = bambara
+        religion = sunni
+        size = 44
+    }
+
+    farmers = {
+        culture = bambara
+        religion = sunni
+        size = 13200
+    }
+	
+    aristocrats = {
+        culture = soninke
+        religion = sunni
+        size = 88
+    }
+
+    bureaucrats = {
+        culture = soninke
+        religion = sunni
+        size = 9
+    }
+	
+    officers = {
+        culture = soninke
+        religion = sunni
+        size = 4
+    }
+
+    clergymen = {
+        culture = soninke
+        religion = sunni
+        size = 88
+    }
+
+    artisans = {
+        culture = soninke
+        religion = sunni
+        size = 44
+    }
+
+    soldiers = {
+        culture = soninke
+        religion = sunni
+        size = 44
+    }
+
+    farmers = {
+        culture = soninke
+        religion = sunni
+        size = 1320
+    }
+
+    aristocrats = {
+        culture = fulbe
+        religion = sunni
+        size = 220
+    }
+
+    bureaucrats = {
+        culture = fulbe
+        religion = sunni
+        size = 18
+    }
+	
+    officers = {
+        culture = fulbe
+        religion = sunni
+        size = 9
+    }
+
+    clergymen = {
+        culture = fulbe
+        religion = sunni
+        size = 132
+    }
+
+    artisans = {
+        culture = fulbe
+        religion = sunni
+        size = 616
+    }
+
+    soldiers = {
+        culture = fulbe
+        religion = sunni
+        size = 132
+    }
+
+    farmers = {
+        culture = fulbe
+        religion = sunni
+        size = 6160
+    }
+
+    slaves = {
+        culture = fulbe
+        religion = sunni
+        size = 1540
+    }
+}
+#Mourdiah (128000/32000 POPS)
+1801 = {
+    aristocrats = {
+        culture = bambara
+        religion = fetishist
+        size = 308
+    }
+
+    bureaucrats = {
+        culture = bambara
+        religion = fetishist
+        size = 18
+    }
+	
+    officers = {
+        culture = bambara
+        religion = fetishist
+        size = 9
+    }
+
+    clergymen = {
+        culture = bambara
+        religion = fetishist
+        size = 176
+    }
+
+    artisans = {
+        culture = bambara
+        religion = fetishist
+        size = 176
+    }
+
+    soldiers = {
+        culture = bambara
+        religion = fetishist
+        size = 88
+    }
+
+    farmers = {
+        culture = bambara
+        religion = fetishist
+        size = 6644
+    }
+
+    slaves = {
+        culture = bambara
+        religion = fetishist
+        size = 1320
+    }
+	
+    aristocrats = {
+        culture = bambara
+        religion = sunni
+        size = 88
+    }
+
+    bureaucrats = {
+        culture = bambara
+        religion = sunni
+        size = 9
+    }
+	
+    officers = {
+        culture = bambara
+        religion = sunni
+        size = 4
+    }
+
+    clergymen = {
+        culture = bambara
+        religion = sunni
+        size = 88
+    }
+
+    artisans = {
+        culture = bambara
+        religion = sunni
+        size = 88
+    }
+
+    soldiers = {
+        culture = bambara
+        religion = sunni
+        size = 88
+    }
+
+    farmers = {
+        culture = bambara
+        religion = sunni
+        size = 1760
+    }
+	
+    aristocrats = {
+        culture = soninke
+        religion = fetishist
+        size = 308
+    }
+
+    bureaucrats = {
+        culture = soninke
+        religion = fetishist
+        size = 79
+    }
+	
+    officers = {
+        culture = soninke
+        religion = fetishist
+        size = 35
+    }
+
+    clergymen = {
+        culture = soninke
+        religion = fetishist
+        size = 176
+    }
+
+    artisans = {
+        culture = soninke
+        religion = fetishist
+        size = 792
+    }
+
+    soldiers = {
+        culture = soninke
+        religion = fetishist
+        size = 968
+    }
+
+    farmers = {
+        culture = soninke
+        religion = fetishist
+        size = 11880
+    }
+
+    slaves = {
+        culture = soninke
+        religion = fetishist
+        size = 880
+    }
+	
+    aristocrats = {
+        culture = soninke
+        religion = sunni
+        size = 132
+    }
+
+    bureaucrats = {
+        culture = soninke
+        religion = sunni
+        size = 18
+    }
+	
+    officers = {
+        culture = soninke
+        religion = sunni
+        size = 9
+    }
+
+    clergymen = {
+        culture = soninke
+        religion = sunni
+        size = 88
+    }
+
+    artisans = {
+        culture = soninke
+        religion = sunni
+        size = 176
+    }
+
+    soldiers = {
+        culture = soninke
+        religion = sunni
+        size = 132
+    }
+
+    farmers = {
+        culture = soninke
+        religion = sunni
+        size = 3124
+    }
+
+    aristocrats = {
+        culture = fulbe
+        religion = sunni
+        size = 176
+    }
+
+    bureaucrats = {
+        culture = fulbe
+        religion = sunni
+        size = 9
+    }
+	
+    officers = {
+        culture = fulbe
+        religion = sunni
+        size = 4
+    }
+
+    clergymen = {
+        culture = fulbe
+        religion = sunni
+        size = 88
+    }
+
+    artisans = {
+        culture = fulbe
+        religion = sunni
+        size = 528
+    }
+
+    soldiers = {
+        culture = fulbe
+        religion = sunni
+        size = 132
+    }
+
+    farmers = {
+        culture = fulbe
+        religion = sunni
+        size = 1716
+    }
+}
+3777 = {
+    aristocrats = {
+        culture = soninke
+        religion = fetishist
+        size = 176
+    }
+
+    clergymen = {
+        culture = soninke
+        religion = fetishist
+        size = 88
+    }
+
+    artisans = {
+        culture = soninke
+        religion = fetishist
+        size = 176
+    }
+
+    soldiers = {
+        culture = soninke
+        religion = fetishist
+        size = 924
+    }
+
+    farmers = {
+        culture = soninke
+        religion = fetishist
+        size = 7040
+    }
+	
+    aristocrats = {
+        culture = soninke
+        religion = sunni
+        size = 88
+    }
+
+    clergymen = {
+        culture = soninke
+        religion = sunni
+        size = 88
+    }
+
+    artisans = {
+        culture = soninke
+        religion = sunni
+        size = 88
+    }
+
+    soldiers = {
+        culture = soninke
+        religion = sunni
+        size = 88
+    }
+
+    farmers = {
+        culture = soninke
+        religion = sunni
+        size = 4840
+    }
+
+    aristocrats = {
+        culture = fulbe
+        religion = sunni
+        size = 220
+    }
+
+    clergymen = {
+        culture = fulbe
+        religion = sunni
+        size = 88
+    }
+
+    artisans = {
+        culture = fulbe
+        religion = sunni
+        size = 176
+    }
+
+    soldiers = {
+        culture = fulbe
+        religion = sunni
+        size = 132
+    }
+
+    farmers = {
+        culture = fulbe
+        religion = sunni
+        size = 1936
+    }
+
+    slaves = {
+        culture = maures
+        religion = sunni
+        size = 2640
+    }
+
+    slaves = {
+        culture = dyula
+        religion = fetishist
+        size = 880
+    }
+}
+#Jenne (360000/90000 POPS)
+1802 = {
+    aristocrats = {
+        culture = bambara
+        religion = fetishist
+        size = 616
+    }
+
+    clergymen = {
+        culture = bambara
+        religion = fetishist
+        size = 308
+    }
+
+    clergymen = {
+        culture = bambara
+        religion = fetishist
+        size = 88
+    }
+
+    artisans = {
+        culture = bambara
+        religion = fetishist
+        size = 132
+    }
+
+    soldiers = {
+        culture = bambara
+        religion = fetishist
+        size = 352
+    }
+
+    farmers = {
+        culture = bambara
+        religion = fetishist
+        size = 8800
+    }
+	
+    aristocrats = {
+        culture = bambara
+        religion = sunni
+        size = 132
+    }
+
+    clergymen = {
+        culture = bambara
+        religion = sunni
+        size = 132
+    }
+
+    artisans = {
+        culture = bambara
+        religion = sunni
+        size = 44
+    }
+
+    soldiers = {
+        culture = bambara
+        religion = sunni
+        size = 44
+    }
+
+    farmers = {
+        culture = bambara
+        religion = sunni
+        size = 528
+    }
+
+    slaves = {
+        culture = bambara
+        religion = fetishist
+        size = 5152
+    }
+
+    farmers = {
+        culture = gur
+        religion = fetishist
+        size = 1408
+    }
+
+    slaves = {
+        culture = gur
+        religion = fetishist
+        size = 2020
+    }
+
+    aristocrats = {
+        culture = fulbe
+        religion = sunni
+        size = 396
+    }
+
+    clergymen = {
+        culture = fulbe
+        religion = sunni
+        size = 132
+    }
+
+    artisans = {
+        culture = fulbe
+        religion = sunni
+        size = 220
+    }
+
+    soldiers = {
+        culture = fulbe
+        religion = sunni
+        size = 1012
+    }
+
+    farmers = {
+        culture = fulbe
+        religion = sunni
+        size = 4752
+    }
+	
+    aristocrats = {
+        culture = soninke
+        religion = fetishist
+        size = 616
+    }
+
+    clergymen = {
+        culture = soninke
+        religion = fetishist
+        size = 308
+    }
+
+    clergymen = {
+        culture = soninke
+        religion = fetishist
+        size = 88
+    }
+
+    artisans = {
+        culture = soninke
+        religion = fetishist
+        size = 132
+    }
+
+    soldiers = {
+        culture = soninke
+        religion = fetishist
+        size = 968
+    }
+
+    farmers = {
+        culture = soninke
+        religion = fetishist
+        size = 11000
+    }
+	
+    aristocrats = {
+        culture = soninke
+        religion = sunni
+        size = 88
+    }
+
+    clergymen = {
+        culture = soninke
+        religion = sunni
+        size = 88
+    }
+
+    artisans = {
+        culture = soninke
+        religion = sunni
+        size = 44
+    }
+
+    soldiers = {
+        culture = soninke
+        religion = sunni
+        size = 44
+    }
+
+    farmers = {
+        culture = soninke
+        religion = sunni
+        size = 880
+    }
+
+    slaves = {
+        culture = soninke
+        religion = fetishist
+        size = 1691
+    }
+}
+#Bambuk Region (512000)
+#under the rule of Segu in 1836
+#Kayes (200000/50000 POPS)
+1795 = {
+    aristocrats = {
+        culture = dyula
+        religion = fetishist
+        size = 88
+    }
+
+    bureaucrats = {
+        culture = dyula
+        religion = fetishist
+        size = 62
+    }
+	
+    officers = {
+        culture = dyula
+        religion = fetishist
+        size = 31
+    }
+
+    clergymen = {
+        culture = dyula
+        religion = fetishist
+        size = 132
+    }
+
+    artisans = {
+        culture = dyula
+        religion = fetishist
+        size = 220
+    }
+
+    soldiers = {
+        culture = dyula
+        religion = fetishist
+        size = 924
+    }
+
+    farmers = {
+        culture = dyula
+        religion = fetishist
+        size = 12320
+    }
+
+    slaves = {
+        culture = dyula
+        religion = fetishist
+        size = 1936
+    }
+
+    farmers = {
+        culture = tenda
+        religion = fetishist
+        size = 440
+    }
+
+    slaves = {
+        culture = tenda
+        religion = fetishist
+        size = 440
+    }
+	
+    aristocrats = {
+        culture = dyula
+        religion = sunni
+        size = 88
+    }
+
+    bureaucrats = {
+        culture = dyula
+        religion = sunni
+        size = 9
+    }
+	
+    officers = {
+        culture = dyula
+        religion = sunni
+        size = 4
+    }
+
+    clergymen = {
+        culture = dyula
+        religion = sunni
+        size = 44
+    }
+
+    artisans = {
+        culture = dyula
+        religion = sunni
+        size = 88
+    }
+
+    soldiers = {
+        culture = dyula
+        religion = sunni
+        size = 44
+    }
+
+    farmers = {
+        culture = dyula
+        religion = sunni
+        size = 616
+    }
+
+    slaves = {
+        culture = dyula
+        religion = fetishist
+        size = 3916
+    }
+
+    aristocrats = {
+        culture = soninke
+        religion = sunni
+        size = 704
+    }
+
+    bureaucrats = {
+        culture = soninke
+        religion = sunni
+        size = 26
+    }
+	
+    officers = {
+        culture = soninke
+        religion = sunni
+        size = 13
+    }
+
+    clergymen = {
+        culture = soninke
+        religion = sunni
+        size = 220
+    }
+
+    artisans = {
+        culture = soninke
+        religion = sunni
+        size = 660
+    }
+
+    soldiers = {
+        culture = soninke
+        religion = sunni
+        size = 572
+    }
+
+    farmers = {
+        culture = soninke
+        religion = sunni
+        size = 3124
+    }
+
+    aristocrats = {
+        culture = soninke
+        religion = fetishist
+        size = 176
+    }
+
+    bureaucrats = {
+        culture = soninke
+        religion = fetishist
+        size = 9
+    }
+	
+    officers = {
+        culture = soninke
+        religion = fetishist
+        size = 4
+    }
+
+    clergymen = {
+        culture = soninke
+        religion = fetishist
+        size = 88
+    }
+
+    artisans = {
+        culture = soninke
+        religion = fetishist
+        size = 88
+    }
+
+    soldiers = {
+        culture = soninke
+        religion = fetishist
+        size = 176
+    }
+
+    farmers = {
+        culture = soninke
+        religion = fetishist
+        size = 1936
+    }
+
+    slaves = {
+        culture = soninke
+        religion = fetishist
+        size = 4400
+    }
+}
+3775 = {
+    aristocrats = {
+        culture = dyula
+        religion = fetishist
+        size = 88
+    }
+
+    bureaucrats = {
+        culture = dyula
+        religion = fetishist
+        size = 44
+    }
+	
+    officers = {
+        culture = dyula
+        religion = fetishist
+        size = 22
+    }
+
+    clergymen = {
+        culture = dyula
+        religion = fetishist
+        size = 132
+    }
+
+    artisans = {
+        culture = dyula
+        religion = fetishist
+        size = 220
+    }
+
+    soldiers = {
+        culture = dyula
+        religion = fetishist
+        size = 924
+    }
+
+    farmers = {
+        culture = dyula
+        religion = fetishist
+        size = 12760
+    }
+	
+    aristocrats = {
+        culture = dyula
+        religion = sunni
+        size = 44
+    }
+
+    bureaucrats = {
+        culture = dyula
+        religion = sunni
+        size = 9
+    }
+	
+    officers = {
+        culture = dyula
+        religion = sunni
+        size = 4
+    }
+
+    clergymen = {
+        culture = dyula
+        religion = sunni
+        size = 44
+    }
+
+    artisans = {
+        culture = dyula
+        religion = sunni
+        size = 88
+    }
+
+    soldiers = {
+        culture = dyula
+        religion = sunni
+        size = 44
+    }
+
+    farmers = {
+        culture = dyula
+        religion = sunni
+        size = 3696
+    }
+
+    aristocrats = {
+        culture = soninke
+        religion = fetishist
+        size = 176
+    }
+
+    bureaucrats = {
+        culture = soninke
+        religion = fetishist
+        size = 18
+    }
+	
+    officers = {
+        culture = soninke
+        religion = fetishist
+        size = 9
+    }
+
+    clergymen = {
+        culture = soninke
+        religion = fetishist
+        size = 132
+    }
+
+    artisans = {
+        culture = soninke
+        religion = fetishist
+        size = 220
+    }
+
+    soldiers = {
+        culture = soninke
+        religion = fetishist
+        size = 132
+    }
+
+    farmers = {
+        culture = soninke
+        religion = fetishist
+        size = 7260
+    }
+
+    aristocrats = {
+        culture = soninke
+        religion = sunni
+        size = 88
+    }
+
+    bureaucrats = {
+        culture = soninke
+        religion = sunni
+        size = 13
+    }
+	
+    officers = {
+        culture = soninke
+        religion = sunni
+        size = 9
+    }
+
+    clergymen = {
+        culture = soninke
+        religion = sunni
+        size = 88
+    }
+
+    artisans = {
+        culture = soninke
+        religion = sunni
+        size = 176
+    }
+
+    soldiers = {
+        culture = soninke
+        religion = sunni
+        size = 88
+    }
+
+    farmers = {
+        culture = soninke
+        religion = sunni
+        size = 3476
+    }
+
+    slaves = {
+        culture = soninke
+        religion = sunni
+        size = 2640
+    }
+
+    aristocrats = {
+        culture = fulbe
+        religion = sunni
+        size = 440
+    }
+
+    bureaucrats = {
+        culture = fulbe
+        religion = sunni
+        size = 9
+    }
+	
+    officers = {
+        culture = fulbe
+        religion = sunni
+        size = 4
+    }
+
+    clergymen = {
+        culture = fulbe
+        religion = sunni
+        size = 132
+    }
+
+    artisans = {
+        culture = fulbe
+        religion = sunni
+        size = 660
+    }
+
+    soldiers = {
+        culture = fulbe
+        religion = sunni
+        size = 308
+    }
+
+    farmers = {
+        culture = fulbe
+        religion = sunni
+        size = 1364
+    }
+
+    aristocrats = {
+        culture = bambara
+        religion = fetishist
+        size = 352
+    }
+
+    bureaucrats = {
+        culture = bambara
+        religion = fetishist
+        size = 13
+    }
+	
+    officers = {
+        culture = bambara
+        religion = fetishist
+        size = 9
+    }
+
+    clergymen = {
+        culture = bambara
+        religion = fetishist
+        size = 44
+    }
+
+    artisans = {
+        culture = bambara
+        religion = fetishist
+        size = 484
+    }
+
+    soldiers = {
+        culture = bambara
+        religion = fetishist
+        size = 220
+    }
+
+    farmers = {
+        culture = bambara
+        religion = fetishist
+        size = 3080
+    }
+
+    aristocrats = {
+        culture = bambara
+        religion = sunni
+        size = 88
+    }
+
+    bureaucrats = {
+        culture = bambara
+        religion = sunni
+        size = 9
+    }
+	
+    officers = {
+        culture = bambara
+        religion = sunni
+        size = 4
+    }
+
+    clergymen = {
+        culture = bambara
+        religion = sunni
+        size = 88
+    }
+
+    artisans = {
+        culture = bambara
+        religion = sunni
+        size = 176
+    }
+
+    soldiers = {
+        culture = bambara
+        religion = sunni
+        size = 88
+    }
+
+    farmers = {
+        culture = bambara
+        religion = sunni
+        size = 1364
+    }
+}
+#Nioro (160000/40000 POPS)
+1796 = {
+    aristocrats = {
+        culture = fulbe
+        religion = sunni
+        size = 220
+    }
+
+    clergymen = {
+        culture = fulbe
+        religion = sunni
+        size = 220
+    }
+
+    artisans = {
+        culture = fulbe
+        religion = sunni
+        size = 132
+    }
+
+    soldiers = {
+        culture = fulbe
+        religion = sunni
+        size = 132
+    }
+
+    farmers = {
+        culture = fulbe
+        religion = sunni
+        size = 2816
+    }
+
+    aristocrats = {
+        culture = soninke
+        religion = sunni
+        size = 220
+    }
+
+    clergymen = {
+        culture = soninke
+        religion = sunni
+        size = 132
+    }
+
+    artisans = {
+        culture = soninke
+        religion = sunni
+        size = 528
+    }
+
+    soldiers = {
+        culture = soninke
+        religion = sunni
+        size = 1012
+    }
+
+    farmers = {
+        culture = soninke
+        religion = sunni
+        size = 8800
+    }
+
+    aristocrats = {
+        culture = soninke
+        religion = fetishist
+        size = 176
+    }
+
+    clergymen = {
+        culture = soninke
+        religion = fetishist
+        size = 88
+    }
+
+    artisans = {
+        culture = soninke
+        religion = fetishist
+        size = 176
+    }
+
+    soldiers = {
+        culture = soninke
+        religion = fetishist
+        size = 88
+    }
+
+    farmers = {
+        culture = soninke
+        religion = fetishist
+        size = 2112
+    }
+
+    slaves = {
+        culture = soninke
+        religion = fetishist
+        size = 1628
+    }
+
+    slaves = {
+        culture = dyula
+        religion = fetishist
+        size = 3520
+    }
+
+    slaves = {
+        culture = maures
+        religion = fetishist
+        size = 880
+    }
+}
+3886 = {
+    aristocrats = {
+        culture = soninke
+        religion = sunni
+        size = 220
+    }
+
+    clergymen = {
+        culture = soninke
+        religion = sunni
+        size = 88
+    }
+
+    artisans = {
+        culture = soninke
+        religion = sunni
+        size = 132
+    }
+
+    soldiers = {
+        culture = soninke
+        religion = sunni
+        size = 132
+    }
+
+    farmers = {
+        culture = soninke
+        religion = sunni
+        size = 7920
+    }
+	
+    aristocrats = {
+        culture = soninke
+        religion = fetishist
+        size = 88
+    }
+
+    clergymen = {
+        culture = soninke
+        religion = fetishist
+        size = 88
+    }
+
+    artisans = {
+        culture = soninke
+        religion = fetishist
+        size = 88
+    }
+
+    soldiers = {
+        culture = soninke
+        religion = fetishist
+        size = 132
+    }
+
+    farmers = {
+        culture = soninke
+        religion = fetishist
+        size = 528
+    }
+
+    aristocrats = {
+        culture = maures
+        religion = sunni
+        size = 264
+    }
+
+    clergymen = {
+        culture = maures
+        religion = sunni
+        size = 220
+    }
+
+    artisans = {
+        culture = maures
+        religion = sunni
+        size = 264
+    }
+
+    soldiers = {
+        culture = maures
+        religion = sunni
+        size = 176
+    }
+
+    farmers = {
+        culture = maures
+        religion = sunni
+        size = 4312
+    }
+
+    slaves = {
+        culture = dyula
+        religion = fetishist
+        size = 440
+    }
+
+    slaves = {
+        culture = maures
+        religion = fetishist
+        size = 440
+    }
+}
+#Kita (152000/38000 POPS)
+1797 = {
+    aristocrats = {
+        culture = soninke
+        religion = sunni
+        size = 572
+    }
+
+    bureaucrats = {
+        culture = soninke
+        religion = sunni
+        size = 18
+    }
+	
+    officers = {
+        culture = soninke
+        religion = sunni
+        size = 9
+    }
+
+    clergymen = {
+        culture = soninke
+        religion = sunni
+        size = 396
+    }
+
+    artisans = {
+        culture = soninke
+        religion = sunni
+        size = 176
+    }
+
+    soldiers = {
+        culture = soninke
+        religion = sunni
+        size = 132
+    }
+
+    farmers = {
+        culture = soninke
+        religion = sunni
+        size = 4400
+    }
+	
+    aristocrats = {
+        culture = soninke
+        religion = fetishist
+        size = 308
+    }
+
+    bureaucrats = {
+        culture = soninke
+        religion = fetishist
+        size = 18
+    }
+	
+    officers = {
+        culture = soninke
+        religion = fetishist
+        size = 9
+    }
+
+    clergymen = {
+        culture = soninke
+        religion = fetishist
+        size = 132
+    }
+
+    artisans = {
+        culture = soninke
+        religion = fetishist
+        size = 176
+    }
+
+    soldiers = {
+        culture = soninke
+        religion = fetishist
+        size = 1012
+    }
+
+    farmers = {
+        culture = soninke
+        religion = fetishist
+        size = 7040
+    }
+
+    slaves = {
+        culture = soninke
+        religion = fetishist
+        size = 3216
+    }
+	
+    aristocrats = {
+        culture = bambara
+        religion = fetishist
+        size = 88
+    }
+
+    bureaucrats = {
+        culture = bambara
+        religion = fetishist
+        size = 9
+    }
+	
+    officers = {
+        culture = bambara
+        religion = fetishist
+        size = 4
+    }
+
+    clergymen = {
+        culture = bambara
+        religion = fetishist
+        size = 44
+    }
+
+    artisans = {
+        culture = bambara
+        religion = fetishist
+        size = 88
+    }
+
+    soldiers = {
+        culture = bambara
+        religion = fetishist
+        size = 44
+    }
+
+    farmers = {
+        culture = bambara
+        religion = fetishist
+        size = 1320
+    }
+	
+    aristocrats = {
+        culture = bambara
+        religion = sunni
+        size = 88
+    }
+
+    bureaucrats = {
+        culture = bambara
+        religion = sunni
+        size = 9
+    }
+	
+    officers = {
+        culture = bambara
+        religion = sunni
+        size = 4
+    }
+
+    clergymen = {
+        culture = bambara
+        religion = sunni
+        size = 44
+    }
+
+    artisans = {
+        culture = bambara
+        religion = sunni
+        size = 88
+    }
+
+    soldiers = {
+        culture = bambara
+        religion = sunni
+        size = 44
+    }
+
+    farmers = {
+        culture = bambara
+        religion = sunni
+        size = 2640
+    }
+
+    aristocrats = {
+        culture = fulbe
+        religion = sunni
+        size = 396
+    }
+
+    bureaucrats = {
+        culture = fulbe
+        religion = sunni
+        size = 79
+    }
+	
+    officers = {
+        culture = fulbe
+        religion = sunni
+        size = 35
+    }
+
+    clergymen = {
+        culture = fulbe
+        religion = sunni
+        size = 220
+    }
+
+    artisans = {
+        culture = fulbe
+        religion = sunni
+        size = 924
+    }
+
+    soldiers = {
+        culture = fulbe
+        religion = sunni
+        size = 2772
+    }
+
+    farmers = {
+        culture = fulbe
+        religion = sunni
+        size = 24552
+    }
+
+    aristocrats = {
+        culture = dogon
+        religion = fetishist
+        size = 440
+    }
+
+    bureaucrats = {
+        culture = dogon
+        religion = fetishist
+        size = 18
+    }
+	
+    officers = {
+        culture = dogon
+        religion = fetishist
+        size = 9
+    }
+
+    clergymen = {
+        culture = dogon
+        religion = fetishist
+        size = 176
+    }
+
+    artisans = {
+        culture = dogon
+        religion = fetishist
+        size = 264
+    }
+
+    soldiers = {
+        culture = dogon
+        religion = fetishist
+        size = 88
+    }
+
+    farmers = {
+        culture = dogon
+        religion = fetishist
+        size = 6160
+    }
+
+    farmers = {
+        culture = dogon
+        religion = sunni
+        size = 172
+    }
+
+    slaves = {
+        culture = dogon
+        religion = fetishist
+        size = 1760
+    }
+}
+#Bure Region (136000) #see Guinea.txt and Ivory Coast.txt for balance of region
+#under the rule of Segu in 1836
+#Bourgouni (272000/68000 POPS)
+1798 = {
+    aristocrats = {
+        culture = bambara
+        religion = fetishist
+        size = 264
+    }
+
+    bureaucrats = {
+        culture = bambara
+        religion = fetishist
+        size = 22
+    }
+	
+    officers = {
+        culture = bambara
+        religion = fetishist
+        size = 9
+    }
+
+    clergymen = {
+        culture = bambara
+        religion = fetishist
+        size = 88
+    }
+
+    artisans = {
+        culture = bambara
+        religion = fetishist
+        size = 616
+    }
+
+    soldiers = {
+        culture = bambara
+        religion = fetishist
+        size = 88
+    }
+
+    farmers = {
+        culture = bambara
+        religion = fetishist
+        size = 6512
+    }
+
+    farmers = {
+        culture = bambara
+        religion = sunni
+        size = 1760
+    }
+
+    slaves = {
+        culture = bambara
+        religion = sunni
+        size = 1144
+    }
+	
+    aristocrats = {
+        culture = dyula
+        religion = fetishist
+        size = 88
+    }
+
+    bureaucrats = {
+        culture = dyula
+        religion = fetishist
+        size = 18
+    }
+	
+    officers = {
+        culture = dyula
+        religion = fetishist
+        size = 6
+    }
+
+    clergymen = {
+        culture = dyula
+        religion = fetishist
+        size = 88
+    }
+
+    artisans = {
+        culture = dyula
+        religion = fetishist
+        size = 352
+    }
+
+    soldiers = {
+        culture = dyula
+        religion = fetishist
+        size = 44
+    }
+
+    farmers = {
+        culture = dyula
+        religion = fetishist
+        size = 3080
+    }
+
+    farmers = {
+        culture = dyula
+        religion = sunni
+        size = 2640
+    }
+
+    slaves = {
+        culture = dyula
+        religion = sunni
+        size = 924
+    }
+
+    aristocrats = {
+        culture = fulbe
+        religion = sunni
+        size = 88
+    }
+
+    clergymen = {
+        culture = fulbe
+        religion = sunni
+        size = 132
+    }
+
+    artisans = {
+        culture = fulbe
+        religion = sunni
+        size = 264
+    }
+
+    soldiers = {
+        culture = gur
+        religion = sunni
+        size = 88
+    }
+
+    farmers = {
+        culture = gur
+        religion = sunni
+        size = 1232
+    }
+
+    aristocrats = {
+        culture = senufo
+        religion = fetishist
+        size = 88
+    }
+
+    bureaucrats = {
+        culture = senufo
+        religion = fetishist
+        size = 79
+    }
+	
+    officers = {
+        culture = senufo
+        religion = fetishist
+        size = 40
+    }
+
+    clergymen = {
+        culture = senufo
+        religion = fetishist
+        size = 132
+    }
+
+    artisans = {
+        culture = senufo
+        religion = fetishist
+        size = 440
+    }
+
+    soldiers = {
+        culture = senufo
+        religion = fetishist
+        size = 968
+    }
+
+    farmers = {
+        culture = senufo
+        religion = fetishist
+        size = 15972
+    }
+
+    slaves = {
+        culture = senufo
+        religion = fetishist
+        size = 1760
+    }
+}
+3767 = {
+    aristocrats = {
+        culture = bambara
+        religion = fetishist
+        size = 176
+    }
+
+    bureaucrats = {
+        culture = bambara
+        religion = fetishist
+        size = 4
+    }
+	
+    officers = {
+        culture = bambara
+        religion = fetishist
+        size = 4
+    }
+
+    clergymen = {
+        culture = bambara
+        religion = fetishist
+        size = 132
+    }
+
+    artisans = {
+        culture = bambara
+        religion = fetishist
+        size = 176
+    }
+
+    soldiers = {
+        culture = bambara
+        religion = fetishist
+        size = 132
+    }
+
+    farmers = {
+        culture = bambara
+        religion = fetishist
+        size = 1144
+    }
+
+    farmers = {
+        culture = bambara
+        religion = sunni
+        size = 1056
+    }
+
+    farmers = {
+        culture = soninke
+        religion = sunni
+        size = 440
+    }
+
+    aristocrats = {
+        culture = fulbe
+        religion = sunni
+        size = 88
+    }
+
+    clergymen = {
+        culture = fulbe
+        religion = sunni
+        size = 132
+    }
+
+    artisans = {
+        culture = fulbe
+        religion = sunni
+        size = 220
+    }
+
+    soldiers = {
+        culture = gur
+        religion = sunni
+        size = 88
+    }
+
+    farmers = {
+        culture = gur
+        religion = sunni
+        size = 1232
+    }
+
+    aristocrats = {
+        culture = senufo
+        religion = fetishist
+        size = 176
+    }
+
+    bureaucrats = {
+        culture = senufo
+        religion = fetishist
+        size = 75
+    }
+	
+    officers = {
+        culture = senufo
+        religion = fetishist
+        size = 26
+    }
+
+    clergymen = {
+        culture = senufo
+        religion = fetishist
+        size = 88
+    }
+
+    artisans = {
+        culture = senufo
+        religion = fetishist
+        size = 176
+    }
+
+    soldiers = {
+        culture = senufo
+        religion = fetishist
+        size = 88
+    }
+
+    farmers = {
+        culture = senufo
+        religion = fetishist
+        size = 13992
+    }
+
+    slaves = {
+        culture = senufo
+        religion = fetishist
+        size = 1760
+    }
+}
+3766 = {
+    aristocrats = {
+        culture = fulbe
+        religion = sunni
+        size = 88
+    }
+
+    clergymen = {
+        culture = fulbe
+        religion = sunni
+        size = 132
+    }
+
+    artisans = {
+        culture = fulbe
+        religion = sunni
+        size = 220
+    }
+
+    soldiers = {
+        culture = fulbe
+        religion = sunni
+        size = 440
+    }
+
+    farmers = {
+        culture = fulbe
+        religion = sunni
+        size = 8536
+    }
+
+    farmers = {
+        culture = songhai
+        religion = sunni
+        size = 2992
+    }
+
+    farmers = {
+        culture = songhai
+        religion = fetishist
+        size = 264
+    }
+
+    slaves = {
+        culture = gur
+        religion = sunni
+        size = 616
+    }
+
+    slaves = {
+        culture = bambara
+        religion = fetishist
+        size = 176
+    }
+
+    slaves = {
+        culture = soninke
+        religion = fetishist
+        size = 616
+    }
+	
+    aristocrats = {
+        culture = dogon
+        religion = fetishist
+        size = 176
+    }
+
+    clergymen = {
+        culture = dogon
+        religion = fetishist
+        size = 132
+    }
+
+    artisans = {
+        culture = dogon
+        religion = fetishist
+        size = 968
+    }
+
+    soldiers = {
+        culture = dogon
+        religion = fetishist
+        size = 1012
+    }
+
+    farmers = {
+        culture = dogon
+        religion = fetishist
+        size = 9240
+    }
+
+    slaves = {
+        culture = dogon
+        religion = fetishist
+        size = 880
+    }
+}
+#Worodugu Region (344000)  #see Burkina.txt and Ivory Coast.txt for balance of region
+#under the rule of Massina in 1836
+#Sikasso (344000/86000 POPS)
+1799 = {
+    aristocrats = {
+        culture = bambara
+        religion = fetishist
+        size = 572
+    }
+
+    clergymen = {
+        culture = bambara
+        religion = fetishist
+        size = 308
+    }
+
+    artisans = {
+        culture = bambara
+        religion = fetishist
+        size = 1144
+    }
+
+    soldiers = {
+        culture = bambara
+        religion = fetishist
+        size = 924
+    }
+
+    farmers = {
+        culture = bambara
+        religion = fetishist
+        size = 17600
+    }
+	
+    aristocrats = {
+        culture = bambara
+        religion = sunni
+        size = 88
+    }
+
+    clergymen = {
+        culture = bambara
+        religion = sunni
+        size = 88
+    }
+
+    artisans = {
+        culture = bambara
+        religion = sunni
+        size = 132
+    }
+
+    soldiers = {
+        culture = bambara
+        religion = sunni
+        size = 44
+    }
+
+    farmers = {
+        culture = bambara
+        religion = sunni
+        size = 5720
+    }
+
+    aristocrats = {
+        culture = fulbe
+        religion = sunni
+        size = 132
+    }
+
+    clergymen = {
+        culture = fulbe
+        religion = sunni
+        size = 88
+    }
+
+    artisans = {
+        culture = fulbe
+        religion = sunni
+        size = 176
+    }
+
+    soldiers = {
+        culture = fulbe
+        religion = sunni
+        size = 132
+    }
+
+    farmers = {
+        culture = fulbe
+        religion = sunni
+        size = 1320
+    }
+	
+    aristocrats = {
+        culture = soninke
+        religion = fetishist
+        size = 88
+    }
+
+    clergymen = {
+        culture = soninke
+        religion = fetishist
+        size = 88
+    }
+
+    artisans = {
+        culture = soninke
+        religion = fetishist
+        size = 44
+    }
+
+    soldiers = {
+        culture = soninke
+        religion = fetishist
+        size = 44
+    }
+
+    farmers = {
+        culture = soninke
+        religion = fetishist
+        size = 704
+    }
+	
+    aristocrats = {
+        culture = soninke
+        religion = sunni
+        size = 88
+    }
+
+    clergymen = {
+        culture = soninke
+        religion = sunni
+        size = 88
+    }
+
+    artisans = {
+        culture = soninke
+        religion = sunni
+        size = 44
+    }
+
+    soldiers = {
+        culture = soninke
+        religion = sunni
+        size = 44
+    }
+
+    farmers = {
+        culture = soninke
+        religion = sunni
+        size = 528
+    }
+	
+    aristocrats = {
+        culture = dyula
+        religion = fetishist
+        size = 176
+    }
+
+    clergymen = {
+        culture = dyula
+        religion = fetishist
+        size = 88
+    }
+
+    artisans = {
+        culture = dyula
+        religion = fetishist
+        size = 176
+    }
+
+    soldiers = {
+        culture = dyula
+        religion = fetishist
+        size = 968
+    }
+	
+    farmers = {
+        culture = dyula
+        religion = fetishist
+        size = 9400
+    }
+	
+    aristocrats = {
+        culture = dyula
+        religion = sunni
+        size = 88
+    }
+
+    clergymen = {
+        culture = dyula
+        religion = sunni
+        size = 88
+    }
+
+    artisans = {
+        culture = dyula
+        religion = sunni
+        size = 88
+    }
+
+    soldiers = {
+        culture = dyula
+        religion = sunni
+        size = 44
+    }
+	
+    farmers = {
+        culture = dyula
+        religion = sunni
+        size = 1496
+    }
+	
+    slaves = {
+        culture = dyula
+        religion = fetishist
+        size = 3520
+    }
+
+    slaves = {
+        culture = dyula
+        religion = sunni
+        size = 1248
+    }
+}
+#Macina Region (536000)
+#under the rule of Segu in 1836
+#Timbuktu (368000/92000 POPS)
+1803 = {
+    aristocrats = {
+        culture = songhai
+        religion = sunni
+        size = 1056
+    }
+
+    bureaucrats = {
+        culture = songhai
+        religion = sunni
+        size = 88
+    }
+	
+    officers = {
+        culture = songhai
+        religion = sunni
+        size = 44
+    }
+
+    clergymen = {
+        culture = songhai
+        religion = sunni
+        size = 528
+    }
+
+    artisans = {
+        culture = songhai
+        religion = sunni
+        size = 2200
+    }
+
+    soldiers = {
+        culture = songhai
+        religion = sunni
+        size = 1012
+    }
+
+    farmers = {
+        culture = songhai
+        religion = sunni
+        size = 21737
+    }
+
+    bureaucrats = {
+        culture = songhai
+        religion = fetishist
+        size = 9
+    }
+	
+    officers = {
+        culture = songhai
+        religion = fetishist
+        size = 4
+    }
+
+    farmers = {
+        culture = songhai
+        religion = fetishist
+        size = 2640
+    }
+
+    farmers = {
+        culture = dogon
+        religion = fetishist
+        size = 3387
+    }
+
+    slaves = {
+        culture = dogon
+        religion = fetishist
+        size = 2640
+    }
+
+    aristocrats = {
+        culture = fulbe
+        religion = sunni
+        size = 484
+    }
+
+    bureaucrats = {
+        culture = fulbe
+        religion = sunni
+        size = 79
+    }
+	
+    officers = {
+        culture = fulbe
+        religion = sunni
+        size = 35
+    }
+
+    clergymen = {
+        culture = fulbe
+        religion = sunni
+        size = 264
+    }
+
+    artisans = {
+        culture = fulbe
+        religion = sunni
+        size = 1012
+    }
+
+    soldiers = {
+        culture = fulbe
+        religion = sunni
+        size = 968
+    }
+
+    farmers = {
+        culture = fulbe
+        religion = sunni
+        size = 14080
+    }
+
+    farmers = {
+        culture = soninke
+        religion = sunni
+        size = 1320
+    }
+
+    farmers = {
+        culture = soninke
+        religion = fetishist
+        size = 440
+    }
+
+    slaves = {
+        culture = soninke
+        religion = fetishist
+        size = 4400
+    }
+
+    slaves = {
+        culture = bambara
+        religion = fetishist
+        size = 880
+    }
+
+    aristocrats = {
+        culture = tuareg
+        religion = sunni
+        size = 88
+    }
+
+    bureaucrats = {
+        culture = tuareg
+        religion = sunni
+        size = 18
+    }
+	
+    officers = {
+        culture = tuareg
+        religion = sunni
+        size = 9
+    }
+
+    clergymen = {
+        culture = tuareg
+        religion = sunni
+        size = 88
+    }
+
+    artisans = {
+        culture = tuareg
+        religion = sunni
+        size = 88
+    }
+
+    soldiers = {
+        culture = tuareg
+        religion = sunni
+        size = 88
+    }
+
+    farmers = {
+        culture = tuareg
+        religion = sunni
+        size = 5104
+    }
+
+    aristocrats = {
+        culture = maghrebi
+        religion = sunni
+        size = 88
+    }
+
+    clergymen = {
+        culture = maghrebi
+        religion = sunni
+        size = 88
+    }
+
+    artisans = {
+        culture = maghrebi
+        religion = sunni
+        size = 88
+    }
+
+    soldiers = {
+        culture = maghrebi
+        religion = sunni
+        size = 88
+    }
+
+    farmers = {
+        culture = maghrebi
+        religion = sunni
+        size = 176
+    }
+}
+#under the rule of Massina in 1836
+#Hamdallahi (488000/122000 POPS)
+1804 = {
+    aristocrats = {
+        culture = fulbe
+        religion = sunni
+        size = 396
+    }
+
+    bureaucrats = {
+        culture = fulbe
+        religion = sunni
+        size = 352
+    }
+
+    officers = {
+        culture = fulbe
+        religion = sunni
+        size = 132
+    }
+
+    clergymen = {
+        culture = fulbe
+        religion = sunni
+        size = 616
+    }
+
+    artisans = {
+        culture = fulbe
+        religion = sunni
+        size = 1012
+    }
+
+    soldiers = {
+        culture = fulbe
+        religion = sunni
+        size = 176
+    }
+
+    farmers = {
+        culture = fulbe
+        religion = sunni
+        size = 1760
+    }
+
+    slaves = {
+        culture = fulbe
+        religion = sunni
+        size = 1345
+    }
+
+    farmers = {
+        culture = soninke
+        religion = sunni
+        size = 2640
+    }
+
+    slaves = {
+        culture = gur
+        religion = sunni
+        size = 1760
+    }
+
+    slaves = {
+        culture = songhai
+        religion = fetishist
+        size = 1760
+    }
+
+    aristocrats = {
+        culture = dogon
+        religion = fetishist
+        size = 792
+    }
+
+    clergymen = {
+        culture = dogon
+        religion = fetishist
+        size = 440
+    }
+
+    artisans = {
+        culture = dogon
+        religion = fetishist
+        size = 2640
+    }
+
+    soldiers = {
+        culture = dogon
+        religion = fetishist
+        size = 924
+    }
+
+    farmers = {
+        culture = dogon
+        religion = fetishist
+        size = 32164
+    }
+
+    farmers = {
+        culture = dogon
+        religion = sunni
+        size = 176
+    }
+
+    slaves = {
+        culture = dogon
+        religion = sunni
+        size = 1232
+    }
+}
+3811 = {
+    aristocrats = {
+        culture = fulbe
+        religion = sunni
+        size = 176
+    }
+
+    bureaucrats = {
+        culture = fulbe
+        religion = sunni
+        size = 18
+    }
+	
+    officers = {
+        culture = fulbe
+        religion = sunni
+        size = 9
+    }
+
+    clergymen = {
+        culture = fulbe
+        religion = sunni
+        size = 88
+    }
+
+    artisans = {
+        culture = fulbe
+        religion = sunni
+        size = 176
+    }
+
+    soldiers = {
+        culture = fulbe
+        religion = sunni
+        size = 132
+    }
+
+    farmers = {
+        culture = fulbe
+        religion = sunni
+        size = 6398
+    }
+
+    farmers = {
+        culture = bambara
+        religion = sunni
+        size = 686
+    }
+
+    slaves = {
+        culture = gur
+        religion = fetishist
+        size = 1074
+    }
+
+    aristocrats = {
+        culture = songhai
+        religion = fetishist
+        size = 352
+    }
+
+    bureaucrats = {
+        culture = songhai
+        religion = fetishist
+        size = 18
+    }
+	
+    officers = {
+        culture = songhai
+        religion = fetishist
+        size = 9
+    }
+
+    clergymen = {
+        culture = songhai
+        religion = fetishist
+        size = 176
+    }
+
+    artisans = {
+        culture = dogon
+        religion = fetishist
+        size = 264
+    }
+
+    soldiers = {
+        culture = songhai
+        religion = sunni
+        size = 9
+    }
+
+    farmers = {
+        culture = songhai
+        religion = sunni
+        size = 3432
+    }
+
+    farmers = {
+        culture = dogon
+        religion = fetishist
+        size = 3740
+    }
+
+    slaves = {
+        culture = dogon
+        religion = fetishist
+        size = 880
+    }
+}
+#under the rule of Massina in 1836
+#Gao (232000/58000 POPS)
+1805 = {
+    aristocrats = {
+        culture = tuareg
+        religion = sunni
+        size = 308
+    }
+
+    clergymen = {
+        culture = tuareg
+        religion = sunni
+        size = 176
+    }
+
+    artisans = {
+        culture = tuareg
+        religion = sunni
+        size = 660
+    }
+
+    soldiers = {
+        culture = tuareg
+        religion = sunni
+        size = 352
+    }
+
+    farmers = {
+        culture = tuareg
+        religion = sunni
+        size = 5544
+    }
+
+    aristocrats = {
+        culture = songhai
+        religion = sunni
+        size = 616
+    }
+
+    clergymen = {
+        culture = fulbe
+        religion = sunni
+        size = 88
+    }
+
+    artisans = {
+        culture = fulbe
+        religion = sunni
+        size = 880
+    }
+
+    soldiers = {
+        culture = fulbe
+        religion = sunni
+        size = 968
+    }
+
+    farmers = {
+        culture = fulbe
+        religion = sunni
+        size = 7920
+    }
+
+    slaves = {
+        culture = fulbe
+        religion = fetishist
+        size = 792
+    }
+
+    clergymen = {
+        culture = songhai
+        religion = sunni
+        size = 352
+    }
+
+    artisans = {
+        culture = songhai
+        religion = sunni
+        size = 1672
+    }
+
+    soldiers = {
+        culture = songhai
+        religion = sunni
+        size = 1760
+    }
+
+    farmers = {
+        culture = songhai
+        religion = sunni
+        size = 12320
+    }
+
+    farmers = {
+        culture = songhai
+        religion = fetishist
+        size = 1848
+    }
+
+    slaves = {
+        culture = songhai
+        religion = fetishist
+        size = 1760
+    }
+
+    clergymen = {
+        culture = maghrebi
+        religion = sunni
+        size = 88
+    }
+
+    artisans = {
+        culture = maghrebi
+        religion = sunni
+        size = 88
+    }
+
+    soldiers = {
+        culture = maghrebi
+        religion = sunni
+        size = 88
+    }
+
+    farmers = {
+        culture = maghrebi
+        religion = sunni
+        size = 264
+    }
+}
+3812 = {
+    aristocrats = {
+        culture = tuareg
+        religion = sunni
+        size = 88
+    }
+
+    bureaucrats = {
+        culture = tuareg
+        religion = sunni
+        size = 9
+    }
+	
+    officers = {
+        culture = tuareg
+        religion = sunni
+        size = 4
+    }
+
+    clergymen = {
+        culture = tuareg
+        religion = sunni
+        size = 176
+    }
+
+    artisans = {
+        culture = tuareg
+        religion = sunni
+        size = 88
+    }
+
+    soldiers = {
+        culture = tuareg
+        religion = sunni
+        size = 176
+    }
+
+    farmers = {
+        culture = tuareg
+        religion = sunni
+        size = 1496
+    }
+
+    farmers = {
+        culture = fulbe
+        religion = sunni
+        size = 1320
+    }
+
+    aristocrats = {
+        culture = songhai
+        religion = sunni
+        size = 616
+    }
+
+    bureaucrats = {
+        culture = songhai
+        religion = sunni
+        size = 62
+    }
+	
+    officers = {
+        culture = songhai
+        religion = sunni
+        size = 26
+    }
+
+    clergymen = {
+        culture = songhai
+        religion = sunni
+        size = 88
+    }
+
+    artisans = {
+        culture = songhai
+        religion = sunni
+        size = 176
+    }
+
+    soldiers = {
+        culture = songhai
+        religion = sunni
+        size = 528
+    }
+
+    farmers = {
+        culture = songhai
+        religion = sunni
+        size = 11440
+    }
+
+    farmers = {
+        culture = songhai
+        religion = fetishist
+        size = 2939
+    }
+
+    slaves = {
+        culture = songhai
+        religion = fetishist
+        size = 2288
+    }
+}
+#Azawad Region (36000)
+#uncolonized in 1836/dominated by Tuareg
+#Tessalit (16000/4000 POPS)
+1807 = {
+    aristocrats = {
+        culture = tuareg
+        religion = sunni
+        size = 44
+    }
+
+    clergymen = {
+        culture = tuareg
+        religion = sunni
+        size = 66
+    }
+
+    artisans = {
+        culture = tuareg
+        religion = sunni
+        size = 176
+    }
+
+    soldiers = {
+        culture = tuareg
+        religion = sunni
+        size = 44
+    }
+
+    farmers = {
+        culture = tuareg
+        religion = sunni
+        size = 2310
+    }
+
+    aristocrats = {
+        culture = maghrebi
+        religion = sunni
+        size = 22
+    }
+
+    clergymen = {
+        culture = maghrebi
+        religion = sunni
+        size = 44
+    }
+
+    artisans = {
+        culture = bedouin
+        religion = sunni
+        size = 88
+    }
+
+    soldiers = {
+        culture = bedouin
+        religion = sunni
+        size = 88
+    }
+
+    farmers = {
+        culture = bedouin
+        religion = sunni
+        size = 704
+    }
+}
+#Araouane (12000/3000 POPS)
+2609 = {
+    aristocrats = {
+        culture = tuareg
+        religion = sunni
+        size = 66
+    }
+
+    clergymen = {
+        culture = tuareg
+        religion = sunni
+        size = 88
+    }
+
+    artisans = {
+        culture = tuareg
+        religion = sunni
+        size = 220
+    }
+
+    soldiers = {
+        culture = tuareg
+        religion = sunni
+        size = 88
+    }
+
+    farmers = {
+        culture = tuareg
+        religion = sunni
+        size = 2288
+    }
+
+    artisans = {
+        culture = soninke
+        religion = sunni
+        size = 176
+    }
+
+    soldiers = {
+        culture = soninke
+        religion = sunni
+        size = 88
+    }
+
+    farmers = {
+        culture = soninke
+        religion = sunni
+        size = 704
+    }
+
+    aristocrats = {
+        culture = maghrebi
+        religion = sunni
+        size = 44
+    }
+
+    clergymen = {
+        culture = maghrebi
+        religion = sunni
+        size = 88
+    }
+
+    artisans = {
+        culture = maures
+        religion = sunni
+        size = 176
+    }
+
+    soldiers = {
+        culture = maures
+        religion = sunni
+        size = 88
+    }
+
+    farmers = {
+        culture = maures
+        religion = sunni
+        size = 352
+    }
+
+}
+3788 = {
+    aristocrats = {
+        culture = tuareg
+        religion = sunni
+        size = 242
+    }
+
+    clergymen = {
+        culture = tuareg
+        religion = sunni
+        size = 88
+    }
+
+    artisans = {
+        culture = tuareg
+        religion = sunni
+        size = 220
+    }
+
+    soldiers = {
+        culture = tuareg
+        religion = sunni
+        size = 440
+    }
+
+    farmers = {
+        culture = tuareg
+        religion = sunni
+        size = 9328
+    }
+	
+    aristocrats = {
+        culture = songhai
+        religion = sunni
+        size = 110
+    }
+
+    clergymen = {
+        culture = songhai
+        religion = sunni
+        size = 66
+    }
+
+    artisans = {
+        culture = songhai
+        religion = sunni
+        size = 132
+    }
+
+    soldiers = {
+        culture = songhai
+        religion = sunni
+        size = 352
+    }
+
+    farmers = {
+        culture = songhai
+        religion = sunni
+        size = 7436
+    }
+
+    farmers = {
+        culture = songhai
+        religion = fetishist
+        size = 264
+    }
+	
+    slaves = {
+        culture = songhai
+        religion = fetishist
+        size = 1056
+    }
+
+    aristocrats = {
+        culture = maghrebi
+        religion = sunni
+        size = 44
+    }
+
+    clergymen = {
+        culture = maghrebi
+        religion = sunni
+        size = 88
+    }
+
+    artisans = {
+        culture = bedouin
+        religion = sunni
+        size = 176
+    }
+
+    soldiers = {
+        culture = bedouin
+        religion = sunni
+        size = 88
+    }
+
+    farmers = {
+        culture = bedouin
+        religion = sunni
+        size = 176
+    }
+
+    farmers = {
+        culture = fulbe
+        religion = sunni
+        size = 2640
+    }
+
+}
+3431 = {
+    aristocrats = {
+        culture = maures
+        religion = sunni
+        size = 44
+    }
+
+    clergymen = {
+        culture = maures
+        religion = sunni
+        size = 88
+    }
+
+    soldiers = {
+        culture = maures
+        religion = sunni
+        size = 44
+    }
+
+    farmers = {
+        culture = maures
+        religion = sunni
+        size = 1936
+    }
+
+    farmers = {
+        culture = soninke
+        religion = sunni
+        size = 88
+    }
+
+    farmers = {
+        culture = tuareg
+        religion = sunni
+        size = 264
+    }
+}
+3984 = {
+    aristocrats = {
+        culture = maures
+        religion = sunni
+        size = 44
+    }
+
+    clergymen = {
+        culture = maures
+        religion = sunni
+        size = 88
+    }
+
+    soldiers = {
+        culture = maures
+        religion = sunni
+        size = 44
+    }
+
+    farmers = {
+        culture = maures
+        religion = sunni
+        size = 5104
+    }
+	
+    aristocrats = {
+        culture = soninke
+        religion = sunni
+        size = 44
+    }
+
+    clergymen = {
+        culture = soninke
+        religion = sunni
+        size = 88
+    }
+
+    soldiers = {
+        culture = soninke
+        religion = sunni
+        size = 44
+    }
+
+    farmers = {
+        culture = soninke
+        religion = sunni
+        size = 1848
+    }
+	
+    aristocrats = {
+        culture = tuareg
+        religion = sunni
+        size = 88
+    }
+
+    clergymen = {
+        culture = tuareg
+        religion = sunni
+        size = 132
+    }
+
+    artisans = {
+        culture = tuareg
+        religion = sunni
+        size = 264
+    }
+
+    soldiers = {
+        culture = tuareg
+        religion = sunni
+        size = 44
+    }
+
+    farmers = {
+        culture = tuareg
+        religion = sunni
+        size = 2200
+    }
+
+    farmers = {
+        culture = songhai
+        religion = sunni
+        size = 792
+    }
+
+    farmers = {
+        culture = bambara
+        religion = sunni
+        size = 88
+    }
+
+    farmers = {
+        culture = fulbe
+        religion = sunni
+        size = 352
+    }
+}
+3776 = {
+    aristocrats = {
+        culture = soninke
+        religion = sunni
+        size = 242
+    }
+
+    clergymen = {
+        culture = soninke
+        religion = sunni
+        size = 132
+    }
+
+    artisans = {
+        culture = soninke
+        religion = sunni
+        size = 176
+    }
+
+    soldiers = {
+        culture = soninke
+        religion = sunni
+        size = 396
+    }
+
+    farmers = {
+        culture = soninke
+        religion = sunni
+        size = 10384
+    }
+
+    slaves = {
+        culture = soninke
+        religion = sunni
+        size = 176
+    }
+
+    aristocrats = {
+        culture = soninke
+        religion = fetishist
+        size = 66
+    }
+
+    clergymen = {
+        culture = soninke
+        religion = fetishist
+        size = 88
+    }
+
+    artisans = {
+        culture = soninke
+        religion = fetishist
+        size = 88
+    }
+
+    soldiers = {
+        culture = soninke
+        religion = fetishist
+        size = 44
+    }
+	
+    farmers = {
+        culture = soninke
+        religion = fetishist
+        size = 528
+    }
+
+    farmers = {
+        culture = maures
+        religion = sunni
+        size = 3938
+    }
+
+    farmers = {
+        culture = fulbe
+        religion = sunni
+        size = 946
+    }
+}

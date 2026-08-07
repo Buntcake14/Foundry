@@ -1,0 +1,10 @@
+owner = KNY
+controller = NYM
+add_core = NYM
+add_core = KNY
+trade_goods = cattle
+terrain = mountain
+life_rating = 25
+1836.1.1 = {
+owner = NYM
+}

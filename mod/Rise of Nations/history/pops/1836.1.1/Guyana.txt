@@ -1,0 +1,317 @@
+#Guyana (99600)
+#Ruled by Britain 1836
+#Georgetown (58600/14650 POPS)
+2239 = {
+    aristocrats = {
+        culture = british
+        religion = anglican
+        size = 27
+    }
+
+    bureaucrats = {
+        culture = british
+        religion = anglican
+        size = 14
+    }
+
+    clergymen = {
+        culture = british
+        religion = anglican
+        size = 6
+    }
+
+    artisans = {
+        culture = british
+        religion = anglican
+        size = 90
+    }
+
+    soldiers = {
+        culture = british
+        religion = anglican
+        size = 6
+    }
+
+    farmers = {
+        culture = british
+        religion = anglican
+        size = 24
+    }
+
+    clergymen = {
+        culture = kreol
+        religion = protestant
+        size = 15
+    }
+
+    artisans = {
+        culture = kreol
+        religion = protestant
+        size = 82
+    }
+
+    soldiers = {
+        culture = kreol
+        religion = protestant
+        size = 30
+    }
+
+    farmers = {
+        culture = kreol
+        religion = protestant
+        size = 862
+    }
+
+    farmers = {
+        culture = afro_caribbean
+        religion = protestant
+        size = 2962
+    }
+    artisans = {
+        culture = avadhi
+        religion = hindu
+        size = 562
+    }
+    artisans = {
+        culture = panjabi
+        religion = sunni
+        size = 600
+    }
+}
+3499 = {
+    aristocrats = {
+        culture = british
+        religion = protestant
+        size = 9
+    }
+	
+    farmers = {
+        culture = afro_caribbean
+        religion = protestant
+        size = 30
+    }
+	
+    farmers = {
+        culture = kreol
+        religion = protestant
+        size = 30
+    }
+
+    farmers = {
+        culture = amazonian
+        religion = protestant
+        size = 120
+    }
+}
+#Pirara
+830 = {
+
+	farmers = {
+        culture = amazonian
+        religion = animist
+        size = 172
+    }
+
+}
+#Mahdia (4000/1000 POPS)
+2242 = {
+    aristocrats = {
+        culture = british
+        religion = anglican
+        size = 3
+    }
+
+    bureaucrats = {
+        culture = british
+        religion = anglican
+        size = 2
+    }
+
+    clergymen = {
+        culture = british
+        religion = anglican
+        size = 2
+    }
+
+    artisans = {
+        culture = british
+        religion = anglican
+        size = 8
+    }
+
+    soldiers = {
+        culture = british
+        religion = anglican
+        size = 2
+    }
+
+    farmers = {
+        culture = british
+        religion = anglican
+        size = 6
+    }
+
+    clergymen = {
+        culture = kreol
+        religion = protestant
+        size = 8
+    }
+
+    artisans = {
+        culture = kreol
+        religion = protestant
+        size = 22
+    }
+
+    soldiers = {
+        culture = kreol
+        religion = protestant
+        size = 8
+    }
+
+    farmers = {
+        culture = kreol
+        religion = protestant
+        size = 8
+    }
+
+    artisans = {
+        culture = afro_caribbean
+        religion = protestant
+        size = 30
+    }
+
+    aristocrats = {
+        culture = amazonian
+        religion = animist
+        size = 3
+    }
+
+    clergymen = {
+        culture = amazonian
+        religion = animist
+        size = 8
+    }
+
+    artisans = {
+        culture = amazonian
+        religion = animist
+        size = 15
+    }
+
+    soldiers = {
+        culture = amazonian
+        religion = animist
+        size = 4
+    }
+
+    farmers = {
+        culture = amazonian
+        religion = animist
+        size = 39
+    }
+}
+#Essequibo (33000/8250 POPS)
+2243 = {
+    aristocrats = {
+        culture = british
+        religion = anglican
+        size = 15
+    }
+
+    clergymen = {
+        culture = british
+        religion = anglican
+        size = 8
+    }
+
+    artisans = {
+        culture = british
+        religion = anglican
+        size = 30
+    }
+
+    soldiers = {
+        culture = british
+        religion = anglican
+        size = 8
+    }
+
+    farmers = {
+        culture = british
+        religion = anglican
+        size = 15
+    }
+
+    clergymen = {
+        culture = afro_caribbean
+        religion = protestant
+        size = 22
+    }
+
+    artisans = {
+        culture = afro_caribbean
+        religion = protestant
+        size = 90
+    }
+
+    soldiers = {
+        culture = afro_caribbean
+        religion = protestant
+        size = 22
+    }
+
+    farmers = {
+        culture = afro_caribbean
+        religion = protestant
+        size = 2400
+    }
+    artisans = {
+        culture = avadhi
+        religion = hindu
+        size = 555
+    }
+    artisans = {
+        culture = panjabi
+        religion = sunni
+        size = 600
+    }
+    farmers = {
+        culture = kreol
+        religion = protestant
+        size = 165
+    }
+}
+#Biloka (4000/1000 POPS)
+1979 = {
+    aristocrats = {
+        culture = amazonian
+        religion = animist
+        size = 3
+    }
+
+    clergymen = {
+        culture = amazonian
+        religion = animist
+        size = 8
+    }
+
+    artisans = {
+        culture = amazonian
+        religion = animist
+        size = 15
+    }
+
+    soldiers = {
+        culture = amazonian
+        religion = animist
+        size = 4
+    }
+
+    farmers = {
+        culture = amazonian
+        religion = animist
+        size = 270
+    }
+
+}

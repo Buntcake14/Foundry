@@ -1,0 +1,1165 @@
+#file includes modern Somalia and Djibouti
+#Benadir Region (392000)
+#under the loose rule of Muscat in 1836
+#Mogadishu (216000/54000 POPS)
+1868 = {
+    aristocrats = {
+        culture = somali
+        religion = sunni
+        size = 1188
+    }
+
+    bureaucrats = {
+        culture = somali
+        religion = sunni
+        size = 92
+    }
+
+    officers = {
+        culture = somali
+        religion = sunni
+        size = 48
+    }
+
+    clergymen = {
+        culture = somali
+        religion = sunni
+        size = 396
+    }
+
+    artisans = {
+        culture = somali
+        religion = sunni
+        size = 1914
+    }
+
+    soldiers = {
+        culture = somali
+        religion = sunni
+        size = 990
+    }
+
+    farmers = {
+        culture = somali
+        religion = sunni
+        size = 12584
+    }
+
+    slaves = {
+        culture = cushitic
+        religion = sunni
+        size = 1760
+    }
+
+    farmers = {
+        culture = lacustrine_bantu
+        religion = sunni
+        size = 440
+    }
+
+    slaves = {
+        culture = lacustrine_bantu
+        religion = sunni
+        size = 704
+    }
+
+    slaves = {
+        culture = lacustrine_bantu
+        religion = animist
+        size = 2376
+    }
+}
+3712 = {
+    aristocrats = {
+        culture = somali
+        religion = sunni
+        size = 924
+    }
+
+    clergymen = {
+        culture = somali
+        religion = sunni
+        size = 484
+    }
+
+    artisans = {
+        culture = somali
+        religion = sunni
+        size = 1914
+    }
+
+    soldiers = {
+        culture = somali
+        religion = sunni
+        size = 990
+    }
+
+    farmers = {
+        culture = somali
+        religion = sunni
+        size = 13200
+    }
+
+    farmers = {
+        culture = swahili
+        religion = sunni
+        size = 968
+    }
+	
+    aristocrats = {
+        culture = bedouin
+        religion = sunni
+        size = 396
+    }
+
+    clergymen = {
+        culture = bedouin
+        religion = sunni
+        size = 220
+    }
+
+    artisans = {
+        culture = bedouin
+        religion = sunni
+        size = 528
+    }
+
+    soldiers = {
+        culture = bedouin
+        religion = sunni
+        size = 176
+    }
+
+    farmers = {
+        culture = bedouin
+        religion = sunni
+        size = 6600
+    }
+
+    slaves = {
+        culture = cushitic
+        religion = animist
+        size = 664
+    }
+
+    slaves = {
+        culture = oromo
+        religion = animist
+        size = 744
+    }
+
+    slaves = {
+        culture = lacustrine_bantu
+        religion = animist
+        size = 2156
+    }
+}
+3710 = {
+    aristocrats = {
+        culture = somali
+        religion = sunni
+        size = 308
+    }
+
+    clergymen = {
+        culture = somali
+        religion = sunni
+        size = 132
+    }
+
+    artisans = {
+        culture = somali
+        religion = sunni
+        size = 352
+    }
+
+    soldiers = {
+        culture = somali
+        religion = sunni
+        size = 176
+    }
+
+    farmers = {
+        culture = somali
+        religion = sunni
+        size = 16368
+    }
+
+    farmers = {
+        culture = lacustrine_bantu
+        religion = sunni
+        size = 440
+    }
+
+    slaves = {
+        culture = lacustrine_bantu
+        religion = sunni
+        size = 1320
+    }
+
+    slaves = {
+        culture = lacustrine_bantu
+        religion = animist
+        size = 2640
+    }
+
+    slaves = {
+        culture = cushitic
+        religion = animist
+        size = 440
+    }
+}
+#Kismayo (84000/21000 POPS)
+1870 = {
+    aristocrats = {
+        culture = somali
+        religion = sunni
+        size = 308
+    }
+
+    clergymen = {
+        culture = somali
+        religion = sunni
+        size = 176
+    }
+
+    artisans = {
+        culture = somali
+        religion = sunni
+        size = 264
+    }
+
+    soldiers = {
+        culture = somali
+        religion = sunni
+        size = 176
+    }
+
+    farmers = {
+        culture = somali
+        religion = sunni
+        size = 4928
+    }
+
+    slaves = {
+        culture = cushitic
+        religion = animist
+        size = 88
+    }
+
+    slaves = {
+        culture = lacustrine_bantu
+        religion = animist
+        size = 1144
+    }
+}
+#Morogoro (232000/58000 POPS)
+2045 = {
+    aristocrats = {
+        culture = somali
+        religion = sunni
+        size = 242
+    }
+
+    clergymen = {
+        culture = somali
+        religion = sunni
+        size = 132
+    }
+
+    artisans = {
+        culture = somali
+        religion = sunni
+        size = 572
+    }
+
+    soldiers = {
+        culture = somali
+        religion = sunni
+        size = 132
+    }
+
+    farmers = {
+        culture = somali
+        religion = sunni
+        size = 7326
+    }
+
+    aristocrats = {
+        culture = swahili
+        religion = sunni
+        size = 66
+    }
+
+    clergymen = {
+        culture = swahili
+        religion = sunni
+        size = 44
+    }
+
+    artisans = {
+        culture = swahili
+        religion = sunni
+        size = 220
+    }
+
+    soldiers = {
+        culture = swahili
+        religion = sunni
+        size = 44
+    }
+
+    farmers = {
+        culture = swahili
+        religion = sunni
+        size = 2002
+    }
+
+    slaves = {
+        culture = cushitic
+        religion = animist
+        size = 1100
+    }
+
+    slaves = {
+        culture = lacustrine_bantu
+        religion = animist
+        size = 2640
+    }
+}
+#uncolonized/ruled by the Sultan of Geledi in 1836
+#Baidoa (92000/23000 POPS)
+1869 = {
+    aristocrats = {
+        culture = somali
+        religion = sunni
+        size = 308
+    }
+
+    bureaucrats = {
+        culture = somali
+        religion = sunni
+        size = 97
+    }
+
+    officers = {
+        culture = somali
+        religion = sunni
+        size = 57
+    }
+
+    clergymen = {
+        culture = somali
+        religion = sunni
+        size = 154
+    }
+
+    artisans = {
+        culture = somali
+        religion = sunni
+        size = 616
+    }
+
+    soldiers = {
+        culture = somali
+        religion = sunni
+        size = 946
+    }
+
+    farmers = {
+        culture = somali
+        religion = sunni
+        size = 18040
+    }
+
+    farmers = {
+        culture = lacustrine_bantu
+        religion = sunni
+        size = 1320
+    }
+
+    slaves = {
+        culture = lacustrine_bantu
+        religion = animist
+        size = 3080
+    }
+
+    slaves = {
+        culture = lacustrine_bantu
+        religion = sunni
+        size = 1760
+    }
+
+    slaves = {
+        culture = cushitic
+        religion = animist
+        size = 352
+    }
+}
+#Majerteyn Region (192000)
+#under the loose rule of Muscat via Sultan of Majerteyn in 1836
+#Hobye (76000/19000 POPS)
+1871 = {
+    aristocrats = {
+        culture = somali
+        religion = sunni
+        size = 308
+    }
+
+    clergymen = {
+        culture = somali
+        religion = sunni
+        size = 154
+    }
+
+    artisans = {
+        culture = somali
+        religion = sunni
+        size = 682
+    }
+
+    soldiers = {
+        culture = somali
+        religion = sunni
+        size = 968
+    }
+
+    farmers = {
+        culture = somali
+        religion = sunni
+        size = 15488
+    }
+
+    slaves = {
+        culture = cushitic
+        religion = animist
+        size = 1760
+    }
+}
+3709 = {
+    aristocrats = {
+        culture = somali
+        religion = sunni
+        size = 308
+    }
+
+    bureaucrats = {
+        culture = somali
+        religion = sunni
+        size = 110
+    }
+
+    officers = {
+        culture = somali
+        religion = sunni
+        size = 57
+    }
+
+    clergymen = {
+        culture = somali
+        religion = sunni
+        size = 154
+    }
+
+    artisans = {
+        culture = somali
+        religion = sunni
+        size = 682
+    }
+
+    soldiers = {
+        culture = somali
+        religion = sunni
+        size = 176
+    }
+
+    farmers = {
+        culture = somali
+        religion = sunni
+        size = 16016
+    }
+
+    farmers = {
+        culture = lacustrine_bantu
+        religion = sunni
+        size = 88
+    }
+
+    slaves = {
+        culture = lacustrine_bantu
+        religion = animist
+        size = 1056
+    }
+
+    slaves = {
+        culture = cushitic
+        religion = animist
+        size = 264
+    }
+}
+#Busaso (116000/29000 POPS)
+1872 = {
+    aristocrats = {
+        culture = somali
+        religion = sunni
+        size = 299
+    }
+
+    bureaucrats = {
+        culture = somali
+        religion = sunni
+        size = 48
+    }
+
+    officers = {
+        culture = somali
+        religion = sunni
+        size = 26
+    }
+
+    clergymen = {
+        culture = somali
+        religion = sunni
+        size = 110
+    }
+
+    artisans = {
+        culture = somali
+        religion = sunni
+        size = 242
+    }
+
+    soldiers = {
+        culture = somali
+        religion = sunni
+        size = 88
+    }
+
+    farmers = {
+        culture = somali
+        religion = sunni
+        size = 11528
+    }
+
+    slaves = {
+        culture = cushitic
+        religion = animist
+        size = 880
+    }
+}
+3819 = {
+    aristocrats = {
+        culture = somali
+        religion = sunni
+        size = 299
+    }
+
+    clergymen = {
+        culture = somali
+        religion = sunni
+        size = 110
+    }
+
+    artisans = {
+        culture = somali
+        religion = sunni
+        size = 242
+    }
+
+    soldiers = {
+        culture = somali
+        religion = sunni
+        size = 880
+    }
+
+    farmers = {
+        culture = somali
+        religion = sunni
+        size = 15400
+    }
+
+    slaves = {
+        culture = cushitic
+        religion = animist
+        size = 440
+    }
+}
+#Real Boosaaso
+3818 = {
+    aristocrats = {
+        culture = somali
+        religion = sunni
+        size = 176
+    }
+
+    bureaucrats = {
+        culture = somali
+        religion = sunni
+        size = 18
+    }
+
+    officers = {
+        culture = somali
+        religion = sunni
+        size = 9
+    }
+
+    clergymen = {
+        culture = somali
+        religion = sunni
+        size = 110
+    }
+
+    artisans = {
+        culture = somali
+        religion = sunni
+        size = 242
+    }
+
+    soldiers = {
+        culture = somali
+        religion = sunni
+        size = 88
+    }
+
+    farmers = {
+        culture = somali
+        religion = sunni
+        size = 11352
+    }
+
+    slaves = {
+        culture = cushitic
+        religion = animist
+        size = 880
+    }
+}
+#Adal Region (244000)
+1873 = {
+    aristocrats = {
+        culture = somali
+        religion = sunni
+        size = 167
+    }
+
+    clergymen = {
+        culture = somali
+        religion = sunni
+        size = 132
+    }
+
+    artisans = {
+        culture = somali
+        religion = sunni
+        size = 220
+    }
+
+    soldiers = {
+        culture = somali
+        religion = sunni
+        size = 132
+    }
+
+    farmers = {
+        culture = somali
+        religion = sunni
+        size = 8844
+    }
+
+    slaves = {
+        culture = cushitic
+        religion = animist
+        size = 660
+    }
+}
+#Berbera (188000/47000 POPS)
+3706 = {
+    aristocrats = {
+        culture = somali
+        religion = sunni
+        size = 352
+    }
+
+    bureaucrats = {
+        culture = somali
+        religion = sunni
+        size = 79
+    }
+
+    officers = {
+        culture = somali
+        religion = sunni
+        size = 44
+    }
+
+    clergymen = {
+        culture = somali
+        religion = sunni
+        size = 264
+    }
+
+    artisans = {
+        culture = somali
+        religion = sunni
+        size = 528
+    }
+
+    soldiers = {
+        culture = somali
+        religion = sunni
+        size = 1012
+    }
+
+    farmers = {
+        culture = somali
+        religion = sunni
+        size = 14256
+    }
+	
+    slaves = {
+        culture = cushitic
+        religion = animist
+        size = 880
+    }
+}
+#Berbera (188000/47000 POPS)
+3820 = {
+    aristocrats = {
+        culture = somali
+        religion = sunni
+        size = 176
+    }
+
+    clergymen = {
+        culture = somali
+        religion = sunni
+        size = 132
+    }
+
+    artisans = {
+        culture = somali
+        religion = sunni
+        size = 176
+    }
+
+    soldiers = {
+        culture = somali
+        religion = sunni
+        size = 1012
+    }
+
+    farmers = {
+        culture = somali
+        religion = sunni
+        size = 12584
+    }
+
+    slaves = {
+        culture = oromo
+        religion = animist
+        size = 440
+    }
+
+    slaves = {
+        culture = cushitic
+        religion = animist
+        size = 440
+    }
+}
+3958 = {
+    aristocrats = {
+        culture = somali
+        religion = sunni
+        size = 176
+    }
+
+    clergymen = {
+        culture = somali
+        religion = sunni
+        size = 132
+    }
+
+    artisans = {
+        culture = somali
+        religion = sunni
+        size = 176
+    }
+
+    soldiers = {
+        culture = somali
+        religion = sunni
+        size = 132
+    }
+
+    farmers = {
+        culture = somali
+        religion = sunni
+        size = 12848
+    }
+
+    slaves = {
+        culture = cushitic
+        religion = animist
+        size = 440
+    }
+}
+#Berbera (188000/47000 POPS)
+3967 = {
+    aristocrats = {
+        culture = somali
+        religion = sunni
+        size = 176
+    }
+
+    clergymen = {
+        culture = somali
+        religion = sunni
+        size = 132
+    }
+
+    artisans = {
+        culture = somali
+        religion = sunni
+        size = 176
+    }
+
+    soldiers = {
+        culture = somali
+        religion = sunni
+        size = 132
+    }
+
+    farmers = {
+        culture = somali
+        religion = sunni
+        size = 4400
+    }
+}
+#Berbera (188000/47000 POPS)
+3707 = {
+    aristocrats = {
+        culture = somali
+        religion = sunni
+        size = 176
+    }
+
+    bureaucrats = {
+        culture = somali
+        religion = sunni
+        size = 48
+    }
+
+    officers = {
+        culture = somali
+        religion = sunni
+        size = 22
+    }
+
+    clergymen = {
+        culture = somali
+        religion = sunni
+        size = 88
+    }
+
+    artisans = {
+        culture = somali
+        religion = sunni
+        size = 176
+    }
+
+    soldiers = {
+        culture = somali
+        religion = sunni
+        size = 924
+    }
+
+    farmers = {
+        culture = somali
+        religion = sunni
+        size = 17547
+    }
+
+    slaves = {
+        culture = cushitic
+        religion = animist
+        size = 1760
+    }
+}
+#Zayla (32000/8000 POPS)
+1874 = {
+    aristocrats = {
+        culture = somali
+        religion = sunni
+        size = 132
+    }
+
+    clergymen = {
+        culture = somali
+        religion = sunni
+        size = 66
+    }
+
+    artisans = {
+        culture = somali
+        religion = sunni
+        size = 352
+    }
+
+    soldiers = {
+        culture = somali
+        religion = sunni
+        size = 66
+    }
+
+    farmers = {
+        culture = somali
+        religion = sunni
+        size = 8712
+    }
+
+    slaves = {
+        culture = harari
+        religion = sunni
+        size = 704
+    }
+}
+3711 = {
+    aristocrats = {
+        culture = somali
+        religion = sunni
+        size = 220
+    }
+
+    clergymen = {
+        culture = somali
+        religion = sunni
+        size = 154
+    }
+
+    artisans = {
+        culture = somali
+        religion = sunni
+        size = 352
+    }
+
+    soldiers = {
+        culture = somali
+        religion = sunni
+        size = 1034
+    }
+
+    farmers = {
+        culture = somali
+        religion = sunni
+        size = 9240
+    }
+
+    slaves = {
+        culture = cushitic
+        religion = sunni
+        size = 440
+    }
+
+    farmers = {
+        culture = lacustrine_bantu
+        religion = sunni
+        size = 1320
+    }
+
+    slaves = {
+        culture = lacustrine_bantu
+        religion = sunni
+        size = 1760
+    }
+
+    slaves = {
+        culture = lacustrine_bantu
+        religion = animist
+        size = 2640
+    }
+}
+3708 = {
+    aristocrats = {
+        culture = somali
+        religion = sunni
+        size = 132
+    }
+
+    clergymen = {
+        culture = somali
+        religion = sunni
+        size = 66
+    }
+
+    artisans = {
+        culture = somali
+        religion = sunni
+        size = 352
+    }
+
+    soldiers = {
+        culture = somali
+        religion = sunni
+        size = 66
+    }
+
+    farmers = {
+        culture = somali
+        religion = sunni
+        size = 6600
+    }
+
+    slaves = {
+        culture = cushitic
+        religion = animist
+        size = 88
+    }
+}
+#Jibuti (28000/7000 POPS) #now part of Djibouti
+1875 = {
+    aristocrats = {
+        culture = somali
+        religion = sunni
+        size = 44
+    }
+
+    clergymen = {
+        culture = somali
+        religion = sunni
+        size = 66
+    }
+
+    artisans = {
+        culture = somali
+        religion = sunni
+        size = 132
+    }
+
+    soldiers = {
+        culture = somali
+        religion = sunni
+        size = 22
+    }
+
+    farmers = {
+        culture = somali
+        religion = sunni
+        size = 264
+    }
+
+    slaves = {
+        culture = somali
+        religion = sunni
+        size = 176
+    }
+
+    aristocrats = {
+        culture = afar
+        religion = sunni
+        size = 44
+    }
+
+    bureaucrats = {
+        culture = afar
+        religion = sunni
+        size = 9
+    }
+
+    officers = {
+        culture = afar
+        religion = sunni
+        size = 4
+    }
+
+    clergymen = {
+        culture = afar
+        religion = sunni
+        size = 66
+    }
+
+    artisans = {
+        culture = afar
+        religion = sunni
+        size = 176
+    }
+
+    soldiers = {
+        culture = afar
+        religion = sunni
+        size = 44
+    }
+
+    farmers = {
+        culture = afar
+        religion = sunni
+        size = 5038
+    }
+
+}
+3870 = {
+    aristocrats = {
+        culture = somali
+        religion = sunni
+        size = 44
+    }
+
+    clergymen = {
+        culture = somali
+        religion = sunni
+        size = 66
+    }
+
+    slaves = {
+        culture = somali
+        religion = sunni
+        size = 132
+    }
+
+    soldiers = {
+        culture = somali
+        religion = sunni
+        size = 22
+    }
+
+    farmers = {
+        culture = somali
+        religion = sunni
+        size = 4488
+    }
+
+    aristocrats = {
+        culture = afar
+        religion = sunni
+        size = 22
+    }
+
+    clergymen = {
+        culture = afar
+        religion = sunni
+        size = 13
+    }
+
+    artisans = {
+        culture = afar
+        religion = sunni
+        size = 31
+    }
+
+    soldiers = {
+        culture = afar
+        religion = sunni
+        size = 22
+    }
+
+    farmers = {
+        culture = afar
+        religion = sunni
+        size = 374
+    }
+
+    slaves = {
+        culture = afar
+        religion = sunni
+        size = 176
+    }
+}

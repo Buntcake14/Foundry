@@ -1,0 +1,104 @@
+#Aruba (2400/600 POPS)
+2235 = {
+
+    aristocrats = {
+        culture = dutch
+        religion = reformed
+        size = 1
+    }
+
+    clergymen = {
+        culture = dutch
+        religion = reformed
+        size = 8
+    }
+
+    farmers = {
+        culture = dutch
+        religion = reformed
+        size = 120
+    }
+
+    slaves = {
+        culture = afro_dutch
+        religion = catholic
+        size = 52
+    }
+	
+	#From Curacao
+    aristocrats = {
+        culture = dutch
+        religion = reformed
+        size = 23
+    }
+
+    bureaucrats = {
+        culture = dutch
+        religion = reformed
+        size = 2
+    }
+
+    soldiers = {
+        culture = dutch
+        religion = reformed
+        size = 8
+    }
+
+    artisans = {
+        culture = dutch
+        religion = reformed
+        size = 21
+    }
+
+    clergymen = {
+        culture = dutch
+        religion = reformed
+        size = 6
+    }
+
+    farmers = {
+        culture = dutch
+        religion = reformed
+        size = 624
+    }
+
+    slaves = {
+        culture = afro_dutch
+        religion = catholic
+        size = 270
+    }
+}
+#Philipsburg - Saint Martin (4800/1200 POPS)
+2236 = {
+
+    aristocrats = {
+        culture = dutch
+        religion = reformed
+        size = 3
+    }
+
+    clergymen = {
+        culture = dutch
+        religion = reformed
+        size = 8
+    }
+
+    artisans = {
+        culture = afro_dutch
+        religion = protestant
+        size = 16
+    }
+
+    farmers = {
+        culture = dutch
+        religion = reformed
+        size = 120
+    }
+
+    slaves = {
+        culture = afro_dutch
+        religion = protestant
+        size = 30
+    }
+
+}

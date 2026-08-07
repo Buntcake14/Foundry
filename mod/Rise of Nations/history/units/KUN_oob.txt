@@ -1,0 +1,7 @@
+leader = {
+    name = "Mohammad Murad Beg"
+    type = land
+    date = 1825.8.20
+    background = attack_2.1
+    personality = defence_2.1
+}

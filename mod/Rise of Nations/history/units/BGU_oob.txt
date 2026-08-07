@@ -1,0 +1,8 @@
+leader = {
+    name = "Dogo dan Jibrim"
+    type = land
+    date = 1830.1.1
+    personality = defence_3.1
+    background = attack_3.1
+    prestige = 0.1
+}

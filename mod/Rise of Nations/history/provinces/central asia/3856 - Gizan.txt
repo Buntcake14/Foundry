@@ -1,0 +1,6 @@
+owner = NJN
+controller = NJN
+add_core = NJN
+trade_goods = sulphur
+terrain = coral_island
+life_rating = 31

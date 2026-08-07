@@ -1,0 +1,97 @@
+#Central Melanesia (54000)
+#uncolonized in 1836
+#Solomon Islands (48000/12000 POPS)
+2534 = {
+    aristocrats = {
+        culture = melanesian
+        religion = animist
+        size = 191
+    }
+
+    clergymen = {
+        culture = melanesian
+        religion = animist
+        size = 106
+    }
+
+    artisans = {
+        culture = melanesian
+        religion = animist
+        size = 510
+    }
+
+    soldiers = {
+        culture = melanesian
+        religion = animist
+        size = 106
+    }
+
+    farmers = {
+        culture = melanesian
+        religion = animist
+        size = 5950
+    }
+}
+3754 = {
+    aristocrats = {
+        culture = melanesian
+        religion = animist
+        size = 191
+    }
+
+    clergymen = {
+        culture = melanesian
+        religion = animist
+        size = 106
+    }
+
+    artisans = {
+        culture = melanesian
+        religion = animist
+        size = 510
+    }
+
+    soldiers = {
+        culture = melanesian
+        religion = animist
+        size = 106
+    }
+
+    farmers = {
+        culture = melanesian
+        religion = animist
+        size = 3336
+    }
+}
+#Santa Cruz Islands (6000/1500 POPS)
+2536 = {
+    aristocrats = {
+        culture = melanesian
+        religion = animist
+        size = 21
+    }
+
+    clergymen = {
+        culture = melanesian
+        religion = animist
+        size = 30
+    }
+
+    artisans = {
+        culture = melanesian
+        religion = animist
+        size = 64
+    }
+
+    soldiers = {
+        culture = melanesian
+        religion = animist
+        size = 13
+    }
+
+    farmers = {
+        culture = melanesian
+        religion = animist
+        size = 1148
+    }
+}

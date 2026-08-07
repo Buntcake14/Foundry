@@ -1,0 +1,41 @@
+army = {
+    name = "Midlands Garrison"
+    location = 284
+
+    regiment = {
+        name = "Warwickshire Regiment"
+        type = infantry
+        home = 284
+    }
+    regiment = {
+        name = "Sherwood Foresters"
+        type = infantry
+        home = 288
+    }
+    regiment = {
+        name = "Leicestershire Regiment"
+        type = infantry
+        home = 289
+    }
+}
+
+army = {
+    name = "Northern Garrison"
+    location = 282
+
+    regiment = {
+        name = "Yorkshire Regiment"
+        type = infantry
+        home = 282
+    }
+    regiment = {
+        name = "Lancashire Fusiliers"
+        type = infantry
+        home = 277
+    }
+    regiment = {
+        name = "Northumberland Fusiliers"
+        type = infantry
+        home = 280
+    }
+}

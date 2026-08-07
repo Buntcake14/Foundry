@@ -1,0 +1,92 @@
+leader = {
+    name = "Manuel Marques de Sousa"
+    picture = brz_gen_marques
+    date = 1830.1.1
+    type = land
+    personality = no_personality
+    background = attack_1.1
+    prestige = 0.1
+}
+leader = {
+    name = "Luís Alves de Lima e Silva"
+    picture = brz_gen_caxias
+    date = 1830.1.1
+    type = land
+    personality = defence_2.30
+    background = attack_3.12
+    prestige = 0.1
+}
+leader = {
+    name = "Miguel de Frias e Vasconcelos"
+    picture = brz_gen_miguel
+    date = 1830.1.1
+    type = land
+    personality = defence_1.100
+    background = attack_1.1
+    prestige = 0.1
+}
+leader = {
+    name = "João Propício de Menna Barreto"
+    picture = brz_gen_propicio
+    date = 1830.1.1
+    type = land
+    personality = defence_1.1
+    background = no_background
+}
+leader = {
+    name = "João Frederico Caldwell"
+    picture = european_general_45
+    date = 1830.1.1
+    type = land
+    personality = defence_2.1
+    background = no_background    
+}
+leader = {
+    name = "José Maria da Silva Bittencourt"
+    picture = brz_gen_jose_maria
+    date = 1830.1.1
+    type = land
+    personality = no_personality
+    background = attack_1.1
+}
+leader = {
+    name = "Manuel Luís Osório"
+    picture = brz_gen_osorio
+    date = 1830.1.1
+    type = land
+    personality = no_personality
+    background = attack_1.50
+}
+leader = {
+    name = "Manuel da Fonseca de Lima e Silva"
+    picture = brz_gen_fonseca
+    date = 1830.1.1
+    type = land
+    personality = no_personality
+    background = no_background
+}
+leader = {
+    name = "Frederico Mariath"
+    picture = european_admiral_0
+    date = 1830.1.1
+    type = sea
+    personality = no_personality
+    background = attack_1.1
+}
+leader = {
+    name = "Joaquim Marques Lisboa"
+    picture = brz_adm_lisboa
+    date = 1830.1.1
+    type = sea
+    personality = defence_1.20
+    background = attack_1.1
+}
+leader = {
+    name = "Francisco Manuel Barroso"
+    picture = brz_adm_barroso
+    date = 1830.1.1
+    type = sea
+    personality = defence_2.1
+    background = no_background
+
+}

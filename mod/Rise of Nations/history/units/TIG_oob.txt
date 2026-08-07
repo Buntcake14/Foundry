@@ -1,0 +1,7 @@
+leader = {
+   name = "Ras Wube Haile Mariam"
+   type = land
+   date = 1830.1.1
+   background = attack_2.1
+   personality = no_personality
+}

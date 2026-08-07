@@ -1,0 +1,135 @@
+political_decisions = {
+
+    #London's role as the Crown's financial backbone, formalized further.
+    enl_bank_of_england_reform = {
+        potential = {
+            tag = ENL
+            NOT = { has_country_flag = bank_of_england_reformed }
+        }
+
+        allow = {
+            war = no
+        }
+
+        effect = {
+            set_country_flag = bank_of_england_reformed
+            prestige = 8
+        }
+
+        ai_will_do = {
+            factor = 1
+        }
+    }
+
+    #The real 1790s canal-building boom, concentrated in Mercia's industrial heartland
+    #(matches the mod's own canal_mania starting tech).
+    mca_canal_mania_investment = {
+        potential = {
+            tag = MCA
+            NOT = { has_country_flag = canal_mania_invested }
+        }
+
+        allow = {
+            war = no
+        }
+
+        effect = {
+            set_country_flag = canal_mania_invested
+            prestige = 8
+        }
+
+        ai_will_do = {
+            factor = 1
+        }
+    }
+
+    #Edinburgh's real reputation as the "Athens of the North" during this period.
+    sco_enlightenment_patronage = {
+        potential = {
+            tag = SCO
+            NOT = { has_country_flag = enlightenment_patronised }
+        }
+
+        allow = {
+            war = no
+        }
+
+        effect = {
+            set_country_flag = enlightenment_patronised
+            prestige = 10
+        }
+
+        ai_will_do = {
+            factor = 1
+        }
+    }
+
+    #Ireland isn't unified under England here, so its Penal Laws can plausibly
+    #be relaxed earlier and on its own terms.
+    ire_penal_laws_relief = {
+        potential = {
+            tag = IRE
+            NOT = { has_country_flag = penal_laws_relieved }
+        }
+
+        allow = {
+            war = no
+        }
+
+        effect = {
+            set_country_flag = penal_laws_relieved
+            prestige = 6
+        }
+
+        ai_will_do = {
+            factor = 1
+        }
+    }
+
+    #The real Welsh Methodist revival of this period, a defining moment for
+    #Welsh national identity and Welsh-language literacy.
+    wha_methodist_revival = {
+        potential = {
+            tag = WHA
+            NOT = { has_country_flag = methodist_revival_embraced }
+        }
+
+        allow = {
+            war = no
+        }
+
+        effect = {
+            set_country_flag = methodist_revival_embraced
+            prestige = 6
+        }
+
+        ai_will_do = {
+            factor = 1
+        }
+    }
+
+    #Real: Cornish as a living community language was effectively extinct by
+    #the 1777 death of its last known native speaker, Dolly Pentreath. A 1790s
+    #revival is a plausible act of cultural recovery, not restoration of an
+    #unbroken tradition.
+    crn_language_revival = {
+        potential = {
+            tag = CRN
+            NOT = { has_country_flag = cornish_revival_embraced }
+        }
+
+        allow = {
+            war = no
+        }
+
+        effect = {
+            set_country_flag = cornish_revival_embraced
+            prestige = 6
+            add_accepted_culture = welsh
+        }
+
+        ai_will_do = {
+            factor = 1
+        }
+    }
+}

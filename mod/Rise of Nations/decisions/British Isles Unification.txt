@@ -1,0 +1,434 @@
+political_decisions = {
+
+    #England itself starts split between London-led ENL (south) and industrial Mercia/MCA
+    #(north). Either can reunify England -- whoever wins ends up as ENL, since English
+    #identity doesn't fork the way Scottish/Irish/Welsh-led reunification does.
+    form_england_south = {
+        potential = {
+            tag = ENL
+            NOT = { has_country_flag = formed_england }
+        }
+
+        allow = {
+            war = no
+            OR = {
+                MCA = { all_core = { owned_by = THIS } }
+                MCA = { alliance_with = THIS }
+            }
+        }
+
+        effect = {
+            set_country_flag = formed_england
+            prestige = 15
+            random_country = {
+                limit = { tag = MCA  exists = yes }
+                THIS = { inherit = MCA }
+            }
+        }
+
+        ai_will_do = {
+            factor = 1
+        }
+    }
+
+    form_england_north = {
+        potential = {
+            tag = MCA
+            NOT = { has_country_flag = formed_england }
+        }
+
+        allow = {
+            war = no
+            OR = {
+                ENL = { all_core = { owned_by = THIS } }
+                ENL = { alliance_with = THIS }
+            }
+        }
+
+        effect = {
+            set_country_flag = formed_england
+            prestige = 15
+            random_country = {
+                limit = { tag = ENL  exists = yes }
+                THIS = { inherit = ENL }
+            }
+            change_tag = ENL
+        }
+
+        ai_will_do = {
+            factor = 1
+        }
+    }
+
+    #England-led: reforms the old Kingdom. ENG owns no provinces at start (its overseas
+    #colonies were released as independent nations), so it's a pure formable, same as CLD/HIB/CMB.
+    form_united_kingdom = {
+        potential = {
+            tag = ENL
+            NOT = { exists = ENG }
+            NOT = { has_country_flag = formed_united_kingdom }
+        }
+
+        allow = {
+            war = no
+            OR = {
+                AND = {
+                    SCO = { all_core = { owned_by = THIS } }
+                    IRE = { all_core = { owned_by = THIS } }
+                    WHA = { all_core = { owned_by = THIS } }
+                }
+                AND = {
+                    SCO = { alliance_with = THIS }
+                    IRE = { alliance_with = THIS }
+                    WHA = { alliance_with = THIS }
+                }
+            }
+        }
+
+        effect = {
+            set_country_flag = formed_united_kingdom
+            prestige = 25
+            badboy = 5
+            add_accepted_culture = scottish
+            add_accepted_culture = welsh
+            add_accepted_culture = irish
+
+            random_country = {
+                limit = { tag = SCO  exists = yes }
+                THIS = { inherit = SCO }
+            }
+            random_country = {
+                limit = { tag = IRE  exists = yes }
+                THIS = { inherit = IRE }
+            }
+            random_country = {
+                limit = { tag = WHA  exists = yes }
+                THIS = { inherit = WHA }
+            }
+
+            change_tag = ENG
+        }
+
+        ai_will_do = {
+            factor = 1
+        }
+    }
+
+    #Scotland-led: forms Caledonia, a new empire under Edinburgh rather than London.
+    form_caledonia = {
+        potential = {
+            tag = SCO
+            NOT = { exists = CLD }
+            NOT = { has_country_flag = formed_caledonia }
+            NOT = { has_country_flag = restored_united_kingdom }
+        }
+
+        allow = {
+            war = no
+            OR = {
+                AND = {
+                    ENL = { all_core = { owned_by = THIS } }
+                    IRE = { all_core = { owned_by = THIS } }
+                    WHA = { all_core = { owned_by = THIS } }
+                }
+                AND = {
+                    ENL = { alliance_with = THIS }
+                    IRE = { alliance_with = THIS }
+                    WHA = { alliance_with = THIS }
+                }
+            }
+        }
+
+        effect = {
+            set_country_flag = formed_caledonia
+            prestige = 25
+            badboy = 5
+            add_accepted_culture = british
+            add_accepted_culture = welsh
+            add_accepted_culture = irish
+
+            random_country = {
+                limit = { tag = ENL  exists = yes }
+                THIS = { inherit = ENL }
+            }
+            random_country = {
+                limit = { tag = IRE  exists = yes }
+                THIS = { inherit = IRE }
+            }
+            random_country = {
+                limit = { tag = WHA  exists = yes }
+                THIS = { inherit = WHA }
+            }
+
+            change_tag = CLD
+        }
+
+        ai_will_do = {
+            factor = 1
+            modifier = {
+                factor = 2
+                ruling_party_ideology = reactionary
+            }
+            modifier = {
+                factor = 0.5
+                ruling_party_ideology = liberal
+            }
+        }
+    }
+
+    #Scotland-led, reconciliation path: the same conquest/alliance achievement as Caledonia,
+    #but chooses to restore the old union instead of a new Caledonian identity. Scottish
+    #culture cedes primary status to the shared British identity rather than being imposed
+    #over the rest of the isles -- reads as restoration, not conquest, so English/Welsh/Irish
+    #get accepted status immediately and unrest is lower, at the cost of Scotland's own
+    #identity being subsumed rather than exalted (suppressed_national_identity, lower prestige
+    #than Caledonia's 25).
+    restore_united_kingdom_scottish_led = {
+        potential = {
+            tag = SCO
+            NOT = { exists = ENG }
+            NOT = { has_country_flag = formed_caledonia }
+            NOT = { has_country_flag = restored_united_kingdom }
+        }
+
+        allow = {
+            war = no
+            OR = {
+                AND = {
+                    ENL = { all_core = { owned_by = THIS } }
+                    IRE = { all_core = { owned_by = THIS } }
+                    WHA = { all_core = { owned_by = THIS } }
+                }
+                AND = {
+                    ENL = { alliance_with = THIS }
+                    IRE = { alliance_with = THIS }
+                    WHA = { alliance_with = THIS }
+                }
+            }
+        }
+
+        effect = {
+            set_country_flag = restored_united_kingdom
+            prestige = 15
+            badboy = 5
+            primary_culture = british
+            add_accepted_culture = scottish
+            add_accepted_culture = welsh
+            add_accepted_culture = irish
+            add_country_modifier = {
+                name = suppressed_national_identity
+                duration = 3650
+            }
+
+            random_country = {
+                limit = { tag = ENL  exists = yes }
+                THIS = { inherit = ENL }
+            }
+            random_country = {
+                limit = { tag = IRE  exists = yes }
+                THIS = { inherit = IRE }
+            }
+            random_country = {
+                limit = { tag = WHA  exists = yes }
+                THIS = { inherit = WHA }
+            }
+
+            change_tag = ENG
+        }
+
+        ai_will_do = {
+            factor = 1
+            modifier = {
+                factor = 2
+                ruling_party_ideology = liberal
+            }
+            modifier = {
+                factor = 0.5
+                ruling_party_ideology = reactionary
+            }
+        }
+    }
+
+    #Ireland-led: forms Hibernia, a new empire under Dublin rather than London.
+    form_hibernia = {
+        potential = {
+            tag = IRE
+            NOT = { exists = HIB }
+            NOT = { has_country_flag = formed_hibernia }
+            NOT = { has_country_flag = restored_united_kingdom }
+        }
+
+        allow = {
+            war = no
+            OR = {
+                AND = {
+                    ENL = { all_core = { owned_by = THIS } }
+                    SCO = { all_core = { owned_by = THIS } }
+                    WHA = { all_core = { owned_by = THIS } }
+                }
+                AND = {
+                    ENL = { alliance_with = THIS }
+                    SCO = { alliance_with = THIS }
+                    WHA = { alliance_with = THIS }
+                }
+            }
+        }
+
+        effect = {
+            set_country_flag = formed_hibernia
+            prestige = 25
+            badboy = 5
+            add_accepted_culture = british
+            add_accepted_culture = scottish
+            add_accepted_culture = welsh
+
+            random_country = {
+                limit = { tag = ENL  exists = yes }
+                THIS = { inherit = ENL }
+            }
+            random_country = {
+                limit = { tag = SCO  exists = yes }
+                THIS = { inherit = SCO }
+            }
+            random_country = {
+                limit = { tag = WHA  exists = yes }
+                THIS = { inherit = WHA }
+            }
+
+            change_tag = HIB
+        }
+
+        ai_will_do = {
+            factor = 1
+            modifier = {
+                factor = 2
+                ruling_party_ideology = reactionary
+            }
+            modifier = {
+                factor = 0.5
+                ruling_party_ideology = liberal
+            }
+        }
+    }
+
+    #Ireland-led, reconciliation path: same achievement as Hibernia, chooses restoration
+    #instead. See restore_united_kingdom_scottish_led above for the full reasoning.
+    restore_united_kingdom_irish_led = {
+        potential = {
+            tag = IRE
+            NOT = { exists = ENG }
+            NOT = { has_country_flag = formed_hibernia }
+            NOT = { has_country_flag = restored_united_kingdom }
+        }
+
+        allow = {
+            war = no
+            OR = {
+                AND = {
+                    ENL = { all_core = { owned_by = THIS } }
+                    SCO = { all_core = { owned_by = THIS } }
+                    WHA = { all_core = { owned_by = THIS } }
+                }
+                AND = {
+                    ENL = { alliance_with = THIS }
+                    SCO = { alliance_with = THIS }
+                    WHA = { alliance_with = THIS }
+                }
+            }
+        }
+
+        effect = {
+            set_country_flag = restored_united_kingdom
+            prestige = 15
+            badboy = 5
+            primary_culture = british
+            add_accepted_culture = scottish
+            add_accepted_culture = welsh
+            add_accepted_culture = irish
+            add_country_modifier = {
+                name = suppressed_national_identity
+                duration = 3650
+            }
+
+            random_country = {
+                limit = { tag = ENL  exists = yes }
+                THIS = { inherit = ENL }
+            }
+            random_country = {
+                limit = { tag = SCO  exists = yes }
+                THIS = { inherit = SCO }
+            }
+            random_country = {
+                limit = { tag = WHA  exists = yes }
+                THIS = { inherit = WHA }
+            }
+
+            change_tag = ENG
+        }
+
+        ai_will_do = {
+            factor = 1
+            modifier = {
+                factor = 2
+                ruling_party_ideology = liberal
+            }
+            modifier = {
+                factor = 0.5
+                ruling_party_ideology = reactionary
+            }
+        }
+    }
+
+    #Wales-led: forms Cambria, a new empire under Cardiff rather than London.
+    form_cambria = {
+        potential = {
+            tag = WHA
+            NOT = { exists = CMB }
+            NOT = { has_country_flag = formed_cambria }
+        }
+
+        allow = {
+            war = no
+            OR = {
+                AND = {
+                    ENL = { all_core = { owned_by = THIS } }
+                    SCO = { all_core = { owned_by = THIS } }
+                    IRE = { all_core = { owned_by = THIS } }
+                }
+                AND = {
+                    ENL = { alliance_with = THIS }
+                    SCO = { alliance_with = THIS }
+                    IRE = { alliance_with = THIS }
+                }
+            }
+        }
+
+        effect = {
+            set_country_flag = formed_cambria
+            prestige = 25
+            badboy = 5
+            add_accepted_culture = british
+            add_accepted_culture = scottish
+            add_accepted_culture = irish
+
+            random_country = {
+                limit = { tag = ENL  exists = yes }
+                THIS = { inherit = ENL }
+            }
+            random_country = {
+                limit = { tag = SCO  exists = yes }
+                THIS = { inherit = SCO }
+            }
+            random_country = {
+                limit = { tag = IRE  exists = yes }
+                THIS = { inherit = IRE }
+            }
+
+            change_tag = CMB
+        }
+
+        ai_will_do = {
+            factor = 1
+        }
+    }
+}

@@ -1,0 +1,624 @@
+#Ubangi-Shari Region (228000)
+#uncolonized in 1836
+#Bangui (104000/26000 POPS)
+1965 = {
+    aristocrats = {
+        culture = ubangian
+        religion = fetishist
+        size = 440
+    }
+
+    clergymen = {
+        culture = ubangian
+        religion = fetishist
+        size = 220
+    }
+
+    artisans = {
+        culture = ubangian
+        religion = fetishist
+        size = 1144
+    }
+
+    soldiers = {
+        culture = ubangian
+        religion = fetishist
+        size = 242
+    }
+
+    farmers = {
+        culture = ubangian
+        religion = fetishist
+        size = 20834
+    }
+}
+#Nola (40000/10000 POPS)
+1966 = {
+    aristocrats = {
+        culture = ubangian
+        religion = fetishist
+        size = 66
+    }
+
+    clergymen = {
+        culture = ubangian
+        religion = fetishist
+        size = 88
+    }
+
+    artisans = {
+        culture = ubangian
+        religion = fetishist
+        size = 440
+    }
+
+    soldiers = {
+        culture = ubangian
+        religion = fetishist
+        size = 88
+    }
+
+    farmers = {
+        culture = ubangian
+        religion = fetishist
+        size = 8030
+    }
+
+    slaves = {
+        culture = mongo
+        religion = fetishist
+        size = 440
+    }
+
+}
+#uncolonized in 1836/under influence of Baguirmi
+#Bouar (28000/7000 POPS)
+1967 = {
+    aristocrats = {
+        culture = ubangian
+        religion = fetishist
+        size = 110
+    }
+
+    bureaucrats = {
+        culture = ubangian
+        religion = fetishist
+        size = 18
+    }
+
+    officers = {
+        culture = ubangian
+        religion = fetishist
+        size = 9
+    }
+
+    clergymen = {
+        culture = ubangian
+        religion = fetishist
+        size = 66
+    }
+
+    slaves = {
+        culture = ubangian
+        religion = fetishist
+        size = 308
+    }
+
+    soldiers = {
+        culture = ubangian
+        religion = fetishist
+        size = 66
+    }
+
+    farmers = {
+        culture = ubangian
+        religion = fetishist
+        size = 5610
+    }
+
+    aristocrats = {
+        culture = fulbe
+        religion = sunni
+        size = 88
+    }
+
+    bureaucrats = {
+        culture = fulbe
+        religion = sunni
+        size = 4
+    }
+
+    officers = {
+        culture = fulbe
+        religion = sunni
+        size = 4
+    }
+
+    clergymen = {
+        culture = fulbe
+        religion = sunni
+        size = 88
+    }
+
+    artisans = {
+        culture = fulbe
+        religion = sunni
+        size = 88
+    }
+
+    soldiers = {
+        culture = fulbe
+        religion = sunni
+        size = 88
+    }
+
+    farmers = {
+        culture = fulbe
+        religion = sunni
+        size = 792
+    }
+}
+#Bossangoa (56000/14000 POPS)
+1968 = {
+    aristocrats = {
+        culture = ubangian
+        religion = fetishist
+        size = 66
+    }
+
+    clergymen = {
+        culture = ubangian
+        religion = fetishist
+        size = 88
+    }
+
+    artisans = {
+        culture = ubangian
+        religion = fetishist
+        size = 440
+    }
+
+    soldiers = {
+        culture = ubangian
+        religion = fetishist
+        size = 88
+    }
+
+    farmers = {
+        culture = ubangian
+        religion = fetishist
+        size = 10670
+    }
+
+    aristocrats = {
+        culture = sara
+        religion = fetishist
+        size = 88
+    }
+
+    clergymen = {
+        culture = sara
+        religion = fetishist
+        size = 88
+    }
+
+    artisans = {
+        culture = sara
+        religion = fetishist
+        size = 132
+    }
+
+    soldiers = {
+        culture = sara
+        religion = fetishist
+        size = 88
+    }
+
+    farmers = {
+        culture = sara
+        religion = fetishist
+        size = 1496
+    }
+}
+3981 = {
+    aristocrats = {
+        culture = ubangian
+        religion = fetishist
+        size = 66
+    }
+
+    clergymen = {
+        culture = ubangian
+        religion = fetishist
+        size = 88
+    }
+
+    artisans = {
+        culture = ubangian
+        religion = fetishist
+        size = 440
+    }
+
+    soldiers = {
+        culture = ubangian
+        religion = fetishist
+        size = 968
+    }
+
+    farmers = {
+        culture = ubangian
+        religion = fetishist
+        size = 11550
+    }
+
+    aristocrats = {
+        culture = fur
+        religion = sunni
+        size = 88
+    }
+
+    clergymen = {
+        culture = fur
+        religion = sunni
+        size = 88
+    }
+
+    artisans = {
+        culture = fur
+        religion = sunni
+        size = 88
+    }
+
+    soldiers = {
+        culture = fur
+        religion = sunni
+        size = 88
+    }
+
+    slaves = {
+        culture = fur
+        religion = sunni
+        size = 792
+    }
+
+    farmers = {
+        culture = sara
+        religion = fetishist
+        size = 880
+    }
+}
+#Dar Banda Region (128000)
+#uncolonized in 1836/under influence of Azande
+#Zemio (44000/11000 POPS)
+1969 = {
+    aristocrats = {
+        culture = ubangian
+        religion = fetishist
+        size = 220
+    }
+
+    bureaucrats = {
+        culture = ubangian
+        religion = fetishist
+        size = 62
+    }
+
+    officers = {
+        culture = ubangian
+        religion = fetishist
+        size = 26
+    }
+
+    clergymen = {
+        culture = ubangian
+        religion = fetishist
+        size = 132
+    }
+
+    artisans = {
+        culture = ubangian
+        religion = fetishist
+        size = 484
+    }
+
+    soldiers = {
+        culture = ubangian
+        religion = fetishist
+        size = 990
+    }
+
+    farmers = {
+        culture = ubangian
+        religion = fetishist
+        size = 17050
+    }
+
+    slaves = {
+        culture = ubangian
+        religion = fetishist
+        size = 506
+    }
+
+    aristocrats = {
+        culture = ubangian
+        religion = sunni
+        size = 22
+    }
+
+    bureaucrats = {
+        culture = ubangian
+        religion = sunni
+        size = 4
+    }
+
+    officers = {
+        culture = ubangian
+        religion = sunni
+        size = 4
+    }
+
+    clergymen = {
+        culture = ubangian
+        religion = sunni
+        size = 22
+    }
+
+    artisans = {
+        culture = ubangian
+        religion = sunni
+        size = 22
+    }
+
+    soldiers = {
+        culture = ubangian
+        religion = sunni
+        size = 22
+    }
+
+    farmers = {
+        culture = ubangian
+        religion = sunni
+        size = 44
+    }
+}
+#Bangassou (56000/14000 POPS)
+1970 = {
+    aristocrats = {
+        culture = ubangian
+        religion = fetishist
+        size = 176
+    }
+
+    bureaucrats = {
+        culture = ubangian
+        religion = fetishist
+        size = 88
+    }
+
+    officers = {
+        culture = ubangian
+        religion = fetishist
+        size = 35
+    }
+
+    clergymen = {
+        culture = ubangian
+        religion = fetishist
+        size = 176
+    }
+
+    artisans = {
+        culture = ubangian
+        religion = fetishist
+        size = 352
+    }
+
+    soldiers = {
+        culture = ubangian
+        religion = fetishist
+        size = 924
+    }
+
+    farmers = {
+        culture = ubangian
+        religion = fetishist
+        size = 19250
+    }
+
+    slaves = {
+        culture = ubangian
+        religion = fetishist
+        size = 792
+    }
+
+    aristocrats = {
+        culture = ubangian
+        religion = sunni
+        size = 110
+    }
+
+    bureaucrats = {
+        culture = ubangian
+        religion = sunni
+        size = 4
+    }
+
+    officers = {
+        culture = ubangian
+        religion = sunni
+        size = 4
+    }
+
+    clergymen = {
+        culture = ubangian
+        religion = sunni
+        size = 44
+    }
+
+    artisans = {
+        culture = ubangian
+        religion = sunni
+        size = 132
+    }
+
+    soldiers = {
+        culture = ubangian
+        religion = sunni
+        size = 132
+    }
+
+    farmers = {
+        culture = ubangian
+        religion = sunni
+        size = 132
+    }
+}
+#uncolonized in 1836/under influence of Wadai
+#Ndele (28000/7000 POPS)
+1971 = {
+    aristocrats = {
+        culture = sara
+        religion = sunni
+        size = 88
+    }
+
+    clergymen = {
+        culture = sara
+        religion = sunni
+        size = 88
+    }
+
+    artisans = {
+        culture = sara
+        religion = sunni
+        size = 88
+    }
+
+    soldiers = {
+        culture = sara
+        religion = sunni
+        size = 88
+    }
+
+    farmers = {
+        culture = sara
+        religion = sunni
+        size = 1760
+    }
+
+    slaves = {
+        culture = sara
+        religion = sunni
+        size = 792
+    }
+
+    aristocrats = {
+        culture = ubangian
+        religion = fetishist
+        size = 88
+    }
+
+    clergymen = {
+        culture = ubangian
+        religion = fetishist
+        size = 44
+    }
+
+    artisans = {
+        culture = ubangian
+        religion = fetishist
+        size = 264
+    }
+
+    soldiers = {
+        culture = ubangian
+        religion = fetishist
+        size = 154
+    }
+
+    farmers = {
+        culture = ubangian
+        religion = fetishist
+        size = 11440
+    }
+
+}
+3822 = {
+    aristocrats = {
+        culture = fur
+        religion = animist
+        size = 176
+    }
+
+    clergymen = {
+        culture = fur
+        religion = animist
+        size = 132
+    }
+
+    artisans = {
+        culture = fur
+        religion = sunni
+        size = 176
+    }
+
+    soldiers = {
+        culture = fur
+        religion = animist
+        size = 136
+    }
+
+    farmers = {
+        culture = fur
+        religion = animist
+        size = 3463
+    }
+
+    slaves = {
+        culture = sara
+        religion = sunni
+        size = 528
+    }
+
+    farmers = {
+        culture = fur
+        religion = sunni
+        size = 800
+    }
+	
+    aristocrats = {
+        culture = ubangian
+        religion = animist
+        size = 176
+    }
+
+    clergymen = {
+        culture = ubangian
+        religion = animist
+        size = 132
+    }
+
+    artisans = {
+        culture = ubangian
+        religion = sunni
+        size = 176
+    }
+
+    soldiers = {
+        culture = ubangian
+        religion = animist
+        size = 136
+    }
+
+    farmers = {
+        culture = ubangian
+        religion = animist
+        size = 8712
+    }
+
+    farmers = {
+        culture = ubangian
+        religion = sunni
+        size = 203
+    }
+}

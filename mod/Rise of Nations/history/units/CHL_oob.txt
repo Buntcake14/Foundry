@@ -1,0 +1,15 @@
+leader = {
+    name = "José Joaquín Prieto"
+    type = land
+    date = 1820.8.20
+    background = attack_1.1
+    personality = no_personality
+    prestige = 0.01
+}
+leader = {
+    name = "Robert Winthrop Simpson"
+    type = sea
+    date = 1820.12.14
+    background = attack_3.1
+    personality = defence_3.1
+}

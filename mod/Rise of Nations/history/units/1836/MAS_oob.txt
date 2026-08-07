@@ -1,0 +1,7 @@
+leader = {
+    name = "Seku Amadu"
+    type = land
+    date = "1830.1.1"
+    personality = defence_3.1
+    background = attack_3.1
+}

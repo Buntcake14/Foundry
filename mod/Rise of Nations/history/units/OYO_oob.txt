@@ -1,0 +1,8 @@
+leader = {
+    name = "Oyo Amepo"
+    date = 1830.1.1
+    type = land
+    personality = defence_3.1
+    background = attack_2.1
+    prestige = 0.1
+}

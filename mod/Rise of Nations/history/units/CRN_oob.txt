@@ -1,0 +1,37 @@
+army = {
+    name = "Cornish Militia"
+    location = 299
+
+    regiment = {
+        name = "Duke of Cornwall's Light Infantry"
+        type = infantry
+        home = 299
+    }
+    regiment = {
+        name = "Cornwall Coastal Artillery"
+        type = artillery
+        home = 299
+    }
+}
+
+navy = {
+    name = "Plymouth Squadron"
+    location = 299
+
+    ship = {
+        name = "HMS Cornwall"
+        type = manowar
+    }
+    ship = {
+        name = "HMS Falmouth"
+        type = frigate
+    }
+    ship = {
+        name = "HMS Tamar"
+        type = frigate
+    }
+    ship = {
+        name = "HMS Scilly"
+        type = commerce_raider
+    }
+}

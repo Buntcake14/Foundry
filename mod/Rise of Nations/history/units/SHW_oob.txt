@@ -1,0 +1,7 @@
+leader = {
+   name = "Ras Sahle Selassie"
+   type = land
+   date = 1830.1.1
+   background = no_background
+   personality = no_personality
+}

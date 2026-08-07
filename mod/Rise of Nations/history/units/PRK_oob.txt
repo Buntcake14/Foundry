@@ -1,0 +1,8 @@
+leader = {
+    name = "Sultan Shahabuddin Riayat"
+    date = 1822.1.1
+    type = land
+    personality = no_personality
+    background = attack_1.1
+    prestige = 0.0
+}

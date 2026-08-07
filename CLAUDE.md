@@ -35,6 +35,12 @@ Nothing has been implemented yet — this section is a design-intent record from
 
 ## Build
 
+**Before doing any build step on a machine (new or otherwise), check what's already installed rather than assuming — this file describes what was true on the machine it was last updated from, not necessarily the one you're on now:**
+```
+which cmake clang clang++ && cmake --version && clang++ --version
+```
+If any are missing, install the apt deps below first. If a `build/` directory already exists, check whether it was configured with clang (see the compiler pitfall note below) before building — don't assume a prior session got it right.
+
 **Confirmed real native Linux support** (not just a Windows binary run through Proton/Wine) — `src/entry_point_nix.cpp` exists alongside `entry_point_win.cpp`, and upstream ships a GitHub Actions AppImage build. CI (`.github/workflows/appimage.yml`) validates against **clang-20 on Ubuntu 24.04**; this machine (Ubuntu 26.04) has **clang 21.1.8** (`llvm-21`) and **cmake 4.2.3** via apt — both newer than CI's baseline, and no issues surfaced from that gap.
 
 Debian/Ubuntu build deps (matches both `docs/contributing.md` and the actual CI workflow):

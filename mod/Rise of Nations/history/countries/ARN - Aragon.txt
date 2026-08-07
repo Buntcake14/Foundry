@@ -1,0 +1,107 @@
+capital = 495
+#Starting technology (period baseline)
+linear_tactics = 1
+socket_bayonet = 1
+cast_iron_ordnance = 1
+standardized_drill = 1
+standing_officer_corps = 1
+line_of_battle_doctrine = 1
+rated_ship_design = 1
+standardized_naval_ordnance = 1
+fighting_instructions = 1
+post_captain_system = 1
+improved_waterwheels = 1
+cottage_industry_organization = 1
+coke_smelting = 1
+turnpike_roads = 1
+improved_assaying = 1
+baroque_classicism = 1
+early_enlightenment_philosophy = 1
+mercantilist_thought = 1
+social_contract_theory = 1
+rationalist_psychology = 1
+goldsmith_banking = 1
+bimetallic_currency = 1
+mercantile_economics = 1
+chartered_trading_companies = 1
+apprenticeship_regulation = 1
+cabinet_warfare_doctrine = 1
+iron_ramrod_drill = 1
+gribeauval_system = 1
+systematic_staff_planning = 1
+meritocratic_promotion = 1
+combined_fleet_maneuvers = 1
+coppered_hulls = 1
+carronade_guns = 1
+marine_chronometer = 1
+fleet_signal_books = 1
+watt_steam_engine = 1
+spinning_jenny = 1
+puddling_process = 1
+canal_mania = 1
+lavoisier_chemistry = 1
+neoclassicism = 1
+kantian_critique = 1
+physiocracy = 1
+separation_of_powers_theory = 1
+faculty_psychology = 1
+bankers_clearing_house = 1
+paper_currency_circulation = 1
+cameralism = 1
+free_port_policy = 1
+manufactory_system = 1
+
+primary_culture = spanish
+religion = catholic
+government = absolute_monarchy
+plurality = 0.1
+nationalvalue = nv_order
+literacy = 0.45
+civilized = yes
+#Political Reforms
+slavery = no_slavery
+upper_house_composition = appointed
+vote_franschise = landed_voting
+public_meetings = restricted_meeting
+press_rights = censored_press
+trade_unions = no_trade_unions
+voting_system = first_past_the_post
+political_parties = non_secret_ballots
+
+#Social Reforms
+wage_reform = no_minimum_wage
+work_hours = no_work_hour_limit
+safety_regulations = no_safety
+health_care = no_health_care
+unemployment_subsidies = no_subsidies
+pensions = no_pensions
+school_reforms = no_schools
+
+#Technologies
+#Inventions
+steam_powered_sugar_mills = yes
+
+#New Reforms
+conscription = one_year_draft
+debt_law = debtors_prisons
+penal_system = capital_punishment
+child_labor = child_labor_legal
+citizens_rights = culture_voting_only
+border_policy = open_borders
+centralization = unitary
+colonial_policy = no_colonies
+
+set_country_flag = catholic_country
+
+ruling_party = ARN_reactionary
+upper_house = {
+    fascist = 0
+    liberal = 20
+    conservative = 25
+    reactionary = 55
+    radical = 0
+    socialist = 0
+    communist = 0
+}
+
+oob = "ARN_oob.txt"

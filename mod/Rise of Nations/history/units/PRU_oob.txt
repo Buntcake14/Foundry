@@ -1,0 +1,81 @@
+leader = {
+    name = "Prince H. Wilhelm Adalbert"
+    picture = european_admiral_2
+    type = sea
+    date = 1830.1.1
+    background = attack_1.1
+    personality = no_personality
+    prestige = 0.1
+    }
+leader = {
+    name = "Helmuth von Moltke"
+    picture = european_general_36
+    type = land
+    date = 1830.1.1
+    background = attack_4.1
+    personality = defence_3.1
+    prestige = 0.2
+    }
+leader = {
+    name = "Albrecht von Roon"
+    picture = european_general_41
+    type = land
+    date = 1830.1.1
+    background = attack_1.1
+    personality = no_personality
+    prestige = 0.3
+    }
+leader = {
+    name = "Friedrich Graf von Wrangel"
+    picture = pru_gen_wrangel
+    type = land
+    date = 1810.1.1
+    background = attack_5.1
+    personality = defence_1.1
+    prestige = 0.5
+    }
+leader = {
+    name = "Eduard Vogel von Falckenstein"
+    picture = european_general_27
+    type = land
+    date = 1826.1.1
+    background = attack_2.1
+    personality = defence_2.1
+    prestige = 0.3
+    }
+leader = {
+    name = "Leopold Hermann von Boyen"
+    picture = pru_gen_boyen
+    date = 1813.1.1
+    type = land
+    personality = no_personality
+    background = no_background
+    prestige = 0.4
+}
+leader = {
+    name = "Prince Friedrich Wilhelm August"
+    picture = pru_gen_prinzaugust
+    date = 1814.1.1
+    type = land
+    personality = defence_1.1
+    background = attack_1.1
+    prestige = 0.4
+}
+leader = {
+    name = "Prince Friedrich Karl"
+    picture = pru_gen_prinzkarl
+    date = 1824.1.1
+    type = land
+    personality = no_personality
+    background = no_background
+    prestige = 0.6
+}
+leader = {
+    name = "Friedrich Wilhelm IV"
+    picture = pru_gen_prinzwilhelm
+    date = 1830.1.1
+    type = land
+    personality = no_personality
+    background = attack_1.1
+    prestige = 0.8
+}

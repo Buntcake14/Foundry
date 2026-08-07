@@ -1,0 +1,18 @@
+gov_parish_office_clerk;Parish Office (Clerks);;;;;;;;;;;;;
+gov_parish_office_craftsmen;Parish Office (Craftsmen);;;;;;;;;;;;;
+gov_provincial_ministry_clerk;Provincial Ministry (Clerks);;;;;;;;;;;;;
+gov_provincial_ministry_craftsmen;Provincial Ministry (Craftsmen);;;;;;;;;;;;;
+gov_civil_service_bureau_clerk;Civil Service Bureau (Clerks);;;;;;;;;;;;;
+gov_civil_service_bureau_craftsmen;Civil Service Bureau (Craftsmen);;;;;;;;;;;;;
+gov_modern_administration_clerk;Modern State Administration (Clerks);;;;;;;;;;;;;
+gov_modern_administration_craftsmen;Modern State Administration (Craftsmen);;;;;;;;;;;;;
+ai_gov_parish_reform;Establish Local Administration;;;;;;;;;;;;;
+ai_gov_parish_reform_desc;Appoint local officials to bring basic order and record-keeping to the provinces.;;;;;;;;;;;;;
+ai_gov_provincial_reform;Establish Provincial Ministries;;;;;;;;;;;;;
+ai_gov_provincial_reform_desc;Rational, positivist administration is the mark of a modern state -- establish provincial ministries across the realm.;;;;;;;;;;;;;
+ai_gov_civil_service_reform;Reform the Civil Service;;;;;;;;;;;;;
+ai_gov_civil_service_reform_desc;Replace patronage appointments with a merit-based civil service, examined and trained in the new social sciences.;;;;;;;;;;;;;
+ai_gov_modern_administration_reform;Modernize State Administration;;;;;;;;;;;;;
+ai_gov_modern_administration_reform_desc;The age of mass politics demands a modern state to match it -- electrified, telephoned, and thoroughly bureaucratic.;;;;;;;;;;;;;
+EVTNAME99099028;Administrative Reorganization;;;;;;;;;;;;;
+EVTDESC99099028;New government offices have been established, and the machinery of the state reorganizes itself accordingly.;;;;;;;;;;;;;

@@ -1,0 +1,14 @@
+leader = {
+	name = "Ghuma al-Mahmudi"
+	type = land
+	date = 1830.1.1
+	background = attack_2.1
+	personality = defence_2.1
+}
+leader = {
+	name = "Abd al-Jalil"
+	type = land
+	date = 1830.1.1
+	background = no_background
+	personality = defence_3.1
+}

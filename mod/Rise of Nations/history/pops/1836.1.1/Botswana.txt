@@ -1,0 +1,711 @@
+#Bechuanaland Region (76000) #see South Africa.txt for balance of region
+#uncolonized in 1836/dominated by the Tswana in 1836
+#Nxamasere (XXX/XXX POPS)
+3649 = {
+    aristocrats = {
+        culture = herero
+        religion = animist
+        size = 13
+    }
+
+    clergymen = {
+        culture = herero
+        religion = animist
+        size = 22
+    }
+
+    artisans = {
+        culture = herero
+        religion = animist
+        size = 40
+    }
+
+    soldiers = {
+        culture = herero
+        religion = animist
+        size = 9
+    }
+
+    farmers = {
+        culture = herero
+        religion = animist
+        size = 88
+    }
+
+    aristocrats = {
+        culture = tswana
+        religion = animist
+        size = 11
+    }
+
+    clergymen = {
+        culture = tswana
+        religion = animist
+        size = 7
+    }
+
+    artisans = {
+        culture = tswana
+        religion = animist
+        size = 31
+    }
+
+    soldiers = {
+        culture = tswana
+        religion = animist
+        size = 40
+	}
+
+    farmers = {
+        culture = tswana
+        religion = animist
+        size = 44
+    }
+
+    aristocrats = {
+        culture = khoisan
+        religion = animist
+        size = 11
+    }
+
+    clergymen = {
+        culture = khoisan
+        religion = animist
+        size = 7
+    }
+
+    soldiers = {
+        culture = khoisan
+        religion = animist
+        size = 18
+    }
+
+    farmers = {
+        culture = khoisan
+        religion = animist
+        size = 396
+    }
+
+    soldiers = {
+        culture = sotho
+        religion = animist
+        size = 25
+    }
+
+    farmers = {
+        culture = sotho
+        religion = animist
+        size = 33
+    }
+}
+#Nokaneng (12000/3000 POPS)
+2076 = {
+    aristocrats = {
+        culture = herero
+        religion = animist
+        size = 13
+    }
+
+    clergymen = {
+        culture = herero
+        religion = animist
+        size = 22
+    }
+
+    artisans = {
+        culture = herero
+        religion = animist
+        size = 40
+    }
+
+    soldiers = {
+        culture = herero
+        religion = animist
+        size = 9
+    }
+
+    farmers = {
+        culture = herero
+        religion = animist
+        size = 719
+    }
+
+    aristocrats = {
+        culture = tswana
+        religion = animist
+        size = 22
+    }
+	
+    bureaucrats = {
+        culture = tswana
+        religion = animist
+        size = 9
+    }
+
+    officers = {
+        culture = tswana
+        religion = animist
+        size = 4
+    }
+
+    clergymen = {
+        culture = tswana
+        religion = animist
+        size = 40
+    }
+
+    artisans = {
+        culture = tswana
+        religion = animist
+        size = 88
+    }
+
+    soldiers = {
+        culture = tswana
+        religion = animist
+        size = 88
+    }
+
+    farmers = {
+        culture = tswana
+        religion = animist
+        size = 1278
+    }
+
+    aristocrats = {
+        culture = khoisan
+        religion = animist
+        size = 9
+    }
+
+    clergymen = {
+        culture = khoisan
+        religion = animist
+        size = 18
+    }
+
+    artisans = {
+        culture = khoisan
+        religion = animist
+        size = 44
+    }
+
+    soldiers = {
+        culture = khoisan
+        religion = animist
+        size = 26
+    }
+
+    farmers = {
+        culture = khoisan
+        religion = animist
+        size = 572
+    }
+
+    slaves = {
+        culture = khoisan
+        religion = animist
+        size = 150
+    }
+
+    soldiers = {
+        culture = sotho
+        religion = animist
+        size = 88
+    }
+
+    farmers = {
+        culture = sotho
+        religion = animist
+        size = 110
+    }
+}
+#Tshabong (12000/3000 POPS)
+2077 = {
+    aristocrats = {
+        culture = khoisan
+        religion = animist
+        size = 35
+    }
+
+    clergymen = {
+        culture = khoisan
+        religion = animist
+        size = 62
+    }
+
+    artisans = {
+        culture = khoisan
+        religion = animist
+        size = 128
+    }
+
+    soldiers = {
+        culture = khoisan
+        religion = animist
+        size = 31
+    }
+
+    farmers = {
+        culture = khoisan
+        religion = animist
+        size = 2672
+    }
+	
+    aristocrats = {
+        culture = tswana
+        religion = animist
+        size = 110
+    }
+
+    clergymen = {
+        culture = tswana
+        religion = animist
+        size = 66
+    }
+
+    artisans = {
+        culture = tswana
+        religion = animist
+        size = 286
+    }
+
+    soldiers = {
+        culture = tswana
+        religion = animist
+        size = 66
+    }
+
+    farmers = {
+        culture = tswana
+        religion = animist
+        size = 1440
+    }
+
+    slaves = {
+        culture = khoisan
+        religion = animist
+        size = 110
+    }
+}
+#Mochidi (16000/4000 POPS)
+2574 = {
+    aristocrats = {
+        culture = tswana
+        religion = animist
+        size = 40
+    }
+	
+    bureaucrats = {
+        culture = tswana
+        religion = animist
+        size = 9
+    }
+
+    officers = {
+        culture = tswana
+        religion = animist
+        size = 4
+    }
+
+    clergymen = {
+        culture = tswana
+        religion = animist
+        size = 40
+    }
+
+    artisans = {
+        culture = tswana
+        religion = animist
+        size = 176
+    }
+
+    soldiers = {
+        culture = tswana
+        religion = animist
+        size = 88
+    }
+
+    farmers = {
+        culture = tswana
+        religion = animist
+        size = 2013
+    }
+
+    aristocrats = {
+        culture = shona
+        religion = animist
+        size = 26
+    }
+
+    clergymen = {
+        culture = shona
+        religion = animist
+        size = 40
+    }
+
+    artisans = {
+        culture = shona
+        religion = animist
+        size = 88
+    }
+
+    soldiers = {
+        culture = shona
+        religion = animist
+        size = 18
+    }
+
+    farmers = {
+        culture = shona
+        religion = animist
+        size = 942
+    }
+
+    aristocrats = {
+        culture = khoisan
+        religion = animist
+        size = 26
+    }
+
+    clergymen = {
+        culture = khoisan
+        religion = animist
+        size = 26
+    }
+
+    artisans = {
+        culture = khoisan
+        religion = animist
+        size = 88
+    }
+
+    soldiers = {
+        culture = khoisan
+        religion = animist
+        size = 35
+    }
+
+    farmers = {
+        culture = khoisan
+        religion = animist
+        size = 1056
+    }
+
+    slaves = {
+        culture = khoisan
+        religion = animist
+        size = 143
+    }
+}
+3882 = {
+    aristocrats = {
+        culture = nguni
+        religion = animist
+        size = 26
+    }
+
+    clergymen = {
+        culture = nguni
+        religion = animist
+        size = 26
+    }
+
+    artisans = {
+        culture = nguni
+        religion = animist
+        size = 88
+    }
+
+    soldiers = {
+        culture = nguni
+        religion = animist
+        size = 35
+    }
+
+    farmers = {
+        culture = nguni
+        religion = animist
+        size = 739
+    }
+
+    slaves = {
+        culture = nguni
+        religion = animist
+        size = 271
+    }
+
+    aristocrats = {
+        culture = shona
+        religion = animist
+        size = 35
+    }
+	
+    bureaucrats = {
+        culture = shona
+        religion = animist
+        size = 9
+    }
+
+    officers = {
+        culture = shona
+        religion = animist
+        size = 4
+    }
+
+    clergymen = {
+        culture = shona
+        religion = animist
+        size = 35
+    }
+
+    artisans = {
+        culture = shona
+        religion = animist
+        size = 88
+    }
+
+    soldiers = {
+        culture = shona
+        religion = animist
+        size = 106
+    }
+
+    farmers = {
+        culture = shona
+        religion = animist
+        size = 2992
+    }
+
+    farmers = {
+        culture = tswana
+        religion = animist
+        size = 352
+    }
+
+    farmers = {
+        culture = khoisan
+        religion = animist
+        size = 440
+    }
+
+    soldiers = {
+        culture = sotho
+        religion = animist
+        size = 968
+    }
+
+    farmers = {
+        culture = sotho
+        religion = animist
+        size = 1320
+    }
+}
+#under the rule of Matabele in 1836
+#Serowe (16000/4000 POPS)
+2075 = {
+    bureaucrats = {
+        culture = shona
+        religion = animist
+        size = 9
+    }
+
+    officers = {
+        culture = shona
+        religion = animist
+        size = 4
+    }
+	
+    aristocrats = {
+        culture = tswana
+        religion = animist
+        size = 4
+    }
+
+    clergymen = {
+        culture = tswana
+        religion = animist
+        size = 6
+    }
+
+    artisans = {
+        culture = tswana
+        religion = animist
+        size = 9
+    }
+
+    soldiers = {
+        culture = tswana
+        religion = animist
+        size = 9
+    }
+
+    farmers = {
+        culture = tswana
+        religion = animist
+        size = 383
+    }
+
+    aristocrats = {
+        culture = tswana
+        religion = animist
+        size = 22
+    }
+
+    clergymen = {
+        culture = tswana
+        religion = animist
+        size = 13
+    }
+
+    artisans = {
+        culture = tswana
+        religion = animist
+        size = 18
+    }
+
+    soldiers = {
+        culture = tswana
+        religion = animist
+        size = 13
+    }
+
+    farmers = {
+        culture = tswana
+        religion = animist
+        size = 1165
+    }
+
+    aristocrats = {
+        culture = khoisan
+        religion = animist
+        size = 18
+    }
+
+    clergymen = {
+        culture = khoisan
+        religion = animist
+        size = 11
+    }
+
+    artisans = {
+        culture = khoisan
+        religion = animist
+        size = 13
+    }
+
+    soldiers = {
+        culture = khoisan
+        religion = animist
+        size = 11
+    }
+
+    farmers = {
+        culture = khoisan
+        religion = animist
+        size = 513
+    }
+
+    slaves = {
+        culture = khoisan
+        religion = animist
+        size = 158
+    }
+
+    aristocrats = {
+        culture = shona
+        religion = animist
+        size = 1
+    }
+
+    clergymen = {
+        culture = shona
+        religion = animist
+        size = 2
+    }
+
+    artisans = {
+        culture = shona
+        religion = animist
+        size = 4
+    }
+
+    soldiers = {
+        culture = shona
+        religion = animist
+        size = 11
+    }
+
+    farmers = {
+        culture = shona
+        religion = animist
+        size = 167
+    }
+}
+3717 = {
+    aristocrats = {
+        culture = tswana
+        religion = animist
+        size = 110
+    }
+	
+    bureaucrats = {
+        culture = tswana
+        religion = animist
+        size = 9
+    }
+
+    officers = {
+        culture = tswana
+        religion = animist
+        size = 4
+    }
+
+    clergymen = {
+        culture = tswana
+        religion = animist
+        size = 66
+    }
+
+    artisans = {
+        culture = tswana
+        religion = animist
+        size = 110
+    }
+
+    soldiers = {
+        culture = tswana
+        religion = animist
+        size = 66
+    }
+
+    farmers = {
+        culture = tswana
+        religion = animist
+        size = 1144
+    }
+	
+    farmers = {
+        culture = khoisan
+        religion = animist
+        size = 1342
+    }
+	
+    slaves = {
+        culture = khoisan
+        religion = animist
+        size = 440
+    }
+	
+    slaves = {
+        culture = herero
+        religion = animist
+        size = 198
+    }
+	
+    farmers = {
+        culture = botatwe
+        religion = animist
+        size = 704
+    }
+}

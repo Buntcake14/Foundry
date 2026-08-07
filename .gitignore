@@ -13,6 +13,14 @@ docs/out/
 _deps/
 build*/
 cmake-build-debug/
+
+# Vendored Rise of Nations mod content: art/map assets are large binary
+# files whose source of truth is the separate Rise-of-Nations repo, so they
+# aren't tracked here to keep Foundry's repo lean. They still exist on disk
+# so Alice can load the mod. Script content (common/, events/, etc.) is
+# intentionally NOT ignored, since that's what engine work will diverge on.
+/mod/Rise of Nations/gfx/
+/mod/Rise of Nations/map/
 mod[s]/
 test_fs_support_case_sensitivity
 

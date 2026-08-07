@@ -1,0 +1,183 @@
+#Equatorial Guinea (143000)
+#Ruled By Spain in 1836
+#Fernando Po (11000/2750 POPS)
+1955 = {
+
+    aristocrats = {
+        culture = british
+        religion = fetishist
+        size = 9
+    }
+
+    officers = {
+        culture = fang
+        religion = fetishist
+        size = 18
+    }
+
+    clergymen = {
+        culture = fang
+        religion = fetishist
+        size = 18
+    }
+
+    artisans = {
+        culture = fang
+        religion = fetishist
+        size = 106
+    }
+
+    soldiers = {
+        culture = fang
+        religion = fetishist
+        size = 44
+    }
+
+    farmers = {
+        culture = fang
+        religion = fetishist
+        size = 1346
+    }
+
+    aristocrats = {
+        culture = spanish
+        religion = fetishist
+        size = 9
+    }
+
+    officers = {
+        culture = fang
+        religion = fetishist
+        size = 18
+    }
+
+    clergymen = {
+        culture = fang
+        religion = fetishist
+        size = 18
+    }
+
+    artisans = {
+        culture = fang
+        religion = fetishist
+        size = 106
+    }
+
+    soldiers = {
+        culture = fang
+        religion = fetishist
+        size = 44
+    }
+
+    farmers = {
+        culture = fang
+        religion = fetishist
+        size = 1496
+    }
+
+    slaves = {
+        culture = fang
+        religion = fetishist
+        size = 1434
+    }
+}
+#uncolonized in 1836
+#Bata (132000/33000 POPS)
+1973 = {
+    aristocrats = {
+        culture = fang
+        religion = fetishist
+        size = 308
+    }
+
+    clergymen = {
+        culture = fang
+        religion = fetishist
+        size = 264
+    }
+
+    artisans = {
+        culture = fang
+        religion = fetishist
+        size = 1320
+    }
+
+    soldiers = {
+        culture = fang
+        religion = fetishist
+        size = 924
+    }
+
+    farmers = {
+        culture = fang
+        religion = fetishist
+        size = 14784
+    }
+
+    aristocrats = {
+        culture = fang
+        religion = fetishist
+        size = 88
+    }
+
+    clergymen = {
+        culture = fang
+        religion = fetishist
+        size = 88
+    }
+
+    artisans = {
+        culture = fang
+        religion = fetishist
+        size = 88
+    }
+
+    soldiers = {
+        culture = fang
+        religion = fetishist
+        size = 968
+    }
+
+    farmers = {
+        culture = fang
+        religion = fetishist
+        size = 880
+    }
+
+    slaves = {
+        culture = fang
+        religion = fetishist
+        size = 440
+    }
+}
+3936 = {
+    aristocrats = {
+        culture = fang
+        religion = fetishist
+        size = 132
+    }
+
+    clergymen = {
+        culture = fang
+        religion = fetishist
+        size = 88
+    }
+
+    artisans = {
+        culture = fang
+        religion = fetishist
+        size = 176
+    }
+
+    soldiers = {
+        culture = fang
+        religion = fetishist
+        size = 132
+    }
+
+    farmers = {
+        culture = fang
+        religion = fetishist
+        size = 6864
+    }
+}

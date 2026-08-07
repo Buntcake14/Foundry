@@ -1,0 +1,1153 @@
+#Siam Region (2080000)
+#under the rule of Siam in 1836
+#Bangkok (1108000/277000 POPS)
+1346 = {
+    aristocrats = {
+        culture = thai
+        religion = theravada
+        size = 3690
+    }
+
+    bureaucrats = {
+        culture = thai
+        religion = theravada
+        size = 308
+    }
+
+    officers = {
+        culture = thai
+        religion = theravada
+        size = 390
+    }
+
+    clergymen = {
+        culture = thai
+        religion = theravada
+        size = 1947
+    }
+
+    artisans = {
+        culture = thai
+        religion = theravada
+        size = 8200
+    }
+
+    artisans = {
+        culture = thai
+        religion = theravada
+        size = 902
+    }
+
+    soldiers = {
+        culture = thai
+        religion = theravada
+        size = 1845
+    }
+
+    farmers = {
+        culture = thai
+        religion = theravada
+        size = 150080
+    }
+
+    slaves = {
+        culture = thai
+        religion = theravada
+        size = 24600
+    }
+
+    aristocrats = {
+        culture = yue
+        religion = mahayana
+        size = 615
+    }
+
+    bureaucrats = {
+        culture = yue
+        religion = mahayana
+        size = 164
+    }
+
+    officers = {
+        culture = yue
+        religion = mahayana
+        size = 61
+    }
+
+    clergymen = {
+        culture = yue
+        religion = mahayana
+        size = 430
+    }
+
+    artisans = {
+        culture = yue
+        religion = mahayana
+        size = 8200
+    }
+
+    artisans = {
+        culture = yue
+        religion = mahayana
+        size = 8200
+    }
+
+    artisans = {
+        culture = yue
+        religion = mahayana
+        size = 8200
+    }
+
+    artisans = {
+        culture = yue
+        religion = mahayana
+        size = 2460
+    }
+
+    soldiers = {
+        culture = yue
+        religion = mahayana
+        size = 472
+    }
+
+    farmers = {
+        culture = yue
+        religion = mahayana
+        size = 17938
+    }
+}
+#Lopburi (324000/81000 POPS)
+1347 = {
+    aristocrats = {
+        culture = thai
+        religion = theravada
+        size = 1292
+    }
+
+    clergymen = {
+        culture = thai
+        religion = theravada
+        size = 676
+    }
+
+    artisans = {
+        culture = thai
+        religion = theravada
+        size = 3280
+    }
+
+    soldiers = {
+        culture = thai
+        religion = theravada
+        size = 902
+    }
+
+    farmers = {
+        culture = thai
+        religion = theravada
+        size = 57892
+    }
+
+    slaves = {
+        culture = thai
+        religion = theravada
+        size = 6560
+    }
+}
+#Nakhon Sawan (188000/47000 POPS)
+1348 = {
+    aristocrats = {
+        culture = thai
+        religion = theravada
+        size = 656
+    }
+
+    clergymen = {
+        culture = thai
+        religion = theravada
+        size = 328
+    }
+
+    artisans = {
+        culture = thai
+        religion = theravada
+        size = 1230
+    }
+
+    soldiers = {
+        culture = thai
+        religion = theravada
+        size = 902
+    }
+
+    farmers = {
+        culture = thai
+        religion = theravada
+        size = 30586
+    }
+
+    slaves = {
+        culture = thai
+        religion = theravada
+        size = 2460
+    }
+
+    aristocrats = {
+        culture = yue
+        religion = mahayana
+        size = 20
+    }
+
+    clergymen = {
+        culture = yue
+        religion = mahayana
+        size = 41
+    }
+
+    artisans = {
+        culture = yue
+        religion = mahayana
+        size = 1025
+    }
+
+    soldiers = {
+        culture = yue
+        religion = mahayana
+        size = 20
+    }
+
+    farmers = {
+        culture = yue
+        religion = mahayana
+        size = 1353
+    }
+}
+#Sukothai (136000/34000 POPS)
+1349 = {
+    aristocrats = {
+        culture = thai
+        religion = theravada
+        size = 533
+    }
+
+    clergymen = {
+        culture = thai
+        religion = theravada
+        size = 287
+    }
+
+    artisans = {
+        culture = thai
+        religion = theravada
+        size = 1394
+    }
+
+    soldiers = {
+        culture = thai
+        religion = theravada
+        size = 902
+    }
+
+    farmers = {
+        culture = thai
+        religion = theravada
+        size = 24518
+    }
+}
+#Nakhon Ratchasima (160000/40000 POPS)
+1350 = {
+    aristocrats = {
+        culture = thai
+        religion = theravada
+        size = 656
+    }
+
+    clergymen = {
+        culture = thai
+        religion = theravada
+        size = 348
+    }
+
+    artisans = {
+        culture = thai
+        religion = theravada
+        size = 1640
+    }
+
+    soldiers = {
+        culture = thai
+        religion = theravada
+        size = 902
+    }
+
+    farmers = {
+        culture = thai
+        religion = theravada
+        size = 29336
+    }
+}
+#Prachin Buri (164000/41000 POPS)
+1351 = {
+    aristocrats = {
+        culture = thai
+        religion = theravada
+        size = 472
+    }
+
+    clergymen = {
+        culture = thai
+        religion = theravada
+        size = 246
+    }
+
+    artisans = {
+        culture = thai
+        religion = theravada
+        size = 1148
+    }
+
+    soldiers = {
+        culture = thai
+        religion = theravada
+        size = 902
+    }
+
+    farmers = {
+        culture = thai
+        religion = theravada
+        size = 22734
+    }
+
+    slaves = {
+        culture = thai
+        religion = theravada
+        size = 902
+    }
+
+    aristocrats = {
+        culture = yue
+        religion = mahayana
+        size = 82
+    }
+
+    clergymen = {
+        culture = yue
+        religion = mahayana
+        size = 61
+    }
+
+    artisans = {
+        culture = yue
+        religion = mahayana
+        size = 1640
+    }
+
+    soldiers = {
+        culture = yue
+        religion = mahayana
+        size = 82
+    }
+
+    farmers = {
+        culture = yue
+        religion = mahayana
+        size = 5514
+    }
+}
+#Kra Region (492000)
+#under the rule of Siam in 1836
+#Phuket (124000/31000 POPS)
+1352 = {
+    aristocrats = {
+        culture = thai
+        religion = theravada
+        size = 369
+    }
+
+    bureaucrats = {
+        culture = thai
+        religion = theravada
+        size = 82
+    }
+
+    officers = {
+        culture = thai
+        religion = theravada
+        size = 82
+    }
+
+    clergymen = {
+        culture = thai
+        religion = theravada
+        size = 184
+    }
+
+    artisans = {
+        culture = thai
+        religion = theravada
+        size = 861
+    }
+
+    soldiers = {
+        culture = thai
+        religion = theravada
+        size = 902
+    }
+
+    farmers = {
+        culture = thai
+        religion = theravada
+        size = 16420
+    }
+
+    aristocrats = {
+        culture = yue
+        religion = mahayana
+        size = 61
+    }
+
+    clergymen = {
+        culture = yue
+        religion = mahayana
+        size = 41
+    }
+
+    artisans = {
+        culture = yue
+        religion = mahayana
+        size = 902
+    }
+
+    soldiers = {
+        culture = yue
+        religion = mahayana
+        size = 41
+    }
+
+    farmers = {
+        culture = yue
+        religion = mahayana
+        size = 3956
+    }
+
+    aristocrats = {
+        culture = malay
+        religion = sunni
+        size = 20
+    }
+
+    clergymen = {
+        culture = malay
+        religion = sunni
+        size = 41
+    }
+
+    artisans = {
+        culture = malay
+        religion = sunni
+        size = 123
+    }
+
+    soldiers = {
+        culture = malay
+        religion = sunni
+        size = 20
+    }
+
+    farmers = {
+        culture = malay
+        religion = sunni
+        size = 2255
+    }
+}
+#Ratchaburi (172000/43000 POPS)
+1353 = {
+    aristocrats = {
+        culture = thai
+        religion = theravada
+        size = 574
+    }
+
+    clergymen = {
+        culture = thai
+        religion = theravada
+        size = 287
+    }
+
+    artisans = {
+        culture = thai
+        religion = theravada
+        size = 1476
+    }
+
+    soldiers = {
+        culture = thai
+        religion = theravada
+        size = 902
+    }
+
+    farmers = {
+        culture = thai
+        religion = theravada
+        size = 24723
+    }
+
+    aristocrats = {
+        culture = yue
+        religion = mahayana
+        size = 102
+    }
+
+    clergymen = {
+        culture = yue
+        religion = mahayana
+        size = 61
+    }
+
+    artisans = {
+        culture = yue
+        religion = mahayana
+        size = 1476
+    }
+
+    soldiers = {
+        culture = yue
+        religion = mahayana
+        size = 61
+    }
+
+    farmers = {
+        culture = yue
+        religion = mahayana
+        size = 4284
+    }
+
+    aristocrats = {
+        culture = karen
+        religion = mahayana
+        size = 102
+    }
+
+    clergymen = {
+        culture = karen
+        religion = mahayana
+        size = 61
+    }
+
+    artisans = {
+        culture = karen
+        religion = mahayana
+        size = 1230
+    }
+
+    soldiers = {
+        culture = karen
+        religion = mahayana
+        size = 61
+    }
+
+    farmers = {
+        culture = karen
+        religion = mahayana
+        size = 5924
+    }
+}
+#Nakhon Si Thammanet (196000/49000 POPS)
+1354 = {
+    aristocrats = {
+        culture = thai
+        religion = theravada
+        size = 512
+    }
+
+    clergymen = {
+        culture = thai
+        religion = theravada
+        size = 266
+    }
+
+    artisans = {
+        culture = thai
+        religion = theravada
+        size = 1066
+    }
+
+    soldiers = {
+        culture = thai
+        religion = theravada
+        size = 902
+    }
+
+    farmers = {
+        culture = thai
+        religion = theravada
+        size = 23616
+    }
+
+    aristocrats = {
+        culture = yue
+        religion = mahayana
+        size = 61
+    }
+
+    clergymen = {
+        culture = yue
+        religion = mahayana
+        size = 41
+    }
+
+    artisans = {
+        culture = yue
+        religion = mahayana
+        size = 1046
+    }
+
+    soldiers = {
+        culture = yue
+        religion = mahayana
+        size = 41
+    }
+
+    slaves = {
+        culture = yue
+        religion = mahayana
+        size = 2911
+    }
+
+    aristocrats = {
+        culture = malay
+        religion = sunni
+        size = 164
+    }
+
+    clergymen = {
+        culture = malay
+        religion = sunni
+        size = 102
+    }
+
+    artisans = {
+        culture = malay
+        religion = sunni
+        size = 492
+    }
+
+    soldiers = {
+        culture = malay
+        religion = sunni
+        size = 82
+    }
+
+    farmers = {
+        culture = malay
+        religion = sunni
+        size = 9000
+    }
+}
+#Shan Region (600000)
+#under the rule of Siam in 1836
+#Chiang Mai (332000/83000 POPS)
+1355 = {
+    aristocrats = {
+        culture = thai
+        religion = theravada
+        size = 451
+    }
+
+    bureaucrats = {
+        culture = thai
+        religion = theravada
+        size = 102
+    }
+
+    officers = {
+        culture = thai
+        religion = theravada
+        size = 61
+    }
+
+    clergymen = {
+        culture = thai
+        religion = theravada
+        size = 266
+    }
+
+    artisans = {
+        culture = thai
+        religion = theravada
+        size = 1312
+    }
+
+    soldiers = {
+        culture = thai
+        religion = theravada
+        size = 266
+    }
+
+    farmers = {
+        culture = thai
+        religion = theravada
+        size = 23554
+    }
+
+    aristocrats = {
+        culture = shan
+        religion = theravada
+        size = 1168
+    }
+
+    officers = {
+        culture = shan
+        religion = theravada
+        size = 61
+    }
+
+    clergymen = {
+        culture = shan
+        religion = theravada
+        size = 410
+    }
+
+    artisans = {
+        culture = shan
+        religion = theravada
+        size = 2091
+    }
+
+    soldiers = {
+        culture = shan
+        religion = theravada
+        size = 430
+    }
+
+    farmers = {
+        culture = shan
+        religion = theravada
+        size = 37925
+    }
+
+    slaves = {
+        culture = burmese
+        religion = theravada
+        size = 5740
+    }
+}
+#Nan (268000/67000 POPS)
+2572 = {
+    aristocrats = {
+        culture = thai
+        religion = theravada
+        size = 328
+    }
+
+    clergymen = {
+        culture = thai
+        religion = theravada
+        size = 184
+    }
+
+    artisans = {
+        culture = thai
+        religion = theravada
+        size = 902
+    }
+
+    soldiers = {
+        culture = thai
+        religion = theravada
+        size = 184
+    }
+
+    farmers = {
+        culture = thai
+        religion = theravada
+        size = 16441
+    }
+
+    aristocrats = {
+        culture = shan
+        religion = theravada
+        size = 348
+    }
+
+    clergymen = {
+        culture = shan
+        religion = theravada
+        size = 164
+    }
+
+    artisans = {
+        culture = shan
+        religion = theravada
+        size = 943
+    }
+
+    soldiers = {
+        culture = shan
+        religion = theravada
+        size = 205
+    }
+
+    farmers = {
+        culture = shan
+        religion = theravada
+        size = 17282
+    }
+
+    aristocrats = {
+        culture = lao
+        religion = theravada
+        size = 308
+    }
+
+    clergymen = {
+        culture = lao
+        religion = theravada
+        size = 164
+    }
+
+    artisans = {
+        culture = lao
+        religion = theravada
+        size = 902
+    }
+
+    soldiers = {
+        culture = lao
+        religion = theravada
+        size = 184
+    }
+
+    farmers = {
+        culture = lao
+        religion = theravada
+        size = 16564
+    }
+}
+#Laos Region (776000)
+#under the rule of Siam in 1836
+#Udon Thani (596000/149000 POPS) #now part of Thailand
+1358 = {
+    aristocrats = {
+        culture = thai
+        religion = theravada
+        size = 328
+    }
+
+    bureaucrats = {
+        culture = thai
+        religion = theravada
+        size = 123
+    }
+
+    officers = {
+        culture = thai
+        religion = theravada
+        size = 164
+    }
+
+    clergymen = {
+        culture = thai
+        religion = theravada
+        size = 184
+    }
+
+    artisans = {
+        culture = thai
+        religion = theravada
+        size = 861
+    }
+
+    soldiers = {
+        culture = thai
+        religion = theravada
+        size = 184
+    }
+
+    farmers = {
+        culture = thai
+        religion = theravada
+        size = 17240
+    }
+
+    aristocrats = {
+        culture = lao
+        religion = theravada
+        size = 2050
+    }
+
+    clergymen = {
+        culture = lao
+        religion = theravada
+        size = 1066
+    }
+
+    artisans = {
+        culture = lao
+        religion = theravada
+        size = 5248
+    }
+
+    soldiers = {
+        culture = lao
+        religion = theravada
+        size = 984
+    }
+
+    farmers = {
+        culture = lao
+        religion = theravada
+        size = 80032
+    }
+
+    slaves = {
+        culture = lao
+        religion = theravada
+        size = 12300
+    }
+}
+#Sisaket (180000/45000 POPS) #now part of Thailand
+1359 = {
+    aristocrats = {
+        culture = thai
+        religion = theravada
+        size = 348
+    }
+
+    clergymen = {
+        culture = thai
+        religion = theravada
+        size = 184
+    }
+
+    artisans = {
+        culture = thai
+        religion = theravada
+        size = 943
+    }
+
+    soldiers = {
+        culture = thai
+        religion = theravada
+        size = 205
+    }
+
+    farmers = {
+        culture = thai
+        religion = theravada
+        size = 17179
+    }
+
+    aristocrats = {
+        culture = lao
+        religion = theravada
+        size = 266
+    }
+
+    clergymen = {
+        culture = lao
+        religion = theravada
+        size = 144
+    }
+
+    artisans = {
+        culture = lao
+        religion = theravada
+        size = 718
+    }
+
+    soldiers = {
+        culture = lao
+        religion = theravada
+        size = 144
+    }
+
+    farmers = {
+        culture = lao
+        religion = theravada
+        size = 14309
+    }
+
+    aristocrats = {
+        culture = khmer
+        religion = theravada
+        size = 20
+    }
+
+    clergymen = {
+        culture = khmer
+        religion = theravada
+        size = 41
+    }
+
+    artisans = {
+        culture = khmer
+        religion = theravada
+        size = 123
+    }
+
+    soldiers = {
+        culture = khmer
+        religion = theravada
+        size = 20
+    }
+
+    farmers = {
+        culture = khmer
+        religion = theravada
+        size = 2255
+    }
+}
+#Cambodia Region (72000)
+#under the rule of Siam in 1836
+#Chanthaburi (72000/18000 POPS) #now part of Thailand
+1365 = {
+    aristocrats = {
+        culture = thai
+        religion = theravada
+        size = 61
+    }
+
+    clergymen = {
+        culture = thai
+        religion = theravada
+        size = 41
+    }
+
+    artisans = {
+        culture = thai
+        religion = theravada
+        size = 184
+    }
+
+    soldiers = {
+        culture = thai
+        religion = theravada
+        size = 41
+    }
+
+    farmers = {
+        culture = thai
+        religion = theravada
+        size = 3772
+    }
+
+    aristocrats = {
+        culture = khmer
+        religion = theravada
+        size = 123
+    }
+
+    clergymen = {
+        culture = khmer
+        religion = theravada
+        size = 82
+    }
+
+    artisans = {
+        culture = khmer
+        religion = theravada
+        size = 410
+    }
+
+    soldiers = {
+        culture = khmer
+        religion = theravada
+        size = 82
+    }
+
+    farmers = {
+        culture = khmer
+        religion = theravada
+        size = 7503
+    }
+
+    clergymen = {
+        culture = yue
+        religion = mahayana
+        size = 41
+    }
+
+    artisans = {
+        culture = yue
+        religion = mahayana
+        size = 615
+    }
+
+    soldiers = {
+        culture = yue
+        religion = mahayana
+        size = 41
+    }
+
+    farmers = {
+        culture = yue
+        religion = mahayana
+        size = 1763
+    }
+}
+#Malaya Region (132000) #see Malaysia.txt for balance of region
+#under the rule of Siam in 1836
+#Pattani (132000/33000 POPS) #now part of Thailand
+1392 = {
+    aristocrats = {
+        culture = malay
+        religion = sunni
+        size = 451
+    }
+
+    clergymen = {
+        culture = malay
+        religion = sunni
+        size = 246
+    }
+
+    artisans = {
+        culture = malay
+        religion = sunni
+        size = 1230
+    }
+
+    soldiers = {
+        culture = malay
+        religion = sunni
+        size = 246
+    }
+
+    farmers = {
+        culture = malay
+        religion = sunni
+        size = 16769
+    }
+
+    slaves = {
+        culture = malay
+        religion = sunni
+        size = 6560
+    }
+
+    clergymen = {
+        culture = yue
+        religion = mahayana
+        size = 41
+    }
+
+    artisans = {
+        culture = yue
+        religion = mahayana
+        size = 533
+    }
+
+    soldiers = {
+        culture = yue
+        religion = mahayana
+        size = 82
+    }
+
+    farmers = {
+        culture = yue
+        religion = mahayana
+        size = 2686
+    }
+
+}

@@ -1,0 +1,16 @@
+leader = {
+    name = "Guillaume de Kalbermatten"
+    date = 1815.1.1
+    type = land
+    personality = no_personality
+    background = attack_1.1
+    prestige = 0.2
+}
+leader = {
+    name = "Guillaume Henri Dufour"
+    date = 1831.1.1
+    type = land
+    personality = defence_3.1
+    background = no_background
+    prestige = 0.1
+}

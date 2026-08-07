@@ -1,0 +1,743 @@
+#Section 1: Hurricanes
+
+country_event = {
+    id = 187751
+    title = "The 1932 Cuba Hurricane"
+    desc = "EVT187751DESC"
+    picture = "1932_cuba_hurricane"
+	fire_only_once = yes
+
+    trigger = {
+        year = 1932
+        owns = 2211 # Camagüey
+		month = 11
+    }
+
+    mean_time_to_happen = { days = 1 }
+	
+	option = {
+		name = "Send aid to rebuild."
+		2211 = {
+			infrastructure = -1
+			any_pop = { consciousness = 2 }
+            add_province_modifier = {
+                name = hurricane_damage
+                duration = 365
+            }
+		}
+        treasury = -15000
+		ai_chance = {
+            factor = 1
+			modifier = {
+				factor = 0
+				NOT = { money = 15100 }
+			}
+		}
+	}
+
+	option = {
+		name = "We cannot spare the resources."
+		2211 = {
+			infrastructure = -1
+			any_pop = { consciousness = 4 }
+            add_province_modifier = {
+                name = hurricane_damage
+                duration = 730
+            }
+		}
+        prestige = -5
+		ai_chance = {
+            factor = 1
+			modifier = {
+				factor = 0
+				money = 15100
+			}
+		}
+	}
+}
+
+country_event = {
+    id = 187752
+    title = "The 1930 San Zenón Hurricane"
+    desc = "EVT187752DESC"
+    picture = "san_zenon_hurricane"
+	fire_only_once = yes
+
+    trigger = {
+        year = 1930
+        owns = 2213 # Santo Domingo
+		month = 9
+    }
+
+    mean_time_to_happen = { days = 1 }
+	
+	option = {
+		name = "Send aid to rebuild."
+		2213 = {
+			infrastructure = -1
+			any_pop = { consciousness = 2 }
+            add_province_modifier = {
+                name = hurricane_damage
+                duration = 365
+            }
+		}
+        treasury = -15000
+		ai_chance = {
+            factor = 1
+			modifier = {
+				factor = 0
+				NOT = { money = 15100 }
+			}
+		}
+	}
+
+	option = {
+		name = "We cannot spare the resources."
+		2213 = {
+			infrastructure = -1
+			any_pop = { consciousness = 4 }
+            add_province_modifier = {
+                name = hurricane_damage
+                duration = 730
+            }
+		}
+        prestige = -5
+		ai_chance = {
+            factor = 1
+			modifier = {
+				factor = 0
+				money = 15100
+			}
+		}
+	}
+}
+
+country_event = {
+    id = 187753
+    title = "The 1893 Chenière Caminada Hurricane"
+    desc = "EVT187753DESC"
+    picture = "cheniere_caminada_hurricane"
+	fire_only_once = yes
+
+    trigger = {
+        year = 1893
+        owns = 139 # New Orleans
+		month = 10
+    }
+
+    mean_time_to_happen = { days = 1 }
+	
+	option = {
+		name = "Send aid to rebuild."
+		139 = {
+			infrastructure = -1
+			any_pop = { consciousness = 2 }
+            add_province_modifier = {
+                name = hurricane_damage
+                duration = 365
+            }
+		}
+        treasury = -15000
+		ai_chance = {
+            factor = 1
+			modifier = {
+				factor = 0
+				NOT = { money = 15100 }
+			}
+		}
+	}
+
+	option = {
+		name = "We cannot spare the resources."
+		139 = {
+			infrastructure = -1
+			any_pop = { consciousness = 4 }
+            add_province_modifier = {
+                name = hurricane_damage
+                duration = 730
+            }
+		}
+        prestige = -5
+		ai_chance = {
+            factor = 1
+			modifier = {
+				factor = 0
+				money = 15100
+			}
+		}
+	}
+}
+
+country_event = {
+    id = 187754
+    title = "The 1928 Okeechobee Hurricane"
+    desc = "EVT187754DESC"
+    picture = "okeechobee_hurricane"
+	fire_only_once = yes
+
+    trigger = {
+        year = 1928
+        owns = 200 # Tampa
+		month = 9
+    }
+
+    mean_time_to_happen = { days = 1 }
+	
+	option = {
+		name = "Send aid to rebuild."
+		200 = {
+			infrastructure = -1
+			any_pop = { consciousness = 2 }
+            add_province_modifier = {
+                name = hurricane_damage
+                duration = 365
+            }
+		}
+        treasury = -15000
+		ai_chance = {
+            factor = 1
+			modifier = {
+				factor = 0
+				NOT = { money = 15100 }
+			}
+		}
+	}
+
+	option = {
+		name = "We cannot spare the resources."
+		200 = {
+			infrastructure = -1
+			any_pop = { consciousness = 4 }
+            add_province_modifier = {
+                name = hurricane_damage
+                duration = 730
+            }
+		}
+        prestige = -5
+		ai_chance = {
+            factor = 1
+			modifier = {
+				factor = 0
+				money = 15100
+			}
+		}
+	}
+}
+
+country_event = {
+    id = 187755
+    title = "The 1910 Cuba Hurricane"
+    desc = "EVT187755DESC"
+    picture = "1910_cuba_hurricane"
+	fire_only_once = yes
+
+    trigger = {
+        year = 1910
+        owns = 2209 # Havana
+		month = 10
+    }
+
+    mean_time_to_happen = { days = 1 }
+	
+	option = {
+		name = "Send aid to rebuild."
+		2209 = {
+			infrastructure = -1
+			any_pop = { consciousness = 2 }
+            add_province_modifier = {
+                name = hurricane_damage
+                duration = 365
+            }
+		}
+        treasury = -15000
+		ai_chance = {
+            factor = 1
+			modifier = {
+				factor = 0
+				NOT = { money = 15100 }
+			}
+		}
+	}
+
+	option = {
+		name = "We cannot spare the resources."
+		2209 = {
+			infrastructure = -1
+			any_pop = { consciousness = 4 }
+            add_province_modifier = {
+                name = hurricane_damage
+                duration = 730
+            }
+		}
+        prestige = -5
+		ai_chance = {
+            factor = 1
+			modifier = {
+				factor = 0
+				money = 15100
+			}
+		}
+	}
+}
+
+country_event = {
+    id = 18482373
+    title = "The 1872 Zanzibar Hurricane"
+    desc = "1872HURRICANEZANZIBAR"
+    picture = "1872_zanzibar_hurricane"
+	
+    fire_only_once = yes
+
+    trigger = {
+		year = 1872
+		owns = 2048
+		month = 3
+    }
+
+    mean_time_to_happen = { days = 1 }
+	
+	option = {
+		name = "Send aid to rebuild."
+		clipper_convoy = -7
+		2048 = {
+			infrastructure = -1
+			any_pop = { consciousness = 2 }
+            add_province_modifier = {
+                name = hurricane_damage
+                duration = 365
+            }
+		}
+        treasury = -15000
+		ai_chance = {
+            factor = 1
+			modifier = {
+				factor = 0
+				NOT = { money = 15100 }
+			}
+		}
+	}
+
+	option = {
+		name = "We cannot spare the resources."
+		clipper_convoy = -7
+		2048 = {
+			infrastructure = -1
+			any_pop = { consciousness = 4 }
+            add_province_modifier = {
+                name = hurricane_damage
+                duration = 730
+            }
+		}
+        prestige = -5
+		ai_chance = {
+            factor = 1
+			modifier = {
+				factor = 0
+				money = 15100
+			}
+		}
+	}
+}
+
+country_event = {
+    id = 187750
+    title = "GALVESTONTITLE"
+    desc = "EVT187750DESC"
+    picture = "galveston"
+	
+	fire_only_once = yes
+
+    trigger = {
+        year = 1900
+        owns = 137 # San Antonio
+        owns = 138 # Laredo
+		month = 9
+    }
+
+    mean_time_to_happen = { days = 1 }
+	
+	option = {
+		name = "Send aid to rebuild."
+		138 = {
+			infrastructure = -1
+			any_pop = { consciousness = 2 }
+            add_province_modifier = {
+                name = hurricane_damage
+                duration = 365
+            }
+		}
+		137 = {
+			infrastructure = -1
+			any_pop = { consciousness = 2 }
+            add_province_modifier = {
+                name = hurricane_damage
+                duration = 365
+            }
+		}
+        treasury = -15000
+		ai_chance = {
+            factor = 1
+			modifier = {
+				factor = 0
+				NOT = { money = 15100 }
+			}
+		}
+	}
+
+	option = {
+		name = "We cannot spare the resources."
+		138 = {
+			infrastructure = -1
+			any_pop = { consciousness = 4 }
+            add_province_modifier = {
+                name = hurricane_damage
+                duration = 730
+            }
+		}
+		137 = {
+			infrastructure = -1
+			any_pop = { consciousness = 4 }
+            add_province_modifier = {
+                name = hurricane_damage
+                duration = 730
+            }
+		}
+        prestige = -5
+		ai_chance = {
+            factor = 1
+			modifier = {
+				factor = 0
+				money = 15100
+			}
+		}
+	}
+}
+
+country_event = {
+    id = 18482380
+    title = "The Coringa Cyclone"
+    desc = "CORINGACYCLONE"
+    picture = "coringa_cyclone"
+	
+    fire_only_once = yes
+
+    trigger = {
+		year = 1839
+		owns = 1305
+		month = 10
+    }
+
+    mean_time_to_happen = { days = 1 }
+
+    option = {
+		name = "Send aid to rebuild."
+		1305 = {
+			infrastructure = -1
+			any_pop = { consciousness = 2 }
+            add_province_modifier = {
+                name = hurricane_damage
+                duration = 365
+            }
+		}
+        treasury = -15000
+		ai_chance = {
+            factor = 1
+			modifier = {
+				factor = 0
+				NOT = { money = 15100 }
+			}
+		}
+	}
+
+	option = {
+		name = "We cannot spare the resources."
+		1305 = {
+			infrastructure = -1
+			any_pop = { consciousness = 4 }
+            add_province_modifier = {
+                name = hurricane_damage
+                duration = 730
+            }
+		}
+        prestige = -5
+		ai_chance = {
+            factor = 1
+			modifier = {
+				factor = 0
+				money = 15100
+			}
+		}
+	}
+}
+
+country_event = {
+    id = 18482229
+    title = "The Maui Hurricane of $YEAR$"
+    desc = "MAUIHURRICANEHAWAII"
+    picture = "maui_hurricane"
+	
+	fire_only_once = yes
+
+	trigger = {
+		year = 1871
+		owns = 658
+		month = 8
+	}
+
+	mean_time_to_happen = { days = 1 }
+
+    option = {
+		name = "Send aid to rebuild."
+		658 = {
+			infrastructure = -1
+			any_pop = { consciousness = 2 }
+            add_province_modifier = {
+                name = hurricane_damage
+                duration = 365
+            }
+		}
+        treasury = -15000
+		ai_chance = {
+            factor = 1
+			modifier = {
+				factor = 0
+				NOT = { money = 15100 }
+			}
+		}
+	}
+
+	option = {
+		name = "We cannot spare the resources."
+		658 = {
+			infrastructure = -1
+			any_pop = { consciousness = 4 }
+            add_province_modifier = {
+                name = hurricane_damage
+                duration = 730
+            }
+		}
+        prestige = -5
+		ai_chance = {
+            factor = 1
+			modifier = {
+				factor = 0
+				money = 15100
+			}
+		}
+	}
+}
+
+#Section 2: Cold Winters in the Great Plains
+
+country_event = {
+    id = 18482259
+    title = "1886WINTERTITLE"
+    desc = "1886WINTER"
+    picture = "winter_of_1887"
+	
+	fire_only_once = yes
+
+	trigger = {
+		year = 1887
+		tag = USA
+	}
+
+	mean_time_to_happen = { days = 6 }
+
+    option = {
+		name = "Poor cows..."
+		any_pop = {
+			limit = {
+				location = {
+					OR = {
+						province_id = 151
+						province_id = 154
+						province_id = 126
+						province_id = 127
+						province_id = 128
+						province_id = 131
+						province_id = 134
+						province_id = 135
+						province_id = 129
+						province_id = 123
+						province_id = 124
+						province_id = 125
+						province_id = 121
+						province_id = 122
+						province_id = 117
+						province_id = 118
+						province_id = 119
+						province_id = 112
+						province_id = 3317
+						province_id = 115
+						province_id = 116
+					}
+				}
+				pop_type = farmers
+			}
+			consciousness = 4
+		}
+	}
+}
+
+country_event = {
+    id = 18492260
+    title = "LONGWINTERTITLE"
+    desc = "LONGWINTERDESC"
+    picture = "long_winter"
+	
+	fire_only_once = yes
+
+	trigger = {
+		year = 1881
+		tag = USA
+	}
+
+	mean_time_to_happen = { days = 6 }
+
+    option = {
+		name = "LONGWINTEROPT"
+		any_pop = {
+			limit = {
+				location = {
+					OR = {
+						province_id = 151
+						province_id = 154
+						province_id = 126
+						province_id = 127
+						province_id = 128
+						province_id = 131
+						province_id = 134
+						province_id = 135
+						province_id = 129
+						province_id = 123
+						province_id = 124
+						province_id = 125
+						province_id = 121
+						province_id = 122
+						province_id = 117
+						province_id = 118
+						province_id = 119
+						province_id = 112
+						province_id = 3317
+						province_id = 115
+						province_id = 116
+					}
+				}
+				pop_type = farmers
+			}
+			consciousness = 3
+		}
+	}
+}
+
+country_event = {
+    id = 18582361
+    title = "SCHOOLBLIZZARDTITLE"
+    desc = "SCHOOLBLIZZARDDESC"
+    picture = "schoolhouse_blizzard"
+	
+	fire_only_once = yes
+
+	trigger = {
+		year = 1886
+		tag = USA
+	}
+
+	mean_time_to_happen = { days = 6 }
+
+    option = {
+		name = "SCHOOLBLIZZARDOPT"
+		any_pop = {
+			limit = {
+				location = {
+					OR = {
+						province_id = 151
+						province_id = 154
+						province_id = 126
+						province_id = 127
+						province_id = 128
+						province_id = 131
+						province_id = 134
+						province_id = 135
+						province_id = 129
+						province_id = 123
+						province_id = 124
+						province_id = 125
+						province_id = 121
+						province_id = 122
+						province_id = 117
+						province_id = 118
+						province_id = 119
+						province_id = 112
+						province_id = 3317
+						province_id = 115
+						province_id = 116
+					}
+				}
+				pop_type = farmers
+			}
+			consciousness = 1
+		}
+	}
+}
+
+#Section 3: A tornado
+
+country_event = {
+    id = 18582382
+    title = "TRISTATETITLE"
+    desc = "TRISTATEADESC"
+    picture = "1925_tornado"
+	
+    fire_only_once = yes
+
+    trigger = {
+		year = 1925
+		owns = 148
+		owns = 168
+		owns = 170
+		month = 3
+		NOT = { has_global_flag = tristatetornado }
+    }
+
+    mean_time_to_happen = { days = 1 }
+
+    option = {
+		name = "TRISTATEAOPT"
+		set_global_flag = tristatetornado
+		148 = { add_province_modifier = { name = local_economic_downturn duration = 365 } }
+		168 = { add_province_modifier = { name = local_economic_downturn duration = 365 } }
+		170 = { add_province_modifier = { name = local_economic_downturn duration = 365 } }
+	}
+}
+
+country_event = {
+    id = 18582383
+    title = "TRISTATETITLE"
+    desc = "TRISTATEBDESC"
+    picture = "1925_tornado"
+	
+    fire_only_once = yes
+
+    trigger = {
+		year = 1925
+		148 = { owned_by = CSA }
+		owns = 168
+		owns = 170
+		NOT = { tag = CSA }
+		month = 3
+		NOT = { has_global_flag = tristatetornado }
+    }
+
+    mean_time_to_happen = { days = 1 }
+
+    option = {
+		name = "TRISTATEBOPT"
+		set_global_flag = tristatetornado
+		relation = { who = CSA value = 50 }
+		148 = { add_province_modifier = { name = local_economic_downturn duration = 365 } }
+		168 = { add_province_modifier = { name = local_economic_downturn duration = 365 } }
+		170 = { add_province_modifier = { name = local_economic_downturn duration = 365 } }
+	}
+}

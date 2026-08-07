@@ -1,0 +1,4 @@
+add_core = ORM
+terrain = dry_mountains
+trade_goods = coffee
+life_rating = 15

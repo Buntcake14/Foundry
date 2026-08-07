@@ -1,0 +1,374 @@
+#Middle Congo Region (148000)
+#under the rule of Loango in 1836
+3744 = {
+    aristocrats = {
+        culture = teke
+        religion = animist
+        size = 748
+    }
+
+    clergymen = {
+        culture = teke
+        religion = animist
+        size = 440
+    }
+
+    artisans = {
+        culture = teke
+        religion = animist
+        size = 1804
+    }
+
+    soldiers = {
+        culture = teke
+        religion = animist
+        size = 968
+    }
+
+    farmers = {
+        culture = teke
+        religion = animist
+        size = 27280
+    }
+
+    slaves = {
+        culture = teke
+        religion = animist
+        size = 3186
+    }
+
+    slaves = {
+        culture = fang
+        religion = animist
+        size = 3027
+    }
+
+    slaves = {
+        culture = bakongo
+        religion = animist
+        size = 387
+    }
+}
+3923 = {
+    aristocrats = {
+        culture = teke
+        religion = animist
+        size = 176
+	}
+	
+    bureaucrats = {
+        culture = teke
+        religion = animist
+        size = 53
+	}
+	
+    officers = {
+        culture = teke
+        religion = animist
+        size = 22
+	}
+
+    clergymen = {
+        culture = teke
+        religion = animist
+        size = 88
+    }
+
+    artisans = {
+        culture = teke
+        religion = animist
+        size = 176
+    }
+
+    soldiers = {
+        culture = teke
+        religion = animist
+        size = 968
+    }
+
+    farmers = {
+        culture = teke
+        religion = animist
+        size = 21657
+    }
+
+    farmers = {
+        culture = bakongo
+        religion = animist
+        size = 9517
+    }
+
+    slaves = {
+        culture = mongo
+        religion = animist
+        size = 4026
+    }
+}
+#Madingou (160000/40000 POPS)
+1978 = {
+    aristocrats = {
+        culture = bakongo
+        religion = animist
+        size = 2200
+    }
+
+    clergymen = {
+        culture = bakongo
+        religion = animist
+        size = 1408
+    }
+
+    artisans = {
+        culture = bakongo
+        religion = animist
+        size = 5060
+    }
+
+    soldiers = {
+        culture = bakongo
+        religion = animist
+        size = 2728
+    }
+
+    farmers = {
+        culture = bakongo
+        religion = animist
+        size = 40172
+    }
+
+    slaves = {
+        culture = bakongo
+        religion = animist
+        size = 7744
+    }
+	
+    farmers = {
+        culture = teke
+        religion = animist
+        size = 7920
+    }
+	
+    slaves = {
+        culture = teke
+        religion = animist
+        size = 9856
+    }
+}
+#Loango (320000/80000 POPS)
+2624 = {
+    aristocrats = {
+        culture = bakongo
+        religion = animist
+        size = 1320
+    }
+
+    bureaucrats = {
+        culture = bakongo
+        religion = animist
+        size = 370
+    }
+
+    officers = {
+        culture = bakongo
+        religion = animist
+        size = 123
+    }
+
+    clergymen = {
+        culture = bakongo
+        religion = animist
+        size = 660
+    }
+
+    artisans = {
+        culture = bakongo
+        religion = animist
+        size = 5500
+    }
+
+    soldiers = {
+        culture = bakongo
+        religion = animist
+        size = 968
+    }
+
+    farmers = {
+        culture = bakongo
+        religion = animist
+        size = 33440
+    }
+
+    farmers = {
+        culture = bakongo
+        religion = catholic
+        size = 2112
+    }
+
+    slaves = {
+        culture = bakongo
+        religion = animist
+        size = 17600
+    }
+}
+#uncolonized in 1836
+#Djambala (28000/7000 POPS)
+1980 = {
+    aristocrats = {
+        culture = mboshi_buja
+        religion = animist
+        size = 110
+    }
+
+    clergymen = {
+        culture = mboshi_buja
+        religion = animist
+        size = 66
+    }
+
+    artisans = {
+        culture = mboshi_buja
+        religion = animist
+        size = 308
+    }
+
+    soldiers = {
+        culture = mboshi_buja
+        religion = animist
+        size = 66
+    }
+
+    farmers = {
+        culture = mboshi_buja
+        religion = animist
+        size = 4565
+    }
+
+    farmers = {
+        culture = teke
+        religion = animist
+        size = 1210
+    }
+
+    farmers = {
+        culture = mongo
+        religion = animist
+        size = 222
+    }
+
+    farmers = {
+        culture = fang
+        religion = animist
+        size = 165
+    }
+}
+#Impfondo (32000/8000 POPS)
+1981 = {
+    aristocrats = {
+        culture = mboshi_buja
+        religion = animist
+        size = 132
+    }
+
+    clergymen = {
+        culture = mboshi_buja
+        religion = animist
+        size = 88
+    }
+
+    artisans = {
+        culture = mboshi_buja
+        religion = animist
+        size = 352
+    }
+
+    soldiers = {
+        culture = mboshi_buja
+        religion = animist
+        size = 88
+    }
+
+    farmers = {
+        culture = mboshi_buja
+        religion = animist
+        size = 4997
+	}
+
+    farmers = {
+        culture = ubangian
+        religion = animist
+        size = 440
+    }
+
+    aristocrats = {
+        culture = fang
+        religion = animist
+        size = 132
+    }
+
+    clergymen = {
+        culture = fang
+        religion = animist
+        size = 88
+    }
+
+    artisans = {
+        culture = fang
+        religion = animist
+        size = 220
+    }
+
+    soldiers = {
+        culture = fang
+        religion = animist
+        size = 88
+    }
+
+    farmers = {
+        culture = fang
+        religion = animist
+        size = 1607
+    }
+}
+1781 = {
+    aristocrats = {
+        culture = mboshi_buja
+        religion = animist
+        size = 132
+    }
+
+    clergymen = {
+        culture = mboshi_buja
+        religion = animist
+        size = 88
+    }
+
+    artisans = {
+        culture = mboshi_buja
+        religion = animist
+        size = 352
+    }
+
+    soldiers = {
+        culture = mboshi_buja
+        religion = animist
+        size = 88
+    }
+
+    farmers = {
+        culture = mboshi_buja
+        religion = animist
+        size = 2842
+	}
+
+    farmers = {
+        culture = ubangian
+        religion = animist
+        size = 243
+    }
+
+    slaves = {
+        culture = mongo
+        religion = animist
+        size = 194
+    }
+}

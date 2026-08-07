@@ -1,0 +1,127 @@
+#AI equivalent of the government-building tier system (see common/production_types.txt /
+#common/buildings.txt / events/Government Administration.txt). The AI isn't expected to reason
+#well about clerk employment or literacy gating, so instead of building the real factory, it
+#gets a decision that directly grants the same province modifiers -- one per tier, gated behind
+#the same tech as the real building (tier 1 always available, matching default_enabled). Each
+#decision sweeps every eligible owned province at once (not one state at a time like the real
+#building), which is the deliberate asymmetry: the player invests granularly, state by state;
+#the AI gets a simpler, sweeping national reform instead. Repeatable (not one-shot) so newly
+#conquered/acquired territory gets swept up on the next take, same is_colonial = no gate as the
+#real buildings to avoid interacting with the COLONIAL_LIFERATING colonization threshold.
+#
+#ai = yes in potential hides these from human players entirely -- this is the AI's own path,
+#not an alternate player option.
+
+political_decisions = {
+
+    ai_gov_parish_reform = {
+        potential = {
+            ai = yes
+        }
+
+        allow = {
+            war = no
+        }
+
+        effect = {
+            any_owned = {
+                limit = {
+                    is_colonial = no
+                    NOT = { has_province_modifier = gov_parish_office_bonus }
+                    NOT = { has_province_modifier = gov_provincial_ministry_bonus }
+                    NOT = { has_province_modifier = gov_civil_service_bureau_bonus }
+                    NOT = { has_province_modifier = gov_modern_administration_bonus }
+                }
+                add_province_modifier = { name = gov_parish_office_bonus duration = -1 }
+            }
+        }
+
+        ai_will_do = {
+            factor = 1
+        }
+    }
+
+    ai_gov_provincial_reform = {
+        potential = {
+            ai = yes
+            positivism = 1
+        }
+
+        allow = {
+            war = no
+        }
+
+        effect = {
+            any_owned = {
+                limit = {
+                    is_colonial = no
+                    NOT = { has_province_modifier = gov_provincial_ministry_bonus }
+                    NOT = { has_province_modifier = gov_civil_service_bureau_bonus }
+                    NOT = { has_province_modifier = gov_modern_administration_bonus }
+                }
+                remove_province_modifier = gov_parish_office_bonus
+                add_province_modifier = { name = gov_provincial_ministry_bonus duration = -1 }
+            }
+        }
+
+        ai_will_do = {
+            factor = 1
+        }
+    }
+
+    ai_gov_civil_service_reform = {
+        potential = {
+            ai = yes
+            social_science = 1
+        }
+
+        allow = {
+            war = no
+        }
+
+        effect = {
+            any_owned = {
+                limit = {
+                    is_colonial = no
+                    NOT = { has_province_modifier = gov_civil_service_bureau_bonus }
+                    NOT = { has_province_modifier = gov_modern_administration_bonus }
+                }
+                remove_province_modifier = gov_parish_office_bonus
+                remove_province_modifier = gov_provincial_ministry_bonus
+                add_province_modifier = { name = gov_civil_service_bureau_bonus duration = -1 }
+            }
+        }
+
+        ai_will_do = {
+            factor = 1
+        }
+    }
+
+    ai_gov_modern_administration_reform = {
+        potential = {
+            ai = yes
+            mass_politics = 1
+        }
+
+        allow = {
+            war = no
+        }
+
+        effect = {
+            any_owned = {
+                limit = {
+                    is_colonial = no
+                    NOT = { has_province_modifier = gov_modern_administration_bonus }
+                }
+                remove_province_modifier = gov_parish_office_bonus
+                remove_province_modifier = gov_provincial_ministry_bonus
+                remove_province_modifier = gov_civil_service_bureau_bonus
+                add_province_modifier = { name = gov_modern_administration_bonus duration = -1 }
+            }
+        }
+
+        ai_will_do = {
+            factor = 1
+        }
+    }
+}

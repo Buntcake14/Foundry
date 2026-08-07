@@ -1,0 +1,7 @@
+leader = {
+    name = "Nawab Mohammad Abbasi"
+    type = land
+    date = 1800.12.14
+    background = no_background
+    personality = no_personality
+}

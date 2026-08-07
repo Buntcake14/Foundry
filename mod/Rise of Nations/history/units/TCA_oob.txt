@@ -1,0 +1,8 @@
+leader = {
+    name = "Georg Andreas von Rosen"
+    picture = european_general_14
+    date = 1800.1.1
+    type = land
+    personality = no_personality
+    background = attack_1.1
+}

@@ -1,0 +1,7 @@
+leader = {
+    name = "Da Diarra"
+    type = land
+    date = 1829.12.14
+    personality = defence_3.1
+    background = attack_2.1
+}

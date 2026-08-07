@@ -1,0 +1,65 @@
+leader = {
+    name = "Carl Nordenskiöld"
+    date = 1834.1.1
+    type = sea
+    personality = no_personality
+    background = attack_4.1
+    prestige = 0.1
+}
+leader = {
+    name = "Carl XIV Johan"
+	picture = european_general_8
+    date = 1818.1.1
+    type = land
+    personality = defence_4.3
+    background = attack_4.1
+    prestige = 0.5
+}
+leader = {
+    name = "Johan Tawast"
+    date = 1807.1.1
+    type = land
+    personality = defence_minus_2.1
+    background = attack_2.1
+    prestige = 0.3
+}
+leader = {
+    name = "Axel Mörner"
+    date = 1818.1.1
+    type = land
+    personality = defence_1.1
+    background = no_background
+    prestige = 0.2
+}
+leader = {
+    name = "Baltzar von Platen"
+    date = 1834.1.1
+    type = sea
+    personality = no_personality
+    background = attack_2.1
+    prestige = 0.1
+}
+leader = {
+    name = "Carl Cederström"
+    date = 1824.1.1
+    type = land
+    personality = defence_1.1
+    background = attack_1.1
+    prestige = 0.1
+}
+leader = {
+    name = "Johan Peter af Billbergh"
+    date = 1814.1.1
+    type = land
+    personality = no_personality
+    background = attack_1.1
+    prestige = 0.2
+}
+leader = {
+    name = "Gustaf Peyron"
+    date = 1827.1.1
+    type = land
+    personality = defence_minus_2.1
+    background = attack_1.1
+    prestige = 0.1
+}

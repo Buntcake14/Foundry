@@ -1,0 +1,6 @@
+owner = ASI
+controller = ASI
+add_core = ASI
+trade_goods = grain
+terrain = semidesert
+life_rating = 32

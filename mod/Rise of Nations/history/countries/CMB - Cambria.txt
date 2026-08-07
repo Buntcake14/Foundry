@@ -1,0 +1,50 @@
+capital = 273
+primary_culture = welsh
+culture = british
+religion = protestant
+government = absolute_monarchy
+plurality = 10
+nationalvalue = nv_order
+literacy = 0.55
+civilized = yes
+prestige = 60
+
+#Political Reforms
+slavery = no_slavery
+upper_house_composition = appointed
+vote_franschise = wealth_voting
+public_meetings = restricted_meeting
+press_rights = censored_press
+trade_unions = non_socialist
+voting_system = first_past_the_post
+political_parties = non_secret_ballots
+
+#Social Reforms
+wage_reform = no_minimum_wage
+work_hours = no_work_hour_limit
+safety_regulations = trinket_safety
+health_care = no_health_care
+unemployment_subsidies = trinket_subsidies
+pensions = no_pensions
+school_reforms = low_schools
+
+#New Reforms
+conscription = one_year_draft
+debt_law = debtors_prisons
+penal_system = colonial_transportation
+child_labor = child_labor_restricted
+citizens_rights = culture_voting_only
+border_policy = open_borders
+centralization = unitary
+colonial_policy = exploitation
+
+ruling_party = CMB_reactionary
+upper_house = {
+    fascist = 0
+    liberal = 20
+    conservative = 30
+    reactionary = 50
+    radical = 0
+    socialist = 0
+    communist = 0
+}

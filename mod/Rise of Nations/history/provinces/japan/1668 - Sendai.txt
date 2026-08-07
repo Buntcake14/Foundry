@@ -1,0 +1,6 @@
+owner = SEN
+controller = SEN
+add_core = SEN
+trade_goods = iron #https://en.wikipedia.org/wiki/Hosokura_mine
+life_rating = 35
+terrain = floodplain_farmland

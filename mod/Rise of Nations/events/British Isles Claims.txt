@@ -1,0 +1,269 @@
+#Border-claim events for Britain's breakup. One claim pair (2 events) per contested zone:
+#England-Scotland (centuries of border war), England-Wales (the Marcher lordships),
+#England-Cornwall (the zone deliberately split when South West England was divided),
+#and Scotland-Ireland (the Dalriada/Ulster-Scots migration link).
+#IDs 99099017-99099024 continue from the range used by earlier (pre-rebuild) region work.
+
+country_event = {
+    id = 99099017
+    title = "EVTNAME99099017"
+    desc = "EVTDESC99099017"
+
+    trigger = {
+        tag = SCO
+        war = no
+        NOT = { 279 = { is_core = SCO } }
+        NOT = { has_country_flag = dismissed_carlisle_dispute }
+    }
+
+    mean_time_to_happen = {
+        months = 120
+        modifier = {
+            factor = 0.5
+            war_policy = jingoism
+        }
+    }
+
+    option = {
+        name = "Press our claim on Carlisle"
+        279 = { add_core = SCO }
+        ENL = { relation = { who = THIS value = -25 } }
+        badboy = 1
+    }
+    option = {
+        name = "Let the old border stand"
+        prestige = 1
+        set_country_flag = dismissed_carlisle_dispute
+    }
+}
+
+country_event = {
+    id = 99099018
+    title = "EVTNAME99099018"
+    desc = "EVTDESC99099018"
+
+    trigger = {
+        tag = ENL
+        war = no
+        NOT = { 272 = { is_core = ENL } }
+        NOT = { has_country_flag = dismissed_dumfries_dispute }
+    }
+
+    mean_time_to_happen = {
+        months = 120
+        modifier = {
+            factor = 0.5
+            war_policy = jingoism
+        }
+    }
+
+    option = {
+        name = "Press our claim on Dumfries"
+        272 = { add_core = ENL }
+        SCO = { relation = { who = THIS value = -25 } }
+        badboy = 1
+    }
+    option = {
+        name = "Let the old border stand"
+        prestige = 1
+        set_country_flag = dismissed_dumfries_dispute
+    }
+}
+
+country_event = {
+    id = 99099019
+    title = "EVTNAME99099019"
+    desc = "EVTDESC99099019"
+
+    trigger = {
+        tag = WHA
+        war = no
+        NOT = { 285 = { is_core = WHA } }
+        NOT = { has_country_flag = dismissed_chester_dispute }
+    }
+
+    mean_time_to_happen = {
+        months = 120
+        modifier = {
+            factor = 0.5
+            war_policy = jingoism
+        }
+    }
+
+    option = {
+        name = "Press our claim on Chester"
+        285 = { add_core = WHA }
+        ENL = { relation = { who = THIS value = -25 } }
+        badboy = 1
+    }
+    option = {
+        name = "Let the marches stand"
+        prestige = 1
+        set_country_flag = dismissed_chester_dispute
+    }
+}
+
+country_event = {
+    id = 99099020
+    title = "EVTNAME99099020"
+    desc = "EVTDESC99099020"
+
+    trigger = {
+        tag = ENL
+        war = no
+        NOT = { 276 = { is_core = ENL } }
+        NOT = { has_country_flag = dismissed_holyhead_dispute }
+    }
+
+    mean_time_to_happen = {
+        months = 120
+        modifier = {
+            factor = 0.5
+            war_policy = jingoism
+        }
+    }
+
+    option = {
+        name = "Press our claim on Holyhead"
+        276 = { add_core = ENL }
+        WHA = { relation = { who = THIS value = -25 } }
+        badboy = 1
+    }
+    option = {
+        name = "Let the marches stand"
+        prestige = 1
+        set_country_flag = dismissed_holyhead_dispute
+    }
+}
+
+country_event = {
+    id = 99099021
+    title = "EVTNAME99099021"
+    desc = "EVTDESC99099021"
+
+    trigger = {
+        tag = CRN
+        war = no
+        NOT = { 3268 = { is_core = CRN } }
+        NOT = { has_country_flag = dismissed_exeter_dispute }
+    }
+
+    mean_time_to_happen = {
+        months = 120
+        modifier = {
+            factor = 0.5
+            war_policy = jingoism
+        }
+    }
+
+    option = {
+        name = "Press our claim on Exeter"
+        3268 = { add_core = CRN }
+        ENL = { relation = { who = THIS value = -25 } }
+        badboy = 1
+    }
+    option = {
+        name = "Accept the old boundary"
+        prestige = 1
+        set_country_flag = dismissed_exeter_dispute
+    }
+}
+
+country_event = {
+    id = 99099022
+    title = "EVTNAME99099022"
+    desc = "EVTDESC99099022"
+
+    trigger = {
+        tag = ENL
+        war = no
+        NOT = { 3480 = { is_core = ENL } }
+        NOT = { has_country_flag = dismissed_scilly_dispute }
+    }
+
+    mean_time_to_happen = {
+        months = 120
+        modifier = {
+            factor = 0.5
+            war_policy = jingoism
+        }
+    }
+
+    option = {
+        name = "Press our claim on the Isles of Scilly"
+        3480 = { add_core = ENL }
+        CRN = { relation = { who = THIS value = -25 } }
+        badboy = 1
+    }
+    option = {
+        name = "Accept the old boundary"
+        prestige = 1
+        set_country_flag = dismissed_scilly_dispute
+    }
+}
+
+country_event = {
+    id = 99099023
+    title = "EVTNAME99099023"
+    desc = "EVTDESC99099023"
+
+    trigger = {
+        tag = SCO
+        war = no
+        NOT = { 254 = { is_core = SCO } }
+        NOT = { has_country_flag = dismissed_belfast_dispute }
+    }
+
+    mean_time_to_happen = {
+        months = 120
+        modifier = {
+            factor = 0.5
+            war_policy = jingoism
+        }
+    }
+
+    option = {
+        name = "Press our claim on Belfast"
+        254 = { add_core = SCO }
+        IRE = { relation = { who = THIS value = -25 } }
+        badboy = 1
+    }
+    option = {
+        name = "Leave the plantation be"
+        prestige = 1
+        set_country_flag = dismissed_belfast_dispute
+    }
+}
+
+country_event = {
+    id = 99099024
+    title = "EVTNAME99099024"
+    desc = "EVTDESC99099024"
+
+    trigger = {
+        tag = IRE
+        war = no
+        NOT = { 3479 = { is_core = IRE } }
+        NOT = { has_country_flag = dismissed_hebrides_dispute }
+    }
+
+    mean_time_to_happen = {
+        months = 120
+        modifier = {
+            factor = 0.5
+            war_policy = jingoism
+        }
+    }
+
+    option = {
+        name = "Press our claim on the Hebrides"
+        3479 = { add_core = IRE }
+        SCO = { relation = { who = THIS value = -25 } }
+        badboy = 1
+    }
+    option = {
+        name = "Leave Dalriada in the past"
+        prestige = 1
+        set_country_flag = dismissed_hebrides_dispute
+    }
+}

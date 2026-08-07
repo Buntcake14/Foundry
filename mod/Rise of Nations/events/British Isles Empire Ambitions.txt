@@ -1,0 +1,143 @@
+#Empire-ambition events for Britain's successors: unlike the border-claim events (one small
+#contested zone each), these grant a sweeping batch of cores representing each nation's
+#"empire of old" ambition, once it's an established power (great or secondary, top 16) under
+#a reactionary government. add_core has no infamy cost, and neither does the acquire_all_cores
+#CB it feeds (badboy_factor = 0), so this is meant to open a genuinely free, high-priority war
+#path once it fires, not just flavor. One-shot per nation (set_country_flag on both options).
+#IDs 99099025-99099027 continue from the claim events' range (99099017-99099024 used).
+
+#ENL: the flagship "United Kingdom" ambition -- claims cores across every other successor's
+#entire core territory via SCO/IRE/WHA/CRN = { all_core = { add_core = ENL } }, reusing each
+#nation's own established core list rather than hardcoding province numbers.
+country_event = {
+    id = 99099025
+    title = "EVTNAME99099025"
+    desc = "EVTDESC99099025"
+
+    trigger = {
+        tag = ENL
+        war = no
+        OR = {
+            is_greater_power = yes
+            is_secondary_power = yes
+        }
+        ruling_party_ideology = reactionary
+        NOT = { has_country_flag = united_kingdom_destiny_decided }
+    }
+
+    mean_time_to_happen = {
+        months = 360
+        modifier = {
+            factor = 0.5
+            war_policy = jingoism
+        }
+    }
+
+    option = {
+        name = "The Isles are ours by right"
+        SCO = { all_core = { add_core = ENL } }
+        IRE = { all_core = { add_core = ENL } }
+        WHA = { all_core = { add_core = ENL } }
+        CRN = { all_core = { add_core = ENL } }
+        prestige = 10
+        set_country_flag = united_kingdom_destiny_decided
+    }
+    option = {
+        name = "Britain's division is Britain's peace"
+        prestige = 2
+        set_country_flag = united_kingdom_destiny_decided
+    }
+}
+
+#SCO: a modest version -- the North West England border state (Carlisle/Chester and
+#neighbors, ENG_277 in map/region.txt) plus all of Ulster (ENG_254), the historical
+#Ulster-Scots migration link already flagged in British Isles Claims.txt.
+country_event = {
+    id = 99099026
+    title = "EVTNAME99099026"
+    desc = "EVTDESC99099026"
+
+    trigger = {
+        tag = SCO
+        war = no
+        OR = {
+            is_greater_power = yes
+            is_secondary_power = yes
+        }
+        ruling_party_ideology = reactionary
+        NOT = { has_country_flag = caledonian_destiny_decided }
+    }
+
+    mean_time_to_happen = {
+        months = 360
+        modifier = {
+            factor = 0.5
+            war_policy = jingoism
+        }
+    }
+
+    option = {
+        name = "Reclaim the borderlands and Ulster"
+        277 = { add_core = SCO }
+        278 = { add_core = SCO }
+        279 = { add_core = SCO }
+        285 = { add_core = SCO }
+        3608 = { add_core = SCO }
+        254 = { add_core = SCO }
+        255 = { add_core = SCO }
+        256 = { add_core = SCO }
+        prestige = 10
+        set_country_flag = caledonian_destiny_decided
+    }
+    option = {
+        name = "The border has stood long enough"
+        prestige = 2
+        set_country_flag = caledonian_destiny_decided
+    }
+}
+
+#IRE: reclaims Argyll and the Hebrides (ENG_266, "Highlands" in map/region.txt) -- the
+#Dalriada link, reversing the Ulster-Scots claim's direction: Dalriada was originally an
+#Irish kingdom that colonized western Scotland, predating the Ulster plantation by a
+#thousand years. Real, distinct historical hook, not a reuse of SCO's own claim on Ireland.
+country_event = {
+    id = 99099027
+    title = "EVTNAME99099027"
+    desc = "EVTDESC99099027"
+
+    trigger = {
+        tag = IRE
+        war = no
+        OR = {
+            is_greater_power = yes
+            is_secondary_power = yes
+        }
+        ruling_party_ideology = reactionary
+        NOT = { has_country_flag = dalriada_destiny_decided }
+    }
+
+    mean_time_to_happen = {
+        months = 360
+        modifier = {
+            factor = 0.5
+            war_policy = jingoism
+        }
+    }
+
+    option = {
+        name = "The old kingdom of Dalriada calls"
+        266 = { add_core = IRE }
+        267 = { add_core = IRE }
+        268 = { add_core = IRE }
+        3477 = { add_core = IRE }
+        3478 = { add_core = IRE }
+        3479 = { add_core = IRE }
+        prestige = 10
+        set_country_flag = dalriada_destiny_decided
+    }
+    option = {
+        name = "Argyll belongs to Scotland now"
+        prestige = 2
+        set_country_flag = dalriada_destiny_decided
+    }
+}

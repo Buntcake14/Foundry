@@ -1,0 +1,852 @@
+#Holland & Zeeland Region - 1353000
+#Amsterdam (464000/116000 POPS)
+375 = {
+    ######Jews
+    aristocrats = {
+        culture = ashkenazi
+        religion = jewish
+        size = 72
+    }
+
+    officers = {
+        culture = sephardic
+        religion = jewish
+        size = 72
+    }
+
+    soldiers = {
+        culture = sephardic
+        religion = jewish
+        size = 216
+    }
+
+    clergymen = {
+        culture = sephardic
+        religion = jewish
+        size = 72
+    }
+	
+	artisans = { 
+		culture = sephardic 
+		religion = jewish 
+		size = 216
+	}
+
+    artisans = {
+        culture = sephardic
+        religion = jewish
+        size = 1944
+    }
+
+    farmers = {
+        culture = sephardic
+        religion = jewish
+        size = 2073
+    }
+    ########
+    aristocrats = {
+        culture = dutch
+        religion = reformed
+        size = 1015
+    }
+    officers = {
+        culture = dutch
+        religion = reformed
+        size = 237
+    }
+    bureaucrats = {
+        culture = dutch
+        religion = reformed
+        size = 1760
+    }
+    clergymen = {
+        culture = dutch
+        religion = reformed
+        size = 1252
+    }
+    artisans = {
+        culture = dutch
+        religion = catholic
+        size = 12816
+    }
+    artisans = {
+        culture = frisian
+        religion = reformed
+        size = 4464
+    }
+    artisans = {
+        culture = dutch
+        religion = reformed
+        size = 5414
+    }
+    soldiers = {
+        culture = dutch
+        religion = catholic
+        size = 6768
+    }
+    soldiers = {
+        culture = dutch
+        religion = catholic
+        size = 1624
+    }
+    farmers = {
+        culture = dutch
+        religion = reformed
+        size = 28016
+    }
+    craftsmen = {
+        culture = dutch
+        religion = reformed
+        size = 4320
+    }
+    artisans = {
+        culture = flemish
+        religion = catholic
+        size = 5753
+    }
+}
+3753 = {
+    aristocrats = {
+        culture = dutch
+        religion = reformed
+        size = 72
+    }
+	
+    clergymen = {
+        culture = dutch
+        religion = reformed
+        size = 36
+    }
+	
+    artisans = {
+        culture = dutch
+        religion = catholic
+        size = 72
+    }
+	
+    farmers = {
+        culture = dutch
+        religion = catholic
+        size = 540
+    }
+	
+    aristocrats = {
+        culture = frisian
+        religion = reformed
+        size = 36
+    }
+	
+    clergymen = {
+        culture = frisian
+        religion = reformed
+        size = 36
+    }
+	
+    artisans = {
+        culture = frisian
+        religion = catholic
+        size = 72
+    }
+	
+    farmers = {
+        culture = frisian
+        religion = catholic
+        size = 720
+    }
+}
+#Rotterdam (567000/141750 POPS)
+376 = {
+    aristocrats = {
+        culture = dutch
+        religion = reformed
+        size = 508
+    }
+    clergymen = {
+        culture = dutch
+        religion = reformed
+        size = 423
+    }
+    artisans = {
+        culture = dutch
+        religion = catholic
+        size = 13536
+    }
+    artisans = {
+        culture = dutch
+        religion = reformed
+        size = 3722
+    }
+    soldiers = {
+        culture = dutch
+        religion = catholic
+        size = 1523
+    }
+    farmers = {
+        culture = dutch
+        religion = reformed
+        size = 52704
+    }
+    craftsmen = {
+        culture = dutch
+        religion = reformed
+        size = 1440
+    }
+    farmers = {
+        culture = dutch
+        religion = catholic
+        size = 19035
+    }
+    artisans = {
+        culture = flemish
+        religion = catholic
+        size = 744
+    }
+    ######Jews
+
+    soldiers = {
+        culture = sephardic
+        religion = jewish
+        size = 72
+    }
+
+    clergymen = {
+        culture = sephardic
+        religion = jewish
+        size = 72
+    }
+
+    artisans = {
+        culture = sephardic 
+        religion = jewish
+        size = 1440
+    }
+
+    farmers = {
+        culture = sephardic 
+        religion = jewish
+        size = 785
+    }
+    ########
+}
+#Utrecht (152000/38000 POPS)
+377 = {
+    aristocrats = {
+        culture = dutch
+        religion = reformed
+        size = 203
+    }
+    clergymen = {
+        culture = dutch
+        religion = reformed
+        size = 118
+    }
+    artisans = {
+        culture = dutch
+        religion = catholic
+        size = 8122
+    }
+    soldiers = {
+        culture = dutch
+        religion = reformed
+        size = 744
+    }
+    farmers = {
+        culture = dutch
+        religion = reformed
+        size = 16598
+    }
+}
+#Middelburg (170000/42500 POPS)
+378 = {
+    aristocrats = {
+        culture = dutch
+        religion = reformed
+        size = 203
+    }
+    clergymen = {
+        culture = dutch
+        religion = reformed
+        size = 135
+    }
+    artisans = {
+        culture = dutch
+        religion = catholic
+        size = 2504
+    }
+    soldiers = {
+        culture = dutch
+        religion = reformed
+        size = 744
+    }
+    farmers = {
+        culture = dutch
+        religion = reformed
+        size = 23891
+    }
+    artisans = {
+        culture = flemish
+        religion = catholic
+        size = 102
+    }
+    farmers = {
+        culture = flemish
+        religion = catholic
+        size = 744
+    }
+}
+#Limburg-Gelderland Region - 979400
+#Eindhoven (230000/57500 POPS)
+379 = {
+    aristocrats = {
+        culture = dutch
+        religion = catholic
+        size = 948
+    }
+    officers = {
+        culture = dutch
+        religion = catholic
+        size = 72
+    }
+    bureaucrats = {
+        culture = dutch
+        religion = catholic
+        size = 541
+    }
+    clergymen = {
+        culture = dutch
+        religion = reformed
+        size = 541
+    }
+    artisans = {
+        culture = dutch
+        religion = reformed
+        size = 2132
+    }
+    soldiers = {
+        culture = dutch
+        religion = catholic
+        size = 2030
+    }
+    soldiers = {
+        culture = dutch
+        religion = reformed
+        size = 72
+    }
+    farmers = {
+        culture = dutch
+        religion = catholic
+        size = 33840
+    }
+    clergymen = {
+        culture = flemish
+        religion = catholic
+        size = 77
+    }
+    artisans = {
+        culture = flemish
+        religion = catholic
+        size = 102
+    }
+    farmers = {
+        culture = flemish
+        religion = catholic
+        size = 2030
+    }
+
+    ######Jews
+    aristocrats = {
+        culture = sephardic
+        religion = jewish
+        size = 72
+    }
+
+    soldiers = {
+        culture = sephardic
+        religion = jewish
+        size = 72
+    }
+
+    clergymen = {
+        culture = sephardic
+        religion = jewish
+        size = 72
+    }
+
+    artisans = {
+        culture = sephardic
+        religion = jewish
+        size = 148
+    }
+
+    farmers = {
+        culture = sephardic
+        religion = jewish
+        size = 144
+    }
+    ########
+}
+#Breda (173200/43300 POPS)
+380 = {
+    aristocrats = {
+        culture = dutch
+        religion = catholic
+        size = 338
+    }
+    clergymen = {
+        culture = dutch
+        religion = catholic
+        size = 271
+    }
+    artisans = {
+        culture = dutch
+        religion = reformed
+        size = 2538
+    }
+    soldiers = {
+        culture = dutch
+        religion = reformed
+        size = 744
+    }
+    labourers = {
+        culture = dutch
+        religion = catholic
+        size = 23722
+    }
+}
+3344 = {
+    aristocrats = {
+        culture = flemish
+        religion = catholic
+        size = 338
+    }
+    clergymen = {
+        culture = flemish
+        religion = catholic
+        size = 271
+    }
+    artisans = {
+        culture = dutch
+        religion = reformed
+        size = 2538
+    }
+    soldiers = {
+        culture = dutch
+        religion = reformed
+        size = 744
+    }
+    labourers = {
+        culture = flemish
+        religion = catholic
+        size = 23722
+    }
+}
+#Maastricht/Limburg (164200/41050 POPS)
+381 = {
+    aristocrats = {
+        culture = dutch
+        religion = reformed
+        size = 126
+    }
+
+    clergymen = {
+        culture = dutch
+        religion = reformed
+        size = 166
+    }
+
+    artisans = {
+        culture = dutch
+        religion = reformed
+        size = 1710
+    }
+
+    soldiers = {
+        culture = dutch
+        religion = reformed
+        size = 720
+    }
+
+    farmers = {
+        culture = dutch
+        religion = reformed
+        size = 5970
+    }
+
+    farmers = {
+        culture = north_german
+        religion = protestant
+        size = 4512
+    }
+
+	farmers = {
+        culture = gypsy
+        religion = protestant
+        size = 21
+    }
+
+    aristocrats = {
+        culture = dutch
+        religion = catholic
+        size = 125
+    }
+
+    clergymen = {
+        culture = dutch
+        religion = catholic
+        size = 83
+    }
+
+    artisans = {
+        culture = dutch
+        religion = catholic
+        size = 459
+    }
+
+    soldiers = {
+        culture = dutch
+        religion = catholic
+        size = 720
+    }
+
+    artisans = {
+        culture = dutch
+        religion = catholic
+        size = 374
+    }
+
+    farmers = {
+        culture = dutch
+        religion = catholic
+        size = 10224
+    }
+
+    aristocrats = {
+        culture = flemish
+        religion = catholic
+        size = 126
+    }
+
+    clergymen = {
+        culture = flemish
+        religion = catholic
+        size = 83
+    }
+
+    artisans = {
+        culture = flemish
+        religion = catholic
+        size = 457
+    }
+
+    soldiers = {
+        culture = flemish
+        religion = catholic
+        size = 720
+    }
+
+    artisans = {
+        culture = flemish
+        religion = catholic
+        size = 374
+    }
+
+    farmers = {
+        culture = flemish
+        religion = catholic
+        size = 6252
+    }
+}
+#Arnhem (412000/103000 POPS)
+382 = {
+    aristocrats = {
+        culture = dutch
+        religion = reformed
+        size = 575
+    }
+    bureaucrats = {
+        culture = dutch
+        religion = reformed
+        size = 406
+    }
+    clergymen = {
+        culture = dutch
+        religion = reformed
+        size = 4061
+    }
+    artisans = {
+        culture = dutch
+        religion = catholic
+        size = 7546
+    }
+    soldiers = {
+        culture = dutch
+        religion = reformed
+        size = 948
+    }
+    farmers = {
+        culture = dutch
+        religion = reformed
+        size = 65210
+    }
+    clergymen = {
+        culture = north_german
+        religion = protestant
+        size = 72
+    }
+    artisans = {
+        culture = north_german
+        religion = protestant
+        size = 169
+    }
+    farmers = {
+        culture = north_german
+        religion = protestant
+        size = 2166
+    }
+
+    ######Jews
+    soldiers = {
+        culture = sephardic
+        religion = jewish
+        size = 72
+    }
+
+    clergymen = {
+        culture = ashkenazi
+        religion = jewish
+        size = 36
+    }
+	
+	 clergymen = {
+        culture = sephardic
+        religion = jewish
+        size = 36
+    }
+
+    artisans = {
+        culture = sephardic
+        religion = jewish
+        size = 72
+    }
+
+    farmers = {
+        culture = sephardic
+        religion = jewish
+        size = 76
+    }
+    ########
+}
+#Friesland-Groningen Region : 713800
+#Groningen (186600/46650 POPS)
+383 = {
+    aristocrats = {
+        culture = dutch
+        religion = reformed
+        size = 203
+    }
+    officers = {
+        culture = dutch
+        religion = reformed
+        size = 102
+    }
+    bureaucrats = {
+        culture = dutch
+        religion = reformed
+        size = 541
+    }
+    clergymen = {
+        culture = dutch
+        religion = reformed
+        size = 135
+    }
+    artisans = {
+        culture = frisian
+        religion = reformed
+        size = 4738
+    }
+    soldiers = {
+        culture = dutch
+        religion = reformed
+        size = 2030
+    }
+    soldiers = {
+        culture = dutch
+        religion = reformed
+        size = 677
+    }
+    farmers = {
+        culture = dutch
+        religion = reformed
+        size = 23993
+    }
+    farmers = {
+        culture = north_german
+        religion = protestant
+        size = 714
+    }
+	farmers = {
+        culture = gypsy
+        religion = protestant
+        size = 32
+    }
+    ######Jews
+
+    soldiers = {
+        culture = sephardic
+        religion = jewish
+        size = 72
+    }
+
+    artisans = {
+        culture = sephardic
+        religion = jewish
+        size = 72
+    }
+
+    farmers = {
+        culture = sephardic
+        religion = jewish
+        size = 72
+    }
+    ########
+}
+#Zwolle (238000/59500 POPS)
+384 = {
+    aristocrats = {
+        culture = dutch
+        religion = reformed
+        size = 338
+    }
+    clergymen = {
+        culture = dutch
+        religion = reformed
+        size = 338
+    }
+    artisans = {
+        culture = dutch
+        religion = catholic
+        size = 2640
+    }
+    soldiers = {
+        culture = dutch
+        religion = reformed
+        size = 2030
+    }
+    soldiers = {
+        culture = dutch
+        religion = reformed
+        size = 68
+    }
+    farmers = {
+        culture = dutch
+        religion = reformed
+        size = 26893
+    }
+    craftsmen = {
+        culture = dutch
+        religion = reformed
+        size = 720
+    }
+    artisans = {
+        culture = north_german
+        religion = protestant
+        size = 68
+    }
+    farmers = {
+        culture = north_german
+        religion = protestant
+        size = 609
+    }
+}
+#Leeuwarden (209200/52300 POPS)
+385 = {
+    aristocrats = {
+        culture = dutch
+        religion = reformed
+        size = 203
+    }
+    clergymen = {
+        culture = dutch
+        religion = reformed
+        size = 253
+    }
+    artisans = {
+        culture = dutch
+        religion = reformed
+        size = 11261
+    }
+    soldiers = {
+        culture = dutch
+        religion = reformed
+        size = 1421
+    }
+    farmers = {
+        culture = frisian
+        religion = protestant
+        size = 22393
+    }
+    ######Jews
+    aristocrats = {
+        culture = sephardic
+        religion = jewish
+        size = 72
+    }
+
+    soldiers = {
+        culture = sephardic
+        religion = jewish
+        size = 72
+    }
+
+    clergymen = {
+        culture = sephardic
+        religion = jewish
+        size = 72
+    }
+
+    artisans = {
+        culture = sephardic
+        religion = jewish
+        size = 72
+    }
+
+    farmers = {
+        culture = sephardic
+        religion = jewish
+        size = 72
+    }
+    ########
+}
+#Assen (80000/20000 POPS)
+386 = {
+    aristocrats = {
+        culture = dutch
+        religion = reformed
+        size = 102
+    }
+    clergymen = {
+        culture = dutch
+        religion = reformed
+        size = 68
+    }
+    artisans = {
+        culture = dutch
+        religion = reformed
+        size = 744
+    }
+    soldiers = {
+        culture = dutch
+        religion = reformed
+        size = 744
+    }
+    farmers = {
+        culture = dutch
+        religion = reformed
+        size = 11336
+    }
+    farmers = {
+        culture = north_german
+        religion = protestant
+        size = 744
+    }
+}

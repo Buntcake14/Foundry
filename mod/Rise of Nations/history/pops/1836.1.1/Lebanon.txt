@@ -1,0 +1,727 @@
+#under the rule of Egypt in 1836
+#Baalbeck #18240 pops
+912 = {
+    aristocrats = {
+        culture = turkish
+        religion = sunni
+        size = 123
+    }
+
+    clergymen = {
+        culture = turkish
+        religion = sunni
+        size = 82
+    }
+
+    bureaucrats = {
+        culture = turkish
+        religion = sunni
+        size = 41
+    }
+
+    artisans = {
+        culture = kurdish
+        religion = sunni
+        size = 123
+    }
+
+    artisans = {
+        culture = gypsy
+        religion = sunni
+        size = 98
+    }
+
+    aristocrats = {
+        culture = syriac
+        religion = catholic
+        size = 123
+    }
+
+    clergymen = {
+        culture = syriac
+        religion = catholic
+        size = 82
+    }
+
+    artisans = {
+        culture = syriac
+        religion = catholic
+        size = 164
+    }
+
+    soldiers = {
+        culture = syriac
+        religion = catholic
+        size = 246
+    }
+
+    farmers = {
+        culture = syriac
+        religion = catholic
+        size = 9650
+    }
+
+    aristocrats = {
+        culture = mashriqi
+        religion = sunni
+        size = 287
+    }
+
+    clergymen = {
+        culture = mashriqi
+        religion = sunni
+        size = 82
+    }
+
+    artisans = {
+        culture = mashriqi
+        religion = sunni
+        size = 164
+    }
+
+    soldiers = {
+        culture = mashriqi
+        religion = sunni
+        size = 41
+    }
+
+    farmers = {
+        culture = mashriqi
+        religion = sunni
+        size = 1116
+    }
+
+    clergymen = {
+        culture = mashriqi
+        religion = shiite
+        size = 131
+    }
+
+    artisans = {
+        culture = mashriqi
+        religion = shiite
+        size = 246
+    }
+
+    farmers = {
+        culture = mashriqi
+        religion = shiite
+        size = 533
+    }
+
+    aristocrats = {
+        culture = mashriqi
+        religion = druze
+        size = 123
+    }
+
+    bureaucrats = {
+        culture = mashriqi
+        religion = druze
+        size = 41
+    }
+
+    clergymen = {
+        culture = mashriqi
+        religion = druze
+        size = 82
+    }
+
+    artisans = {
+        culture = mashriqi
+        religion = druze
+        size = 205
+    }
+
+    farmers = {
+        culture = mashriqi
+        religion = druze
+        size = 1173
+    }
+}
+#Bayrut Region (260000)  #see Israel-Palestine.txt for balance of region
+#under the rule of Egypt in 1836
+#Beirut (128000/32000 POPS) #mashriqi-catholic = maronites
+913 = { #21676 pops
+    aristocrats = {
+        culture = turkish
+        religion = sunni
+        size = 102
+    }
+
+    clergymen = {
+        culture = turkish
+        religion = sunni
+        size = 61
+    }
+
+    bureaucrats = {
+        culture = turkish
+        religion = sunni
+        size = 20
+    }
+
+    artisans = {
+        culture = turkish
+        religion = sunni
+        size = 102
+    }
+
+    artisans = {
+        culture = kurdish
+        religion = sunni
+        size = 41
+    }
+
+    aristocrats = {
+        culture = syriac
+        religion = catholic
+        size = 61
+    }
+
+    clergymen = {
+        culture = syriac
+        religion = catholic
+        size = 82
+    }
+
+    artisans = {
+        culture = syriac
+        religion = catholic
+        size = 102
+    }
+
+    farmers = {
+        culture = syriac
+        religion = catholic
+        size = 9311
+    }
+
+    aristocrats = {
+        culture = mashriqi
+        religion = druze
+        size = 123
+    }
+
+    bureaucrats = {
+        culture = mashriqi
+        religion = druze
+        size = 82
+    }
+
+    clergymen = {
+        culture = mashriqi
+        religion = druze
+        size = 164
+    }
+
+    artisans = {
+        culture = mashriqi
+        religion = druze
+        size = 533
+    }
+
+    farmers = {
+        culture = mashriqi
+        religion = druze
+        size = 3018
+    }
+
+    officers = {
+        culture = mashriqi
+        religion = shiite
+        size = 2
+    }
+
+    clergymen = {
+        culture = mashriqi
+        religion = shiite
+        size = 16
+    }
+
+    artisans = {
+        culture = mashriqi
+        religion = shiite
+        size = 20
+    }
+
+    farmers = {
+        culture = mashriqi
+        religion = shiite
+        size = 303
+    }
+
+	farmers = {
+        culture = gypsy
+        religion = sunni
+        size = 144
+    }
+
+    aristocrats = {
+        culture = mashriqi
+        religion = sunni
+        size = 41
+    }
+
+    clergymen = {
+        culture = mashriqi
+        religion = sunni
+        size = 82
+    }
+
+    artisans = {
+        culture = mashriqi
+        religion = sunni
+        size = 164
+    }
+
+    farmers = {
+        culture = mashriqi
+        religion = sunni
+        size = 1024
+    }
+
+    clergymen = {
+        culture = armenian
+        religion = miaphysite
+        size = 20
+    }
+
+    artisans = {
+        culture = armenian
+        religion = miaphysite
+        size = 82
+    }
+
+    farmers = {
+        culture = armenian
+        religion = miaphysite
+        size = 1168
+    }
+
+	farmers = {
+        culture = greek
+        religion = orthodox
+        size = 779
+    }
+
+    clergymen = {
+        culture = sephardic
+        religion = jewish
+        size = 8
+    }
+
+    artisans = {
+        culture = sephardic
+        religion = jewish
+        size = 82
+    }
+
+    farmers = {
+        culture = sephardic
+        religion = jewish
+        size = 33
+    }
+}
+#Byblos #11970 pops
+3361 = {
+    aristocrats = {
+        culture = turkish
+        religion = sunni
+        size = 41
+    }
+
+    clergymen = {
+        culture = turkish
+        religion = sunni
+        size = 20
+    }
+
+    bureaucrats = {
+        culture = turkish
+        religion = sunni
+        size = 20
+    }
+
+    aristocrats = {
+        culture = mashriqi
+        religion = shiite
+        size = 29
+    }
+
+    clergymen = {
+        culture = mashriqi
+        religion = shiite
+        size = 23
+    }
+
+    artisans = {
+        culture = mashriqi
+        religion = shiite
+        size = 93
+    }
+
+    soldiers = {
+        culture = mashriqi
+        religion = shiite
+        size = 41
+    }
+
+    farmers = {
+        culture = mashriqi
+        religion = shiite
+        size = 455
+    }
+
+    clergymen = {
+        culture = mashriqi
+        religion = sunni
+        size = 33
+    }
+
+    artisans = {
+        culture = mashriqi
+        religion = sunni
+        size = 71
+    }
+
+    farmers = {
+        culture = mashriqi
+        religion = sunni
+        size = 198
+    }
+
+    aristocrats = {
+        culture = syriac
+        religion = catholic
+        size = 205
+    }
+
+    clergymen = {
+        culture = syriac
+        religion = catholic
+        size = 82
+    }
+
+    artisans = {
+        culture = syriac
+        religion = catholic
+        size = 230
+    }
+
+    farmers = {
+        culture = syriac
+        religion = catholic
+        size = 7610
+    }
+
+	farmers = {
+        culture = greek
+        religion = orthodox
+        size = 369
+    }
+
+    aristocrats = {
+        culture = mashriqi
+        religion = druze
+        size = 20
+    }
+
+    clergymen = {
+        culture = mashriqi
+        religion = druze
+        size = 20
+    }
+
+    artisans = {
+        culture = mashriqi
+        religion = druze
+        size = 20
+    }
+
+    farmers = {
+        culture = mashriqi
+        religion = druze
+        size = 234
+    }
+}
+#Trablos #13261 pops
+914 = {
+    aristocrats = {
+        culture = turkish
+        religion = sunni
+        size = 41
+    }
+
+    clergymen = {
+        culture = turkish
+        religion = sunni
+        size = 20
+    }
+
+    bureaucrats = {
+        culture = turkish
+        religion = sunni
+        size = 20
+    }
+
+    artisans = {
+        culture = turkish
+        religion = sunni
+        size = 41
+    }
+
+    artisans = {
+        culture = kurdish
+        religion = sunni
+        size = 82
+    }
+
+    aristocrats = {
+        culture = mashriqi
+        religion = sunni
+        size = 123
+    }
+
+    clergymen = {
+        culture = mashriqi
+        religion = sunni
+        size = 82
+    }
+
+    artisans = {
+        culture = mashriqi
+        religion = sunni
+        size = 287
+    }
+
+    soldiers = {
+        culture = mashriqi
+        religion = sunni
+        size = 82
+    }
+
+    farmers = {
+        culture = mashriqi
+        religion = sunni
+        size = 3725
+    }
+
+    aristocrats = {
+        culture = syriac
+        religion = catholic
+        size = 82
+    }
+
+    clergymen = {
+        culture = syriac
+        religion = catholic
+        size = 20
+    }
+
+    artisans = {
+        culture = syriac
+        religion = catholic
+        size = 164
+    }
+
+    soldiers = {
+        culture = syriac
+        religion = catholic
+        size = 61
+    }
+
+    farmers = {
+        culture = syriac
+        religion = catholic
+        size = 4678
+    }
+
+    farmers = {
+        culture = gypsy
+        religion = sunni
+        size = 82
+    }
+
+    farmers = {
+        culture = mashriqi
+        religion = shiite
+        size = 199
+    }
+
+	farmers = {
+        culture = greek
+        religion = orthodox
+        size = 164
+    }
+
+	farmers = {
+        culture = north_italian
+        religion = catholic
+        size = 738
+    }
+
+	farmers = {
+        culture = mashriqi
+        religion = druze
+        size = 131
+    }
+
+    clergymen = {
+        culture = sephardic
+        religion = jewish
+        size = 8
+    }
+
+    artisans = {
+        culture = sephardic
+        religion = jewish
+        size = 41
+    }
+}
+#Sidon #19061 pops
+915 = {
+    aristocrats = {
+        culture = turkish
+        religion = sunni
+        size = 41
+    }
+
+    clergymen = {
+        culture = turkish
+        religion = sunni
+        size = 20
+    }
+
+    bureaucrats = {
+        culture = turkish
+        religion = sunni
+        size = 20
+    }
+
+    artisans = {
+        culture = turkish
+        religion = sunni
+        size = 41
+    }
+
+    aristocrats = {
+        culture = mashriqi
+        religion = shiite
+        size = 102
+    }
+
+    clergymen = {
+        culture = mashriqi
+        religion = shiite
+        size = 41
+    }
+
+    artisans = {
+        culture = mashriqi
+        religion = shiite
+        size = 164
+    }
+
+    soldiers = {
+        culture = mashriqi
+        religion = shiite
+        size = 820
+    }
+
+    farmers = {
+        culture = mashriqi
+        religion = shiite
+        size = 1496
+    }
+
+    aristocrats = {
+        culture = syriac
+        religion = catholic
+        size = 123
+    }
+
+    clergymen = {
+        culture = syriac
+        religion = catholic
+        size = 82
+    }
+
+    artisans = {
+        culture = syriac
+        religion = catholic
+        size = 164
+    }
+
+    soldiers = {
+        culture = syriac
+        religion = catholic
+        size = 41
+    }
+
+    farmers = {
+        culture = syriac
+        religion = catholic
+        size = 9631
+    }
+
+    aristocrats = {
+        culture = mashriqi
+        religion = sunni
+        size = 82
+    }
+
+    clergymen = {
+        culture = mashriqi
+        religion = sunni
+        size = 41
+    }
+
+    artisans = {
+        culture = mashriqi
+        religion = sunni
+        size = 205
+    }
+
+    farmers = {
+        culture = mashriqi
+        religion = sunni
+        size = 369
+    }
+
+    clergymen = {
+        culture = mashriqi
+        religion = druze
+        size = 82
+    }
+
+    artisans = {
+        culture = mashriqi
+        religion = druze
+        size = 164
+    }
+
+	farmers = {
+        culture = mashriqi
+        religion = druze
+        size = 1304
+    }
+
+	farmers = {
+        culture = greek
+        religion = orthodox
+        size = 533
+    }
+
+    clergymen = {
+        culture = sephardic
+        religion = jewish
+        size = 12
+    }
+
+    artisans = {
+        culture = sephardic
+        religion = jewish
+        size = 49
+    }
+}

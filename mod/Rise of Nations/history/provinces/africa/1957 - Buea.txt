@@ -1,0 +1,4 @@
+trade_goods = iron
+life_rating = 10
+terrain = jungle_mountains
+colonial = 1

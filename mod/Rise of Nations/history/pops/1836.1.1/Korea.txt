@@ -1,0 +1,956 @@
+#Pyongan Region (1596000)
+#under the rule of Korea in 1836
+#Pyongyang (800000/200000 POPS)
+1619 = {
+    aristocrats = {
+        culture = korean
+        religion = mahayana
+        size = 10455
+    }
+
+    bureaucrats = {
+        culture = korean
+        religion = mahayana
+        size = 5986
+    }
+
+    officers = {
+        culture = korean
+        religion = mahayana
+        size = 1640
+    }
+
+    clergymen = {
+        culture = korean
+        religion = mahayana
+        size = 2398
+    }
+
+    artisans = {
+        culture = korean
+        religion = mahayana
+        size = 7790
+    }
+
+    artisans = {
+        culture = korean
+        religion = mahayana
+        size = 4510
+    }
+
+    soldiers = {
+        culture = korean
+        religion = mahayana
+        size = 8200
+    }
+
+    farmers = {
+        culture = korean
+        religion = mahayana
+        size = 190342
+    }
+
+    slaves = {
+        culture = korean
+        religion = mahayana
+        size = 20418
+    }
+}
+#Chonchon (796000/190000 POPS)
+1620 = {
+    aristocrats = {
+        culture = korean
+        religion = mahayana
+        size = 5371
+    }
+
+    clergymen = {
+        culture = korean
+        religion = mahayana
+        size = 2316
+    }
+
+    artisans = {
+        culture = korean
+        religion = mahayana
+        size = 7380
+    }
+
+    artisans = {
+        culture = korean
+        religion = mahayana
+        size = 4100
+    }
+
+    artisans = {
+        culture = korean
+        religion = mahayana
+        size = 6560
+    }
+
+    soldiers = {
+        culture = korean
+        religion = mahayana
+        size = 8200
+    }
+
+    farmers = {
+        culture = korean
+        religion = mahayana
+        size = 147600
+    }
+
+    farmers = {
+        culture = manchu
+        religion = mahayana
+        size = 35772
+    }
+
+    slaves = {
+        culture = korean
+        religion = mahayana
+        size = 20500
+    }
+}
+#Hamgyong Region (920000)
+#under the rule of Korea in 1836
+#Hamhung (300000/75000 POPS)
+1621 = {
+    aristocrats = {
+        culture = korean
+        religion = mahayana
+        size = 1148
+    }
+
+    bureaucrats = {
+        culture = korean
+        religion = mahayana
+        size = 123
+    }
+
+    officers = {
+        culture = korean
+        religion = mahayana
+        size = 164
+    }
+
+    clergymen = {
+        culture = korean
+        religion = mahayana
+        size = 1435
+    }
+
+    artisans = {
+        culture = korean
+        religion = mahayana
+        size = 6970
+    }
+
+    soldiers = {
+        culture = korean
+        religion = mahayana
+        size = 4920
+    }
+
+    farmers = {
+        culture = korean
+        religion = mahayana
+        size = 117506
+    }
+
+    slaves = {
+        culture = korean
+        religion = mahayana
+        size = 9020
+    }
+}
+#Chongjin (360000/90000 POPS)
+1622 = {
+    aristocrats = {
+        culture = korean
+        religion = mahayana
+        size = 2870
+    }
+
+    clergymen = {
+        culture = korean
+        religion = mahayana
+        size = 1476
+    }
+
+    artisans = {
+        culture = korean
+        religion = mahayana
+        size = 7380
+    }
+
+    soldiers = {
+        culture = korean
+        religion = mahayana
+        size = 5002
+    }
+
+    farmers = {
+        culture = korean
+        religion = mahayana
+        size = 125132
+    }
+
+    slaves = {
+        culture = korean
+        religion = mahayana
+        size = 13940
+    }
+}
+#Kimchaek (260000/65000 POPS)
+1623 = {
+    aristocrats = {
+        culture = korean
+        religion = mahayana
+        size = 943
+    }
+
+    clergymen = {
+        culture = korean
+        religion = mahayana
+        size = 1332
+    }
+
+    artisans = {
+        culture = korean
+        religion = mahayana
+        size = 7380
+    }
+
+    soldiers = {
+        culture = korean
+        religion = mahayana
+        size = 4920
+    }
+
+    farmers = {
+        culture = korean
+        religion = mahayana
+        size = 126792
+    }
+
+    slaves = {
+        culture = korean
+        religion = mahayana
+        size = 9840
+    }
+}
+#Kyonggi Region (2620000)
+#under the rule of Korea in 1836
+#Seoul (1180000/295000 POPS)
+1624 = {
+    aristocrats = {
+        culture = korean
+        religion = mahayana
+        size = 10188
+    }
+
+    bureaucrats = {
+        culture = korean
+        religion = mahayana
+        size = 7933
+    }
+
+    officers = {
+        culture = korean
+        religion = mahayana
+        size = 1640
+    }
+
+    clergymen = {
+        culture = korean
+        religion = mahayana
+        size = 2296
+    }
+
+    artisans = {
+        culture = korean
+        religion = mahayana
+        size = 8200
+    }
+
+    artisans = {
+        culture = korean
+        religion = mahayana
+        size = 8200
+    }
+
+    artisans = {
+        culture = korean
+        religion = mahayana
+        size = 8200
+    }
+
+    artisans = {
+        culture = korean
+        religion = mahayana
+        size = 8200
+    }
+
+    artisans = {
+        culture = korean
+        religion = mahayana
+        size = 3075
+    }
+
+    soldiers = {
+        culture = korean
+        religion = mahayana
+        size = 10660
+    }
+
+    farmers = {
+        culture = korean
+        religion = mahayana
+        size = 204774
+    }
+
+    slaves = {
+        culture = korean
+        religion = mahayana
+        size = 9532
+    }
+}
+#Kaesong (280000/70000 POPS)
+1625 = {
+    aristocrats = {
+        culture = korean
+        religion = mahayana
+        size = 1845
+    }
+
+    clergymen = {
+        culture = korean
+        religion = mahayana
+        size = 1046
+    }
+
+    artisans = {
+        culture = korean
+        religion = mahayana
+        size = 5125
+    }
+
+    artisans = {
+        culture = korean
+        religion = mahayana
+        size = 8200
+    }
+
+    soldiers = {
+        culture = korean
+        religion = mahayana
+        size = 5330
+    }
+
+    farmers = {
+        culture = korean
+        religion = mahayana
+        size = 114103
+    }
+
+    slaves = {
+        culture = korean
+        religion = mahayana
+        size = 3280
+    }
+}
+#Haeju (260000/65000 POPS)
+1626 = {
+    aristocrats = {
+        culture = korean
+        religion = mahayana
+        size = 943
+    }
+
+    clergymen = {
+        culture = korean
+        religion = mahayana
+        size = 1332
+    }
+
+    artisans = {
+        culture = korean
+        religion = mahayana
+        size = 2460
+    }
+
+    artisans = {
+        culture = korean
+        religion = mahayana
+        size = 8200
+    }
+
+    soldiers = {
+        culture = korean
+        religion = mahayana
+        size = 4920
+    }
+
+    farmers = {
+        culture = korean
+        religion = mahayana
+        size = 118592
+    }
+
+    slaves = {
+        culture = korean
+        religion = mahayana
+        size = 14760
+    }
+}
+#Sariwon (340000/85000 POPS)
+1627 = {
+    aristocrats = {
+        culture = korean
+        religion = mahayana
+        size = 5371
+    }
+
+    bureaucrats = {
+        culture = korean
+        religion = mahayana
+        size = 4244
+    }
+
+    officers = {
+        culture = korean
+        religion = mahayana
+        size = 820
+    }
+
+    clergymen = {
+        culture = korean
+        religion = mahayana
+        size = 1496
+    }
+
+    artisans = {
+        culture = korean
+        religion = mahayana
+        size = 8200
+    }
+
+    artisans = {
+        culture = korean
+        religion = mahayana
+        size = 2460
+    }
+
+    soldiers = {
+        culture = korean
+        religion = mahayana
+        size = 4182
+    }
+
+    farmers = {
+        culture = korean
+        religion = mahayana
+        size = 121052
+    }
+
+    slaves = {
+        culture = korean
+        religion = mahayana
+        size = 8200
+    }
+}
+#Inchon (560000/140000 POPS)
+1628 = {
+    aristocrats = {
+        culture = korean
+        religion = mahayana
+        size = 2911
+    }
+
+    clergymen = {
+        culture = korean
+        religion = mahayana
+        size = 1906
+    }
+
+    artisans = {
+        culture = korean
+        religion = mahayana
+        size = 5330
+    }
+
+    artisans = {
+        culture = korean
+        religion = mahayana
+        size = 8200
+    }
+
+    artisans = {
+        culture = korean
+        religion = mahayana
+        size = 8200
+    }
+
+    soldiers = {
+        culture = korean
+        religion = mahayana
+        size = 6560
+    }
+
+    farmers = {
+        culture = korean
+        religion = mahayana
+        size = 147292
+    }
+
+    slaves = {
+        culture = korean
+        religion = mahayana
+        size = 8200
+    }
+}
+#Gangwon Region (920000)
+#under the rule of Korea in 1836
+#Wonsan (380000/95000 POPS)
+1629 = {
+    aristocrats = {
+        culture = korean
+        religion = mahayana
+        size = 3034
+    }
+
+    officers = {
+        culture = korean
+        religion = mahayana
+        size = 184
+    }
+
+    clergymen = {
+        culture = korean
+        religion = mahayana
+        size = 697
+    }
+
+    artisans = {
+        culture = korean
+        religion = mahayana
+        size = 7585
+    }
+
+    artisans = {
+        culture = korean
+        religion = mahayana
+        size = 8200
+    }
+
+    soldiers = {
+        culture = korean
+        religion = mahayana
+        size = 3362
+    }
+
+    farmers = {
+        culture = korean
+        religion = mahayana
+        size = 87576
+    }
+
+    slaves = {
+        culture = korean
+        religion = mahayana
+        size = 8200
+    }
+}
+#Kangnung (260000/65000 POPS)
+1630 = {
+    aristocrats = {
+        culture = korean
+        religion = mahayana
+        size = 943
+    }
+
+    clergymen = {
+        culture = korean
+        religion = mahayana
+        size = 1332
+    }
+
+    artisans = {
+        culture = korean
+        religion = mahayana
+        size = 2460
+    }
+
+    artisans = {
+        culture = korean
+        religion = mahayana
+        size = 8200
+    }
+
+    artisans = {
+        culture = korean
+        religion = mahayana
+        size = 8200
+    }
+
+    soldiers = {
+        culture = korean
+        religion = mahayana
+        size = 4920
+    }
+
+    farmers = {
+        culture = korean
+        religion = mahayana
+        size = 125152
+    }
+
+    slaves = {
+        culture = korean
+        religion = mahayana
+        size = 8200
+    }
+}
+#Wonju (280000/70000 POPS)
+1631 = {
+    aristocrats = {
+        culture = korean
+        religion = mahayana
+        size = 1025
+    }
+
+    clergymen = {
+        culture = korean
+        religion = mahayana
+        size = 800
+    }
+
+    artisans = {
+        culture = korean
+        religion = mahayana
+        size = 2665
+    }
+
+    artisans = {
+        culture = korean
+        religion = mahayana
+        size = 8200
+    }
+
+    soldiers = {
+        culture = korean
+        religion = mahayana
+        size = 5330
+    }
+
+    farmers = {
+        culture = korean
+        religion = mahayana
+        size = 112484
+    }
+
+    slaves = {
+        culture = korean
+        religion = mahayana
+        size = 7380
+    }
+}
+#Kyongsang Region (1800000)
+#under the rule of Korea in 1836
+#Pusan (740000/185000 POPS)
+1632 = {
+    aristocrats = {
+        culture = korean
+        religion = mahayana
+        size = 6068
+    }
+
+    bureaucrats = {
+        culture = korean
+        religion = mahayana
+        size = 308
+    }
+
+    officers = {
+        culture = korean
+        religion = mahayana
+        size = 348
+    }
+
+    clergymen = {
+        culture = korean
+        religion = mahayana
+        size = 2296
+    }
+
+    artisans = {
+        culture = korean
+        religion = mahayana
+        size = 7175
+    }
+
+    artisans = {
+        culture = korean
+        religion = mahayana
+        size = 8200
+    }
+
+    artisans = {
+        culture = korean
+        religion = mahayana
+        size = 8200
+    }
+
+    soldiers = {
+        culture = korean
+        religion = mahayana
+        size = 6560
+    }
+
+    farmers = {
+        culture = korean
+        religion = mahayana
+        size = 154283
+    }
+
+    slaves = {
+        culture = korean
+        religion = mahayana
+        size = 38540
+    }
+}
+#Taejon (420000/105000 POPS)
+1633 = {
+    aristocrats = {
+        culture = korean
+        religion = mahayana
+        size = 1558
+    }
+
+    clergymen = {
+        culture = korean
+        religion = mahayana
+        size = 1271
+    }
+
+    artisans = {
+        culture = korean
+        religion = mahayana
+        size = 4100
+    }
+
+    artisans = {
+        culture = korean
+        religion = mahayana
+        size = 8200
+    }
+
+    soldiers = {
+        culture = korean
+        religion = mahayana
+        size = 5002
+    }
+
+    farmers = {
+        culture = korean
+        religion = mahayana
+        size = 82861
+    }
+
+    slaves = {
+        culture = korean
+        religion = mahayana
+        size = 24190
+    }
+}
+#Pohang (640000/160000 POPS)
+1634 = {
+    aristocrats = {
+        culture = korean
+        religion = mahayana
+        size = 2378
+    }
+
+    clergymen = {
+        culture = korean
+        religion = mahayana
+        size = 1271
+    }
+
+    artisans = {
+        culture = korean
+        religion = mahayana
+        size = 6150
+    }
+
+    soldiers = {
+        culture = korean
+        religion = mahayana
+        size = 1640
+    }
+
+    farmers = {
+        culture = korean
+        religion = mahayana
+        size = 152561
+    }
+
+    slaves = {
+        culture = korean
+        religion = mahayana
+        size = 41000
+    }
+}
+#Cholla Region (1504000)
+#under the rule of Korea in 1836
+#Kwangju (644000/161000 POPS)
+1635 = {
+    aristocrats = {
+        culture = korean
+        religion = mahayana
+        size = 8200
+    }
+
+    bureaucrats = {
+        culture = korean
+        religion = mahayana
+        size = 1722
+    }
+
+    officers = {
+        culture = korean
+        religion = mahayana
+        size = 1107
+    }
+
+    clergymen = {
+        culture = korean
+        religion = mahayana
+        size = 2050
+    }
+
+    artisans = {
+        culture = korean
+        religion = mahayana
+        size = 6191
+    }
+
+    artisans = {
+        culture = korean
+        religion = mahayana
+        size = 8200
+    }
+
+    artisans = {
+        culture = korean
+        religion = mahayana
+        size = 8200
+    }
+
+    soldiers = {
+        culture = korean
+        religion = mahayana
+        size = 6560
+    }
+
+    farmers = {
+        culture = korean
+        religion = mahayana
+        size = 152766
+    }
+
+    slaves = {
+        culture = korean
+        religion = mahayana
+        size = 19024
+    }
+}
+#Taegu (560000/140000 POPS)
+1636 = {
+    aristocrats = {
+        culture = korean
+        religion = mahayana
+        size = 4551
+    }
+
+    clergymen = {
+        culture = korean
+        religion = mahayana
+        size = 1906
+    }
+
+    artisans = {
+        culture = korean
+        religion = mahayana
+        size = 6970
+    }
+
+    artisans = {
+        culture = korean
+        religion = mahayana
+        size = 8200
+    }
+    artisans = {
+        culture = korean
+        religion = mahayana
+        size = 8200
+    }
+
+    soldiers = {
+        culture = korean
+        religion = mahayana
+        size = 7380
+    }
+
+    farmers = {
+        culture = korean
+        religion = mahayana
+        size = 145652
+    }
+
+    slaves = {
+        culture = korean
+        religion = mahayana
+        size = 13940
+    }
+}
+#Cheju (300000/75000 POPS)
+1637 = {
+    aristocrats = {
+        culture = korean
+        religion = mahayana
+        size = 1107
+    }
+
+    clergymen = {
+        culture = korean
+        religion = mahayana
+        size = 594
+    }
+
+    artisans = {
+        culture = korean
+        religion = mahayana
+        size = 5740
+    }
+
+    soldiers = {
+        culture = korean
+        religion = mahayana
+        size = 1640
+    }
+
+    farmers = {
+        culture = korean
+        religion = mahayana
+        size = 44054
+    }
+
+    slaves = {
+        culture = korean
+        religion = mahayana
+        size = 8036
+    }
+
+}

@@ -1,0 +1,15 @@
+leader = {
+    name = "Filippo Resta"
+    date = 1815.1.1
+    type = land
+    personality = defence_minus_2.1
+    background = attack_1.1
+    prestige = 0.5
+}
+leader = {
+    name = "Alessandro Cialdi"
+    date = 1830.1.1
+    type = sea
+    personality = defence_minus_1.1
+    background = attack_1.1
+}

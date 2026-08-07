@@ -1,0 +1,166 @@
+#General flavor events for Britain's successors, distinct from the border-claim pairs in
+#"British Isles Claims.txt" -- one per nation, grounded in real history/culture from this
+#period rather than contested provinces. IDs continue from 99099025, the next free block
+#after the claims file's 99099017-99099024.
+
+country_event = {
+    id = 99099025
+    title = "EVTNAME99099025"
+    desc = "EVTDESC99099025"
+
+    trigger = {
+        tag = ENL
+        war = no
+        NOT = { has_country_flag = east_india_charter_resolved }
+    }
+
+    mean_time_to_happen = {
+        months = 120
+    }
+
+    option = {
+        name = "Back the Company's modest ambitions"
+        set_country_flag = east_india_charter_resolved
+        prestige = 3
+    }
+    option = {
+        name = "Keep the Company on a short leash"
+        set_country_flag = east_india_charter_resolved
+        prestige = 1
+    }
+}
+
+country_event = {
+    id = 99099026
+    title = "EVTNAME99099026"
+    desc = "EVTDESC99099026"
+
+    trigger = {
+        tag = MCA
+        war = no
+        NOT = { has_country_flag = mechanization_question_resolved }
+    }
+
+    mean_time_to_happen = {
+        months = 120
+    }
+
+    option = {
+        name = "Back the mill owners"
+        set_country_flag = mechanization_question_resolved
+        prestige = 3
+    }
+    option = {
+        name = "Ease the hand-weavers' plight"
+        set_country_flag = mechanization_question_resolved
+        prestige = 1
+    }
+}
+
+country_event = {
+    id = 99099027
+    title = "EVTNAME99099027"
+    desc = "EVTDESC99099027"
+
+    trigger = {
+        tag = SCO
+        war = no
+        NOT = { has_country_flag = ossian_controversy_resolved }
+    }
+
+    mean_time_to_happen = {
+        months = 120
+    }
+
+    option = {
+        name = "Champion the Gaelic revival"
+        set_country_flag = ossian_controversy_resolved
+        prestige = 3
+    }
+    option = {
+        name = "Dismiss the poems as forgery"
+        set_country_flag = ossian_controversy_resolved
+        prestige = 1
+    }
+}
+
+country_event = {
+    id = 99099028
+    title = "EVTNAME99099028"
+    desc = "EVTDESC99099028"
+
+    trigger = {
+        tag = IRE
+        war = no
+        NOT = { has_country_flag = reform_societies_resolved }
+    }
+
+    mean_time_to_happen = {
+        months = 120
+    }
+
+    option = {
+        name = "Embrace calls for reform"
+        set_country_flag = reform_societies_resolved
+        prestige = 3
+    }
+    option = {
+        name = "Maintain the old order"
+        set_country_flag = reform_societies_resolved
+        prestige = 1
+    }
+}
+
+country_event = {
+    id = 99099029
+    title = "EVTNAME99099029"
+    desc = "EVTDESC99099029"
+
+    trigger = {
+        tag = WHA
+        war = no
+        NOT = { has_country_flag = gorsedd_resolved }
+    }
+
+    mean_time_to_happen = {
+        months = 120
+    }
+
+    option = {
+        name = "Endorse the new Gorsedd tradition"
+        set_country_flag = gorsedd_resolved
+        prestige = 3
+    }
+    option = {
+        name = "Regard it as invented nonsense"
+        set_country_flag = gorsedd_resolved
+        prestige = 1
+    }
+}
+
+country_event = {
+    id = 99099030
+    title = "EVTNAME99099030"
+    desc = "EVTDESC99099030"
+
+    trigger = {
+        tag = CRN
+        war = no
+        NOT = { has_country_flag = cornish_engine_resolved }
+    }
+
+    mean_time_to_happen = {
+        months = 120
+    }
+
+    option = {
+        name = "Invest in the new engines"
+        set_country_flag = cornish_engine_resolved
+        prestige = 3
+    }
+    option = {
+        name = "Trust the old methods"
+        set_country_flag = cornish_engine_resolved
+        prestige = 1
+    }
+}

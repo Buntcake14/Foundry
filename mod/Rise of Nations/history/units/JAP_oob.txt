@@ -1,0 +1,47 @@
+leader = {
+    name = "Takashima Shuhan"
+    date = 1830.1.1
+    type = land
+    personality = defence_3.1
+    background = attack_1.1
+    prestige = 0.1
+}
+leader = {
+    name = "Watanabe Kazan"
+    date = 1830.1.1
+    type = land
+    personality = no_personality
+    background = no_background
+    prestige = 0.1
+}
+leader = {
+    name = "Takano Choei"
+    date = 1830.1.1
+    type = land
+    personality = no_personality
+    background = attack_1.1
+    prestige = 0.1
+}
+leader = {
+    name = "Matsudaira Katataka"
+    date = 1830.1.1
+    type = land
+    personality = no_personality
+    background = attack_4.1
+    prestige = 0.1
+}
+leader = {
+    name = "Tokugawa Ienari"
+    date = 1830.1.1
+    type = land
+    personality = defence_2.1
+    background = no_background
+}
+leader = {
+    name = "Tokugawa Nariaki"
+    date = 1830.1.1
+    type = land
+    personality = defence_minus_2.1
+    background = attack_3.1
+    prestige = 0.1
+}

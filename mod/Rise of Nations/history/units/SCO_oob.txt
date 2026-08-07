@@ -1,0 +1,48 @@
+army = {
+    name = "Scottish Home Army"
+    location = 269
+
+    regiment = {
+        name = "Royal Scots"
+        type = infantry
+        home = 269
+    }
+    regiment = {
+        name = "Black Watch"
+        type = infantry
+        home = 267
+    }
+    regiment = {
+        name = "Cameron Highlanders"
+        type = infantry
+        home = 3478
+    }
+    regiment = {
+        name = "Scots Greys"
+        type = dragoon
+        home = 271
+    }
+    regiment = {
+        name = "Royal Scottish Artillery"
+        type = artillery
+        home = 270
+    }
+}
+
+navy = {
+    name = "Firth Squadron"
+    location = 269
+
+    ship = {
+        name = "HMS Caledonia"
+        type = manowar
+    }
+    ship = {
+        name = "HMS Dundee"
+        type = frigate
+    }
+    ship = {
+        name = "HMS Aberdeen"
+        type = frigate
+    }
+}

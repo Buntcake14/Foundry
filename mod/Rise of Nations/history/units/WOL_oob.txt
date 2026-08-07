@@ -1,0 +1,8 @@
+leader = {
+    name = "Mba Buuri"
+    type = land
+    date = 1830.1.1
+    personality = defence_3.1
+    background = attack_1.1
+    prestige = 0.5
+}

@@ -1,0 +1,322 @@
+#Honduras Region (352000)
+#Ruled by Central America 1836
+#Tegucigapa (180000/45000 POPS)
+3363 = {
+    aristocrats = {
+        culture = central_american
+        religion = catholic
+        size = 120
+    }
+
+    bureaucrats = {
+        culture = central_american
+        religion = catholic
+        size = 15
+    }
+
+    officers = {
+        culture = central_american
+        religion = catholic
+        size = 12
+    }
+
+    clergymen = {
+        culture = central_american
+        religion = catholic
+        size = 45
+    }
+
+    artisans = {
+        culture = central_american
+        religion = catholic
+        size = 300
+    }
+
+    soldiers = {
+        culture = central_american
+        religion = catholic
+        size = 360
+    }
+
+    farmers = {
+        culture = central_american
+        religion = catholic
+        size = 5542
+    }
+}
+#Comayagua (180000/45000 POPS)
+2194 = {
+    aristocrats = {
+        culture = central_american
+        religion = catholic
+        size = 165
+    }
+
+    bureaucrats = {
+        culture = central_american
+        religion = catholic
+        size = 22
+    }
+
+    officers = {
+        culture = central_american
+        religion = catholic
+        size = 18
+    }
+
+    clergymen = {
+        culture = central_american
+        religion = catholic
+        size = 90
+    }
+
+    artisans = {
+        culture = central_american
+        religion = catholic
+        size = 375
+    }
+
+    soldiers = {
+        culture = central_american
+        religion = catholic
+        size = 360
+    }
+
+    farmers = {
+        culture = central_american
+        religion = catholic
+        size = 4290
+    }
+}
+#San Pedro Sula (92000/23000 POPS)
+2193 = {
+    aristocrats = {
+        culture = central_american
+        religion = catholic
+        size = 165
+    }
+
+    clergymen = {
+        culture = central_american
+        religion = catholic
+        size = 68
+    }
+
+    artisans = {
+        culture = central_american
+        religion = catholic
+        size = 345
+    }
+
+    soldiers = {
+        culture = central_american
+        religion = catholic
+        size = 368
+    }
+
+    farmers = {
+        culture = central_american
+        religion = catholic
+        size = 4110
+    }
+
+	farmers = {
+        culture = kreol
+        religion = catholic
+        size = 900
+    }
+
+	farmers = {
+        culture = native_american_minor
+        religion = catholic
+        size = 945
+    }
+
+}
+#La Ceiba (68000/17000 POPS)
+2195 = {
+    aristocrats = {
+        culture = central_american
+        religion = catholic
+        size = 128
+    }
+
+    clergymen = {
+        culture = central_american
+        religion = catholic
+        size = 52
+    }
+
+    artisans = {
+        culture = central_american
+        religion = catholic
+        size = 135
+    }
+
+    soldiers = {
+        culture = central_american
+        religion = catholic
+        size = 52
+    }
+
+    farmers = {
+        culture = central_american
+        religion = catholic
+        size = 1170
+    }
+
+	farmers = {
+        culture = native_american_minor
+        religion = catholic
+        size = 412
+    }
+
+	farmers = {
+        culture = kreol
+        religion = catholic
+        size = 450
+    }
+}
+#Puerto Lempira (12000/3000 POPS)
+2196 = {
+    aristocrats = {
+        culture = central_american
+        religion = catholic
+        size = 22
+    }
+
+    clergymen = {
+        culture = central_american
+        religion = catholic
+        size = 15
+    }
+
+    artisans = {
+        culture = central_american
+        religion = catholic
+        size = 45
+    }
+
+    soldiers = {
+        culture = central_american
+        religion = catholic
+        size = 8
+    }
+
+    farmers = {
+        culture = native_american_minor
+        religion = catholic
+        size = 495
+    }
+
+	farmers = {
+        culture = kreol
+        religion = catholic
+        size = 165
+    }
+
+}
+3393 = {
+    aristocrats = {
+        culture = british
+        religion = anglican
+        size = 7
+    }
+
+    bureaucrats = {
+        culture = british
+        religion = anglican
+        size = 1
+    }
+
+    officers = {
+        culture = british
+        religion = anglican
+        size = 1
+    }
+
+    clergymen = {
+        culture = british
+        religion = anglican
+        size = 2
+    }
+
+    artisans = {
+        culture = british
+        religion = anglican
+        size = 8
+    }
+
+    soldiers = {
+        culture = british
+        religion = anglican
+        size = 22
+    }
+
+    farmers = {
+        culture = central_american
+        religion = catholic
+        size = 86
+    }
+
+    clergymen = {
+        culture = central_american
+        religion = catholic
+        size = 15
+    }
+
+    artisans = {
+        culture = central_american
+        religion = catholic
+        size = 75
+    }
+
+    farmers = {
+        culture = british
+        religion = anglican
+        size = 50
+    }
+
+	farmers = {
+        culture = afro_caribbean
+        religion = protestant
+        size = 75
+    }
+}
+1918 = {
+    aristocrats = {
+        culture = central_american
+        religion = catholic
+        size = 75
+    }
+
+    clergymen = {
+        culture = central_american
+        religion = catholic
+        size = 30
+    }
+
+    artisans = {
+        culture = central_american
+        religion = catholic
+        size = 75
+    }
+
+    soldiers = {
+        culture = central_american
+        religion = catholic
+        size = 330
+    }
+	
+	farmers = {
+        culture = central_american
+        religion = catholic
+        size = 4455
+    }
+	
+	farmers = {
+        culture = native_american_minor
+        religion = catholic
+        size = 150
+    }
+}

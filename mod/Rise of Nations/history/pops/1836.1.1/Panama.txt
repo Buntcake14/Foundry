@@ -1,0 +1,430 @@
+#Panama Region (128000)
+#Ruled by Colombia 1836
+#Balboa (12000/3000 POPS)
+1723 = {
+    aristocrats = {
+        culture = central_american
+        religion = catholic
+        size = 6
+    }
+
+    clergymen = {
+        culture = central_american
+        religion = catholic
+        size = 8
+    }
+
+    artisans = {
+        culture = central_american
+        religion = catholic
+        size = 15
+    }
+
+    soldiers = {
+        culture = central_american
+        religion = catholic
+        size = 3
+    }
+
+    farmers = {
+        culture = central_american
+        religion = catholic
+        size = 268
+    }
+
+    clergymen = {
+        culture = afro_latino
+        religion = catholic
+        size = 15
+    }
+
+    artisans = {
+        culture = afro_latino
+        religion = catholic
+        size = 30
+    }
+
+    soldiers = {
+        culture = afro_latino
+        religion = catholic
+        size = 8
+    }
+
+    farmers = {
+        culture = afro_latino
+        religion = catholic
+        size = 398
+    }
+
+    slaves = {
+        culture = afro_latino
+        religion = catholic
+        size = 150
+    }
+}
+
+#Panama City (52000/13000 POPS)
+2204 = {
+    aristocrats = {
+        culture = central_american
+        religion = catholic
+        size = 68
+    }
+
+    bureaucrats = {
+        culture = central_american
+        religion = catholic
+        size = 8
+    }
+
+    officers = {
+        culture = central_american
+        religion = catholic
+        size = 15
+    }
+
+    clergymen = {
+        culture = central_american
+        religion = catholic
+        size = 30
+    }
+
+    artisans = {
+        culture = central_american
+        religion = catholic
+        size = 135
+    }
+
+    soldiers = {
+        culture = central_american
+        religion = catholic
+        size = 30
+    }
+
+    farmers = {
+        culture = central_american
+        religion = catholic
+        size = 2415
+    }
+
+    clergymen = {
+        culture = afro_latino
+        religion = catholic
+        size = 22
+    }
+
+    artisans = {
+        culture = afro_latino
+        religion = catholic
+        size = 60
+    }
+
+    soldiers = {
+        culture = afro_latino
+        religion = catholic
+        size = 15
+    }
+
+    farmers = {
+        culture = afro_latino
+        religion = catholic
+        size = 802
+    }
+
+    slaves = {
+        culture = afro_latino
+        religion = catholic
+        size = 330
+    }
+}
+#David (28000/7000 POPS)
+2205 = {
+    aristocrats = {
+        culture = central_american
+        religion = catholic
+        size = 36
+    }
+
+    clergymen = {
+        culture = central_american
+        religion = catholic
+        size = 10
+    }
+
+    artisans = {
+        culture = central_american
+        religion = catholic
+        size = 75
+    }
+
+    soldiers = {
+        culture = central_american
+        religion = catholic
+        size = 15
+    }
+
+    farmers = {
+        culture = central_american
+        religion = catholic
+        size = 540
+    }
+
+	farmers = {
+        culture = native_american_minor
+        religion = catholic
+        size = 210
+    }
+
+    clergymen = {
+        culture = afro_latino
+        religion = catholic
+        size = 4
+    }
+
+    artisans = {
+        culture = afro_latino
+        religion = catholic
+        size = 12
+    }
+
+    soldiers = {
+        culture = afro_latino
+        religion = catholic
+        size = 2
+    }
+
+    farmers = {
+        culture = afro_latino
+        religion = catholic
+        size = 60
+    }
+
+    slaves = {
+        culture = afro_latino
+        religion = catholic
+        size = 60
+    }
+}
+#Bocas del Toro
+3564 = {
+    aristocrats = {
+        culture = central_american
+        religion = catholic
+        size = 9
+    }
+
+    clergymen = {
+        culture = central_american
+        religion = catholic
+        size = 4
+    }
+
+    artisans = {
+        culture = central_american
+        religion = catholic
+        size = 15
+    }
+
+    soldiers = {
+        culture = central_american
+        religion = catholic
+        size = 8
+    }
+
+    farmers = {
+        culture = central_american
+        religion = catholic
+        size = 60
+    }
+
+	farmers = {
+        culture = native_american_minor
+        religion = catholic
+        size = 862
+    }
+
+    clergymen = {
+        culture = afro_latino
+        religion = catholic
+        size = 2
+    }
+
+    artisans = {
+        culture = afro_latino
+        religion = catholic
+        size = 3
+    }
+
+    soldiers = {
+        culture = afro_latino
+        religion = catholic
+        size = 2
+    }
+
+    farmers = {
+        culture = afro_latino
+        religion = catholic
+        size = 21
+    }
+
+    slaves = {
+        culture = afro_latino
+        religion = catholic
+        size = 15
+    }
+}
+#Penonome (24000/6000 POPS)
+2206 = {
+    aristocrats = {
+        culture = central_american
+        religion = catholic
+        size = 45
+    }
+
+    clergymen = {
+        culture = central_american
+        religion = catholic
+        size = 15
+    }
+
+    artisans = {
+        culture = central_american
+        religion = catholic
+        size = 75
+    }
+
+    soldiers = {
+        culture = central_american
+        religion = catholic
+        size = 15
+    }
+
+    farmers = {
+        culture = central_american
+        religion = catholic
+        size = 1350
+    }
+
+    clergymen = {
+        culture = afro_latino
+        religion = catholic
+        size = 6
+    }
+
+    artisans = {
+        culture = afro_latino
+        religion = catholic
+        size = 15
+    }
+
+    soldiers = {
+        culture = afro_latino
+        religion = catholic
+        size = 3
+    }
+
+    farmers = {
+        culture = afro_latino
+        religion = catholic
+        size = 201
+    }
+
+    slaves = {
+        culture = afro_latino
+        religion = catholic
+        size = 75
+    }
+}
+#Yaviza (12000/3000 POPS)
+2208 = {
+    aristocrats = {
+        culture = central_american
+        religion = catholic
+        size = 6
+    }
+
+    clergymen = {
+        culture = central_american
+        religion = catholic
+        size = 8
+    }
+
+    artisans = {
+        culture = central_american
+        religion = catholic
+        size = 15
+    }
+
+    soldiers = {
+        culture = central_american
+        religion = catholic
+        size = 3
+    }
+
+    farmers = {
+        culture = central_american
+        religion = catholic
+        size = 208
+    }
+
+    aristocrats = {
+        culture = north_andean
+        religion = catholic
+        size = 6
+    }
+
+    clergymen = {
+        culture = north_andean
+        religion = catholic
+        size = 8
+    }
+
+    artisans = {
+        culture = north_andean
+        religion = catholic
+        size = 15
+    }
+
+    soldiers = {
+        culture = north_andean
+        religion = catholic
+        size = 3
+    }
+
+    farmers = {
+        culture = north_andean
+        religion = catholic
+        size = 178
+    }
+
+    aristocrats = {
+        culture = native_american_minor
+        religion = animist
+        size = 4
+    }
+
+    clergymen = {
+        culture = native_american_minor
+        religion = animist
+        size = 8
+    }
+
+    artisans = {
+        culture = native_american_minor
+        religion = animist
+        size = 15
+    }
+
+    soldiers = {
+        culture = native_american_minor
+        religion = animist
+        size = 3
+    }
+
+	farmers = {
+        culture = native_american_minor
+        religion = animist
+        size = 420
+    }
+
+}

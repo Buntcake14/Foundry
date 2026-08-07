@@ -1,0 +1,179 @@
+#Delivery mechanism for the government-building tier system (common/production_types.txt /
+#common/buildings.txt: gov_parish_office / gov_provincial_ministry / gov_civil_service_bureau /
+#gov_modern_administration, each with a clerk-staffed and craftsmen-staffed variant). Buildings
+#themselves only produce a small amount of paper -- the real state-wide buff is delivered here,
+#as add_province_modifier looped across every province the owner holds in the state (not
+#add_country_modifier), so it transfers automatically on conquest exactly like a real building
+#would (see CLAUDE.md "Government buildings" for the full reasoning).
+#
+#This event only fires when a real mismatch exists between what's built and what's applied --
+#the trigger checks for that specifically, so it resolves quickly after a building completes
+#(short mean_time_to_happen) and then goes quiet again once synced, instead of popping up for
+#every nation every year regardless of whether anything changed.
+#
+#War-conquest-specific wipe ("the admin building was destroyed in the assault") deliberately
+#NOT implemented yet -- needs on_state_conquest's actual scope context verified empirically
+#first (see CLAUDE.md). Until then, a conquered state's government building modifier just
+#carries over to the new owner via this same sync event, same as a peaceful transfer.
+
+country_event = {
+    id = 99099028
+    title = "EVTNAME99099028"
+    desc = "EVTDESC99099028"
+
+    trigger = {
+        OR = {
+            any_owned_province = {
+                OR = {
+                    state_scope = { has_building = gov_modern_administration_clerk }
+                    state_scope = { has_building = gov_modern_administration_craftsmen }
+                }
+                NOT = { has_province_modifier = gov_modern_administration_bonus }
+            }
+            any_owned_province = {
+                OR = {
+                    state_scope = { has_building = gov_civil_service_bureau_clerk }
+                    state_scope = { has_building = gov_civil_service_bureau_craftsmen }
+                }
+                NOT = {
+                    OR = {
+                        state_scope = { has_building = gov_modern_administration_clerk }
+                        state_scope = { has_building = gov_modern_administration_craftsmen }
+                    }
+                }
+                NOT = { has_province_modifier = gov_civil_service_bureau_bonus }
+            }
+            any_owned_province = {
+                OR = {
+                    state_scope = { has_building = gov_provincial_ministry_clerk }
+                    state_scope = { has_building = gov_provincial_ministry_craftsmen }
+                }
+                NOT = {
+                    OR = {
+                        state_scope = { has_building = gov_civil_service_bureau_clerk }
+                        state_scope = { has_building = gov_civil_service_bureau_craftsmen }
+                    }
+                }
+                NOT = {
+                    OR = {
+                        state_scope = { has_building = gov_modern_administration_clerk }
+                        state_scope = { has_building = gov_modern_administration_craftsmen }
+                    }
+                }
+                NOT = { has_province_modifier = gov_provincial_ministry_bonus }
+            }
+            any_owned_province = {
+                OR = {
+                    state_scope = { has_building = gov_parish_office_clerk }
+                    state_scope = { has_building = gov_parish_office_craftsmen }
+                }
+                NOT = {
+                    OR = {
+                        state_scope = { has_building = gov_provincial_ministry_clerk }
+                        state_scope = { has_building = gov_provincial_ministry_craftsmen }
+                    }
+                }
+                NOT = {
+                    OR = {
+                        state_scope = { has_building = gov_civil_service_bureau_clerk }
+                        state_scope = { has_building = gov_civil_service_bureau_craftsmen }
+                    }
+                }
+                NOT = {
+                    OR = {
+                        state_scope = { has_building = gov_modern_administration_clerk }
+                        state_scope = { has_building = gov_modern_administration_craftsmen }
+                    }
+                }
+                NOT = { has_province_modifier = gov_parish_office_bonus }
+            }
+        }
+    }
+
+    mean_time_to_happen = {
+        months = 1
+    }
+
+    option = {
+        name = "Continue"
+        any_owned = {
+            limit = {
+                OR = {
+                    state_scope = { has_building = gov_modern_administration_clerk }
+                    state_scope = { has_building = gov_modern_administration_craftsmen }
+                }
+            }
+            remove_province_modifier = gov_parish_office_bonus
+            remove_province_modifier = gov_provincial_ministry_bonus
+            remove_province_modifier = gov_civil_service_bureau_bonus
+            add_province_modifier = { name = gov_modern_administration_bonus duration = -1 }
+        }
+        any_owned = {
+            limit = {
+                OR = {
+                    state_scope = { has_building = gov_civil_service_bureau_clerk }
+                    state_scope = { has_building = gov_civil_service_bureau_craftsmen }
+                }
+                NOT = {
+                    OR = {
+                        state_scope = { has_building = gov_modern_administration_clerk }
+                        state_scope = { has_building = gov_modern_administration_craftsmen }
+                    }
+                }
+            }
+            remove_province_modifier = gov_parish_office_bonus
+            remove_province_modifier = gov_provincial_ministry_bonus
+            add_province_modifier = { name = gov_civil_service_bureau_bonus duration = -1 }
+        }
+        any_owned = {
+            limit = {
+                OR = {
+                    state_scope = { has_building = gov_provincial_ministry_clerk }
+                    state_scope = { has_building = gov_provincial_ministry_craftsmen }
+                }
+                NOT = {
+                    OR = {
+                        state_scope = { has_building = gov_civil_service_bureau_clerk }
+                        state_scope = { has_building = gov_civil_service_bureau_craftsmen }
+                    }
+                }
+                NOT = {
+                    OR = {
+                        state_scope = { has_building = gov_modern_administration_clerk }
+                        state_scope = { has_building = gov_modern_administration_craftsmen }
+                    }
+                }
+            }
+            remove_province_modifier = gov_parish_office_bonus
+            add_province_modifier = { name = gov_provincial_ministry_bonus duration = -1 }
+        }
+        any_owned = {
+            limit = {
+                OR = {
+                    state_scope = { has_building = gov_parish_office_clerk }
+                    state_scope = { has_building = gov_parish_office_craftsmen }
+                }
+                NOT = {
+                    OR = {
+                        state_scope = { has_building = gov_provincial_ministry_clerk }
+                        state_scope = { has_building = gov_provincial_ministry_craftsmen }
+                    }
+                }
+                NOT = {
+                    OR = {
+                        state_scope = { has_building = gov_civil_service_bureau_clerk }
+                        state_scope = { has_building = gov_civil_service_bureau_craftsmen }
+                    }
+                }
+                NOT = {
+                    OR = {
+                        state_scope = { has_building = gov_modern_administration_clerk }
+                        state_scope = { has_building = gov_modern_administration_craftsmen }
+                    }
+                }
+                NOT = { has_province_modifier = gov_parish_office_bonus }
+            }
+            add_province_modifier = { name = gov_parish_office_bonus duration = -1 }
+        }
+    }
+}

@@ -1,0 +1,228 @@
+#East Papua (892000)
+#uncolonized in 1836
+#Port Moresby (212000/53000 POPS)
+2528 = {
+    aristocrats = {
+        culture = melanesian
+        religion = animist
+        size = 871
+    }
+
+    clergymen = {
+        culture = melanesian
+        religion = animist
+        size = 446
+    }
+
+    artisans = {
+        culture = melanesian
+        religion = animist
+        size = 2252
+    }
+
+    soldiers = {
+        culture = melanesian
+        religion = animist
+        size = 468
+    }
+
+    farmers = {
+        culture = melanesian
+        religion = animist
+        size = 41098
+    }
+}
+#Kerema (116000/29000 POPS)
+2529 = {
+    aristocrats = {
+        culture = melanesian
+        religion = animist
+        size = 468
+    }
+
+    clergymen = {
+        culture = melanesian
+        religion = animist
+        size = 255
+    }
+
+    artisans = {
+        culture = melanesian
+        religion = animist
+        size = 1232
+    }
+
+    soldiers = {
+        culture = melanesian
+        religion = animist
+        size = 255
+    }
+
+    farmers = {
+        culture = melanesian
+        religion = animist
+        size = 22440
+    }
+}
+#Lae (264000/66000 POPS)
+2530 = {
+    aristocrats = {
+        culture = melanesian
+        religion = animist
+        size = 1105
+    }
+
+    clergymen = {
+        culture = melanesian
+        religion = animist
+        size = 552
+    }
+
+    artisans = {
+        culture = melanesian
+        religion = animist
+        size = 2805
+    }
+
+    soldiers = {
+        culture = melanesian
+        religion = animist
+        size = 574
+    }
+
+    farmers = {
+        culture = melanesian
+        religion = animist
+        size = 51064
+    }
+}
+#Madang (300000/75000 POPS)
+2531 = {
+    aristocrats = {
+        culture = melanesian
+        religion = animist
+        size = 1254
+    }
+
+    clergymen = {
+        culture = melanesian
+        religion = animist
+        size = 638
+    }
+
+    artisans = {
+        culture = melanesian
+        religion = animist
+        size = 3188
+    }
+
+    soldiers = {
+        culture = melanesian
+        religion = animist
+        size = 638
+    }
+
+    farmers = {
+        culture = melanesian
+        religion = animist
+        size = 58119
+    }
+}
+#Northern Melanesia (226000)
+#uncolonized in 1836}
+#New Ireland (104000/POPS)
+1531 = {
+    aristocrats = {
+        culture = melanesian
+        religion = animist
+        size = 425
+    }
+
+    clergymen = {
+        culture = melanesian
+        religion = animist
+        size = 212
+    }
+
+    artisans = {
+        culture = melanesian
+        religion = animist
+        size = 1105
+    }
+
+    soldiers = {
+        culture = melanesian
+        religion = animist
+        size = 234
+    }
+
+    farmers = {
+        culture = melanesian
+        religion = animist
+        size = 20124
+    }
+}
+#New Britain (144000/POPS)
+2537 = {
+    aristocrats = {
+        culture = melanesian
+        religion = animist
+        size = 595
+    }
+
+    clergymen = {
+        culture = melanesian
+        religion = animist
+        size = 298
+    }
+
+    artisans = {
+        culture = melanesian
+        religion = animist
+        size = 1530
+    }
+
+    soldiers = {
+        culture = melanesian
+        religion = animist
+        size = 319
+    }
+
+    farmers = {
+        culture = melanesian
+        religion = animist
+        size = 27859
+    }
+}
+#Bougainville (56000/POPS)
+2539 = {
+    aristocrats = {
+        culture = melanesian
+        religion = animist
+        size = 212
+    }
+
+    clergymen = {
+        culture = melanesian
+        religion = animist
+        size = 128
+    }
+
+    artisans = {
+        culture = melanesian
+        religion = animist
+        size = 595
+    }
+
+    soldiers = {
+        culture = melanesian
+        religion = animist
+        size = 128
+    }
+
+    farmers = {
+        culture = melanesian
+        religion = animist
+        size = 10838
+    }
+}

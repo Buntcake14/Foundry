@@ -1,0 +1,7 @@
+leader = {
+    name = "Muhsin ibn al-Fadl al-Abdali"
+    type = land
+    date = 1830.1.1
+    personality = no_personality
+    background = attack_minus_1.1
+}

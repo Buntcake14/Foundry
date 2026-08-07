@@ -1,0 +1,48 @@
+army = {
+    name = "Irish Home Army"
+    location = 263
+
+    regiment = {
+        name = "Royal Irish Regiment"
+        type = infantry
+        home = 263
+    }
+    regiment = {
+        name = "Connaught Rangers"
+        type = infantry
+        home = 258
+    }
+    regiment = {
+        name = "Munster Fusiliers"
+        type = infantry
+        home = 260
+    }
+    regiment = {
+        name = "Ulster Volunteers"
+        type = irregular
+        home = 254
+    }
+    regiment = {
+        name = "Royal Irish Artillery"
+        type = artillery
+        home = 264
+    }
+}
+
+navy = {
+    name = "Irish Sea Squadron"
+    location = 260
+
+    ship = {
+        name = "HMS Hibernia"
+        type = manowar
+    }
+    ship = {
+        name = "HMS Shannon"
+        type = frigate
+    }
+    ship = {
+        name = "HMS Liffey"
+        type = commerce_raider
+    }
+}

@@ -1,0 +1,911 @@
+#Khwarazm Region (380000) #see Kazakhstan.txt and Turkmenistan.txt for balance of region
+#under the rule of Khiva in 1836
+#Khiva (200000/50000 POPS) #now part of Uzbekistan
+1191 = {
+    aristocrats = {
+        culture = uzbek
+        religion = sunni
+        size = 779
+    }
+
+    bureaucrats = {
+        culture = uzbek
+        religion = sunni
+        size = 102
+    }
+
+    officers = {
+        culture = uzbek
+        religion = sunni
+        size = 102
+    }
+
+    clergymen = {
+        culture = uzbek
+        religion = sunni
+        size = 369
+    }
+
+    artisans = {
+        culture = uzbek
+        religion = sunni
+        size = 1886
+    }
+
+    soldiers = {
+        culture = uzbek
+        religion = sunni
+        size = 2460
+    }
+
+    soldiers = {
+        culture = uzbek
+        religion = sunni
+        size = 820
+    }
+
+    farmers = {
+        culture = uzbek
+        religion = sunni
+        size = 27101
+    }
+
+	farmers = {
+        culture = uzbek
+        religion = sunni
+        size = 4100
+    }
+
+    slaves = {
+        culture = persian
+        religion = shiite
+        size = 7995
+    }
+
+    slaves = {
+        culture = russian
+        religion = orthodox
+        size = 205
+    }
+    clergymen = {
+        culture = persian
+        religion = zoroastrian
+        size = 20
+    }
+
+    farmers = {
+        culture = persian
+        religion = zoroastrian
+        size = 1316
+    }
+}
+#Nukus (180000/45000 POPS) #now part of Uzbekistan
+1192 = {
+    aristocrats = {
+        culture = uzbek
+        religion = sunni
+        size = 328
+    }
+
+    clergymen = {
+        culture = uzbek
+        religion = sunni
+        size = 184
+    }
+
+    artisans = {
+        culture = uzbek
+        religion = sunni
+        size = 943
+    }
+
+    soldiers = {
+        culture = uzbek
+        religion = sunni
+        size = 2460
+    }
+
+    soldiers = {
+        culture = uzbek
+        religion = sunni
+        size = 820
+    }
+
+    farmers = {
+        culture = uzbek
+        religion = sunni
+        size = 10926
+    }
+
+	farmers = {
+        culture = kazak
+        religion = sunni
+        size = 3546
+    }
+
+    aristocrats = {
+        culture = uzbek
+        religion = sunni
+        size = 226
+    }
+
+    clergymen = {
+        culture = uzbek
+        religion = sunni
+        size = 102
+    }
+
+    artisans = {
+        culture = uzbek
+        religion = sunni
+        size = 574
+    }
+
+    soldiers = {
+        culture = uzbek
+        religion = sunni
+        size = 102
+    }
+
+    farmers = {
+        culture = uzbek
+        religion = sunni
+        size = 11398
+    }
+
+    slaves = {
+        culture = persian
+        religion = shiite
+        size = 4838
+    }
+
+    slaves = {
+        culture = russian
+        religion = orthodox
+        size = 164
+    }
+
+    aristocrats = {
+        culture = turkmen
+        religion = sunni
+        size = 61
+    }
+
+    clergymen = {
+        culture = turkmen
+        religion = sunni
+        size = 61
+    }
+
+    artisans = {
+        culture = turkmen
+        religion = sunni
+        size = 144
+    }
+
+    soldiers = {
+        culture = turkmen
+        religion = sunni
+        size = 20
+    }
+
+    farmers = {
+        culture = turkmen
+        religion = sunni
+        size = 2993
+    }
+}
+3441 = {
+    aristocrats = {
+        culture = uzbek
+        religion = sunni
+        size = 328
+    }
+
+    clergymen = {
+        culture = uzbek
+        religion = sunni
+        size = 184
+    }
+
+    artisans = {
+        culture = uzbek
+        religion = sunni
+        size = 943
+    }
+
+    soldiers = {
+        culture = uzbek
+        religion = sunni
+        size = 2460
+    }
+
+    soldiers = {
+        culture = uzbek
+        religion = sunni
+        size = 820
+    }
+
+    farmers = {
+        culture = uzbek
+        religion = sunni
+        size = 14206
+    }
+
+    aristocrats = {
+        culture = kazak
+        religion = sunni
+        size = 226
+    }
+
+    clergymen = {
+        culture = kazak
+        religion = sunni
+        size = 102
+    }
+
+    artisans = {
+        culture = kazak
+        religion = sunni
+        size = 574
+    }
+
+    soldiers = {
+        culture = kazak
+        religion = sunni
+        size = 102
+    }
+
+    farmers = {
+        culture = kazak
+        religion = sunni
+        size = 3198
+    }
+
+    aristocrats = {
+        culture = turkmen
+        religion = sunni
+        size = 61
+    }
+
+    clergymen = {
+        culture = turkmen
+        religion = sunni
+        size = 61
+    }
+
+    artisans = {
+        culture = turkmen
+        religion = sunni
+        size = 144
+    }
+
+    soldiers = {
+        culture = turkmen
+        religion = sunni
+        size = 20
+    }
+
+    farmers = {
+        culture = turkmen
+        religion = sunni
+        size = 2993
+    }
+}
+#Mawarannahr Region (524000) #see Kazakhstan.txt, Tajikistan.txt, Kirghizstan.txt for balance of region
+#under the rule of Kokand in 1836
+#Tashkent (224000/56000 POPS)
+1195 = {
+    aristocrats = {
+        culture = uzbek
+        religion = sunni
+        size = 738
+    }
+
+    clergymen = {
+        culture = uzbek
+        religion = sunni
+        size = 369
+    }
+
+    artisans = {
+        culture = uzbek
+        religion = sunni
+        size = 1066
+    }
+
+    soldiers = {
+        culture = uzbek
+        religion = sunni
+        size = 2460
+    }
+
+    soldiers = {
+        culture = uzbek
+        religion = sunni
+        size = 820
+    }
+
+    farmers = {
+        culture = uzbek
+        religion = sunni
+        size = 25297
+    }
+
+    aristocrats = {
+        culture = kirgiz
+        religion = sunni
+        size = 41
+    }
+
+    clergymen = {
+        culture = kirgiz
+        religion = sunni
+        size = 20
+    }
+
+    artisans = {
+        culture = kirgiz
+        religion = sunni
+        size = 102
+    }
+
+    soldiers = {
+        culture = kirgiz
+        religion = sunni
+        size = 20
+    }
+
+    farmers = {
+        culture = kirgiz
+        religion = sunni
+        size = 2276
+    }
+
+    aristocrats = {
+        culture = tajik
+        religion = sunni
+        size = 512
+    }
+
+    clergymen = {
+        culture = tajik
+        religion = sunni
+        size = 451
+    }
+
+    artisans = {
+        culture = tajik
+        religion = sunni
+        size = 1906
+    }
+
+    soldiers = {
+        culture = tajik
+        religion = sunni
+        size = 41
+    }
+
+    farmers = {
+        culture = tajik
+        religion = sunni
+        size = 11029
+    }
+
+    slaves = {
+        culture = uzbek
+        religion = sunni
+        size = 1640
+    }
+
+    clergymen = {
+        culture = persian
+        religion = zoroastrian
+        size = 33
+    }
+
+    farmers = {
+        culture = persian
+        religion = zoroastrian
+        size = 943
+    }
+}
+#Kokand (300000/75000 POPS)
+1202 = {
+    aristocrats = {
+        culture = kirgiz
+        religion = sunni
+        size = 82
+    }
+
+    clergymen = {
+        culture = kirgiz
+        religion = sunni
+        size = 123
+    }
+
+    artisans = {
+        culture = kirgiz
+        religion = sunni
+        size = 861
+    }
+
+    soldiers = {
+        culture = kirgiz
+        religion = sunni
+        size = 472
+    }
+
+    farmers = {
+        culture = kirgiz
+        religion = sunni
+        size = 21607
+    }
+
+    aristocrats = {
+        culture = tajik
+        religion = sunni
+        size = 246
+    }
+
+    clergymen = {
+        culture = tajik
+        religion = sunni
+        size = 123
+    }
+
+    artisans = {
+        culture = tajik
+        religion = sunni
+        size = 3936
+    }
+
+    soldiers = {
+        culture = tajik
+        religion = sunni
+        size = 123
+    }
+
+    farmers = {
+        culture = tajik
+        religion = sunni
+        size = 8692
+    }
+
+    aristocrats = {
+        culture = uzbek
+        religion = sunni
+        size = 861
+    }
+
+	bureaucrats = {
+        culture = uzbek
+        religion = sunni
+        size = 164
+    }
+
+    officers = {
+        culture = uzbek
+        religion = sunni
+        size = 184
+    }
+
+    clergymen = {
+        culture = uzbek
+        religion = sunni
+        size = 369
+    }
+
+    artisans = {
+        culture = uzbek
+        religion = sunni
+        size = 2583
+    }
+
+    soldiers = {
+        culture = uzbek
+        religion = sunni
+        size = 3300
+    }
+
+    farmers = {
+        culture = uzbek
+        religion = sunni
+        size = 18552
+    }
+
+    slaves = {
+        culture = uighur
+        religion = sunni
+        size = 6560
+    }
+
+    slaves = {
+        culture = russian
+        religion = orthodox
+        size = 4100
+    }
+}
+#under the rule of Bukhara in 1836
+#Bukhara (868000/217000 POPS)
+1198 = {
+    aristocrats = {
+        culture = uzbek
+        religion = sunni
+        size = 3075
+    }
+
+    bureaucrats = {
+        culture = uzbek
+        religion = sunni
+        size = 430
+    }
+
+    officers = {
+        culture = uzbek
+        religion = sunni
+        size = 390
+    }
+
+    clergymen = {
+        culture = uzbek
+        religion = sunni
+        size = 820
+    }
+
+    artisans = {
+        culture = uzbek
+        religion = sunni
+        size = 1886
+    }
+
+    soldiers = {
+        culture = uzbek
+        religion = sunni
+        size = 11480
+    }
+
+    farmers = {
+        culture = uzbek
+        religion = sunni
+        size = 42640
+    }
+
+	farmers = {
+        culture = uzbek
+        religion = sunni
+        size = 6519
+    }
+
+    aristocrats = {
+        culture = tajik
+        religion = sunni
+        size = 636
+    }
+
+    clergymen = {
+        culture = tajik
+        religion = sunni
+        size = 2152
+    }
+
+    artisans = {
+        culture = tajik
+        religion = sunni
+        size = 10414
+    }
+
+    soldiers = {
+        culture = tajik
+        religion = sunni
+        size = 2562
+    }
+
+    farmers = {
+        culture = tajik
+        religion = sunni
+        size = 67056
+    }
+
+    aristocrats = {
+        culture = mashriqi
+        religion = sunni
+        size = 20
+    }
+
+    clergymen = {
+        culture = mashriqi
+        religion = sunni
+        size = 41
+    }
+
+    artisans = {
+        culture = mashriqi
+        religion = sunni
+        size = 2870
+    }
+
+    soldiers = {
+        culture = mashriqi
+        religion = sunni
+        size = 41
+    }
+
+    farmers = {
+        culture = mashriqi
+        religion = sunni
+        size = 1128
+    }
+
+    clergymen = {
+        culture = sephardic
+        religion = jewish
+        size = 41
+    }
+
+    artisans = {
+        culture = sephardic
+        religion = jewish
+        size = 1599
+    }
+
+    slaves = {
+        culture = mashriqi
+        religion = sunni
+        size = 6560
+    }
+
+    slaves = {
+        culture = persian
+        religion = shiite
+        size = 24600
+    }
+
+    clergymen = {
+        culture = persian
+        religion = zoroastrian
+        size = 41
+    }
+
+    farmers = {
+        culture = persian
+        religion = zoroastrian
+        size = 1804
+    }
+}
+#Samarkand (544000/136000 POPS)
+1199 = {
+    aristocrats = {
+        culture = uzbek
+        religion = sunni
+        size = 1845
+    }
+
+    clergymen = {
+        culture = uzbek
+        religion = sunni
+        size = 1025
+    }
+
+    artisans = {
+        culture = uzbek
+        religion = sunni
+        size = 3854
+    }
+
+    soldiers = {
+        culture = uzbek
+        religion = sunni
+        size = 5740
+    }
+
+    farmers = {
+        culture = uzbek
+        religion = sunni
+        size = 58056
+    }
+
+    aristocrats = {
+        culture = tajik
+        religion = sunni
+        size = 205
+    }
+
+    clergymen = {
+        culture = tajik
+        religion = sunni
+        size = 1271
+    }
+
+    artisans = {
+        culture = tajik
+        religion = sunni
+        size = 6806
+    }
+
+    soldiers = {
+        culture = tajik
+        religion = sunni
+        size = 41
+    }
+
+    farmers = {
+        culture = tajik
+        religion = sunni
+        size = 25092
+    }
+
+    aristocrats = {
+        culture = mashriqi
+        religion = sunni
+        size = 61
+    }
+
+    clergymen = {
+        culture = mashriqi
+        religion = sunni
+        size = 41
+    }
+
+    artisans = {
+        culture = mashriqi
+        religion = sunni
+        size = 1230
+    }
+
+    soldiers = {
+        culture = mashriqi
+        religion = sunni
+        size = 41
+    }
+
+    farmers = {
+        culture = mashriqi
+        religion = sunni
+        size = 1906
+    }
+
+    slaves = {
+        culture = tajik
+        religion = sunni
+        size = 16400
+    }
+}
+#Qarshi (280000/70000 POPS)
+1200 = {
+    aristocrats = {
+        culture = uzbek
+        religion = sunni
+        size = 902
+    }
+
+    clergymen = {
+        culture = uzbek
+        religion = sunni
+        size = 410
+    }
+
+    artisans = {
+        culture = uzbek
+        religion = sunni
+        size = 451
+    }
+
+    soldiers = {
+        culture = uzbek
+        religion = sunni
+        size = 430
+    }
+
+    farmers = {
+        culture = uzbek
+        religion = sunni
+        size = 16748
+    }
+
+    aristocrats = {
+        culture = tajik
+        religion = sunni
+        size = 184
+    }
+
+    clergymen = {
+        culture = tajik
+        religion = sunni
+        size = 492
+    }
+
+    artisans = {
+        culture = tajik
+        religion = sunni
+        size = 5330
+    }
+
+    soldiers = {
+        culture = tajik
+        religion = sunni
+        size = 82
+    }
+
+    farmers = {
+        culture = tajik
+        religion = sunni
+        size = 25482
+    }
+
+    aristocrats = {
+        culture = turkmen
+        religion = sunni
+        size = 123
+    }
+
+    clergymen = {
+        culture = turkmen
+        religion = sunni
+        size = 41
+    }
+
+    artisans = {
+        culture = turkmen
+        religion = sunni
+        size = 246
+    }
+
+    soldiers = {
+        culture = turkmen
+        religion = sunni
+        size = 61
+    }
+
+    farmers = {
+        culture = turkmen
+        religion = sunni
+        size = 5268
+    }
+
+    slaves = {
+        culture = uighur
+        religion = sunni
+        size = 6560
+    }
+
+    clergymen = {
+        culture = persian
+        religion = zoroastrian
+        size = 78
+    }
+
+    farmers = {
+        culture = persian
+        religion = zoroastrian
+        size = 2337
+    }
+}
+
+#Kyzyl Kum - Former Medicine Hat (8000/2000 POPS)
+29 = {
+
+    clergymen = {
+        culture = uzbek
+        religion = sunni
+        size = 82
+    }
+
+    artisans = {
+        culture = uzbek
+        religion = sunni
+        size = 410
+    }
+
+    soldiers = {
+        culture = uzbek
+        religion = sunni
+        size = 205
+    }
+
+    farmers = {
+        culture = uzbek
+        religion = sunni
+        size = 4100
+    }
+}

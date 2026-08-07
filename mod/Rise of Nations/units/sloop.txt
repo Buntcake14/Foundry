@@ -1,0 +1,45 @@
+sloop = {
+    icon = 5
+    naval_icon = 2
+
+    sail = yes
+
+    type = naval
+    sprite = Frigate
+    unit_type = light_ship
+    floating_flag = yes
+    colonial_points = 1
+
+    #Core Abilities
+    priority = 8
+    max_strength = 100
+    default_organisation = 30
+    maximum_speed = 6
+    weighted_value = 1.0
+    can_build_overseas = yes
+
+    #Building Costs
+    build_time = 120
+    build_cost = {
+        clipper_convoy = 12
+        artillery = 4
+        regular_clothes = 5
+        canned_food = 5
+    }
+    min_port_level = 1
+    limit_per_port = -1
+    supply_consumption_score = 1
+
+    supply_consumption = 1.0
+    supply_cost = {
+        clipper_convoy = 0.08
+        artillery = 0.02
+    }
+
+    #Naval Abilities
+    hull = 1
+    gun_power = 2
+    fire_range = 0.25
+    evasion = 0.15
+    torpedo_attack = 0
+}

@@ -1,0 +1,3148 @@
+#Abyssinia Region (2172000)
+#under the rule of Ethiopia in 1836
+#Gonder (632000/158000 POPS)
+1852 = {
+    aristocrats = {
+        culture = amhara
+        religion = miaphysite
+        size = 1294
+    }
+
+    bureaucrats = {
+        culture = amhara
+        religion = miaphysite
+        size = 304
+    }
+
+    officers = {
+        culture = amhara
+        religion = miaphysite
+        size = 150
+    }
+
+    clergymen = {
+        culture = amhara
+        religion = miaphysite
+        size = 711
+    }
+
+    artisans = {
+        culture = amhara
+        religion = miaphysite
+        size = 2957
+    }
+
+    artisans = {
+        culture = amhara
+        religion = reformed
+        size = 748
+    }
+
+    soldiers = {
+        culture = amhara
+        religion = miaphysite
+        size = 4418
+    }
+
+    farmers = {
+        culture = amhara
+        religion = miaphysite
+        size = 51480
+    }
+	
+    farmers = {
+        culture = cushitic
+        religion = miaphysite
+        size = 2094
+    }
+
+    farmers = {
+        culture = cushitic
+        religion = animist
+        size = 3850
+    }
+
+    farmers = {
+        culture = fur
+        religion = miaphysite
+        size = 2565
+    }
+
+    farmers = {
+        culture = fur
+        religion = animist
+        size = 1232
+    }
+
+    slaves = {
+        culture = amhara
+        religion = miaphysite
+        size = 6899
+    }
+
+    aristocrats = {
+        culture = sephardic
+        religion = jewish
+        size = 62
+    }
+
+    bureaucrats = {
+        culture = sephardic
+        religion = jewish
+        size = 35
+    }
+
+    officers = {
+        culture = sephardic
+        religion = jewish
+        size = 22
+    }
+
+    clergymen = {
+        culture = sephardic
+        religion = jewish
+        size = 66
+    }
+
+    artisans = {
+        culture = sephardic
+        religion = jewish
+        size = 304
+    }
+
+    soldiers = {
+        culture = sephardic
+        religion = jewish
+        size = 414
+    }
+
+    farmers = {
+        culture = sephardic
+        religion = jewish
+        size = 4884
+    }
+
+    slaves = {
+        culture = nuba
+        religion = miaphysite
+        size = 616
+    }
+
+    farmers = {
+        culture = nuba
+        religion = miaphysite
+        size = 6160
+    }
+
+    farmers = {
+        culture = nuba
+        religion = animist
+        size = 7942
+    }
+
+    farmers = {
+        culture = tigray
+        religion = miaphysite
+        size = 6160
+    }
+
+    aristocrats = {
+        culture = oromo
+        religion = miaphysite
+        size = 480
+    }
+
+    bureaucrats = {
+        culture = oromo
+        religion = miaphysite
+        size = 13
+    }
+
+    officers = {
+        culture = oromo
+        religion = miaphysite
+        size = 13
+    }
+
+    clergymen = {
+        culture = oromo
+        religion = miaphysite
+        size = 62
+    }
+
+    artisans = {
+        culture = oromo
+        religion = miaphysite
+        size = 400
+    }
+
+    soldiers = {
+        culture = oromo
+        religion = miaphysite
+        size = 238
+    }
+
+    farmers = {
+        culture = oromo
+        religion = miaphysite
+        size = 1866
+    }
+
+    slaves = {
+        culture = oromo
+        religion = sunni
+        size = 2341
+    }
+}
+#Debre Tabor (270000/67500 POPS)
+3592 = {
+	aristocrats = {
+		culture = amhara
+		religion = miaphysite
+		size = 1355
+	}
+
+	clergymen = {
+		culture = amhara
+		religion = miaphysite
+		size = 1065
+	}
+
+	artisans = {
+		culture = amhara
+		religion = miaphysite
+		size = 3388
+	}
+
+	soldiers = {
+		culture = amhara
+		religion = miaphysite
+		size = 4646
+	}
+
+	farmers = {
+		culture = amhara
+		religion = miaphysite
+		size = 110546
+    }
+
+	farmers = {
+		culture = tigray
+		religion = miaphysite
+		size = 3872
+    }
+
+	farmers = {
+		culture = oromo
+		religion = sunni
+		size = 5808
+    }
+}
+#Wellega (720000/180000 POPS)
+1863 = {
+	aristocrats = {
+		culture = amhara
+		religion = miaphysite
+		size = 352
+	}
+
+	bureaucrats = {
+		culture = amhara
+		religion = miaphysite
+		size = 31
+	}
+
+	officers = {
+		culture = amhara
+		religion = miaphysite
+		size = 13
+	}
+
+	clergymen = {
+		culture = amhara
+		religion = miaphysite
+		size = 264
+	}
+
+	artisans = {
+		culture = amhara
+		religion = miaphysite
+		size = 440
+	}
+
+	soldiers = {
+		culture = amhara
+		religion = miaphysite
+		size = 132
+	}
+
+	farmers = {
+		culture = amhara
+		religion = miaphysite
+		size = 10736
+	}
+
+	slaves = {
+		culture = amhara
+		religion = miaphysite
+		size = 3168
+	}
+
+	slaves = {
+		culture = nilotic
+		religion = miaphysite
+		size = 950
+	}
+
+	slaves = {
+		culture = kefficho
+		religion = miaphysite
+		size = 986
+	}
+
+	aristocrats = {
+		culture = oromo
+		religion = sunni
+		size = 748
+	}
+
+	bureaucrats = {
+		culture = oromo
+		religion = sunni
+		size = 145
+	}
+
+	officers = {
+		culture = oromo
+		religion = sunni
+		size = 66
+	}
+
+	bureaucrats = {
+		culture = oromo
+		religion = miaphysite
+		size = 92
+	}
+
+	officers = {
+		culture = oromo
+		religion = miaphysite
+		size = 40
+	}
+
+	clergymen = {
+		culture = oromo
+		religion = sunni
+		size = 458
+	}
+
+	artisans = {
+		culture = oromo
+		religion = sunni
+		size = 6600
+	}
+
+	artisans = {
+		culture = oromo
+		religion = miaphysite
+		size = 2200
+	}
+
+	soldiers = {
+		culture = oromo
+		religion = sunni
+		size = 2640
+	}
+
+	farmers = {
+		culture = oromo
+		religion = sunni
+		size = 46200
+	}
+
+	farmers = {
+		culture = oromo
+		religion = miaphysite
+		size = 19800
+	}
+
+	farmers = {
+		culture = oromo
+		religion = animist
+		size = 12320
+	}
+
+	slaves = {
+		culture = oromo
+		religion = miaphysite
+		size = 6160
+	}
+
+	farmers = {
+		culture = nuba
+		religion = animist
+		size = 17160
+	}
+
+	farmers = {
+		culture = nuba
+		religion = sunni
+		size = 5280
+	}
+
+	slaves = {
+		culture = oromo
+		religion = animist
+		size = 4400
+	}
+
+}
+#Matamma (416000/104000 POPS)
+1854 = {
+    aristocrats = {
+        culture = amhara
+        religion = miaphysite
+        size = 836
+    }
+
+    bureaucrats = {
+        culture = amhara
+        religion = miaphysite
+        size = 70
+    }
+
+    officers = {
+        culture = amhara
+        religion = miaphysite
+        size = 31
+    }
+
+    clergymen = {
+        culture = amhara
+        religion = miaphysite
+        size = 440
+    }
+
+    artisans = {
+        culture = amhara
+        religion = miaphysite
+        size = 880
+    }
+
+    soldiers = {
+        culture = amhara
+        religion = miaphysite
+        size = 1188
+    }
+
+    farmers = {
+        culture = amhara
+        religion = miaphysite
+        size = 19360
+    }
+
+    farmers = {
+        culture = fur
+        religion = animist
+        size = 3010
+    }
+
+    aristocrats = {
+        culture = tigray
+        religion = miaphysite
+        size = 682
+    }
+
+    bureaucrats = {
+        culture = tigray
+        religion = miaphysite
+        size = 132
+    }
+
+    officers = {
+        culture = tigray
+        religion = miaphysite
+        size = 62
+    }
+
+    clergymen = {
+        culture = tigray
+        religion = miaphysite
+        size = 88
+    }
+
+    artisans = {
+        culture = tigray
+        religion = miaphysite
+        size = 572
+    }
+
+    soldiers = {
+        culture = tigray
+        religion = miaphysite
+        size = 968
+    }
+
+    farmers = {
+        culture = tigray
+        religion = miaphysite
+        size = 36821
+    }
+
+    slaves = {
+        culture = amhara
+        religion = miaphysite
+        size = 3300
+    }
+
+    aristocrats = {
+        culture = sephardic
+        religion = jewish
+        size = 128
+    }
+
+    clergymen = {
+        culture = sephardic
+        religion = jewish
+        size = 97
+    }
+
+    artisans = {
+        culture = sephardic
+        religion = jewish
+        size = 704
+    }
+
+    soldiers = {
+        culture = sephardic
+        religion = jewish
+        size = 128
+    }
+
+    farmers = {
+        culture = sephardic
+        religion = jewish
+        size = 4752
+    }
+}
+#Chilga (428000/107000)
+3593 = {
+	aristocrats = {
+		culture = amhara
+		religion = miaphysite
+		size = 634
+	}
+
+	clergymen = {
+		culture = amhara
+		religion = miaphysite
+		size = 352
+	}
+
+	artisans = {
+		culture = amhara
+		religion = miaphysite
+		size = 854
+	}
+
+	soldiers = {
+		culture = amhara
+		religion = miaphysite
+		size = 986
+	}
+
+	farmers = {
+		culture = amhara
+		religion = miaphysite
+		size = 40480
+	}
+
+	farmers = {
+		culture = nilotic
+		religion = sunni
+		size = 7920
+	}
+
+	farmers = {
+		culture = oromo
+		religion = miaphysite
+		size = 2288
+	}
+
+	farmers = {
+		culture = oromo
+		religion = sunni
+		size = 176
+	}
+
+	farmers = {
+		culture = oromo
+		religion = animist
+		size = 176
+	}
+
+	farmers = {
+		culture = kefficho
+		religion = miaphysite
+		size = 9064
+	}
+
+    aristocrats = {
+        culture = nuba
+        religion = animist
+        size = 299
+    }
+
+    clergymen = {
+        culture = nuba
+        religion = animist
+        size = 53
+    }
+
+    artisans = {
+        culture = nuba
+        religion = animist
+        size = 986
+    }
+
+    soldiers = {
+        culture = nuba
+        religion = animist
+        size = 405
+    }
+
+    farmers = {
+        culture = nuba
+        religion = animist
+        size = 55458
+    }
+
+    slaves = {
+        culture = nuba
+        religion = animist
+        size = 8444
+    }
+}
+#Debre Markos (1100000/275000 POPS)
+1855 = {
+    aristocrats = {
+        culture = amhara
+        religion = miaphysite
+        size = 1056
+    }
+
+    bureaucrats = {
+        culture = amhara
+        religion = miaphysite
+        size = 198
+    }
+
+    officers = {
+        culture = amhara
+        religion = miaphysite
+        size = 119
+    }
+
+    clergymen = {
+        culture = amhara
+        religion = miaphysite
+        size = 444
+    }
+
+    artisans = {
+        culture = amhara
+        religion = miaphysite
+        size = 3102
+    }
+
+    soldiers = {
+        culture = amhara
+        religion = miaphysite
+        size = 2768
+    }
+
+    farmers = {
+        culture = amhara
+        religion = miaphysite
+        size = 75629
+    }
+
+    soldiers = {
+        culture = cushitic
+        religion = miaphysite
+        size = 99
+	}
+
+    farmers = {
+        culture = cushitic
+        religion = miaphysite
+        size = 10859
+    }
+
+    slaves = {
+        culture = amhara
+        religion = miaphysite
+        size = 5236
+    }
+
+    aristocrats = {
+        culture = oromo
+        religion = miaphysite
+        size = 374
+    }
+
+    clergymen = {
+        culture = oromo
+        religion = miaphysite
+        size = 110
+    }
+
+    artisans = {
+        culture = oromo
+        religion = miaphysite
+        size = 880
+    }
+
+    soldiers = {
+        culture = oromo
+        religion = miaphysite
+        size = 264
+	}
+
+    farmers = {
+        culture = oromo
+        religion = miaphysite
+        size = 6560
+    }
+
+    farmers = {
+        culture = oromo
+        religion = animist
+        size = 1320
+    }
+
+    farmers = {
+        culture = oromo
+        religion = sunni
+        size = 528
+    }
+
+    farmers = {
+        culture = nuba
+        religion = animist
+        size = 5377
+    }
+
+    slaves = {
+        culture = oromo
+        religion = animist
+        size = 2156
+    }
+}
+#Tigray Region (316000)
+#under the rule of Ethiopia in 1836
+#Aksum (196000/49000 POPS)
+1856 = {
+    aristocrats = {
+        culture = tigray
+        religion = miaphysite
+        size = 704
+    }
+
+    bureaucrats = {
+        culture = tigray
+        religion = miaphysite
+        size = 110
+    }
+
+    officers = {
+        culture = tigray
+        religion = miaphysite
+        size = 53
+    }
+
+    clergymen = {
+        culture = tigray
+        religion = miaphysite
+        size = 370
+    }
+
+    artisans = {
+        culture = tigray
+        religion = miaphysite
+        size = 1540
+    }
+
+    soldiers = {
+        culture = tigray
+        religion = miaphysite
+        size = 2112
+    }
+
+    farmers = {
+        culture = tigray
+        religion = miaphysite
+        size = 38971
+    }
+
+    farmers = {
+        culture = tigray
+        religion = sunni
+        size = 880
+    }
+
+    farmers = {
+        culture = tigray
+        religion = catholic
+        size = 176
+    }
+
+    farmers = {
+        culture = oromo
+        religion = sunni
+        size = 2640
+    }
+
+    farmers = {
+        culture = nilotic
+        religion = animist
+        size = 2816
+    }
+
+    farmers = {
+        culture = afar
+        religion = sunni
+        size = 4752
+    }
+
+    farmers = {
+        culture = afar
+        religion = animist
+        size = 2640
+    }
+
+    farmers = {
+        culture = afar
+        religion = catholic
+        size = 352
+    }
+
+    slaves = {
+        culture = tigray
+        religion = miaphysite
+        size = 6160
+    }
+
+    aristocrats = {
+        culture = amhara
+        religion = miaphysite
+        size = 88
+    }
+
+    bureaucrats = {
+        culture = amhara
+        religion = miaphysite
+        size = 18
+    }
+
+    officers = {
+        culture = amhara
+        religion = miaphysite
+        size = 9
+    }
+
+    clergymen = {
+        culture = amhara
+        religion = miaphysite
+        size = 88
+    }
+
+    artisans = {
+        culture = amhara
+        religion = miaphysite
+        size = 246
+    }
+
+    soldiers = {
+        culture = amhara
+        religion = miaphysite
+        size = 88
+    }
+
+    farmers = {
+        culture = amhara
+        religion = miaphysite
+        size = 3586
+    }
+
+    slaves = {
+        culture = nilotic
+        religion = animist
+        size = 1232
+    }
+}
+#Antalo (180000/45000 POPS)
+1857 = {
+    aristocrats = {
+        culture = amhara
+        religion = miaphysite
+        size = 352
+    }
+
+    clergymen = {
+        culture = amhara
+        religion = miaphysite
+        size = 308
+    }
+
+    artisans = {
+        culture = amhara
+        religion = miaphysite
+        size = 440
+    }
+
+    soldiers = {
+        culture = amhara
+        religion = miaphysite
+        size = 968
+    }
+
+    farmers = {
+        culture = amhara
+        religion = miaphysite
+        size = 16720
+    }
+
+    farmers = {
+        culture = amhara
+        religion = sunni
+        size = 4573
+    }
+
+    farmers = {
+        culture = oromo
+        religion = sunni
+        size = 3520
+    }
+
+    slaves = {
+        culture = oromo
+        religion = sunni
+        size = 10800
+    }
+
+    slaves = {
+        culture = afar
+        religion = sunni
+        size = 2644
+    }
+
+    aristocrats = {
+        culture = tigray
+        religion = miaphysite
+        size = 176
+    }
+
+    clergymen = {
+        culture = tigray
+        religion = miaphysite
+        size = 132
+    }
+
+    artisans = {
+        culture = tigray
+        religion = miaphysite
+        size = 352
+    }
+
+    soldiers = {
+        culture = tigray
+        religion = miaphysite
+        size = 968
+    }
+
+    farmers = {
+        culture = tigray
+        religion = miaphysite
+        size = 17543
+    }
+
+    farmers = {
+        culture = cushitic
+        religion = animist
+        size = 6611
+    }
+}
+#Awsa (68000/17000 POPS)
+1858 = {
+    aristocrats = {
+        culture = afar
+        religion = sunni
+        size = 277
+    }
+
+    bureaucrats = {
+        culture = afar
+        religion = sunni
+        size = 53
+    }
+
+    officers = {
+        culture = afar
+        religion = sunni
+        size = 22
+    }
+
+    clergymen = {
+        culture = afar
+        religion = sunni
+        size = 154
+    }
+
+    artisans = {
+        culture = afar
+        religion = sunni
+        size = 616
+    }
+
+    soldiers = {
+        culture = afar
+        religion = sunni
+        size = 968
+    }
+
+    farmers = {
+        culture = afar
+        religion = sunni
+        size = 12254
+    }
+
+    farmers = {
+        culture = oromo
+        religion = sunni
+        size = 176
+    }
+
+    slaves = {
+        culture = afar
+        religion = animist
+        size = 1848
+    }
+
+    slaves = {
+        culture = oromo
+        religion = animist
+        size = 440
+    }
+}
+3953 = {
+    aristocrats = {
+        culture = afar
+        religion = sunni
+        size = 48
+    }
+
+    clergymen = {
+        culture = afar
+        religion = sunni
+        size = 22
+    }
+
+    artisans = {
+        culture = afar
+        religion = sunni
+        size = 35
+    }
+
+    soldiers = {
+        culture = afar
+        religion = sunni
+        size = 31
+    }
+	
+    farmers = {
+        culture = afar
+        religion = sunni
+        size = 2847
+    }
+
+    slaves = {
+        culture = afar
+        religion = animist
+        size = 352
+    }
+
+    farmers = {
+        culture = oromo
+        religion = sunni
+        size = 264
+    }
+
+    farmers = {
+        culture = tigray
+        religion = miaphysite
+        size = 176
+    }
+}
+#Dessie (420000/105000 POPS)
+1853 = {
+	aristocrats = {
+		culture = amhara
+		religion = miaphysite
+		size = 2200
+	}
+
+	bureaucrats = {
+		culture = amhara
+		religion = miaphysite
+		size = 158
+	}
+
+	officers = {
+		culture = amhara
+		religion = miaphysite
+		size = 88
+	}
+
+	clergymen = {
+		culture = amhara
+		religion = miaphysite
+		size = 1584
+	}
+
+	artisans = {
+		culture = amhara
+		religion = miaphysite
+		size = 14256
+	}
+
+	soldiers = {
+		culture = amhara
+		religion = miaphysite
+		size = 1056
+	}
+
+	farmers = {
+		culture = amhara
+		religion = miaphysite
+		size = 19360
+    }
+
+	farmers = {
+		culture = amhara
+		religion = sunni
+		size = 10683
+    }
+
+	farmers = {
+		culture = afar
+		religion = sunni
+		size = 20117
+    }
+
+	aristocrats = {
+		culture = oromo
+		religion = miaphysite
+		size = 299
+	}
+
+	aristocrats = {
+		culture = oromo
+		religion = animist
+		size = 18
+	}
+
+	aristocrats = {
+		culture = oromo
+		religion = sunni
+		size = 634
+	}
+
+	bureaucrats = {
+		culture = oromo
+		religion = miaphysite
+		size = 9
+	}
+
+	bureaucrats = {
+		culture = oromo
+		religion = sunni
+		size = 18
+	}
+
+	clergymen = {
+		culture = oromo
+		religion = sunni
+		size = 440
+	}
+
+	clergymen = {
+		culture = oromo
+		religion = sunni
+		size = 220
+	}
+
+	artisans = {
+		culture = oromo
+		religion = sunni
+		size = 2200
+	}
+
+	artisans = {
+		culture = oromo
+		religion = animist
+		size = 880
+	}
+
+	artisans = {
+		culture = oromo
+		religion = miaphysite
+		size = 660
+	}
+
+	farmers = {
+		culture = oromo
+		religion = sunni
+		size = 8228
+	}
+
+	farmers = {
+		culture = oromo
+		religion = sunni
+		size = 5500
+	}
+
+	farmers	= {
+		culture = oromo
+		religion = miaphysite
+		size = 2746
+    }
+
+	slaves = {
+		culture = oromo
+		religion = sunni
+		size = 3696
+	}
+}
+#Shoa Region (2068000)
+#under the rule of Ethiopia in 1836
+#Ankober (1236000/309000 POPS)
+1859 = {
+    aristocrats = {
+        culture = amhara
+        religion = miaphysite
+        size = 1056
+    }
+
+    bureaucrats = {
+        culture = amhara
+        religion = miaphysite
+        size = 216
+    }
+
+    officers = {
+        culture = amhara
+        religion = miaphysite
+        size = 106
+    }
+
+    clergymen = {
+        culture = amhara
+        religion = miaphysite
+        size = 299
+    }
+
+    artisans = {
+        culture = amhara
+        religion = miaphysite
+        size = 3520
+    }
+
+    soldiers = {
+        culture = amhara
+        religion = miaphysite
+        size = 5280
+    }
+
+    farmers = {
+        culture = amhara
+        religion = miaphysite
+        size = 40480
+    }
+
+    slaves = {
+        culture = amhara
+        religion = miaphysite
+        size = 8800
+    }
+
+    aristocrats = {
+        culture = oromo
+        religion = miaphysite
+        size = 880
+    }
+
+    bureaucrats = {
+        culture = oromo
+        religion = miaphysite
+        size = 70
+    }
+
+    officers = {
+        culture = oromo
+        religion = miaphysite
+        size = 35
+    }
+
+    clergymen = {
+        culture = oromo
+        religion = miaphysite
+        size = 440
+    }
+
+    artisans = {
+        culture = oromo
+        religion = miaphysite
+        size = 1760
+    }
+
+    soldiers = {
+        culture = oromo
+        religion = miaphysite
+        size = 880
+    }
+
+    farmers = {
+        culture = oromo
+        religion = miaphysite
+        size = 12857
+    }
+
+    farmers = {
+        culture = oromo
+        religion = sunni
+        size = 8800
+    }
+
+    slaves = {
+        culture = oromo
+        religion = sunni
+        size = 19437
+    }
+
+    farmers = {
+        culture = afar
+        religion = sunni
+        size = 13565
+    }
+
+    farmers = {
+        culture = harari
+        religion = sunni
+        size = 11440
+    }
+}
+3951 = {
+    aristocrats = {
+        culture = amhara
+        religion = miaphysite
+        size = 352
+    }
+
+    bureaucrats = {
+        culture = amhara
+        religion = miaphysite
+        size = 233
+    }
+
+    officers = {
+        culture = amhara
+        religion = miaphysite
+        size = 176
+    }
+
+    clergymen = {
+        culture = amhara
+        religion = miaphysite
+        size = 299
+    }
+
+    artisans = {
+        culture = amhara
+        religion = miaphysite
+        size = 176
+    }
+
+    soldiers = {
+        culture = amhara
+        religion = miaphysite
+        size = 88
+    }
+
+    farmers = {
+        culture = amhara
+        religion = miaphysite
+        size = 8800
+    }
+
+    slaves = {
+        culture = amhara
+        religion = miaphysite
+        size = 7920
+    }
+	
+    aristocrats = {
+        culture = oromo
+        religion = miaphysite
+        size = 880
+    }
+
+    bureaucrats = {
+        culture = oromo
+        religion = miaphysite
+        size = 343
+    }
+
+    officers = {
+        culture = oromo
+        religion = miaphysite
+        size = 352
+    }
+
+    clergymen = {
+        culture = oromo
+        religion = miaphysite
+        size = 440
+    }
+	
+    artisans = {
+        culture = oromo
+        religion = miaphysite
+        size = 1760
+    }
+
+    soldiers = {
+        culture = oromo
+        religion = miaphysite
+        size = 968
+    }
+
+    farmers = {
+        culture = oromo
+        religion = miaphysite
+        size = 16720
+    }
+
+    farmers = {
+        culture = oromo
+        religion = animist
+        size = 1408
+    }
+
+    farmers = {
+        culture = oromo
+        religion = sunni
+        size = 5632
+    }
+
+    slaves = {
+        culture = afar
+        religion = sunni
+        size = 3520
+    }
+
+    slaves = {
+        culture = harari
+        religion = sunni
+        size = 8800
+    }
+}
+3792 = {
+    aristocrats = {
+        culture = amhara
+        religion = miaphysite
+        size = 176
+    }
+
+    clergymen = {
+        culture = amhara
+        religion = miaphysite
+        size = 299
+    }
+
+    artisans = {
+        culture = amhara
+        religion = miaphysite
+        size = 352
+    }
+
+    soldiers = {
+        culture = amhara
+        religion = miaphysite
+        size = 880
+    }
+
+    farmers = {
+        culture = amhara
+        religion = miaphysite
+        size = 7568
+    }
+
+    slaves = {
+        culture = amhara
+        religion = miaphysite
+        size = 8800
+    }
+
+    aristocrats = {
+        culture = oromo
+        religion = miaphysite
+        size = 880
+    }
+
+    bureaucrats = {
+        culture = oromo
+        religion = miaphysite
+        size = 150
+    }
+
+    officers = {
+        culture = oromo
+        religion = miaphysite
+        size = 62
+    }
+
+    clergymen = {
+        culture = oromo
+        religion = miaphysite
+        size = 440
+    }
+
+    artisans = {
+        culture = oromo
+        religion = miaphysite
+        size = 1760
+    }
+
+    soldiers = {
+        culture = oromo
+        religion = miaphysite
+        size = 880
+    }
+
+    farmers = {
+        culture = oromo
+        religion = miaphysite
+        size = 27280
+    }
+
+    aristocrats = {
+        culture = oromo
+        religion = sunni
+        size = 264
+    }
+
+    bureaucrats = {
+        culture = oromo
+        religion = sunni
+        size = 92
+    }
+
+    officers = {
+        culture = oromo
+        religion = sunni
+        size = 44
+    }
+
+    clergymen = {
+        culture = oromo
+        religion = sunni
+        size = 176
+    }
+
+    artisans = {
+        culture = oromo
+        religion = sunni
+        size = 440
+    }
+
+    soldiers = {
+        culture = oromo
+        religion = sunni
+        size = 176
+    }
+
+    farmers = {
+        culture = oromo
+        religion = sunni
+        size = 16368
+    }
+
+    farmers = {
+        culture = oromo
+        religion = animist
+        size = 8800
+    }
+
+    slaves = {
+        culture = harari
+        religion = sunni
+        size = 1612
+    }
+
+    slaves = {
+        culture = kefficho
+        religion = animist
+        size = 2174
+    }
+
+    farmers = {
+        culture = cushitic
+        religion = animist
+        size = 5438
+    }
+}
+#Awasa (448000/115000 POPS)
+1860 = {
+
+    aristocrats = {
+        culture = oromo
+        religion = sunni
+        size = 352
+    }
+
+    clergymen = {
+        culture = oromo
+        religion = sunni
+        size = 176
+    }
+
+    artisans = {
+        culture = oromo
+        religion = sunni
+        size = 352
+    }
+
+    farmers = {
+        culture = oromo
+        religion = sunni
+        size = 5318
+    }
+
+    farmers = {
+        culture = oromo
+        religion = animist
+        size = 2640
+    }
+
+    slaves = {
+        culture = oromo
+        religion = animist
+        size = 7040
+    }
+
+    farmers = {
+        culture = cushitic
+        religion = animist
+        size = 7938
+    }
+
+    aristocrats = {
+        culture = kefficho
+        religion = miaphysite
+        size = 440
+    }
+
+    clergymen = {
+        culture = kefficho
+        religion = miaphysite
+        size = 440
+    }
+
+    artisans = {
+        culture = kefficho
+        religion = miaphysite
+        size = 1760
+    }
+
+    soldiers = {
+        culture = kefficho
+        religion = miaphysite
+        size = 880
+    }
+
+    farmers = {
+        culture = cushitic #sidama
+        religion = animist
+        size = 30220
+    }
+
+    aristocrats = {
+        culture = cushitic #sidama
+        religion = animist
+        size = 440
+    }
+
+    clergymen = {
+        culture = cushitic #sidama
+        religion = animist
+        size = 440
+    }
+
+    artisans = {
+        culture = cushitic #sidama
+        religion = animist
+        size = 1760
+    }
+
+    soldiers = {
+        culture = cushitic #sidama
+        religion = animist
+        size = 880
+    }
+
+    farmers = {
+        culture = cushitic #sidama
+        religion = animist
+        size = 24266
+    }
+
+    aristocrats = {
+        culture = harari #gurage
+        religion = sunni
+        size = 440
+    }
+
+    clergymen = {
+        culture = harari #gurage
+        religion = sunni
+        size = 440
+    }
+
+    artisans = {
+        culture = harari #gurage
+        religion = sunni
+        size = 1760
+    }
+
+    soldiers = {
+        culture = harari #gurage
+        religion = sunni
+        size = 880
+    }
+
+    farmers = {
+        culture = harari #gurage
+        religion = sunni
+        size = 11440
+    }
+
+    farmers = {
+        culture = harari #gurage
+        religion = animist
+        size = 3895
+    }
+
+}
+#Arsi (384000/96000 POPS)
+3594 = {
+
+    aristocrats = {
+        culture = oromo
+        religion = sunni
+        size = 1100
+    }
+
+    clergymen = {
+        culture = oromo
+        religion = sunni
+        size = 132
+    }
+
+    artisans = {
+        culture = oromo
+        religion = sunni
+        size = 2332
+    }
+
+    soldiers = {
+        culture = oromo
+        religion = sunni
+        size = 396
+    }
+
+    farmers = {
+        culture = oromo
+        religion = sunni
+        size = 44440
+    }
+
+    slaves = {
+        culture = oromo
+        religion = sunni
+        size = 8800
+    }
+
+    aristocrats = {
+        culture = oromo
+        religion = sunni
+        size = 528
+    }
+
+    clergymen = {
+        culture = oromo
+        religion = sunni
+        size = 264
+    }
+
+    artisans = {
+        culture = oromo
+        religion = sunni
+        size = 1100
+    }
+
+    soldiers = {
+        culture = oromo
+        religion = sunni
+        size = 286
+    }
+
+    farmers = {
+        culture = oromo
+        religion = sunni
+        size = 11743
+    }
+
+    slaves = {
+        culture = oromo
+        religion = sunni
+        size = 1760
+    }
+
+	farmers = {
+		culture = amhara
+		religion = miaphysite
+		size = 12039
+	}
+}
+#Habro (57000/14300 POPS)
+1861 = {
+	aristocrats = {
+		culture = oromo
+		religion = sunni
+		size = 880
+	}
+
+	bureaucrats = {
+		culture = oromo
+		religion = sunni
+		size = 62
+	}
+
+	officers = {
+		culture = oromo
+		religion = sunni
+		size = 26
+	}
+
+	clergymen = {
+		culture = oromo
+		religion = sunni
+		size = 128
+	}
+
+	soldiers = {
+		culture = oromo
+		religion = sunni
+		size = 616
+	}
+
+	farmers = {
+		culture = oromo
+		religion = sunni
+		size = 6191
+	}
+
+	farmers = {
+		culture = oromo
+		religion = animist
+		size = 17380
+	}
+
+	farmers = {
+		culture = harari
+		religion = sunni
+		size = 1760
+	}
+
+	farmers = {
+		culture = amhara
+		religion = miaphysite
+		size = 6626
+	}
+
+	slaves = {
+		culture = amhara
+		religion = miaphysite
+		size = 440
+	}
+
+	farmers = {
+		culture = afar
+		religion = sunni
+		size = 9658
+	}
+}
+#Sidamo-Welega Region (1628000)
+#under the "rule" of Ethiopia in 1836
+#Bonga (516000/129000 POPS)
+3595 = {
+    aristocrats = {
+        culture = kefficho #sidama
+        religion = animist
+        size = 999
+    }
+
+    clergymen = {
+        culture = kefficho #sidama
+        religion = animist
+        size = 132
+    }
+
+    artisans = {
+        culture = kefficho #sidama
+        religion = animist
+        size = 1245
+    }
+
+    soldiers = {
+        culture = kefficho #sidama
+        religion = animist
+        size = 374
+    }
+
+    farmers = {
+        culture = kefficho #sidama
+        religion = animist
+        size = 8983
+    }
+
+    farmers = {
+        culture = luo
+        religion = animist
+        size = 119
+    }
+
+    slaves = {
+        culture = luo
+        religion = animist
+        size = 1914
+    }
+
+    aristocrats = {
+        culture = nilotic
+        religion = animist
+        size = 255
+    }
+
+    clergymen = {
+        culture = nilotic
+        religion = animist
+        size = 22
+    }
+
+    artisans = {
+        culture = nilotic
+        religion = animist
+        size = 440
+    }
+
+    soldiers = {
+        culture = nilotic
+        religion = animist
+        size = 110
+    }
+
+    farmers = {
+        culture = nilotic
+        religion = animist
+        size = 9856
+    }
+
+    aristocrats = {
+        culture = oromo
+        religion = sunni
+        size = 110
+    }
+
+    officers = {
+        culture = oromo
+        religion = sunni
+        size = 22
+    }
+
+    clergymen = {
+        culture = oromo
+        religion = sunni
+        size = 22
+    }
+
+    artisans = {
+        culture = oromo
+        religion = sunni
+        size = 352
+    }
+
+    soldiers = {
+        culture = oromo
+        religion = sunni
+        size = 88
+    }
+
+    farmers = {
+        culture = oromo
+        religion = sunni
+        size = 3392
+    }
+
+    farmers = {
+        culture = oromo
+        religion = miaphysite
+        size = 1470
+    }
+
+    farmers = {
+        culture = oromo
+        religion = animist
+        size = 4110
+    }
+
+    aristocrats = {
+        culture = luo
+        religion = miaphysite
+        size = 22
+    }
+
+    clergymen = {
+        culture = luo
+        religion = miaphysite
+        size = 22
+    }
+
+    artisans = {
+        culture = luo
+        religion = miaphysite
+        size = 110
+    }
+
+    soldiers = {
+        culture = luo
+        religion = miaphysite
+        size = 110
+    }
+
+    farmers = {
+        culture = luo
+        religion = miaphysite
+        size = 8263
+    }
+
+    farmers = {
+        culture = luo
+        religion = animist
+        size = 5870
+    }
+
+    farmers = {
+        culture = nuba
+        religion = animist
+        size = 2350
+    }
+}
+3930 = {
+    aristocrats = {
+        culture = nilotic
+        religion = animist
+        size = 792
+    }
+
+    officers = {
+        culture = nilotic
+        religion = animist
+        size = 66
+    }
+
+    clergymen = {
+        culture = nilotic
+        religion = animist
+        size = 154
+    }
+
+    artisans = {
+        culture = nilotic
+        religion = animist
+        size = 176
+    }
+
+    soldiers = {
+        culture = nilotic
+        religion = animist
+        size = 1364
+    }
+
+    farmers = {
+        culture = nilotic
+        religion = animist
+        size = 10648
+    }
+
+    farmers = {
+        culture = nilotic
+        religion = miaphysite
+        size = 1100
+    }
+
+    farmers = {
+        culture = cushitic
+        religion = sunni
+        size = 1232
+    }
+
+    farmers = {
+        culture = maasai
+        religion = animist
+        size = 2112
+    }
+
+    farmers = {
+        culture = kefficho
+        religion = miaphysite
+        size = 6838
+    }
+
+    farmers = {
+        culture = kefficho
+        religion = animist
+        size = 14520
+    }
+
+    slaves = {
+        culture = kefficho
+        religion = animist
+        size = 704
+    }
+}
+#Kaffa (316000/79000 POPS)
+3591 = {
+	aristocrats = {
+		culture = kefficho
+		religion = miaphysite
+		size = 282
+	}
+
+	bureaucrats = {
+		culture = kefficho
+		religion = miaphysite
+		size = 123
+	}
+
+	officers = {
+		culture = kefficho
+		religion = miaphysite
+		size = 57
+	}
+
+	clergymen = {
+		culture = kefficho
+		religion = miaphysite
+		size = 194
+	}
+
+	artisans = {
+		culture = kefficho
+		religion = miaphysite
+		size = 748
+	}
+
+	soldiers = {
+		culture = kefficho
+		religion = miaphysite
+		size = 880
+	}
+
+	farmers = {
+		culture = kefficho
+		religion = miaphysite
+		size = 22000
+	}
+
+	farmers = {
+		culture = kefficho
+		religion = animist
+		size = 4400
+	}
+
+	aristocrats = {
+		culture = oromo
+		religion = animist
+		size = 97
+	}
+
+	bureaucrats = {
+		culture = oromo
+		religion = animist
+		size = 185
+	}
+
+	officers = {
+		culture = oromo
+		religion = animist
+		size = 88
+	}
+
+	clergymen = {
+		culture = oromo
+		religion = animist
+		size = 57
+	}
+
+	artisans = {
+		culture = oromo
+		religion = animist
+		size = 616
+	}
+
+	soldiers = {
+		culture = oromo
+		religion = animist
+		size = 968
+	}
+
+	farmers = {
+		culture = oromo
+		religion = animist
+		size = 36080
+	}
+
+	farmers = {
+		culture = oromo
+		religion = sunni
+		size = 5518
+	}
+
+	slaves = {
+		culture = cushitic
+		religion = animist
+		size = 1426
+	}
+}
+#Asosa (756000/189000 POPS)
+3596 = {
+    aristocrats = {
+        culture = amhara
+        religion = miaphysite
+        size = 66
+    }
+
+    clergymen = {
+        culture = amhara
+        religion = miaphysite
+        size = 106
+    }
+
+    artisans = {
+        culture = amhara
+        religion = miaphysite
+        size = 405
+    }
+
+    soldiers = {
+        culture = amhara
+        religion = miaphysite
+        size = 370
+    }
+
+    farmers = {
+        culture = amhara
+        religion = miaphysite
+        size = 7902
+    }
+
+    slaves = {
+        culture = kefficho
+        religion = animist
+        size = 6024
+    }
+
+    aristocrats = {
+        culture = oromo
+        religion = miaphysite
+        size = 554
+    }
+
+    clergymen = {
+        culture = oromo
+        religion = miaphysite
+        size = 282
+    }
+
+    artisans = {
+        culture = oromo
+        religion = sunni
+        size = 673
+    }
+
+    artisans = {
+        culture = oromo
+        religion = miaphysite
+        size = 453
+    }
+
+    soldiers = {
+        culture = oromo
+        religion = miaphysite
+        size = 84
+    }
+
+    farmers = {
+        culture = oromo
+        religion = sunni
+        size = 2587
+    }
+
+    farmers = {
+        culture = oromo
+        religion = animist
+        size = 2957
+    }
+
+    farmers = {
+        culture = oromo
+        religion = miaphysite
+        size = 6723
+    }
+
+    aristocrats = {
+        culture = nuba
+        religion = miaphysite
+        size = 66
+    }
+	
+    aristocrats = {
+        culture = nuba
+        religion = animist
+        size = 132
+    }
+	
+    aristocrats = {
+        culture = nuba
+        religion = sunni
+        size = 66
+    }
+
+    clergymen = {
+        culture = nuba
+        religion = miaphysite
+        size = 44
+    }
+
+    clergymen = {
+        culture = nuba
+        religion = animist
+        size = 44
+    }
+
+    clergymen = {
+        culture = nuba
+        religion = sunni
+        size = 75
+    }
+
+    artisans = {
+        culture = nuba
+        religion = sunni
+        size = 172
+    }
+
+    artisans = {
+        culture = nuba
+        religion = miaphysite
+        size = 136
+    }
+
+    artisans = {
+        culture = nuba
+        religion = animist
+        size = 202
+    }
+
+    soldiers = {
+        culture = nuba
+        religion = sunni
+        size = 35
+    }
+
+    soldiers = {
+        culture = nuba
+        religion = miaphysite
+        size = 53
+    }
+
+    soldiers = {
+        culture = nuba
+        religion = animist
+        size = 62
+    }
+
+    farmers = {
+        culture = nuba
+        religion = sunni
+        size = 1848
+    }
+
+    farmers = {
+        culture = nuba
+        religion = miaphysite
+        size = 4290
+    }
+
+    farmers = {
+        culture = nuba
+        religion = animist
+        size = 6230
+    }
+
+    aristocrats = {
+        culture = nilotic
+        religion = miaphysite
+        size = 35
+    }
+	
+    aristocrats = {
+        culture = nilotic
+        religion = animist
+        size = 35
+    }
+	
+    aristocrats = {
+        culture = nilotic
+        religion = sunni
+        size = 202
+    }
+
+    clergymen = {
+        culture = nilotic
+        religion = sunni
+        size = 150
+    }
+
+    artisans = {
+        culture = nilotic
+        religion = sunni
+        size = 339
+    }
+
+    artisans = {
+        culture = nilotic
+        religion = miaphysite
+        size = 35
+    }
+
+    artisans = {
+        culture = nilotic
+        religion = animist
+        size = 70
+    }
+
+    soldiers = {
+        culture = nilotic
+        religion = sunni
+        size = 70
+    }
+
+    farmers = {
+        culture = nilotic
+        religion = sunni
+        size = 10085
+    }
+
+    farmers = {
+        culture = nilotic
+        religion = animist
+        size = 1346
+    }
+
+    slaves = {
+        culture = nuba
+        religion = animist
+        size = 5236
+    }
+}
+3697 = {
+    aristocrats = {
+        culture = amhara
+        religion = miaphysite
+        size = 176
+    }
+
+    clergymen = {
+        culture = amhara
+        religion = miaphysite
+        size = 273
+    }
+
+    artisans = {
+        culture = amhara
+        religion = miaphysite
+        size = 1056
+    }
+
+    soldiers = {
+        culture = amhara
+        religion = miaphysite
+        size = 88
+    }
+
+    farmers = {
+        culture = amhara
+        religion = miaphysite
+        size = 4840
+    }
+
+    slaves = {
+        culture = kefficho
+        religion = animist
+        size = 3454
+    }
+
+    aristocrats = {
+        culture = oromo
+        religion = miaphysite
+        size = 1452
+    }
+
+    clergymen = {
+        culture = oromo
+        religion = miaphysite
+        size = 735
+    }
+
+    artisans = {
+        culture = oromo
+        religion = sunni
+        size = 1760
+    }
+
+    artisans = {
+        culture = oromo
+        religion = miaphysite
+        size = 1188
+    }
+
+    soldiers = {
+        culture = oromo
+        religion = miaphysite
+        size = 211
+    }
+
+    farmers = {
+        culture = oromo
+        religion = sunni
+        size = 20240
+    }
+
+    farmers = {
+        culture = oromo
+        religion = animist
+        size = 7920
+    }
+
+    farmers = {
+        culture = oromo
+        religion = miaphysite
+        size = 4400
+    }
+
+    farmers = {
+        culture = nuba
+        religion = sunni
+        size = 3080
+    }
+
+    farmers = {
+        culture = nuba
+        religion = miaphysite
+        size = 6776
+    }
+
+    aristocrats = {
+        culture = nilotic
+        religion = miaphysite
+        size = 88
+    }
+	
+    aristocrats = {
+        culture = nilotic
+        religion = animist
+        size = 88
+    }
+	
+    aristocrats = {
+        culture = nilotic
+        religion = sunni
+        size = 528
+    }
+
+    clergymen = {
+        culture = nilotic
+        religion = sunni
+        size = 383
+    }
+
+    artisans = {
+        culture = nilotic
+        religion = sunni
+        size = 880
+    }
+
+    artisans = {
+        culture = nilotic
+        religion = miaphysite
+        size = 88
+    }
+
+    artisans = {
+        culture = nilotic
+        religion = animist
+        size = 176
+    }
+
+    soldiers = {
+        culture = nilotic
+        religion = sunni
+        size = 176
+    }
+
+    farmers = {
+        culture = nilotic
+        religion = sunni
+        size = 13200
+    }
+
+    farmers = {
+        culture = nuba
+        religion = animist
+        size = 7040
+    }
+
+    farmers = {
+        culture = nilotic
+        religion = animist
+        size = 2640
+    }
+
+    slaves = {
+        culture = nuba
+        religion = animist
+        size = 12320
+    }
+
+    slaves = {
+        culture = luo
+        religion = animist
+        size = 1276
+    }
+}
+#Negele (720000/180000 POPS)
+1864 = {
+    aristocrats = {
+        culture = oromo
+        religion = sunni
+        size = 770
+    }
+
+    clergymen = {
+        culture = oromo
+        religion = sunni
+        size = 396
+    }
+
+    artisans = {
+        culture = oromo
+        religion = sunni
+        size = 1628
+    }
+
+    soldiers = {
+        culture = oromo
+        religion = sunni
+        size = 396
+    }
+
+    farmers = {
+        culture = oromo
+        religion = sunni
+        size = 17666
+    }
+
+    farmers = {
+        culture = cushitic
+        religion = miaphysite
+        size = 4796
+    }
+
+    farmers = {
+        culture = harari
+        religion = animist
+        size = 1496
+    }
+
+    farmers = {
+        culture = cushitic
+        religion = sunni
+        size = 308
+    }
+
+    farmers = {
+        culture = somali
+        religion = sunni
+        size = 2992
+    }
+
+    farmers = {
+        culture = luo
+        religion = animist
+        size = 352
+    }
+
+    slaves = {
+        culture = oromo
+        religion = sunni
+        size = 20900
+    }
+
+    aristocrats = {
+        culture = kefficho
+        religion = animist
+        size = 440
+    }
+
+    clergymen = {
+        culture = kefficho
+        religion = animist
+        size = 242
+    }
+
+    artisans = {
+        culture = kefficho
+        religion = animist
+        size = 946
+    }
+
+    soldiers = {
+        culture = kefficho
+        religion = animist
+        size = 242
+    }
+
+    farmers = {
+        culture = kefficho
+        religion = animist
+        size = 7062
+    }
+
+    slaves = {
+        culture = kefficho
+        religion = animist
+        size = 5720
+    }
+}
+#Ogaden Region (786000)
+#under the "rule" of Ethiopia in 1836
+#Dire Dawa (36000/9000 POPS)
+1865 = {
+	aristocrats = {
+		culture = afar
+		religion = sunni
+		size = 141
+	}
+	
+	soldiers = {
+		culture = afar
+		religion = sunni
+		size = 176
+	}
+	
+	farmers = {
+		culture = afar
+		religion = sunni
+		size = 5148
+	}
+	
+	slaves = {
+		culture = afar
+		religion = sunni
+		size = 1056
+	}
+	
+	aristocrats = {
+		culture = somali
+		religion = sunni
+		size = 123
+	}
+	
+	clergymen = {
+		culture = somali
+		religion = sunni
+		size = 97
+	}
+	
+	artisans = {
+		culture = somali
+		religion = sunni
+		size = 176
+	}
+	
+	soldiers = {
+		culture = somali
+		religion = sunni
+		size = 132
+	}
+	
+	farmers = {
+		culture = somali
+		religion = sunni
+		size = 3080
+	}
+	
+	slaves = {
+		culture = afar
+		religion = animist
+		size = 440
+	}
+}
+#Harer (348000/87000 POPS)
+3590 = {
+    aristocrats = {
+        culture = harari
+        religion = sunni
+        size = 801
+    }
+
+    bureaucrats = {
+        culture = harari
+        religion = sunni
+        size = 97
+    }
+
+    officers = {
+        culture = harari
+        religion = sunni
+        size = 48
+    }
+
+    clergymen = {
+        culture = harari
+        religion = sunni
+        size = 251
+    }
+
+    artisans = {
+        culture = harari
+        religion = sunni
+        size = 1496
+    }
+
+    soldiers = {
+        culture = harari
+        religion = sunni
+        size = 968
+    }
+
+    farmers = {
+        culture = harari
+        religion = sunni
+        size = 15005
+    }
+
+    slaves = {
+        culture = harari
+        religion = animist
+        size = 3080
+    }
+
+    farmers = {
+        culture = amhara
+        religion = miaphysite
+        size = 2783
+    }
+
+    slaves = {
+        culture = amhara
+        religion = miaphysite
+        size = 1760
+    }
+
+    farmers = {
+        culture = afar
+        religion = sunni
+        size = 1514
+    }
+
+    aristocrats = {
+        culture = oromo
+        religion = sunni
+        size = 264
+    }
+
+    clergymen = {
+        culture = oromo
+        religion = sunni
+        size = 145
+    }
+
+    artisans = {
+        culture = oromo
+        religion = sunni
+        size = 616
+    }
+
+    soldiers = {
+        culture = oromo
+        religion = sunni
+        size = 1030
+    }
+
+    farmers = {
+        culture = oromo
+        religion = sunni
+        size = 2640
+    }
+
+    farmers = {
+        culture = oromo
+        religion = animist
+        size = 1760
+    }
+
+    slaves = {
+        culture = oromo
+        religion = animist
+        size = 1465
+    }
+
+    slaves = {
+        culture = cushitic
+        religion = animist
+        size = 1848
+    }
+
+    aristocrats = {
+        culture = somali
+        religion = sunni
+        size = 836
+    }
+
+    bureaucrats = {
+        culture = somali
+        religion = sunni
+        size = 57
+    }
+
+    officers = {
+        culture = somali
+        religion = sunni
+        size = 26
+    }
+
+    clergymen = {
+        culture = somali
+        religion = sunni
+        size = 418
+    }
+
+    artisans = {
+        culture = somali
+        religion = sunni
+        size = 1232
+    }
+
+    soldiers = {
+        culture = somali
+        religion = sunni
+        size = 1034
+    }
+
+    farmers = {
+        culture = somali
+        religion = sunni
+        size = 17248
+    }
+}
+#uncolonized in 1836
+#Goba (296000/74000 POPS)
+1866 = {
+
+    aristocrats = {
+        culture = oromo
+        religion = sunni
+        size = 550
+    }
+
+    clergymen = {
+        culture = oromo
+        religion = sunni
+        size = 286
+    }
+
+    artisans = {
+        culture = oromo
+        religion = sunni
+        size = 1408
+    }
+
+    soldiers = {
+        culture = oromo
+        religion = sunni
+        size = 924
+    }
+
+    farmers = {
+        culture = oromo
+        religion = sunni
+        size = 28273
+    }
+
+    farmers = {
+        culture = somali
+        religion = sunni
+        size = 5607
+    }
+
+    slaves = {
+        culture = cushitic
+        religion = animist
+        size = 4400
+    }
+
+}
+#Werder (328000/82000 POPS)
+1867 = {
+    farmers = {
+        culture = oromo
+        religion = sunni
+        size = 1320
+    }
+
+    aristocrats = {
+        culture = somali
+        religion = sunni
+        size = 682
+    }
+
+    clergymen = {
+        culture = somali
+        religion = sunni
+        size = 88
+    }
+
+    soldiers = {
+        culture = somali
+        religion = sunni
+        size = 1012
+    }
+
+    artisans = {
+        culture = somali
+        religion = sunni
+        size = 638
+    }
+
+    farmers = {
+        culture = somali
+        religion = sunni
+        size = 19030
+    }
+
+    slaves = {
+        culture = lacustrine_bantu
+        religion = animist
+        size = 880
+    }
+
+    slaves = {
+        culture = cushitic
+        religion = animist
+        size = 440
+    }
+
+}
+3937 = {
+
+    clergymen = {
+        culture = oromo
+        religion = sunni
+        size = 132
+    }
+
+    artisans = {
+        culture = oromo
+        religion = sunni
+        size = 660
+    }
+
+    soldiers = {
+        culture = oromo
+        religion = sunni
+        size = 132
+    }
+
+    farmers = {
+        culture = oromo
+        religion = sunni
+        size = 9394
+    }
+
+    aristocrats = {
+        culture = somali
+        religion = sunni
+        size = 946
+    }
+
+    clergymen = {
+        culture = somali
+        religion = sunni
+        size = 88
+    }
+
+    soldiers = {
+        culture = somali
+        religion = sunni
+        size = 1012
+    }
+
+    artisans = {
+        culture = somali
+        religion = sunni
+        size = 1056
+    }
+
+    farmers = {
+        culture = somali
+        religion = sunni
+        size = 27390
+    }
+
+    slaves = {
+        culture = cushitic
+        religion = animist
+        size = 880
+    }
+
+    slaves = {
+        culture = lacustrine_bantu
+        religion = animist
+        size = 1320
+    }
+
+}

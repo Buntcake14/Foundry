@@ -1,0 +1,24 @@
+leader = {
+    name = "Dost Mohammed"
+    type = land
+    date = 1830.1.1
+    personality = defence_1.1
+    background = attack_1.1
+    prestige = 0.2
+}
+leader = {
+    name = "Yar Mohammed"
+    type = land
+    date = 1830.1.1
+    personality = no_personality
+    background = no_background
+    prestige = 0.2
+}
+leader = {
+    name = "Akbar Khan"
+    type = land
+    date = 1830.1.1
+    personality = no_personality
+    background = no_background
+    prestige = 0.2
+}

@@ -1,0 +1,13 @@
+owner = MCA
+controller = MCA
+add_core = MCA
+add_core = ENG
+trade_goods = coal
+life_rating = 25
+state_building = {
+    level = 2
+    building = fabric_factory
+    upgrade = yes
+}
+1836.1.1 = {
+}

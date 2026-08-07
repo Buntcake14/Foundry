@@ -1,0 +1,740 @@
+#Liberia Region (880000)
+#under the rule of Liberia in 1836
+#Monrovia (252000/63000 POPS)
+1887 = {
+    aristocrats = {
+        culture = afro_american
+        religion = protestant
+        size = 440
+    }
+
+    bureaucrats = {
+        culture = afro_american
+        religion = protestant
+        size = 88
+    }
+
+    officers = {
+        culture = afro_american
+        religion = protestant
+        size = 88
+    }
+
+    clergymen = {
+        culture = afro_american
+        religion = protestant
+        size = 88
+    }
+
+    farmers = {
+        culture = afro_american
+        religion = protestant
+        size = 1769
+    }
+
+    artisans = {
+        culture = afro_american
+        religion = protestant
+        size = 264
+    }
+
+    soldiers = {
+        culture = afro_american
+        religion = protestant
+        size = 88
+    }
+
+    farmers = {
+        culture = kru
+        religion = protestant
+        size = 2442
+    }
+
+    aristocrats = {
+        culture = kru
+        religion = fetishist
+        size = 770
+    }
+
+    clergymen = {
+        culture = kru
+        religion = fetishist
+        size = 396
+    }
+
+    artisans = {
+        culture = kru
+        religion = fetishist
+        size = 2068
+    }
+
+    soldiers = {
+        culture = kru
+        religion = fetishist
+        size = 396
+    }
+
+    farmers = {
+        culture = kru
+        religion = fetishist
+        size = 7920
+    }
+
+    slaves = {
+        culture = kru
+        religion = fetishist
+        size = 2340
+    }
+
+    farmers = {
+        culture = mande
+        religion = fetishist
+        size = 7920
+    }
+
+    slaves = {
+        culture = mande
+        religion = fetishist
+        size = 1721
+    }
+
+    aristocrats = {
+        culture = western_nigritic
+        religion = sunni
+        size = 88
+    }
+
+    clergymen = {
+        culture = western_nigritic
+        religion = sunni
+        size = 88
+    }
+
+    artisans = {
+        culture = western_nigritic
+        religion = sunni
+        size = 176
+    }
+
+    soldiers = {
+        culture = western_nigritic
+        religion = sunni
+        size = 88
+    }
+
+    farmers = {
+        culture = western_nigritic
+        religion = sunni
+        size = 990
+    }
+
+    aristocrats = {
+        culture = western_nigritic
+        religion = fetishist
+        size = 132
+    }
+
+    clergymen = {
+        culture = western_nigritic
+        religion = fetishist
+        size = 88
+    }
+
+    artisans = {
+        culture = western_nigritic
+        religion = fetishist
+        size = 396
+    }
+
+    soldiers = {
+        culture = western_nigritic
+        religion = fetishist
+        size = 88
+    }
+
+    farmers = {
+        culture = western_nigritic
+        religion = fetishist
+        size = 2640
+    }
+
+    slaves = {
+        culture = mande
+        religion = fetishist
+        size = 638
+    }
+
+    aristocrats = {
+        culture = mande
+        religion = protestant
+        size = 440
+    }
+
+    officers = {
+        culture = mande
+        religion = protestant
+        size = 88
+    }
+
+    clergymen = {
+        culture = mande
+        religion = protestant
+        size = 88
+    }
+
+    farmers = {
+        culture = mande
+        religion = protestant
+        size = 889
+    }
+
+    artisans = {
+        culture = mande
+        religion = protestant
+        size = 264
+    }
+
+    soldiers = {
+        culture = mande
+        religion = protestant
+        size = 968
+    }
+
+    aristocrats = {
+        culture = mande
+        religion = fetishist
+        size = 132
+    }
+
+    clergymen = {
+        culture = mande
+        religion = fetishist
+        size = 88
+    }
+
+    artisans = {
+        culture = mande
+        religion = fetishist
+        size = 396
+    }
+
+    soldiers = {
+        culture = mande
+        religion = fetishist
+        size = 88
+    }
+
+    farmers = {
+        culture = mande
+        religion = fetishist
+        size = 4598
+    }
+    #was african minor
+    aristocrats = {
+        culture = western_nigritic
+        religion = fetishist
+        size = 88
+    }
+
+    clergymen = {
+        culture = western_nigritic
+        religion = fetishist
+        size = 88
+    }
+
+    artisans = {
+        culture = western_nigritic
+        religion = fetishist
+        size = 176
+    }
+
+    soldiers = {
+        culture = western_nigritic
+        religion = fetishist
+        size = 88
+    }
+
+    slaves = {
+        culture = western_nigritic
+        religion = fetishist
+        size = 1430
+    }
+}
+3852 = {
+    aristocrats = {
+        culture = afro_american
+        religion = protestant
+        size = 88
+    }
+
+    farmers = {
+        culture = mande
+        religion = protestant
+        size = 792
+    }
+
+    aristocrats = {
+        culture = mande
+        religion = fetishist
+        size = 176
+    }
+
+    clergymen = {
+        culture = mande
+        religion = fetishist
+        size = 88
+    }
+
+    artisans = {
+        culture = mande
+        religion = fetishist
+        size = 176
+    }
+
+    soldiers = {
+        culture = mande
+        religion = fetishist
+        size = 88
+    }
+
+    farmers = {
+        culture = mande
+        religion = fetishist
+        size = 7040
+    }
+
+    slaves = {
+        culture = mande
+        religion = fetishist
+        size = 2112
+    }
+
+    farmers = {
+        culture = mande
+        religion = sunni
+        size = 1760
+    }
+
+    slaves = {
+        culture = mande
+        religion = sunni
+        size = 880
+    }
+	
+    aristocrats = {
+        culture = western_nigritic
+        religion = fetishist
+        size = 88
+    }
+
+    clergymen = {
+        culture = western_nigritic
+        religion = fetishist
+        size = 88
+    }
+
+    artisans = {
+        culture = western_nigritic
+        religion = fetishist
+        size = 176
+    }
+
+    soldiers = {
+        culture = western_nigritic
+        religion = fetishist
+        size = 88
+    }
+
+    farmers = {
+        culture = western_nigritic
+        religion = fetishist
+        size = 8800
+    }
+
+    slaves = {
+        culture = western_nigritic
+        religion = sunni
+        size = 484
+    }
+}
+#Harper (204000/51000 POPS)
+1888 = {
+    aristocrats = {
+        culture = afro_american
+        religion = protestant
+        size = 660
+    }
+
+    clergymen = {
+        culture = afro_american
+        religion = protestant
+        size = 330
+    }
+
+    artisans = {
+        culture = kru
+        religion = protestant
+        size = 1672
+    }
+
+    soldiers = {
+        culture = kru
+        religion = fetishist
+        size = 330
+    }
+
+    farmers = {
+        culture = kru
+        religion = fetishist
+        size = 13200
+    }
+
+    slaves = {
+        culture = kru
+        religion = fetishist
+        size = 3168
+    }
+
+    aristocrats = {
+        culture = kru
+        religion = protestant
+        size = 220
+    }
+
+    clergymen = {
+        culture = kru
+        religion = fetishist
+        size = 110
+    }
+
+    artisans = {
+        culture = kru
+        religion = fetishist
+        size = 572
+    }
+
+    soldiers = {
+        culture = kru
+        religion = fetishist
+        size = 110
+    }
+
+    farmers = {
+        culture = kru
+        religion = fetishist
+        size = 13948
+    }
+}
+#uncolonized in 1836
+#Bopulu (124000/31000 POPS)
+1889 = {
+    aristocrats = {
+        culture = western_nigritic
+        religion = sunni
+        size = 594
+    }
+
+    clergymen = {
+        culture = western_nigritic
+        religion = sunni
+        size = 308
+    }
+
+    artisans = {
+        culture = western_nigritic
+        religion = sunni
+        size = 704
+    }
+
+    soldiers = {
+        culture = western_nigritic
+        religion = sunni
+        size = 154
+    }
+
+    farmers = {
+        culture = western_nigritic
+        religion = sunni
+        size = 2552
+    }
+
+    farmers = {
+        culture = western_nigritic
+        religion = fetishist
+        size = 6160
+    }
+
+    slaves = {
+        culture = western_nigritic
+        religion = fetishist
+        size = 959
+    }
+	
+    aristocrats = {
+        culture = dyula
+        religion = sunni
+        size = 176
+    }
+
+    clergymen = {
+        culture = dyula
+        religion = sunni
+        size = 88
+    }
+
+    artisans = {
+        culture = dyula
+        religion = sunni
+        size = 176
+    }
+
+    soldiers = {
+        culture = dyula
+        religion = sunni
+        size = 132
+    }
+
+    farmers = {
+        culture = dyula
+        religion = sunni
+        size = 2640
+    }
+
+    farmers = {
+        culture = dyula
+        religion = fetishist
+        size = 880
+    }
+	
+    aristocrats = {
+        culture = mande
+        religion = fetishist
+        size = 462
+    }
+
+    clergymen = {
+        culture = mande
+        religion = fetishist
+        size = 286
+    }
+
+    artisans = {
+        culture = mande
+        religion = fetishist
+        size = 1232
+    }
+
+    soldiers = {
+        culture = mande
+        religion = fetishist
+        size = 2750
+    }
+
+    farmers = {
+        culture = mande
+        religion = fetishist
+        size = 31680
+    }
+
+    slaves = {
+        culture = mande
+        religion = fetishist
+        size = 5280
+    }
+
+    farmers = {
+        culture = mande
+        religion = sunni
+        size = 10336
+    }
+	
+    farmers = {
+        culture = kru
+        religion = fetishist
+        size = 2640
+    }
+	
+    slaves = {
+        culture = kru
+        religion = fetishist
+        size = 858
+    }
+}
+3851 = {
+    aristocrats = {
+        culture = western_nigritic
+        religion = sunni
+        size = 264
+    }
+
+    clergymen = {
+        culture = western_nigritic
+        religion = sunni
+        size = 88
+    }
+
+    artisans = {
+        culture = western_nigritic
+        religion = sunni
+        size = 176
+    }
+
+    soldiers = {
+        culture = western_nigritic
+        religion = sunni
+        size = 88
+    }
+
+    farmers = {
+        culture = western_nigritic
+        religion = sunni
+        size = 1760
+    }
+
+    slaves = {
+        culture = western_nigritic
+        religion = sunni
+        size = 1144
+    }
+
+    farmers = {
+        culture = western_nigritic
+        religion = fetishist
+        size = 11440
+    }
+
+    slaves = {
+        culture = western_nigritic
+        religion = fetishist
+        size = 880
+    }
+	
+    aristocrats = {
+        culture = mande
+        religion = fetishist
+        size = 264
+    }
+
+    clergymen = {
+        culture = mande
+        religion = fetishist
+        size = 176
+    }
+
+    artisans = {
+        culture = mande
+        religion = fetishist
+        size = 264
+    }
+
+    soldiers = {
+        culture = mande
+        religion = fetishist
+        size = 968
+    }
+
+    farmers = {
+        culture = mande
+        religion = fetishist
+        size = 7040
+    }
+
+    slaves = {
+        culture = mande
+        religion = fetishist
+        size = 880
+    }
+
+    farmers = {
+        culture = mande
+        religion = sunni
+        size = 4400
+    }
+
+    slaves = {
+        culture = mande
+        religion = sunni
+        size = 1848
+    }
+}
+#Zwedru (168000/42000 POPS)
+1891 = {
+    aristocrats = {
+        culture = kru
+        religion = fetishist
+        size = 374
+    }
+
+    clergymen = {
+        culture = afro_american
+        religion = fetishist
+        size = 220
+    }
+
+    artisans = {
+        culture = afro_american
+        religion = fetishist
+        size = 1012
+    }
+
+    soldiers = {
+        culture = kru
+        religion = fetishist
+        size = 220
+    }
+
+    farmers = {
+        culture = kru
+        religion = fetishist
+        size = 5258
+    }
+
+    aristocrats = {
+        culture = afro_american
+        religion = fetishist
+        size = 308
+    }
+
+    clergymen = {
+        culture = afro_american
+        religion = fetishist
+        size = 176
+    }
+
+    artisans = {
+        culture = afro_american
+        religion = fetishist
+        size = 836
+    }
+
+    soldiers = {
+        culture = afro_american
+        religion = fetishist
+        size = 176
+    }
+
+    farmers = {
+        culture = kru
+        religion = fetishist
+        size = 32560
+    }
+
+    slaves = {
+        culture = kru
+        religion = fetishist
+        size = 4664
+    }
+
+    farmers = {
+        culture = mande
+        religion = fetishist
+        size = 2640
+    }
+
+    slaves = {
+        culture = mande
+        religion = fetishist
+        size = 1760
+    }
+
+}

@@ -1,0 +1,130 @@
+leader = {
+    name = "Thomas Cochrane"
+    picture = eng_adm_cochrane
+    date = 1832.1.1
+    type = sea
+    personality = no_personality
+    background = attack_2.1
+    prestige = 0.4
+}
+leader = {
+    name = "Edward Codrington"
+    picture = eng_adm_codrington
+    date = 1836.1.1
+    type = sea
+    personality = no_personality
+    background = attack_5.1
+    prestige = 0.3
+}
+leader = {
+    name = "Sir George Cockburn"
+    picture = eng_adm_cockburn
+    date = 1812.1.1
+    type = sea
+    personality = defence_minus_2.1
+    background = attack_1.1
+    prestige = 0.3
+}
+leader = {
+    name = "William Parker"
+    picture = eng_adm_parker
+    date = 1830.1.1
+    type = land
+    personality = no_personality
+    background = attack_minus_1.1
+}
+leader = {
+    name = "Edward Blakeney"
+    picture = eng_gen_blakeney
+    date = 1825.1.1
+    type = land
+    personality = no_personality
+    background = no_background
+    prestige = 0.1
+}
+leader = {
+    name = "Arthur Wellesley"
+    picture = european_general_34
+    date = 1810.1.1
+    type = land
+    personality = defence_3.1
+    background = no_background
+    prestige = 0.8
+}
+leader = {
+    name = "Hugh Gough"
+    picture = eng_gen_goughhugh
+    date = 1830.1.1
+    type = land
+    personality = defence_1.1
+    background = attack_2.1
+    prestige = 0.1
+}
+leader = {
+    name = "John Seaton"
+    picture = eng_gen_seaton
+    date = 1825.1.1
+    type = land
+    personality = no_personality
+    background = attack_1.1
+    prestige = 0.2
+}
+leader = {
+    name = "Henry Smith"
+    picture = eng_gen_smith
+    date = 1814.1.1
+    type = land
+    personality = no_personality
+    background = attack_2.1
+    prestige = 0.1
+}
+leader = {
+    name = "Henry Hardinge"
+    picture = eng_gen_hardinge
+    date = 1830.1.1
+    type = land
+    personality = no_personality
+    background = no_background
+    prestige = 0.1
+}
+leader = {
+    name = "Raglan"
+    picture = eng_gen_raglan
+    date = 1836.1.1
+    type = land
+    personality = no_personality
+    background = no_background
+    prestige = 0.0
+}
+leader = {
+    name = "Whitworth-Aylmer"
+    date = 1825.1.1
+    type = land
+    personality = defence_1.1
+    background = attack_minus_1.1
+    prestige = 0.1
+}
+leader = {
+    name = "John Fox Burgoyne"
+    date = 1836.1.1
+    type = land
+    personality = no_personality
+    background = no_background
+    prestige = 0.0
+}
+leader = {
+    name = "Sir George Brown"
+    date = 1836.1.1
+    type = land
+    personality = defence_1.1
+    background = attack_3.1
+    prestige = 0.0
+}
+leader = {
+    name = "James Dundas"
+    date = 1836.1.1
+    type = sea
+    personality = defence_3.1
+    background = no_background
+    prestige = 0.0
+}

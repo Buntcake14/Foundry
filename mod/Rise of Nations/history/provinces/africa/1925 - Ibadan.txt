@@ -1,0 +1,9 @@
+owner = OYO
+controller = OYO
+add_core = OYO
+trade_goods = grain
+life_rating = 35
+terrain = savanna
+1836.1.1 = {
+controller = ILO
+}

@@ -1,0 +1,8 @@
+owner = GUY
+controller = GUY
+add_core = GUY
+add_core = AMA
+add_core = VNZ
+terrain = jungle_hills
+trade_goods = tropical_wood
+life_rating = 15

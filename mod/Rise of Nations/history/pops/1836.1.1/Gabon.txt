@@ -1,0 +1,261 @@
+#Gabon Region (180000)  #see Gulf of Guinea.txt for balance of region
+#uncolonized in 1836/under the influence of Teke
+#Libreville (48000/12000 POPS)
+1972 = {
+    aristocrats = {
+        culture = fang
+        religion = animist
+        size = 176
+    }
+	
+    bureaucrats = {
+        culture = fang
+        religion = animist
+        size = 48
+    }
+	
+    officers = {
+        culture = fang
+        religion = animist
+        size = 22
+    }
+
+    clergymen = {
+        culture = fang
+        religion = animist
+        size = 154
+    }
+
+    artisans = {
+        culture = fang
+        religion = animist
+        size = 528
+    }
+
+    soldiers = {
+        culture = fang
+        religion = animist
+        size = 990
+    }
+
+    farmers = {
+        culture = fang
+        religion = animist
+        size = 16280
+    }
+
+    slaves = {
+        culture = fang
+        religion = animist
+        size = 2112
+    }
+}
+#Mayumbe (32000/8000 POPS)
+1974 = {
+    aristocrats = {
+        culture = bakongo
+        religion = animist
+        size = 132
+    }
+	
+    bureaucrats = {
+        culture = bakongo
+        religion = animist
+        size = 18
+    }
+	
+    officers = {
+        culture = bakongo
+        religion = animist
+        size = 9
+    }
+
+    clergymen = {
+        culture = bakongo
+        religion = animist
+        size = 66
+    }
+
+    artisans = {
+        culture = bakongo
+        religion = animist
+        size = 352
+    }
+
+    soldiers = {
+        culture = bakongo
+        religion = animist
+        size = 66
+    }
+
+    farmers = {
+        culture = bakongo
+        religion = animist
+        size = 9680
+    }
+}
+#Moanda (28000/7000 POPS)
+1975 = {
+    aristocrats = {
+        culture = fang
+        religion = animist
+        size = 110
+    }
+
+    clergymen = {
+        culture = fang
+        religion = animist
+        size = 66
+    }
+
+    artisans = {
+        culture = fang
+        religion = animist
+        size = 308
+    }
+
+    soldiers = {
+        culture = fang
+        religion = animist
+        size = 66
+    }
+
+    farmers = {
+        culture = fang
+        religion = animist
+        size = 3357
+    }
+
+    farmers = {
+        culture = bakongo
+        religion = animist
+        size = 2372
+    }
+
+    farmers = {
+        culture = teke
+        religion = animist
+        size = 123
+    }
+}
+3745 = {
+    aristocrats = {
+        culture = fang
+        religion = animist
+        size = 176
+    }
+
+    clergymen = {
+        culture = fang
+        religion = animist
+        size = 88
+    }
+
+    artisans = {
+        culture = fang
+        religion = animist
+        size = 176
+    }
+
+    soldiers = {
+        culture = fang
+        religion = animist
+        size = 88
+    }
+
+    farmers = {
+        culture = fang
+        religion = animist
+        size = 4202
+    }
+
+    farmers = {
+        culture = teke
+        religion = animist
+        size = 2715
+    }
+
+    farmers = {
+        culture = bakongo
+        religion = animist
+        size = 35
+    }
+}
+#uncolonized in 1836
+#Makokou (72000/18000 POPS)
+1976 = {
+    aristocrats = {
+        culture = fang
+        religion = animist
+        size = 154
+    }
+
+    clergymen = {
+        culture = fang
+        religion = animist
+        size = 88
+    }
+
+    artisans = {
+        culture = fang
+        religion = animist
+        size = 264
+    }
+
+    soldiers = {
+        culture = fang
+        religion = animist
+        size = 88
+    }
+
+    farmers = {
+        culture = fang
+        religion = animist
+        size = 7128
+    }
+
+    farmers = {
+        culture = ubangian
+        religion = animist
+        size = 550
+    }
+
+}
+3935 = {
+    aristocrats = {
+        culture = fang
+        religion = animist
+        size = 132
+    }
+
+    clergymen = {
+        culture = fang
+        religion = animist
+        size = 66
+    }
+
+    artisans = {
+        culture = fang
+        religion = animist
+        size = 176
+    }
+
+    soldiers = {
+        culture = fang
+        religion = animist
+        size = 66
+    }
+
+    farmers = {
+        culture = fang
+        religion = animist
+        size = 9064
+    }
+
+    slaves = {
+        culture = fang
+        religion = animist
+        size = 946
+    }
+
+}

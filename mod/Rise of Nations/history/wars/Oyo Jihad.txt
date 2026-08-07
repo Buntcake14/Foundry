@@ -1,0 +1,32 @@
+name = "The Eleduwe War"
+
+1835.10.2 = {
+    add_attacker = SOK
+    add_attacker = ILO
+    add_defender = OYO
+    add_defender = BGU
+
+    # actor
+    # receiver
+    # casus_belli - cb type
+    # country - 3rd party
+    # state_province_id - target state capital
+    war_goal = {
+        casus_belli = conquest_any
+        actor = ILO
+        receiver = OYO
+    }
+	war_goal = {
+        casus_belli = acquire_core_state state_province_id = 1927
+        actor = OYO
+        receiver = ILO
+    }
+
+}
+
+1836.4.21 = {
+    rem_attacker = SOK
+    rem_attacker = ILO
+    rem_defender = OYO
+    rem_defender = BGU
+}

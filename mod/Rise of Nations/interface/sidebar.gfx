@@ -1,0 +1,79 @@
+spriteTypes = {	
+
+	
+	spriteType = {
+		name = "GFX_sidebar_view_provinces"
+		texturefile = "gfx\\interface\\sidebar_view_provinces.dds"
+		noOfFrames = 1
+		norefcount = yes
+		transparencecheck = yes
+	}
+	
+	spriteType = {
+		name = "GFX_sidebar_view_army"
+		texturefile = "gfx\\interface\\sidebar_view_army.dds"
+		noOfFrames = 1
+		norefcount = yes
+		transparencecheck = yes
+	}
+	
+	spriteType = {
+		name = "GFX_sidebar_view_naval"
+		texturefile = "gfx\\interface\\sidebar_view_naval.dds"
+		noOfFrames = 1
+		norefcount = yes
+		transparencecheck = yes
+	}
+	
+	spriteType = {
+		name = "GFX_sidebar_view_air"
+		texturefile = "gfx\\interface\\sidebar_view_air.dds"
+		noOfFrames = 1
+		norefcount = yes
+		transparencecheck = yes
+	}
+	
+	spriteType = {
+		name = "GFX_sidebar_view_combat"
+		texturefile = "gfx\\interface\\sidebar_view_combat.dds"
+		noOfFrames = 1
+		norefcount = yes
+		transparencecheck = yes
+	}
+	
+	spriteType = {
+		name = "GFX_sidebar_view_deploy"
+		texturefile = "gfx\\interface\\bg_deployment.dds"
+		noOfFrames = 1
+		norefcount = yes
+		transparencecheck = yes
+	}
+	
+	textSpriteType = {
+		name = "GFX_select_deployment"
+		texturefile = "gfx\\interface\\select_deployment.dds"
+		noOfFrames = 1
+		effectFile = "gfx\\FX\\buttonstate.fx"
+		norefcount = yes
+	}
+	
+	textSpriteType = {
+		name = "GFX_select_deployment_target"
+		texturefile = "gfx\\interface\\select_deployment_target.dds"
+		noOfFrames = 1
+		effectFile = "gfx\\FX\\buttonstate.fx"
+		norefcount = yes
+	}
+	
+	spriteType = {
+		name = "GFX_button_close"
+		texturefile = "gfx\\interface\\button_close.dds"
+		noOfFrames = 1
+		effectFile = "gfx\\FX\\buttonstate.fx"
+		norefcount = yes
+		clicksound = click
+	}
+	
+	
+
+}

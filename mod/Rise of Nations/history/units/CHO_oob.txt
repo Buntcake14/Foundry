@@ -1,0 +1,7 @@
+leader = {
+    name = "Mori Narimoto"
+    type = land
+    date = 1824.1.1
+    personality = no_personality
+    background = attack_1.1
+}
