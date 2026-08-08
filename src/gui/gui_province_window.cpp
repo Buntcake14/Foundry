@@ -747,7 +747,11 @@ public:
 		} else if(name == "alice_move_capital") {
 			return make_element_by_type<province_move_capital_button>(state, id);
 		} else if(name == "alice_toggle_administration") {
-			return make_element_by_type<province_toggle_administration_button>(state, id);
+			// Removed: manual per-province administration toggling overlapped
+			// conceptually with the new urban-center/admin-building system.
+			// Underlying administration simulation (economy_government.cpp)
+			// is untouched -- this only removes the player's manual control.
+			return make_element_by_type<invisible_element>(state, id);
 		} else if(name == "province_victory_points_icon") {
 			return make_element_by_type<image_element_base>(state, id);
 		} else if(name == "province_victory_points") {
@@ -2443,12 +2447,6 @@ public:
 			set_visible(state, true);
 		}
 	}
-};
-
-enum province_subtab_toggle_signal {
-	economy = 1,
-	tiles = 2,
-	market = 3
 };
 
 class economy_data_toggle : public button_element_base {

@@ -13,6 +13,7 @@
 #include "province_templates.hpp"
 #include "triggers.hpp"
 #include "advanced_province_buildings.hpp"
+#include "civic_buildings.hpp"
 #include "price.hpp"
 #include "economy_pops.hpp"
 #include "commodities.hpp"
@@ -3140,6 +3141,8 @@ void daily_update(sys::state& state, bool presimulation, float presimulation_sta
 	);
 
 	advanced_province_buildings::update_consumption(state);
+
+	civic_buildings::update_leveling(state);
 
 	set_profile_point(state, "apb_consumption");
 

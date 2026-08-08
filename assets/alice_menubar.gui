@@ -180,6 +180,15 @@ guiTypes = {
 			shortcut = "~"
 		}
 		guiButtonType = {
+			name = "state_ledger_button"
+			size = { 236 24 }
+			position = { 300 300 }
+			Orientation = "UPPER_LEFT"
+			quadTextureSprite = "GFX_frontend_button_236"
+			buttonText = "STATE LEDGER"
+			buttonFont = "vic_18_black"
+		}
+		guiButtonType = {
 			name = "map_zoom_in"
 			position = { -45 -35 }
 			quadTextureSprite ="GFX_map_zoom_in"

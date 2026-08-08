@@ -11,6 +11,7 @@
 #include "economy_constants.hpp"
 #include "economy.hpp"
 #include "price.hpp"
+#include "gui_province_window.hpp"
 
 namespace ui {
 
@@ -302,6 +303,7 @@ public:
 		impl_set(state, payload);
 	}
 };
+
 class ledger_nation_ranking_listbox : public listbox_element_base<ledger_nation_ranking_entry, dcon::nation_id> {
 protected:
 	std::string_view get_row_element_name() override {

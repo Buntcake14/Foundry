@@ -11,6 +11,8 @@
 
 #include "province_templates.hpp"
 #include "advanced_province_buildings.hpp"
+#include "civic_buildings.hpp"
+#include "culture.hpp"
 #include "economy_constants.hpp"
 #include "money.hpp"
 #include "economy.hpp"
@@ -1463,18 +1465,29 @@ void update_production_investement_consumption(
 		}
 
 		auto total_agriculture = 0.f;
+		// Urban development eats into resource-extraction land: an urban center's
+		// current level applies a cumulative penalty to how much RGO capacity this
+		// province can grow toward. Applied to the ceiling, not the current size
+		// directly, so existing RGO size decays toward the new lower cap over time
+		// via the normal growth-loop clamp below, rather than snapping instantly.
+		auto urban_rgo_scale = 1.0f - civic_buildings::province_urban_rgo_penalty(state, province);
+		// Automatic private-capital RGO expansion only runs when the nation's current
+		// economic reforms actually permit private investment -- a government hostile
+		// to private investment doesn't block RGO leveling outright, it just means
+		// nobody grows it automatically, so it's on the player to invest manually.
+		auto private_investment_allowed = (state.world.nation_get_combined_issue_rules(nation) & issue_rule::can_invest_in_pop_projects) != 0;
 
 		//RGO
 		state.world.for_each_commodity([&](auto c){
 			auto decay_mult = 0.0001f;
 			auto base_output = state.world.commodity_get_rgo_amount(c);
 			if (base_output == 0.f) return;
-			auto current_max_size = state.world.province_get_rgo_potential(province, c);
+			auto current_max_size = state.world.province_get_rgo_potential(province, c) * urban_rgo_scale;
 			if (current_max_size == 0.f) return;
 			auto current_size = state.world.province_get_rgo_size(province, c);
 
 			auto local_tokens = rgo_investment_tokens(state, nation, province, c);
-			auto local_investment = available_investment * local_tokens / total_tokens;
+			auto local_investment = private_investment_allowed ? available_investment * local_tokens / total_tokens : 0.f;
 			auto investment_efficiency = state.world.province_get_rgo_max_efficiency(province, c);
 
 			{

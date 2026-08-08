@@ -5,6 +5,12 @@
 
 namespace ui {
 
+enum province_subtab_toggle_signal {
+	economy = 1,
+	tiles = 2,
+	market = 3
+};
+
 class province_window_header;
 class province_view_foreign_details;
 class province_view_statistics;

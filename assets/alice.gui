@@ -179,6 +179,49 @@ guiTypes = {
 		format = right
 	}
 	windowType = {
+		name = "state_ledger_row"
+		position = { 0 0 }
+		size = { 760 28 }
+		moveable = 0
+	}
+	windowType = {
+		name = "state_ledger_window"
+		position = { -400 -300 }
+		size = { 800 600 }
+		moveable = 1
+		Orientation = "CENTER"
+		iconType = {
+			name = "background"
+			spriteType = "GFX_menu"
+			position = { 0 0 }
+			Orientation = "UPPER_LEFT"
+		}
+		guiButtonType = {
+			name = "close_button"
+			size = { 24 24 }
+			quadTextureSprite = "GFX_main_close_button"
+			position = { -32 0 }
+			Orientation = "UPPER_RIGHT"
+			shortcut = "ESCAPE"
+		}
+		instantTextBoxType = {
+			name = "state_ledger_title"
+			position = { 20 10 }
+			font = "vic_22"
+			text = "ledger_header_states"
+			maxWidth = 400
+			maxHeight = 32
+		}
+		listboxType = {
+			name = "state_ledger_listbox_area"
+			position = { 20 60 }
+			size = { 760 520 }
+			spacing = 0
+			scrollbartype = "standardlistbox_slider"
+			borderSize = { 1 1 }
+		}
+	}
+	windowType = {
 		name = "alice_main_menu"
 		position = {  -176 -216 }
 		size = { 352 432 }

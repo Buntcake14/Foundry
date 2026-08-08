@@ -22,6 +22,7 @@
 #include "game_scene.hpp"
 #include "province.hpp"
 #include "economy.hpp"
+#include "civic_buildings.hpp"
 #include "economy_factory_view.hpp"
 #include "gui_diplomacy_request.hpp"
 #include "gui_message_window.hpp"
@@ -637,6 +638,9 @@ bool can_begin_factory_building_construction(sys::state& state, dcon::nation_id 
 
 	// New factory construction
 	if(!is_upgrade && !refit_target) {
+		// Requires an urban center to have unlocked factory construction in this province
+		if(!civic_buildings::province_unlocks_factories(state, location))
+			return false;
 		// Disallow building in colonies unless define flag is set
 		if(economy::is_colony(state, sid) && !economy::can_build_factory_type_in_colony(state, sid, type))
 			return false;

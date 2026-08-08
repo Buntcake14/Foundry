@@ -1223,6 +1223,13 @@ TRIGGER_FUNCTION(tf_life_rating_state) {
 	auto state_caps = ws.world.state_instance_get_capital(to_state(primary_slot));
 	return compare_values(tval[0], ws.world.province_get_life_rating(state_caps), trigger::payload(tval[1]).signed_value);
 }
+TRIGGER_FUNCTION(tf_province_population_growth_province) {
+	auto current_pop = ws.world.province_get_demographics(to_prov(primary_slot), demographics::total);
+	auto year_ago_pop = ws.world.province_get_population_year_ago(to_prov(primary_slot));
+	return compare_values(tval[0],
+			ve::select(year_ago_pop > 1.0f, (current_pop - year_ago_pop) / year_ago_pop, 0.0f),
+			read_float_from_payload(tval + 1));
+}
 
 auto empty_province_accumulator(sys::state const& ws) {
 	return make_true_accumulator(

@@ -95,6 +95,7 @@ list(APPEND ALICE_INCREMENTAL_SOURCES_LIST_ECONOMY
 	"${PROJECT_SOURCE_DIR}/src/economy/construction.cpp"
 	"${PROJECT_SOURCE_DIR}/src/economy/advanced_province_buildings.cpp"
 	"${PROJECT_SOURCE_DIR}/src/economy/national_budget.cpp"
+	"${PROJECT_SOURCE_DIR}/src/economy/civic_buildings.cpp"
 )
 set_source_files_properties(
 	${ALICE_INCREMENTAL_SOURCES_LIST_ECONOMY}

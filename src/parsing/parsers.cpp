@@ -459,6 +459,7 @@ std::string_view remove_surrounding_whitespace(std::string_view txt) {
 #include "nations_parsing.cpp"
 #include "cultures_parsing.cpp"
 #include "econ_parsing.cpp"
+#include "civic_buildings_parsing.cpp"
 #include "military_parsing.cpp"
 #include "provinces_parsing.cpp"
 #include "trigger_parsing.cpp"

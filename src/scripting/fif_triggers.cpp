@@ -1117,6 +1117,12 @@ TRIGGER_FUNCTION(tf_life_rating_province) {
 TRIGGER_FUNCTION(tf_life_rating_state) {
 	return "dup capital @ life_rating @ " + value_to_string(trigger::payload(tval[1]).signed_value) + " >u8 " + compare_values(tval[0]);
 }
+// growth = year_ago > 1.0 ? (current - year_ago) / year_ago : 0.0, leaving [province, growth] as
+// every other member_fn trigger here does -- see tf_literacy_province for the same
+// dup/>r/r@/r>/select shape this is adapted from, extended with one extra subtraction step.
+TRIGGER_FUNCTION(tf_province_population_growth_province) {
+	return "dup " + value_to_string(demographics::total.index()) + " >demographics_key demographics @ >r dup population_year_ago @ dup r@ swap - r> drop swap dup >r / 0.0 1.0 r> >= select " + value_to_string(read_float_from_payload(tval + 1)) + " " + compare_values(tval[0]);
+}
 
 TRIGGER_FUNCTION(tf_has_empty_adjacent_state_province) {
 	return "dup >index state-ptr @ empty-a-province " + truth_inversion(tval[0]);

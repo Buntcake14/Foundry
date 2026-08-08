@@ -23,6 +23,7 @@
 #include "ai_war.hpp"
 #include "effects.hpp"
 #include "advanced_province_buildings.hpp"
+#include "civic_buildings.hpp"
 #include "military_templates.hpp"
 #include "economy_pops.hpp"
 #include "user_interactions.hpp"
@@ -2280,6 +2281,18 @@ void state::load_scenario_data(parsers::error_handler& err, sys::year_month_day 
 			err.accumulated_errors += "File common/event_modifiers.txt could not be opened\n";
 		}
 	}
+	// read civic_buildings.txt -- optional: most mods (and vanilla) won't have one.
+	// Must come after event_modifiers.txt, since a level's `modifier` field is
+	// resolved against map_of_modifiers, which that parse populates.
+	{
+		auto civic_buildings = open_file(common, NATIVE("civic_buildings.txt"));
+		if(civic_buildings) {
+			auto content = view_contents(*civic_buildings);
+			err.file_name = "civic_buildings.txt";
+			parsers::token_generator gen(content.data, content.data + content.file_size);
+			parsers::parse_civic_buildings_file(gen, err, context);
+		}
+	}
 	// read *.lua, not being able to read the defines isn't fatal per se
 	{
 		// Default vanilla dates used if ones are not defined
@@ -3232,6 +3245,7 @@ void state::load_scenario_data(parsers::error_handler& err, sys::year_month_day 
 
 	services::initialize_size_of_dcon_arrays(*this);
 	advanced_province_buildings::initialize_size_of_dcon_arrays(*this);
+	civic_buildings::initialize_size_of_dcon_arrays(*this);
 
 	world.nation_resize_stockpile_targets(world.commodity_size());
 	world.nation_resize_drawing_on_stockpiles(world.commodity_size());
@@ -4798,6 +4812,12 @@ void state::single_game_tick() {
 				ai::update_influence_priorities(*this);
 				nations::generate_sea_trade_routes(*this);
 				nations::recalculate_markets_distance(*this);
+
+				// snapshot each province's population so province_population_growth
+				// triggers can compare against "population at the start of this year"
+				for(auto p : world.in_province) {
+					p.set_population_year_ago(world.province_get_demographics(p, demographics::total));
+				}
 			}
 			if(ymd_date.month == 2) {
 				ai::upgrade_colonies(*this);

@@ -2,6 +2,7 @@ global{no-conversions}
 
 include{"constants_dcon.hpp"}
 include{"container_types_dcon.hpp"}
+include{"civic_buildings.hpp"}
 include{"hb.h"}
 
 make_index{text_key}{uint32_t}
@@ -553,6 +554,39 @@ object {
 	property{
 		name{ factory_tier }
 		type{ uint8_t }
+		tag{ scenario }
+	}
+}
+
+object {
+	name{ civic_building_type }
+	storage_type{ contiguous }
+	size{ 64 }
+	tag{ scenario }
+
+	property{
+		name{ name }
+		type{ text_key }
+		tag{ scenario }
+	}
+	property{
+		name{ level_count }
+		type{ uint8_t }
+		tag{ scenario }
+	}
+	property{
+		name{ is_urban_center }
+		type{ bitfield }
+		tag{ scenario }
+	}
+	property{
+		name{ is_rgo_level }
+		type{ bitfield }
+		tag{ scenario }
+	}
+	property{
+		name{ levels }
+		type{ std::array<civic_buildings::level_definition,civic_buildings::max_levels> }
 		tag{ scenario }
 	}
 }
@@ -1783,6 +1817,22 @@ object {
 	property {
 		name{ advanced_province_building_private_output }
 		type{ array{int32_t}{float} }
+		tag{ save }
+	}
+
+	property {
+		name{ civic_building_level }
+		type{ array{int32_t}{uint8_t} }
+		tag{ save }
+	}
+	property {
+		name{ civic_building_progress }
+		type{ array{int32_t}{float} }
+		tag{ save }
+	}
+	property {
+		name{ population_year_ago }
+		type{ float }
 		tag{ save }
 	}
 

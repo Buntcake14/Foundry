@@ -303,6 +303,23 @@ building_definition
 building_file
 	#any           group     building_definition    member_fn    (result)
 
+civic_building_level
+	requirement           extern    make_civic_building_trigger    member
+	modifier              value     text                           member_fn
+	time                  value     int                            member
+	rgo_output_penalty    value     float                          member
+	unlocks_factories     value     bool                           member
+	unlocks_admin_buildings   value bool                           member
+	cost                  group     commodity_array                member
+
+civic_building_definition
+	is_urban_center       value     bool                           member
+	is_rgo_level          value     bool                           member
+	level                 group     civic_building_level           member_fn
+
+civic_buildings_file
+	#any           group     civic_building_definition    member_fn    (result)
+
 ideology_group
 	#any           extern    register_ideology      discard
 

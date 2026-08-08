@@ -1228,6 +1228,36 @@ struct building_file {
 	void finish(scenario_building_context& context) { }
 };
 
+dcon::trigger_key make_civic_building_trigger(token_generator& gen, error_handler& err, scenario_building_context& context);
+
+struct civic_building_level {
+	dcon::trigger_key requirement;
+	dcon::modifier_id modifier_id_;
+	commodity_array cost;
+	int32_t time = 0;
+	float rgo_output_penalty = 0.0f;
+	bool unlocks_factories = false;
+	bool unlocks_admin_buildings = false;
+
+	void modifier(association_type, std::string_view value, error_handler& err, int32_t line, scenario_building_context& context);
+	void finish(scenario_building_context&) { }
+};
+
+struct civic_building_definition {
+	std::vector<civic_building_level> levels;
+	bool is_urban_center = false;
+	bool is_rgo_level = false;
+
+	void level(civic_building_level&& value, error_handler& err, int32_t line, scenario_building_context& context);
+	void finish(scenario_building_context&) { }
+};
+
+struct civic_buildings_file {
+	void result(std::string_view name, civic_building_definition&& res, error_handler& err, int32_t line,
+			scenario_building_context& context);
+	void finish(scenario_building_context&) { }
+};
+
 struct ideology_group_context {
 	scenario_building_context& outer_context;
 	dcon::ideology_group_id id;

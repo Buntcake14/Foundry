@@ -133,6 +133,7 @@ trigger_body
 	is_overseas      value           bool               member_fn
 	is_substate      value           bool               member_fn
 	life_rating      value           int                member_fn
+	province_population_growth      value           float                member_fn
 	nationalism      value           int                member_fn
 	province_id      value           int                member_fn
 	substate_of      value           text               member_fn
