@@ -915,11 +915,15 @@ public:
 			auto window = make_element_by_type<state_ledger_window>(state, "state_ledger_window");
 			state.ui_state.state_ledger_window = window.get();
 			state.ui_state.root->add_child_to_front(std::move(window));
+			// Rows are populated lazily on the next game_state_updated tick; force it now so
+			// a freshly created window isn't empty until that happens on its own.
+			state.ui_state.state_ledger_window->impl_on_update(state);
 		} else if(state.ui_state.state_ledger_window->is_visible()) {
 			state.ui_state.state_ledger_window->set_visible(state, false);
 		} else {
 			state.ui_state.state_ledger_window->set_visible(state, true);
 			state.ui_state.root->move_child_to_front(state.ui_state.state_ledger_window);
+			state.ui_state.state_ledger_window->impl_on_update(state);
 		}
 	}
 

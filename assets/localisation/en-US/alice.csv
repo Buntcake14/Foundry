@@ -1480,6 +1480,11 @@ alice_ledger_header_gdp_history;GDP(inflation-adjusted) over time
 ledger_header_states;Your States
 ledger_state_view;View
 ledger_state_view_tooltip;Open this state's market
+state_ledger_col_state;State
+state_ledger_col_life_needs;Life needs
+state_ledger_col_market;Market
+state_ledger_col_rgo;RGO use
+state_ledger_col_view;View
 alice_countryalert_colonialgood_start;You can colonize $region$
 alice_overseas_mil_description;Overseas militancy
 alice_armygroup_go_to_selection;Add/remove units

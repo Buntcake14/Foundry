@@ -178,11 +178,40 @@ guiTypes = {
 		maxsize = { 90 32 }
 		format = right
 	}
+	iconType = {
+		name = "state_ledger_status_dot"
+		spriteType = "GFX_state_ledger_status_dots"
+		position = { 0 0 }
+		Orientation = "UPPER_LEFT"
+	}
+	guiButtonType = {
+		name = "state_ledger_view_button_bg"
+		position = { 0 0 }
+		size = { 152 28 }
+		quadTextureSprite = "GFX_state_ledger_view_btn"
+		buttonText = ""
+		buttonFont = "vic_18_black"
+		clicksound = click
+	}
 	windowType = {
 		name = "state_ledger_row"
 		position = { 0 0 }
-		size = { 760 28 }
+		size = { 660 28 }
 		moveable = 0
+		iconType = {
+			name = "state_ledger_row_background"
+			spriteType = "GFX_state_ledger_row_bg"
+			position = { 0 0 }
+			size = { 660 28 }
+			Orientation = "UPPER_LEFT"
+		}
+		iconType = {
+			name = "state_ledger_row_background_dark"
+			spriteType = "GFX_state_ledger_row_bg_dark"
+			position = { 0 0 }
+			size = { 660 28 }
+			Orientation = "UPPER_LEFT"
+		}
 	}
 	windowType = {
 		name = "state_ledger_window"
@@ -192,30 +221,70 @@ guiTypes = {
 		Orientation = "CENTER"
 		iconType = {
 			name = "background"
-			spriteType = "GFX_menu"
+			spriteType = "GFX_state_ledger_bg"
 			position = { 0 0 }
+			size = { 800 600 }
 			Orientation = "UPPER_LEFT"
 		}
 		guiButtonType = {
 			name = "close_button"
 			size = { 24 24 }
-			quadTextureSprite = "GFX_main_close_button"
-			position = { -32 0 }
+			quadTextureSprite = "GFX_state_ledger_close"
+			position = { -64 34 }
 			Orientation = "UPPER_RIGHT"
 			shortcut = "ESCAPE"
 		}
+		iconType = {
+			name = "state_ledger_header_background"
+			spriteType = "GFX_state_ledger_header_bg"
+			position = { 70 110 }
+			size = { 660 24 }
+			Orientation = "UPPER_LEFT"
+		}
 		instantTextBoxType = {
-			name = "state_ledger_title"
-			position = { 20 10 }
-			font = "vic_22"
-			text = "ledger_header_states"
-			maxWidth = 400
-			maxHeight = 32
+			name = "state_ledger_col_state"
+			position = { 82 115 }
+			font = "vic_18"
+			text = "state_ledger_col_state"
+			maxWidth = 132
+			maxHeight = 16
+		}
+		instantTextBoxType = {
+			name = "state_ledger_col_life_needs"
+			position = { 214 115 }
+			font = "vic_18"
+			text = "state_ledger_col_life_needs"
+			maxWidth = 132
+			maxHeight = 16
+		}
+		instantTextBoxType = {
+			name = "state_ledger_col_market"
+			position = { 346 115 }
+			font = "vic_18"
+			text = "state_ledger_col_market"
+			maxWidth = 132
+			maxHeight = 16
+		}
+		instantTextBoxType = {
+			name = "state_ledger_col_rgo"
+			position = { 478 115 }
+			font = "vic_18"
+			text = "state_ledger_col_rgo"
+			maxWidth = 132
+			maxHeight = 16
+		}
+		instantTextBoxType = {
+			name = "state_ledger_col_view"
+			position = { 610 115 }
+			font = "vic_18"
+			text = "state_ledger_col_view"
+			maxWidth = 132
+			maxHeight = 16
 		}
 		listboxType = {
 			name = "state_ledger_listbox_area"
-			position = { 20 60 }
-			size = { 760 520 }
+			position = { 70 138 }
+			size = { 660 446 }
 			spacing = 0
 			scrollbartype = "standardlistbox_slider"
 			borderSize = { 1 1 }

@@ -49,6 +49,16 @@ public:
 	}
 };
 
+// Status dot frames: 0 = green, 1 = yellow, 2 = red (see GFX_state_ledger_status_dots).
+class state_ledger_life_needs_dot : public image_element_base {
+public:
+	void on_update(sys::state& state) noexcept override {
+		auto sid = retrieve<dcon::state_instance_id>(state, parent);
+		auto ratio = state_ledger_life_needs_satisfaction(state, sid);
+		frame = ratio < 0.5f ? 2 : (ratio < 0.7f ? 1 : 0);
+	}
+};
+
 class state_ledger_market_balance_text : public simple_text_element_base {
 public:
 	void on_update(sys::state& state) noexcept override {
@@ -56,6 +66,16 @@ public:
 		auto market = state.world.state_instance_get_market_from_local_market(sid);
 		auto balance = state.world.market_get_stockpile(market, economy::money);
 		set_text(state, balance < 0.f ? (text::format_money(balance) + " DEFICIT") : text::format_money(balance));
+	}
+};
+
+class state_ledger_market_dot : public image_element_base {
+public:
+	void on_update(sys::state& state) noexcept override {
+		auto sid = retrieve<dcon::state_instance_id>(state, parent);
+		auto market = state.world.state_instance_get_market_from_local_market(sid);
+		auto balance = state.world.market_get_stockpile(market, economy::money);
+		frame = balance < 0.f ? 2 : 0;
 	}
 };
 
@@ -82,6 +102,15 @@ public:
 	}
 };
 
+class state_ledger_rgo_dot : public image_element_base {
+public:
+	void on_update(sys::state& state) noexcept override {
+		auto sid = retrieve<dcon::state_instance_id>(state, parent);
+		auto ratio = state_ledger_rgo_utilization(state, sid);
+		frame = ratio < 0.5f ? 2 : (ratio < 0.7f ? 1 : 0);
+	}
+};
+
 class state_ledger_view_button : public button_element_base {
 public:
 	void button_action(sys::state& state) noexcept override {
@@ -102,46 +131,94 @@ public:
 };
 
 class state_ledger_entry : public listbox_row_element_base<dcon::state_instance_id> {
+	image_element_base* light_background = nullptr;
+	image_element_base* dark_background = nullptr;
+
 public:
+	std::unique_ptr<element_base> make_child(sys::state& state, std::string_view name, dcon::gui_def_id id) noexcept override {
+		if(name == "state_ledger_row_background") {
+			auto ptr = make_element_by_type<image_element_base>(state, id);
+			light_background = ptr.get();
+			return ptr;
+		}
+		if(name == "state_ledger_row_background_dark") {
+			auto ptr = make_element_by_type<image_element_base>(state, id);
+			dark_background = ptr.get();
+			return ptr;
+		}
+		return nullptr;
+	}
+
+	// Called once by the listbox right after the row pool is created, so alternating rows get a
+	// slightly darker background (matching the striped-grid look of the reference mockup). Only
+	// one of the two is ever visible, so stacking order between them doesn't matter.
+	void set_striped(sys::state& state, bool dark) noexcept {
+		if(light_background)
+			light_background->set_visible(state, !dark);
+		if(dark_background)
+			dark_background->set_visible(state, dark);
+	}
+
 	void on_create(sys::state& state) noexcept override {
 		listbox_row_element_base::on_create(state);
 
 		xy_pair cell_offset{ int16_t(0), 0 };
-		auto cell_width = int16_t(760 / 5);
+		auto cell_width = int16_t(660 / 5);
 		auto apply_offset = [&](auto& ptr) {
 			ptr->base_data.position = cell_offset;
 			ptr->base_data.size.x = cell_width;
+			cell_offset.x += cell_width;
+		};
+		auto dot_def = state.ui_state.defs_by_name.find(state.lookup_key("state_ledger_status_dot"))->second.definition;
+		auto dot_width = int16_t(20);
+		// A status dot sits at the left of a metric cell; the cell's text is shifted right and
+		// narrowed to make room for it, then the cell offset advances as normal.
+		auto apply_metric_cell = [&](auto& dot_ptr, auto& text_ptr) {
+			dot_ptr->base_data.position = xy_pair{ int16_t(cell_offset.x + 4), int16_t(6) };
+			dot_ptr->base_data.size = xy_pair{ dot_width, int16_t(16) };
+			add_child_to_front(std::move(dot_ptr));
+
+			text_ptr->base_data.position = xy_pair{ int16_t(cell_offset.x + dot_width + 8), int16_t(6) };
+			text_ptr->base_data.size.x = int16_t(cell_width - dot_width - 8);
+			add_child_to_front(std::move(text_ptr));
+
 			cell_offset.x += cell_width;
 		};
 		{
 			auto ptr = make_element_by_type<state_ledger_name_text>(state,
 					state.ui_state.defs_by_name.find(state.lookup_key("ledger_default_textbox"))->second.definition);
 			apply_offset(ptr);
+			ptr->base_data.position.x += int16_t(20);
+			ptr->base_data.size.x -= int16_t(20);
+			ptr->base_data.position.y = int16_t(6);
 			add_child_to_front(std::move(ptr));
 		}
 		{
+			auto dot = make_element_by_type<state_ledger_life_needs_dot>(state, dot_def);
 			auto ptr = make_element_by_type<state_ledger_unmet_demand_text>(state,
 					state.ui_state.defs_by_name.find(state.lookup_key("ledger_default_textbox"))->second.definition);
-			apply_offset(ptr);
-			add_child_to_front(std::move(ptr));
+			apply_metric_cell(dot, ptr);
 		}
 		{
+			auto dot = make_element_by_type<state_ledger_market_dot>(state, dot_def);
 			auto ptr = make_element_by_type<state_ledger_market_balance_text>(state,
 					state.ui_state.defs_by_name.find(state.lookup_key("ledger_default_textbox"))->second.definition);
-			apply_offset(ptr);
-			add_child_to_front(std::move(ptr));
+			apply_metric_cell(dot, ptr);
 		}
 		{
+			auto dot = make_element_by_type<state_ledger_rgo_dot>(state, dot_def);
 			auto ptr = make_element_by_type<state_ledger_idle_capacity_text>(state,
 					state.ui_state.defs_by_name.find(state.lookup_key("ledger_default_textbox"))->second.definition);
-			apply_offset(ptr);
-			add_child_to_front(std::move(ptr));
+			apply_metric_cell(dot, ptr);
 		}
 		{
+			// The button's own art is a fixed 152px-wide graphic; center it in the cell rather
+			// than stretching it to the full (wider) cell width like the plain text cells.
 			auto ptr = make_element_by_type<state_ledger_view_button>(state,
-					state.ui_state.defs_by_name.find(state.lookup_key("ledger_default_button"))->second.definition);
-			ptr->set_button_text(state, text::produce_simple_string(state, "ledger_state_view"));
-			apply_offset(ptr);
+					state.ui_state.defs_by_name.find(state.lookup_key("state_ledger_view_button_bg"))->second.definition);
+			auto button_width = int16_t(152);
+			ptr->base_data.position = xy_pair{ int16_t(cell_offset.x + (cell_width - button_width) / 2), 0 };
+			cell_offset.x += cell_width;
 			add_child_to_front(std::move(ptr));
 		}
 	}
@@ -167,6 +244,12 @@ protected:
 	}
 
 public:
+	void on_create(sys::state& state) noexcept override {
+		listbox_element_base::on_create(state);
+		for(size_t i = 0; i < row_windows.size(); ++i)
+			row_windows[i]->set_striped(state, (i % 2) == 1);
+	}
+
 	void on_update(sys::state& state) noexcept override {
 		row_contents.clear();
 		auto player_nation = state.local_player_nation;

@@ -10,6 +10,40 @@ spriteTypes = {
 		noOfFrames = 2
 	}
 
+	spriteType = {
+		name = "GFX_state_ledger_bg"
+		texturefile = "assets\\state_ledger_bg.png"
+	}
+	spriteType = {
+		name = "GFX_state_ledger_close"
+		texturefile = "assets\\state_ledger_close.png"
+	}
+	spriteType = {
+		name = "GFX_state_ledger_icon"
+		texturefile = "assets\\state_ledger_icon.png"
+	}
+	spriteType = {
+		name = "GFX_state_ledger_header_bg"
+		texturefile = "assets\\state_ledger_header_bg.png"
+	}
+	spriteType = {
+		name = "GFX_state_ledger_row_bg"
+		texturefile = "assets\\state_ledger_row_bg.png"
+	}
+	spriteType = {
+		name = "GFX_state_ledger_row_bg_dark"
+		texturefile = "assets\\state_ledger_row_bg_dark.png"
+	}
+	spriteType = {
+		name = "GFX_state_ledger_view_btn"
+		texturefile = "assets\\state_ledger_view_btn.png"
+	}
+	spriteType = {
+		name = "GFX_state_ledger_status_dots"
+		texturefile = "assets\\state_ledger_status_dots.png"
+		noOfFrames = 3
+	}
+
 	textSpriteType = {
 		name = "GFX_alice_odds"
 		texturefile = "assets\\odds_icon.dds"
