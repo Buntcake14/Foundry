@@ -820,7 +820,7 @@ void initialize(sys::state& state) {
 
 				auto actual_size = std::min(max_size, (10000.f + pop_amount * 1.f) * true_distribution[c.index()]);
 
-				if(actual_size > state.defines.alice_secondary_rgos_min_employment || main_rgo == c) {
+				if(main_rgo == c) {
 					state.world.province_set_rgo_size(p, c,
 						state.world.province_get_rgo_size(p, c) + actual_size
 					);
@@ -835,12 +835,6 @@ void initialize(sys::state& state) {
 					state.world.market_set_stockpile(market, c, state.world.market_get_stockpile(market, c) + 1.f + efficiency * actual_size / 10'000.f);
 				}
 			});
-
-			// add a trickle of money rgo everywhere to produce a source of inflation
-			state.world.province_set_rgo_size(p, economy::money, state.world.province_get_rgo_size(p, economy::money) + 2500.f);
-			state.world.province_set_rgo_potential(p, economy::money, state.world.province_get_rgo_size(p, economy::money) + 5000.f);
-			state.world.province_set_rgo_efficiency(p, economy::money, 1.f);
-			state.world.province_set_rgo_max_efficiency(p, economy::money, 1.f);
 		});
 	}
 

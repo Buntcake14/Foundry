@@ -212,11 +212,11 @@ public:
 			apply_metric_cell(dot, ptr);
 		}
 		{
-			// The button's own art is a fixed 152px-wide graphic; center it in the cell rather
+			// The button's own art is a fixed 92px-wide graphic; center it in the cell rather
 			// than stretching it to the full (wider) cell width like the plain text cells.
 			auto ptr = make_element_by_type<state_ledger_view_button>(state,
 					state.ui_state.defs_by_name.find(state.lookup_key("state_ledger_view_button_bg"))->second.definition);
-			auto button_width = int16_t(152);
+			auto button_width = int16_t(92);
 			ptr->base_data.position = xy_pair{ int16_t(cell_offset.x + (cell_width - button_width) / 2), 0 };
 			cell_offset.x += cell_width;
 			add_child_to_front(std::move(ptr));
