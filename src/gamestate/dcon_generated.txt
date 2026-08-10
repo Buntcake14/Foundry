@@ -1637,7 +1637,12 @@ object {
 		type{ array{commodity_id}{float} }
 		tag{ save }
 	}
-	
+	property{
+		name{ rgo_level_progress }
+		type{ array{commodity_id}{float} }
+		tag{ save }
+	}
+
 	property{
 		name{ rgo_potential }
 		type{ array{commodity_id}{float} }

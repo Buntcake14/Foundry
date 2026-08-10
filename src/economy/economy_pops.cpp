@@ -110,15 +110,6 @@ VALUE bank_saving_rate(const sys::state& state, POPS ids) {
 	return bank_saving_ratio;
 }
 
-template<typename VALUE, typename POPS>
-VALUE adjusted_subsistence_score(
-	const sys::state& state,
-	POPS p
-) {
-	return state.world.province_get_subsistence_score(p)
-		* state.world.province_get_subsistence_employment(p)
-		/ (state.world.province_get_demographics(p, demographics::total) + 1.f);
-}
 
 template<typename POPS>
 auto prepare_pop_budget_templated(
@@ -229,12 +220,6 @@ auto prepare_pop_budget_templated(
 	// ##########
 
 	VALUE old_life = pop_demographics::get_life_needs(state, ids);
-	VALUE subsistence = adjusted_subsistence_score<VALUE, decltype(provs)>(state, provs);
-	BOOL_VALUE rgo_worker = state.world.pop_type_get_is_paid_rgo_worker(pop_type);
-	subsistence = adaptive_ve::select<BOOL_VALUE, VALUE>(rgo_worker, subsistence, 0.f);
-	VALUE available_subsistence = adaptive_ve::min<VALUE>(subsistence_score_life, subsistence);
-	subsistence = subsistence - available_subsistence;
-	VALUE qol_from_subsistence = available_subsistence / subsistence_score_life;
 	VALUE demand_scale_life = satisfaction;//old_life / base_qol;
 	result.life_needs.demand_scale = demand_scale_life;// * demand_scale_life + 0.01f;
 	result.life_needs.required =
@@ -261,8 +246,8 @@ auto prepare_pop_budget_templated(
 		result.life_needs.spent
 		/ result.life_needs.required
 	);
-	// subsistence gives free "level of consumption"
-	result.life_needs.satisfied_for_free_ratio = qol_from_subsistence / (1.f + result.life_needs.demand_scale);
+	// Vanilla has no subsistence-farming free consumption; unmet needs are just unmet.
+	result.life_needs.satisfied_for_free_ratio = 0.f;
 	result.spent_total = result.spent_total + result.life_needs.spent;
 	savings = savings - result.life_needs.spent;
 
@@ -311,6 +296,14 @@ auto prepare_pop_budget_templated(
 		)
 	);
 	*/
+	// Vanilla gates everyday-needs spending behind life needs being ~fully satisfied first.
+	VALUE life_needs_satisfied = adaptive_ve::select<BOOL_VALUE, VALUE>(
+		zero_life_costs,
+		1.f,
+		result.life_needs.satisfied_with_money_ratio
+	);
+	BOOL_VALUE life_needs_gate = life_needs_satisfied >= needs_tier_satisfaction_gate;
+	spend_on_everyday_needs = adaptive_ve::select<BOOL_VALUE, VALUE>(life_needs_gate, spend_on_everyday_needs, 0.f);
 	result.everyday_needs.spent = adaptive_ve::min<VALUE>(savings, adaptive_ve::min<VALUE>(spend_on_everyday_needs, result.everyday_needs.required * (1.f + is_rich)));
 	result.everyday_needs.satisfied_with_money_ratio = adaptive_ve::select<BOOL_VALUE, VALUE>(
 		zero_everyday_costs,
@@ -349,6 +342,14 @@ auto prepare_pop_budget_templated(
 		)
 	);
 	*/
+	// Vanilla gates luxury-needs spending behind everyday needs being ~fully satisfied first.
+	VALUE everyday_needs_satisfied = adaptive_ve::select<BOOL_VALUE, VALUE>(
+		zero_everyday_costs,
+		1.f,
+		result.everyday_needs.satisfied_with_money_ratio
+	);
+	BOOL_VALUE everyday_needs_gate = everyday_needs_satisfied >= needs_tier_satisfaction_gate;
+	spend_on_luxury_needs = adaptive_ve::select<BOOL_VALUE, VALUE>(everyday_needs_gate, spend_on_luxury_needs, 0.f);
 	result.luxury_needs.spent = adaptive_ve::min<VALUE>(savings, adaptive_ve::min<VALUE>(spend_on_luxury_needs, result.luxury_needs.required * (1.f + is_rich)));
 	result.luxury_needs.satisfied_for_free_ratio = 0.f;
 	result.luxury_needs.satisfied_with_money_ratio = adaptive_ve::select<BOOL_VALUE, VALUE>(

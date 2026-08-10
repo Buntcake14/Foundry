@@ -47,9 +47,41 @@ inline constexpr float market_savings_target = 1'000'000.f;
 inline constexpr float trade_transaction_soft_limit = 1'000.f;
 
 // base subsistence
-inline constexpr float subsistence_factor = 5.0f;
 inline constexpr float subsistence_score_life = 30.0f;
 inline constexpr float subsistence_score_total = subsistence_score_life;
+
+// vanilla-style strict needs tiering: a lower tier must be ~fully satisfied
+// with money before any budget is released to the next tier up
+inline constexpr float needs_tier_satisfaction_gate = 0.98f;
+
+// vanilla-style artisan production: a province works one good at a time and
+// only periodically reconsiders switching, rather than continuously blending
+// fractional employment across every possible good every day
+inline constexpr int32_t artisan_reroll_period_days = 30;
+inline constexpr float artisan_switch_margin = 5.0f;
+
+// vanilla-style factory hiring: a factory wants its full base_workforce * level
+// directly rather than slowly walking toward it via a profit gradient; this
+// damping factor is how much of the remaining gap it closes per day
+inline constexpr float factory_hiring_damping = 0.2f;
+
+// a factory the affordability clamp drives toward zero desired employment risks
+// automatic deletion (economy.cpp's prune_factories fires below 50 while
+// unprofitable) -- keep a minimal skeleton crew alive, safely above that
+// threshold, so a temporary input-cost spike wounds a factory instead of
+// permanently destroying it
+inline constexpr float factory_survival_floor = 60.f;
+
+// vanilla-style discrete RGO tiers (user-requested, not a vanilla mechanic --
+// vanilla RGO size is just fixed, and Alice's original smooth investment curve
+// up to rgo_potential turned out to be too easy to leave stuck or to spiral
+// against, see the milestone 6 economy phase writeup): an RGO only starts
+// investing toward its *next* tier once the current one is this utilized (an
+// idle RGO shouldn't expand just because it theoretically could -- only one
+// that's actually in hot demand), and completing a tier costs this much
+// investment per worker-slot the tier is worth (commodity_get_rgo_workforce).
+inline constexpr float rgo_level_up_utilization_threshold = 0.9f;
+inline constexpr float rgo_level_up_cost_per_worker = 0.05f;
 
 // move to defines later
 inline constexpr float payouts_spending_multiplier = 10.f;

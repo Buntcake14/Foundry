@@ -16,6 +16,10 @@
 #include "economy_constants.hpp"
 #include "money.hpp"
 #include "economy.hpp"
+#include "text.hpp"
+
+#include <fstream>
+#include <mutex>
 
 
 namespace production_directives {
@@ -354,17 +358,27 @@ void save_inputs_to_buffers(
 	}
 }
 
+// unqualified/primary_satisfaction_override let a caller (vanilla-style priority
+// hiring for factories) substitute a per-employer ratio in place of the
+// province-wide blanket labor_demand_satisfaction ratio; a negative value (the
+// default) means "use the province blanket ratio", preserving old behavior for
+// every caller that doesn't pass an override (RGO, artisans).
 float employment_units(
 	sys::state const& state,
 	dcon::province_id labor_market,
-	float target_workers_no_education, float target_workers_basic_education, float target_workers_high_education, float employment_unit_size
+	float target_workers_no_education, float target_workers_basic_education, float target_workers_high_education, float employment_unit_size,
+	float unqualified_satisfaction_override = -1.f, float primary_satisfaction_override = -1.f
 ) {
 	assert(target_workers_no_education >= 0.f);
 	assert(target_workers_basic_education >= 0.f);
-	float workers_no_education = target_workers_no_education
-		* state.world.province_get_labor_demand_satisfaction(labor_market, labor::no_education);
-	float workers_basic_education = target_workers_basic_education
-		* state.world.province_get_labor_demand_satisfaction(labor_market, labor::basic_education);
+	float unqualified_satisfaction = unqualified_satisfaction_override >= 0.f
+		? unqualified_satisfaction_override
+		: state.world.province_get_labor_demand_satisfaction(labor_market, labor::no_education);
+	float primary_satisfaction = primary_satisfaction_override >= 0.f
+		? primary_satisfaction_override
+		: state.world.province_get_labor_demand_satisfaction(labor_market, labor::basic_education);
+	float workers_no_education = target_workers_no_education * unqualified_satisfaction;
+	float workers_basic_education = target_workers_basic_education * primary_satisfaction;
 	assert(workers_no_education >= 0.f);
 	assert(workers_basic_education >= 0.f);
 
@@ -400,10 +414,8 @@ float high_education_power(
 	dcon::nation_id nation,
 	dcon::commodity_id output
 ) {
-	return
-		std::max(0.f, 1.f + state.world.nation_get_factory_goods_output(nation, output))
-		* std::max(0.f, 1.f + state.world.nation_get_modifier_values(nation, sys::national_mod_offsets::factory_output))
-		* economy::secondary_employment_output_bonus;
+	// Vanilla has no secondary-worker output-efficiency bonus; folded to a no-op.
+	return 0.f;
 }
 
 float output_multiplier_from_workers_with_high_education(
@@ -412,20 +424,22 @@ float output_multiplier_from_workers_with_high_education(
 	dcon::province_id labor_market,
 	float target_workers_high_education
 ) {
-	assert(target_workers_high_education >= 0.f);
-	float workers_high_education = target_workers_high_education * state.world.province_get_labor_demand_satisfaction(labor_market, labor::high_education);
-	assert(workers_high_education >= 0.f);
-	return (1.f + high_education_power(state, state.world.province_get_nation_from_province_ownership(labor_market), output) * workers_high_education);
+	// Vanilla has no secondary-worker output-efficiency bonus; folded to a no-op.
+	return 1.f;
 }
 
-// returns employment units
+// returns employment units. unqualified/primary_satisfaction_override: see employment_units.
+// Demand registration always uses the true (unrationed) target, regardless of any override,
+// so tomorrow's province-wide supply/demand signal stays correct.
 float consume_labor(
 	sys::state& state,
 	dcon::province_id labor_market,
 	float target_workers_no_education,
 	float target_workers_basic_education,
 	float target_workers_high_education,
-	float employment_unit_size
+	float employment_unit_size,
+	float unqualified_satisfaction_override = -1.f,
+	float primary_satisfaction_override = -1.f
 ) {
 	assert(std::isfinite(target_workers_no_education)&& target_workers_no_education >= 0.f);
 	assert(std::isfinite(target_workers_basic_education)&& target_workers_basic_education >=0.f);
@@ -447,7 +461,8 @@ float consume_labor(
 
 	return employment_units(
 		state, labor_market,
-		target_workers_no_education, target_workers_basic_education, target_workers_high_education, employment_unit_size
+		target_workers_no_education, target_workers_basic_education, target_workers_high_education, employment_unit_size,
+		unqualified_satisfaction_override, primary_satisfaction_override
 	);
 }
 
@@ -941,15 +956,7 @@ throughput_multipliers_explanation explain_throughput_multiplier(sys::state cons
 	throughput_multipliers_explanation result{ };
 
 	auto fac = fatten(state.world, f);
-	auto factory_type = state.world.factory_get_building_type(f);
 	auto p = fac.get_province_from_factory_location();
-	auto s = p.get_state_membership();
-	auto m = s.get_market_from_local_market();
-	auto n = p.get_nation_from_province_ownership();
-
-	{
-		result.from_scale = (1.f + fac.get_size() / factory_type.get_base_workforce() / 100.f);
-	}
 
 	{
 		result.base = state.world.factory_get_technology_scale(f);
@@ -963,12 +970,9 @@ throughput_multipliers_explanation explain_throughput_multiplier(sys::state cons
 			* std::max(0.f, 1.f + triggered);
 	}
 
-	{
-		auto local_urbanisation = state.world.province_get_advanced_province_building_max_private_size(p, advanced_province_buildings::list::local_cities_and_towns);
-		auto local_population = state.world.province_get_demographics(p, demographics::total);
-		auto urban_premium = base_urban_premium + local_urbanisation / max_premium_size;
-		result.from_forced_subsistence = std::clamp(0.5f + 0.5f * local_urbanisation / (local_population + 1.f), 0.f, 1.f) * urban_premium;
-	}
+	// Vanilla has no urbanization throughput penalty/premium and no factory-size
+	// throughput scaling; both folded to a no-op (from_scale/from_forced_subsistence
+	// already default to 1.f).
 
 	{
 		result.total = result.from_modifiers * result.from_scale * result.from_forced_subsistence * result.base;
@@ -979,29 +983,15 @@ throughput_multipliers_explanation explain_throughput_multiplier(sys::state cons
 }
 
 float factory_throughput_multiplier(sys::state const& state, dcon::factory_id fac, dcon::nation_id n, dcon::province_id p, dcon::state_instance_id s, float size) {
-	auto fac_type = state.world.factory_get_building_type(fac);
-	auto output = state.world.factory_type_get_output(fac_type);
 	auto triggered = state.world.factory_get_triggered_modifiers(fac);
 	auto provincial_fac_t = state.world.province_get_modifier_values(p, sys::provincial_mod_offsets::local_factory_throughput);
-	
-	/*
-	We assume that local people who do not live in urban environment
-	have to spend a lot of time on managing their household and subsist in a certain way
-	(beggary, crime, farming)
-	It means that local industries can't convert their labour into production units as efficiently
-	*/
 
-	auto local_urbanisation = state.world.province_get_advanced_province_building_max_private_size(p, advanced_province_buildings::list::local_cities_and_towns);
-	auto local_population = state.world.province_get_demographics(p, demographics::total);
-	auto urban_premium = base_urban_premium + local_urbanisation / max_premium_size;
-	auto forced_subsistence = std::clamp(0.5f + 0.5f * local_urbanisation / (local_population + 1.f), 0.f, 1.f) * urban_premium;
-
+	// Vanilla has no urbanization throughput penalty/premium and no factory-size
+	// throughput scaling; both folded to a no-op.
 	auto result = 1.f
 		* state.world.factory_get_technology_scale(fac)
 		* std::max(0.f, 1.f + provincial_fac_t)
-		* (1.f + size / state.world.factory_type_get_base_workforce(fac_type) / 100.f)
-		* std::max(0.f, 1.f + triggered)
-		* forced_subsistence;
+		* std::max(0.f, 1.f + triggered);
 
 	return result;
 }
@@ -1058,14 +1048,24 @@ float factory_throughput_additional_multiplier(sys::state const& state, dcon::fa
 	return (occupied ? 0.1f : 1.0f) * std::max(0.0f, mobilization_impact);
 }
 
-float get_total_wage(const sys::state& state, dcon::factory_id f) {
+// unqualified/primary_satisfaction_override: see employment_units. Lets the caller
+// substitute this factory's own priority-hiring ratio in place of the province
+// blanket ratio, so wages paid stay consistent with the workers actually employed
+// via consume_labor's own override.
+float get_total_wage(const sys::state& state, dcon::factory_id f, float unqualified_satisfaction_override = -1.f, float primary_satisfaction_override = -1.f) {
 	auto labor_market = state.world.factory_get_province_from_factory_location(f);
+	float unqualified_satisfaction = unqualified_satisfaction_override >= 0.f
+		? unqualified_satisfaction_override
+		: state.world.province_get_labor_demand_satisfaction(labor_market, labor::no_education);
+	float primary_satisfaction = primary_satisfaction_override >= 0.f
+		? primary_satisfaction_override
+		: state.world.province_get_labor_demand_satisfaction(labor_market, labor::basic_education);
 	return state.world.province_get_labor_price(labor_market, labor::no_education)
-		* state.world.province_get_labor_demand_satisfaction(labor_market, labor::no_education)
+		* unqualified_satisfaction
 		* state.world.factory_get_unqualified_employment(f)
 		+
 		state.world.province_get_labor_price(labor_market, labor::basic_education)
-		* state.world.province_get_labor_demand_satisfaction(labor_market, labor::basic_education)
+		* primary_satisfaction
 		* state.world.factory_get_primary_employment(f)
 		+
 		state.world.province_get_labor_price(labor_market, labor::high_education)
@@ -1471,23 +1471,25 @@ void update_production_investement_consumption(
 		// directly, so existing RGO size decays toward the new lower cap over time
 		// via the normal growth-loop clamp below, rather than snapping instantly.
 		auto urban_rgo_scale = 1.0f - civic_buildings::province_urban_rgo_penalty(state, province);
-		// Automatic private-capital RGO expansion only runs when the nation's current
-		// economic reforms actually permit private investment -- a government hostile
-		// to private investment doesn't block RGO leveling outright, it just means
-		// nobody grows it automatically, so it's on the player to invest manually.
-		auto private_investment_allowed = (state.world.nation_get_combined_issue_rules(nation) & issue_rule::can_invest_in_pop_projects) != 0;
 
 		//RGO
 		state.world.for_each_commodity([&](auto c){
 			auto decay_mult = 0.0001f;
 			auto base_output = state.world.commodity_get_rgo_amount(c);
 			if (base_output == 0.f) return;
-			auto current_max_size = state.world.province_get_rgo_potential(province, c) * urban_rgo_scale;
+			// current_max_size is the *current tier's* cap (see the level-up block
+			// below), not the full terrain-capped potential -- an RGO only grows one
+			// discrete tier at a time, like a factory's level, instead of smoothly all
+			// the way up to rgo_potential in one continuous curve. full_potential is
+			// that ultimate terrain/province-area-scaled ceiling (computed at scenario
+			// generation), used only to cap how many tiers an RGO can ever reach.
+			auto current_max_size = state.world.province_get_rgo_max_size(province, c) * urban_rgo_scale;
+			auto full_potential = state.world.province_get_rgo_potential(province, c) * urban_rgo_scale;
 			if (current_max_size == 0.f) return;
 			auto current_size = state.world.province_get_rgo_size(province, c);
 
 			auto local_tokens = rgo_investment_tokens(state, nation, province, c);
-			auto local_investment = private_investment_allowed ? available_investment * local_tokens / total_tokens : 0.f;
+			auto local_investment = available_investment * local_tokens / total_tokens;
 			auto investment_efficiency = state.world.province_get_rgo_max_efficiency(province, c);
 
 			{
@@ -1564,6 +1566,31 @@ void update_production_investement_consumption(
 
 				state.world.province_set_labor_demand(province, economy::labor::basic_education, labor_demand + labor_to_expand_rgo * can_expand);
 				actually_spent = actually_spent + expansion_cost * can_expand * available_labor;
+
+				// LEVEL UP: an RGO only starts investing toward its *next* discrete
+				// tier once the current one is genuinely saturated -- "in hot demand,"
+				// not just because there's theoretically room to grow. Capped by
+				// rgo_potential (the terrain/province-area-scaled ceiling from scenario
+				// generation), so a small island still can't out-invest its way to an
+				// unbounded workforce -- it just tops out at a lower tier.
+				{
+					auto workforce_per_level = float(state.world.commodity_get_rgo_workforce(c));
+					if(workforce_per_level > 0.f && current_max_size < full_potential - 1.f) {
+						auto utilization = current_max_size > 0.f ? size / current_max_size : 0.f;
+						if(utilization >= rgo_level_up_utilization_threshold) {
+							auto level_up_investment = local_investment * 0.2f;
+							auto level_up_total_cost = workforce_per_level * rgo_level_up_cost_per_worker;
+							auto progress = state.world.province_get_rgo_level_progress(province, c) + level_up_investment / level_up_total_cost;
+							if(progress >= 1.f) {
+								auto new_tier_cap = std::min(full_potential, current_max_size + workforce_per_level);
+								state.world.province_set_rgo_max_size(province, c, new_tier_cap);
+								progress -= 1.f;
+							}
+							state.world.province_set_rgo_level_progress(province, c, progress);
+							actually_spent = actually_spent + level_up_investment;
+						}
+					}
+				}
 			}
 			/*
 			{
@@ -1598,6 +1625,52 @@ void update_production_investement_consumption(
 	});
 }
 
+// unqualified/primary_hiring_ratio: this factory's own vanilla-style priority-hiring
+// ratio (computed in update_production_consumption's per-province hiring pass),
+// substituted in place of the province blanket labor_demand_satisfaction ratio for
+// the no_education/basic_education tiers. A negative value (the default) falls
+// back to the province blanket ratio.
+
+// TEMPORARY DEBUG INSTRUMENTATION (2026-08-09): appends one CSV row per day per
+// factory owned by the player's nation to "factory_flows_log.csv" in the game's
+// working directory (the Victoria 2 install dir when launched via launch.sh),
+// to verify milestone-6 hiring/production is actually moving inputs and outputs
+// during a real play session. Safe to delete once that's confirmed -- not meant
+// to be permanent.
+std::mutex factory_flow_log_mutex;
+bool factory_flow_log_initialized = false;
+void debug_log_factory_flow(
+	sys::state& state,
+	dcon::factory_id f,
+	dcon::province_id p,
+	dcon::commodity_id output_commodity,
+	float output_amount,
+	float input_cost,
+	float profit,
+	int32_t priority,
+	float unqualified, float unqualified_target,
+	float primary, float primary_target,
+	float secondary, float secondary_target
+) {
+	std::lock_guard<std::mutex> lock(factory_flow_log_mutex);
+	std::ofstream file("factory_flows_log.csv", factory_flow_log_initialized ? std::ios::app : std::ios::trunc);
+	if(!factory_flow_log_initialized) {
+		file << "date,province,factory_type,output_commodity,output_amount,input_cost,profit,priority,"
+			"unqualified,unqualified_target,primary,primary_target,secondary,secondary_target\n";
+		factory_flow_log_initialized = true;
+	}
+	auto ymd = state.current_date.to_ymd(state.start_date);
+	auto factory_type = state.world.factory_get_building_type(f);
+	file << ymd.year << "." << ymd.month << "." << ymd.day << ","
+		<< text::produce_simple_string(state, state.world.province_get_name(p)) << ","
+		<< text::produce_simple_string(state, state.world.factory_type_get_name(factory_type)) << ","
+		<< text::produce_simple_string(state, state.world.commodity_get_name(output_commodity)) << ","
+		<< output_amount << "," << input_cost << "," << profit << "," << priority << ","
+		<< unqualified << "," << unqualified_target << ","
+		<< primary << "," << primary_target << ","
+		<< secondary << "," << secondary_target << "\n";
+}
+
 void update_single_factory_consumption(
 	sys::state& state,
 	dcon::factory_id f,
@@ -1608,7 +1681,9 @@ void update_single_factory_consumption(
 	std::vector<ve::vectorizable_buffer<float, dcon::province_id>>& buffer_demanded,
 	std::vector<ve::vectorizable_buffer<float, dcon::province_id>>& buffer_consumed,
 	float mobilization_impact,
-	bool occupied
+	bool occupied,
+	float unqualified_hiring_ratio = -1.f,
+	float primary_hiring_ratio = -1.f
 ) {
 	auto fac = fatten(state.world, f);
 	auto fac_type = fac.get_building_type();
@@ -1638,7 +1713,8 @@ void update_single_factory_consumption(
 	auto employment_units = consume_labor(
 		state, fac.get_province_from_factory_location(),
 		fac.get_unqualified_employment(), fac.get_primary_employment(), fac.get_secondary_employment(),
-		float(fac_type.get_base_workforce())
+		float(fac_type.get_base_workforce()),
+		unqualified_hiring_ratio, primary_hiring_ratio
 	) * std::max(0.f, mobilization_impact);
 	auto total_employment = fac.get_unqualified_employment() + fac.get_primary_employment() + fac.get_secondary_employment();
 
@@ -1656,7 +1732,7 @@ void update_single_factory_consumption(
 	auto current_size = state.world.factory_get_size(f);
 	auto ftid = state.world.factory_get_building_type(f);
 	auto base_size = state.world.factory_type_get_base_workforce(ftid);
-	float actual_wages = get_total_wage(state, f);
+	float actual_wages = get_total_wage(state, f, unqualified_hiring_ratio, primary_hiring_ratio);
 	float actual_profit =
 		data.output
 		* base_data.output_price
@@ -1679,6 +1755,23 @@ void update_single_factory_consumption(
 	fac.set_output_per_worker(data.output_per_employment_unit / float(fac_type.get_base_workforce()));
 	fac.set_input_cost_per_worker(data.input_cost_per_employment_unit / float(fac_type.get_base_workforce()));
 	fac.set_input_cost(data.direct_inputs_cost);
+
+	if(n == state.local_player_nation) {
+		auto unqualified_target = fac.get_unqualified_employment();
+		auto primary_target = fac.get_primary_employment();
+		auto secondary_target = fac.get_secondary_employment();
+		auto unqualified_ratio = unqualified_hiring_ratio >= 0.f ? unqualified_hiring_ratio : state.world.province_get_labor_demand_satisfaction(p, labor::no_education);
+		auto primary_ratio = primary_hiring_ratio >= 0.f ? primary_hiring_ratio : state.world.province_get_labor_demand_satisfaction(p, labor::basic_education);
+		auto secondary_ratio = state.world.province_get_labor_demand_satisfaction(p, labor::high_education);
+		debug_log_factory_flow(
+			state, f, p, fac_type.get_output(),
+			data.output, data.direct_inputs_cost, actual_profit,
+			(fac.get_priority_low() ? 1 : 0) + (fac.get_priority_high() ? 2 : 0),
+			unqualified_target * unqualified_ratio, unqualified_target,
+			primary_target * primary_ratio, primary_target,
+			secondary_target * secondary_ratio, secondary_target
+		);
+	}
 }
 
 void set_initial_factory_values(sys::state& state, dcon::factory_id f) {
@@ -2065,6 +2158,45 @@ VALUE gradient_to_employment_change(VALUE gradient, VALUE wage, VALUE current_em
 template float gradient_to_employment_change<float>(float gradient, float wage, float current_employment, float sat);
 template ve::fp_vector gradient_to_employment_change<ve::fp_vector>(ve::fp_vector gradient, ve::fp_vector wage, ve::fp_vector current_employment, ve::fp_vector sat);
 
+// Scalar attractiveness score (same formula as the RGO/factory profit gradients)
+// for a single province working a single artisan good, used to compare a
+// province's current good against a candidate good when considering a switch.
+float artisan_good_gradient(sys::state& state, dcon::province_id p, dcon::commodity_id cid) {
+	auto base_output = state.world.commodity_get_artisan_output_amount(cid);
+	if(base_output <= 0.f)
+		return -1000.f;
+
+	auto local_states = state.world.province_get_state_membership(p);
+	auto nation = state.world.province_get_nation_from_province_ownership(p);
+	auto markets = state.world.state_instance_get_market_from_local_market(local_states);
+
+	auto priority = state.world.nation_get_production_directive(nation, production_directives::to_key(state, cid));
+	auto priority_local = state.world.state_instance_get_production_directive(local_states, production_directives::to_key(state, cid));
+	auto subsidy = (priority_local || priority ? state.world.nation_get_subsidy_token_price(nation) : 0.f) / base_output;
+
+	auto price_today = price(state, markets, cid) + subsidy;
+	auto supply = state.world.market_get_aggregated_supply_history(markets, cid);
+	auto demand = state.world.market_get_aggregated_demand_history(markets, cid);
+	auto predicted_price = price_today + price_properties::commodity::change<float>(price_today, supply, demand) * 2.f;
+
+	auto inputs_data = get_inputs_data(state, markets, state.world.commodity_get_artisan_inputs(cid));
+	auto expected_sales = state.world.market_get_expected_probability_to_sell(markets, cid);
+
+	auto sales_expectation_perception = (sales_optimism * 0.5f + (1.f - sales_optimism * 0.5f) * expected_sales);
+	auto purchase_expectation_perception = (purchase_optimism * 0.5f + (1.f - purchase_optimism * 0.5f) * inputs_data.min_expected);
+
+	auto output_cost = base_artisan_output_cost(state, markets, cid, predicted_price / (1.f + artisans_greed))
+		* sales_expectation_perception
+		* purchase_expectation_perception;
+
+	auto input_cost = inputs_data.total_cost * artisan_input_multiplier(state, nation);
+
+	auto base_output_cost_per_worker = output_cost / artisans_per_employment_unit;
+	auto base_input_cost_per_worker = input_cost / artisans_per_employment_unit;
+
+	return gradient_employment_i<float>(base_output_cost_per_worker, base_input_cost_per_worker, 1.f, 0.f);
+}
+
 void update_employment(sys::state& state, bool ignore_reality, float presim_employment_mult) {
 	// note: markets are independent, so nations are independent:
 	// so we can execute in parallel over nations but not over provinces
@@ -2150,12 +2282,6 @@ void update_employment(sys::state& state, bool ignore_reality, float presim_empl
 		auto base_size = state.world.factory_type_get_base_workforce(factory_type);
 
 
-		auto min_expected_input = ve::apply([&](auto ftid, auto factory_market) {
-			auto inputs = state.world.factory_type_get_inputs(ftid);
-			auto inputs_data = get_inputs_data(state, factory_market, inputs);
-			return inputs_data.min_expected;
-		}, factory_type, mid);
-
 		auto output = state.world.factory_type_get_output(factory_type);
 		auto base_output = state.world.factory_type_get_output_amount(factory_type);
 
@@ -2179,81 +2305,75 @@ void update_employment(sys::state& state, bool ignore_reality, float presim_empl
 		auto unqualified = state.world.factory_get_unqualified_employment(facids);
 		auto primary = state.world.factory_get_primary_employment(facids);
 		auto secondary = state.world.factory_get_secondary_employment(facids);
-		auto profit_push = output_per_worker * price_output;
-		auto spending_push = state.world.factory_get_input_cost_per_worker(facids);
 		auto wage_no_education = state.world.province_get_labor_price(pid, labor::no_education);
 		auto wage_basic_education = state.world.province_get_labor_price(pid, labor::basic_education);
 		auto wage_high_education = state.world.province_get_labor_price(pid, labor::high_education);
 
-		auto probability_to_hire_uneducated_worker = state.world.province_get_labor_demand_satisfaction(pid, labor::no_education);
-
-		employment_data<2, decltype(wage_no_education)> primary_employment{
-			{ unqualified, primary },
-			{
-				unqualified * probability_to_hire_uneducated_worker,
-				primary * state.world.province_get_labor_demand_satisfaction(pid, labor::basic_education)
-			},
-			{ unqualified_throughput_multiplier, 1.f },
-			{
-				2.f * wage_no_education * (1.f + capitalists_greed) / (0.01f + state.world.province_get_labor_demand_satisfaction(pid, labor::no_education)),
-				2.f * wage_basic_education * (1.f + capitalists_greed) / (0.01f + state.world.province_get_labor_demand_satisfaction(pid, labor::basic_education))
-			}
-		};
-
 		auto price_speed = price_properties::commodity::change<ve::fp_vector>(price_output, supply, demand);
 
 		auto price_prediction = (price_output + price_speed);
-		auto size = state.world.factory_get_size(facids);
 
-		auto sold_expectation = ve::apply([&](dcon::market_id market, dcon::commodity_id cid) {
-			return state.world.market_get_expected_probability_to_sell(market, cid);
-		}, mid, output);
+		// Vanilla factories just want to be fully staffed (base_workforce * level) rather
+		// than slowly walking toward an equilibrium via a continuous profit gradient.
+		// factory_get_size already tracks base_workforce * level as a continuous value.
+		// The fixed craftsmen/clerks split comes from the mod's own production_types.txt
+		// (parsed once into economy_definitions.craftsmen_fraction); the craftsmen share is
+		// further split between the unqualified/primary labor tiers by which one currently
+		// has more available supply, so factories naturally prefer whichever tier is easier
+		// to hire from. A light damping factor avoids the target teleporting in one day.
+		auto total_target = state.world.factory_get_size(facids);
+		auto target_secondary = total_target * (1.f - state.economy_definitions.craftsmen_fraction);
+		auto target_craftsmen = total_target * state.economy_definitions.craftsmen_fraction;
+		auto no_edu_sat = state.world.province_get_labor_demand_satisfaction(pid, labor::no_education);
+		auto basic_edu_sat = state.world.province_get_labor_demand_satisfaction(pid, labor::basic_education);
+		auto primary_share = basic_edu_sat / (no_edu_sat + basic_edu_sat + 0.01f);
+		auto target_primary = target_craftsmen * primary_share;
+		auto target_unqualified = target_craftsmen - target_primary;
 
-		auto profit_per_worker =
-			output_per_worker
-			* price_prediction
-			* (sales_optimism + (1.f - sales_optimism) * sold_expectation)
-			* (purchase_optimism + (1.f - purchase_optimism) * min_expected_input);
-
-		auto input_cost_per_worker = state.world.factory_get_input_cost_per_worker(facids) * (1.f + capitalists_greed);
-
-		auto secondary_power = ve::apply([&](dcon::nation_id local_nation, dcon::commodity_id output_commodity) {
-			return high_education_power(state, local_nation, output_commodity);
-		}, nation, output);
-
-		auto current_secondary_multiplier = 1.f + secondary_power * secondary * state.world.province_get_labor_demand_satisfaction(pid, labor::high_education);
-
-		auto gradient = get_profit_gradient(
-			profit_per_worker,
-			input_cost_per_worker,
-			secondary,
-			secondary * state.world.province_get_labor_demand_satisfaction(pid, labor::high_education),
-			current_secondary_multiplier,
-			secondary_power,
-			wage_high_education * (1.f + capitalists_greed) / (0.01f + state.world.province_get_labor_demand_satisfaction(pid, labor::high_education)),
-			primary_employment
-		);
-
-		auto unqualified_now = unqualified * state.world.province_get_labor_demand_satisfaction(pid, labor::no_education);
-		auto unqualified_next = unqualified
-			+ gradient_to_employment_change(gradient.primary[0] * presim_employment_mult, wage_no_education, unqualified, state.world.province_get_labor_demand_satisfaction(pid, labor::no_education) * sold_expectation);
-
-		auto primary_now = primary * state.world.province_get_labor_demand_satisfaction(pid, labor::basic_education);
-		auto primary_next = primary
-			+ gradient_to_employment_change(gradient.primary[1] * presim_employment_mult, wage_basic_education, primary, state.world.province_get_labor_demand_satisfaction(pid, labor::basic_education) * sold_expectation);
-
-		auto secondary_now = secondary * state.world.province_get_labor_demand_satisfaction(pid, labor::high_education);
-		auto secondary_next = secondary
-			+ gradient_to_employment_change(gradient.secondary * presim_employment_mult, wage_high_education, secondary, state.world.province_get_labor_demand_satisfaction(pid, labor::high_education) * sold_expectation);
+		auto unqualified_next = unqualified + (target_unqualified - unqualified) * factory_hiring_damping;
+		auto primary_next = primary + (target_primary - primary) * factory_hiring_damping;
+		auto secondary_next = secondary + (target_secondary - secondary) * factory_hiring_damping;
 
 		// do not hire too expensive workers:
 		// ideally decided by factory budget but it is what it is
-
-		auto budget = factory_profit_to_wage_bound * state.world.factory_get_size(facids) * output_per_worker * price_prediction;
+		//
+		// This has to be judged against *net* revenue (output minus input costs),
+		// not gross revenue -- otherwise a factory whose inputs have become
+		// ruinously expensive (e.g. a Coal/Iron price spike) never gets throttled
+		// here at all, since gross output revenue alone can still look affordable
+		// even while the factory is bleeding money on every worker. Without this,
+		// a fully-vanilla "always want full employment" factory (see milestone 6)
+		// has no brake on runaway input demand, which can spiral: expensive
+		// inputs -> still-full staffing -> even more input demand -> even higher
+		// prices. Using net revenue here means a factory getting squeezed by
+		// input costs actually scales staff back (and can shrink already-hired
+		// workers, not just cap further growth, since this clamp applies every day).
+		auto input_cost_per_worker_estimate = state.world.factory_get_input_cost_per_worker(facids);
+		auto net_revenue_per_worker = ve::max(0.f, output_per_worker * price_prediction - input_cost_per_worker_estimate);
+		auto budget = factory_profit_to_wage_bound * state.world.factory_get_size(facids) * net_revenue_per_worker;
 
 		unqualified_next = ve::max(0.f, ve::min(state.world.factory_get_size(facids), ve::min(budget / wage_no_education - 1.f, unqualified_next)));
 		primary_next = ve::max(0.f, ve::min(state.world.factory_get_size(facids), ve::min(budget / wage_basic_education - 1.f, primary_next)));
 		secondary_next = ve::max(0.f, ve::min(state.world.factory_get_size(facids), ve::min(budget / wage_high_education - 1.f, secondary_next)));
+
+		// A factory the affordability clamp above has driven toward zero is not
+		// just "small" -- economy.cpp's prune_factories deletes any factory whose
+		// total desired employment drops below 50 while unprofitable, permanently,
+		// and with new-factory construction gated behind urban centers (see the
+		// civic buildings system) a destroyed factory may not be rebuildable at
+		// all. A temporary input-price spike should be able to wound a factory,
+		// not permanently erase it -- so keep a minimal skeleton crew (well above
+		// the deletion threshold) alive, split across tiers the same way the full
+		// target is, letting it recover once conditions ease instead of vanishing.
+		// (The "no available workers at all" zero-out right below this still wins
+		// over this floor when there's truly nobody to hire, since it runs after.)
+		auto target_total_all = target_unqualified + target_primary + target_secondary;
+		auto floor_unqualified = ve::select(target_total_all > 0.f, factory_survival_floor * target_unqualified / (target_total_all + 0.01f), 0.f);
+		auto floor_primary = ve::select(target_total_all > 0.f, factory_survival_floor * target_primary / (target_total_all + 0.01f), 0.f);
+		auto floor_secondary = ve::select(target_total_all > 0.f, factory_survival_floor * target_secondary / (target_total_all + 0.01f), 0.f);
+		unqualified_next = ve::max(unqualified_next, floor_unqualified);
+		primary_next = ve::max(primary_next, floor_primary);
+		secondary_next = ve::max(secondary_next, floor_secondary);
 
 		// no available workers at all?
 		// reduce and set to zero if it's low enough
@@ -2325,82 +2445,59 @@ void update_employment(sys::state& state, bool ignore_reality, float presim_empl
 
 	auto const csize = state.world.commodity_size();
 
-	// artisans do not have natural max production size, so we use total population as a limit
-	// they also don't have secondary workers
-
+	// Vanilla artisans work a single good per province, staying fully employed on
+	// it (scaled to current local artisan population) rather than continuously
+	// splitting employment across every possible good. Provinces only reconsider
+	// their choice periodically, wholesale-switching to a single candidate good
+	// if it's clearly more profitable than the current one — not a daily
+	// blend/optimization across all commodities.
 	auto artisans = state.culture_definitions.artisans;
 	auto keys = demographics::to_key(state, artisans);
 
-	state.world.execute_parallel_over_commodity([&](auto cids) {
-		ve::apply([&](dcon::commodity_id cid) {
-			auto base_output = state.world.commodity_get_artisan_output_amount(cid);
-			if(base_output == 0.f)
-				return;
+	concurrency::parallel_for(uint32_t(0), uint32_t(state.province_definitions.first_sea_province.index()), [&](uint32_t raw_id) {
+		dcon::province_id p{ dcon::province_id::value_base_t(raw_id) };
+		if(!state.world.province_is_valid(p))
+			return;
+		if(!state.world.province_get_state_membership(p))
+			return;
 
-			province::ve_for_each_land_province(state, [&](auto ids) {
-				auto local_states = state.world.province_get_state_membership(ids);
-				auto nations = state.world.province_get_nation_from_province_ownership(ids);
-				auto markets = state.world.state_instance_get_market_from_local_market(local_states);
+		auto local_population = state.world.province_get_demographics(p, keys);
+		if(local_population <= 0.f)
+			return;
 
-				//safeguard against runaway artisans target employment
-				auto local_population = state.world.province_get_demographics(ids, keys) * 2.f;
+		dcon::commodity_id active_good{};
+		for(uint32_t i = 1; i < csize; ++i) {
+			dcon::commodity_id cid{ dcon::commodity_id::value_base_t(uint16_t(i)) };
+			if(state.world.province_get_artisan_score(p, cid) > 0.f) {
+				active_good = cid;
+				break;
+			}
+		}
 
-				//auto min_wage = ve_artisan_min_wage(state, markets) / state.defines.alice_needs_scaling_factor;
-				//auto actual_wage = state.world.province_get_labor_price(ids, labor::guild_education);
-				auto mask = ve_valid_artisan_good(state, nations, cid);
+		// safeguard against runaway artisans target employment
+		if(active_good)
+			state.world.province_set_artisan_score(p, active_good, local_population * 2.f);
 
+		bool is_reroll_day = ((uint32_t(p.index()) + uint32_t(state.current_date.value)) % uint32_t(artisan_reroll_period_days)) == 0;
+		if(!is_reroll_day)
+			return;
 
-				auto priority = state.world.nation_get_production_directive(nations, production_directives::to_key(state, cid));
-				auto priority_local = state.world.state_instance_get_production_directive(local_states, production_directives::to_key(state, cid));
-				auto subsidy = ve::select(priority_local || priority, state.world.nation_get_subsidy_token_price(nations), 0.f) / base_output;
+		auto nation = state.world.province_get_nation_from_province_ownership(p);
+		uint32_t candidate_index = 1 + (uint32_t(p.index()) + uint32_t(state.current_date.value) / uint32_t(artisan_reroll_period_days)) % (csize - 1);
+		dcon::commodity_id candidate{ dcon::commodity_id::value_base_t(uint16_t(candidate_index)) };
+		if(candidate == active_good)
+			return;
+		if(!valid_artisan_good(state, nation, candidate))
+			return;
 
-				auto price_today = ve_price(state, markets, cid) + subsidy;
-				auto supply = state.world.market_get_aggregated_supply_history(markets, cid);
-				auto demand = state.world.market_get_aggregated_demand_history(markets, cid);
-				auto predicted_price = price_today + price_properties::commodity::change<ve::fp_vector>(price_today, supply, demand) * 2.f;
+		auto current_gradient = active_good ? artisan_good_gradient(state, p, active_good) : -1000.f;
+		auto candidate_gradient = artisan_good_gradient(state, p, candidate);
 
-				auto inputs_data = get_inputs_data(state, markets, state.world.commodity_get_artisan_inputs(cid));
-				auto expected_sales = state.world.market_get_expected_probability_to_sell(markets, cid);
-
-				auto sales_expectation_perception = (sales_optimism * 0.5f + (1.f - sales_optimism * 0.5f) * expected_sales);
-				auto purchase_expectation_perception = (purchase_optimism * 0.5f + (1.f - purchase_optimism * 0.5f) * inputs_data.min_expected);
-
-				auto output_cost = base_artisan_output_cost(state, markets, cid, predicted_price / (1.f + artisans_greed)) 
-					* sales_expectation_perception
-					* purchase_expectation_perception;
-
-				auto input_cost = inputs_data.total_cost * artisan_input_multiplier(state, nations);
-
-				auto base_output_cost_per_worker = output_cost / artisans_per_employment_unit;
-				auto base_input_cost_per_worker = input_cost / artisans_per_employment_unit;
-
-				auto current_employment_target = state.world.province_get_artisan_score(ids, cid);
-				auto current_employment_actual = current_employment_target
-					* state.world.province_get_labor_demand_satisfaction(ids, labor::guild_education);
-				auto profit_per_worker = ve::select(
-					mask,
-					base_output_cost_per_worker,
-					0.f
-				);
-
-				auto gradient = gradient_employment_i<ve::fp_vector>(
-					profit_per_worker,
-					base_input_cost_per_worker,
-					1.f,
-					0.f
-				);
-
-				auto employment_change = gradient_to_employment_change<ve::fp_vector>(gradient, 0.f, current_employment_target, purchase_expectation_perception * sales_expectation_perception);
-				auto decay = 0.9999f;
-				auto new_employment = ve::select(mask, ve::max(current_employment_target * decay + presim_employment_mult * employment_change, 0.0f), 0.f);
-				state.world.province_set_artisan_score(ids, cid, new_employment);
-				ve::apply(
-					[](float x) {
-							assert(std::isfinite(x));
-					}, new_employment
-				);
-			});
-		}, cids);
+		if(candidate_gradient > current_gradient + artisan_switch_margin) {
+			if(active_good)
+				state.world.province_set_artisan_score(p, active_good, 0.f);
+			state.world.province_set_artisan_score(p, candidate, local_population * 2.f);
+		}
 	});
 }
 
@@ -2460,16 +2557,69 @@ void update_production_consumption(sys::state& state) {
 			: 1.f;
 
 		province::for_each_province_in_state_instance(state, sid, [&](auto p) {
-			for(auto f : state.world.province_get_factory_location(p)) {
+			// Vanilla-style priority hiring: rank this province's factories by
+			// priority arrow, then by profitability as the tiebreak (the closest
+			// available stand-in for "who would pay more" -- Alice clears wages at
+			// the province level, so there's no true per-factory wage to compare).
+			// The aggregate craftsmen-tier labor handed out below equals exactly
+			// what the province blanket labor_demand_satisfaction ratio would have
+			// given factories in total, so the overall wage/supply/demand
+			// equilibrium is unchanged; only which factories get served first differs.
+			struct hiring_candidate {
+				dcon::factory_id id;
+				int32_t priority;
+				float profit;
+				float unqualified_target;
+				float primary_target;
+			};
+			std::vector<hiring_candidate> hiring_order;
+			float total_unqualified_target = 0.f;
+			float total_primary_target = 0.f;
+			for(auto floc : state.world.province_get_factory_location(p)) {
+				auto f = floc.get_factory();
+				auto ftid = f.get_building_type();
+				auto output = state.world.factory_type_get_output(ftid);
+				auto profit = f.get_output_per_worker() * price(state, market, output) - f.get_input_cost_per_worker();
+				auto uq = f.get_unqualified_employment();
+				auto pr = f.get_primary_employment();
+				hiring_order.push_back({ f.id, (f.get_priority_low() ? 1 : 0) + (f.get_priority_high() ? 2 : 0), profit, uq, pr });
+				total_unqualified_target += uq;
+				total_primary_target += pr;
+			}
+			std::sort(hiring_order.begin(), hiring_order.end(), [](hiring_candidate const& a, hiring_candidate const& b) {
+				if(a.priority != b.priority)
+					return a.priority > b.priority;
+				return a.profit > b.profit;
+			});
+
+			float unqualified_pool = total_unqualified_target * state.world.province_get_labor_demand_satisfaction(p, labor::no_education);
+			float primary_pool = total_primary_target * state.world.province_get_labor_demand_satisfaction(p, labor::basic_education);
+
+			for(auto const& c : hiring_order) {
+				float unqualified_ratio = 1.f;
+				if(c.unqualified_target > 0.f) {
+					float given = std::min(c.unqualified_target, unqualified_pool);
+					unqualified_ratio = given / c.unqualified_target;
+					unqualified_pool -= given;
+				}
+				float primary_ratio = 1.f;
+				if(c.primary_target > 0.f) {
+					float given = std::min(c.primary_target, primary_pool);
+					primary_ratio = given / c.primary_target;
+					primary_pool -= given;
+				}
+
 				update_single_factory_consumption(
 					state,
-					f.get_factory(),
+					c.id,
 					p,
 					sid,
 					market,
 					nation, buffer_demanded, buffer_consumed_estimation,
 					mobilization_impact,
-					state.world.province_get_nation_from_province_control(p) != nation // is occupied
+					state.world.province_get_nation_from_province_control(p) != nation, // is occupied
+					unqualified_ratio,
+					primary_ratio
 				);
 			}
 		});
@@ -2775,7 +2925,13 @@ float rgo_employment(sys::state& state, dcon::province_id p) {
 }
 
 float rgo_max_employment(sys::state& state, dcon::commodity_id c, dcon::province_id p) {
-	return state.world.province_get_rgo_size(p, c);
+	// Pre-existing bug (found 2026-08-09, unrelated to the RGO tier system that
+	// exposed it): this returned rgo_size (today's *current* employment) instead
+	// of any actual ceiling, so every "Max" column/tooltip across the GUI was
+	// silently just re-displaying "Employed" under a different label. Now
+	// returns the real current-tier cap (see the RGO leveling system in
+	// update_employment's RGO growth loop, economy_production.cpp).
+	return state.world.province_get_rgo_max_size(p, c);
 }
 float rgo_max_employment(sys::state& state, dcon::province_id p) {
 	float total = 0.f;

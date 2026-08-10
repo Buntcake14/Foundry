@@ -119,7 +119,6 @@ public:
 		if(!bool(capital))
 			return;
 		static_cast<ui::province_view_window*>(state.ui_state.province_window)->set_active_province(state, capital);
-		send<province_subtab_toggle_signal>(state, state.ui_state.province_window, province_subtab_toggle_signal::market);
 	}
 
 	tooltip_behavior has_tooltip(sys::state& state) noexcept override {

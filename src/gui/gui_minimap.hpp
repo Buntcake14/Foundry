@@ -3,7 +3,6 @@
 #include "gui_element_types.hpp"
 #include "gui_graphics.hpp"
 #include "gui_ledger_window.hpp"
-#include "gui_state_ledger_window.hpp"
 #include "gui_search_window.hpp"
 #include "gui_main_menu.hpp"
 #include "gui_message_filters_window.hpp"
@@ -908,35 +907,6 @@ public:
 		game_scene::switch_scene(state, game_scene::scene_id::in_game_economy_viewer);
 	}
 };
-class minimap_state_ledger_button : public button_element_base {
-public:
-	void button_action(sys::state& state) noexcept override {
-		if(!state.ui_state.state_ledger_window) {
-			auto window = make_element_by_type<state_ledger_window>(state, "state_ledger_window");
-			state.ui_state.state_ledger_window = window.get();
-			state.ui_state.root->add_child_to_front(std::move(window));
-			// Rows are populated lazily on the next game_state_updated tick; force it now so
-			// a freshly created window isn't empty until that happens on its own.
-			state.ui_state.state_ledger_window->impl_on_update(state);
-		} else if(state.ui_state.state_ledger_window->is_visible()) {
-			state.ui_state.state_ledger_window->set_visible(state, false);
-		} else {
-			state.ui_state.state_ledger_window->set_visible(state, true);
-			state.ui_state.root->move_child_to_front(state.ui_state.state_ledger_window);
-			state.ui_state.state_ledger_window->impl_on_update(state);
-		}
-	}
-
-	tooltip_behavior has_tooltip(sys::state& state) noexcept override {
-		return tooltip_behavior::tooltip;
-	}
-
-	void update_tooltip(sys::state& state, int32_t x, int32_t t, text::columnar_layout& contents) noexcept override {
-		auto box = text::open_layout_box(contents, 0);
-		text::localised_format_box(state, contents, box, std::string_view("ledger_header_states"));
-		text::close_layout_box(contents, box);
-	}
-};
 class minimap_toggle_sun : public button_element_base {
 public:
 	void button_action(sys::state& state) noexcept override {
@@ -1012,8 +982,6 @@ public:
 			return make_element_by_type<minimap_goto_button>(state, id);
 		} else if(name == "ledger_button") {
 			return make_element_by_type<minimap_ledger_button>(state, id);
-		} else if(name == "state_ledger_button") {
-			return make_element_by_type<minimap_state_ledger_button>(state, id);
 		} else if(name == "map_zoom_in") {
 			return make_element_by_type<minimap_zoom_in_button>(state, id);
 		} else if(name == "map_zoom_out") {

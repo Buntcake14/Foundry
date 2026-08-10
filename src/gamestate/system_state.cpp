@@ -2573,6 +2573,7 @@ void state::load_scenario_data(parsers::error_handler& err, sys::year_month_day 
 	world.province_resize_rgo_output(world.commodity_size());
 	world.province_resize_rgo_output_per_worker(world.commodity_size());
 	world.province_resize_rgo_max_size(world.commodity_size());
+	world.province_resize_rgo_level_progress(world.commodity_size());
 	world.province_resize_factory_max_size(world.commodity_size());
 
 	// load province history files

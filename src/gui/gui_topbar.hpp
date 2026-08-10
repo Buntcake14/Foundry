@@ -3,6 +3,9 @@
 #include "demographics.hpp"
 #include "gui_element_types.hpp"
 #include "gui_production_window.hpp"
+#include "gui_budget_window.hpp"
+#include "gui_population_window.hpp"
+#include "gui_trade_window.hpp"
 #include "gui_diplomacy_window.hpp"
 #include "gui_technology_window.hpp"
 #include "gui_politics_window.hpp"
@@ -2150,8 +2153,7 @@ public:
 		} else if(name == "topbarbutton_budget") {
 			auto btn = make_element_by_type<topbar_budget_tab_button>(state, id);
 
-			//auto tab = make_element_by_type<budget_window>(state, "country_budget");
-			auto tab = alice_ui::make_budgetwindow_main(state);
+			auto tab = make_element_by_type<budget_window>(state, "country_budget");
 			tab->set_visible(state, false);
 			btn->topbar_subwindow = tab.get();
 			state.ui_state.root->add_child_to_back(std::move(tab));
@@ -2175,9 +2177,7 @@ public:
 			return btn;
 		} else if(name == "topbarbutton_pops") {
 			auto btn = make_element_by_type<topbar_population_view_button>(state, id);
-			//auto tab = make_element_by_type<population_window>(state, "country_pop");
-			auto tab = alice_ui::make_demographicswindow_main(state);
-			tab->set_visible(state, false);
+			auto tab = make_element_by_type<population_window>(state, "country_pop");
 			btn->topbar_subwindow = tab.get();
 
 			state.ui_state.population_subwindow = tab.get();
@@ -2186,9 +2186,7 @@ public:
 		} else if(name == "topbarbutton_trade") {
 			auto btn = make_element_by_type<topbar_trade_tab_button>(state, id);
 
-			//auto tab = make_element_by_type<trade_window>(state, "alice_country_trade");
-			auto tab = alice_ui::make_trade_dashboard_main(state);
-			tab->set_visible(state, false);
+			auto tab = make_element_by_type<trade_window>(state, "country_trade");
 			btn->topbar_subwindow = tab.get();
 
 			state.ui_state.trade_subwindow = tab.get();

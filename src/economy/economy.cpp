@@ -23,6 +23,10 @@
 #include "economy_factory_view.hpp"
 #include "events.hpp"
 #include "commands.hpp"
+#include "text.hpp"
+
+#include <fstream>
+#include <mutex>
 #include <vector>
 #include <algorithm>
 #include "economy_pops_constants.hpp"
@@ -157,152 +161,56 @@ std::vector<dcon::factory_type_id> commodity_get_factory_types_as_output(sys::st
 	return types;
 }
 
+// Vanilla artisans work a single good per province at a time, not a little of
+// everything at once — so scenario start picks one starting good per province
+// instead of seeding every commodity simultaneously.
 void initialize_artisan_distribution(sys::state& state) {
 	state.world.province_resize_artisan_score(state.world.commodity_size());
 	state.world.province_resize_artisan_actual_production(state.world.commodity_size());
 
 	auto artisans = state.culture_definitions.artisans;
 	auto keys = demographics::to_key(state, artisans);
+	auto csize = state.world.commodity_size();
 
-	state.world.for_each_commodity([&](auto cid) {
-		province::ve_for_each_land_province(state, [&](auto ids) {
-			auto local_artisans = state.world.province_get_demographics(ids, keys);
-			state.world.province_set_artisan_score(ids, cid, local_artisans * 0.05f);
-		});
-	});
+	for(auto p : state.world.in_province) {
+		auto local_artisans = state.world.province_get_demographics(p, keys);
+		if(local_artisans <= 0.f)
+			continue;
+
+		auto nation = state.world.province_get_nation_from_province_ownership(p);
+		dcon::commodity_id starting_good{};
+		for(uint32_t i = 1; i < csize; ++i) {
+			dcon::commodity_id cid{ dcon::commodity_id::value_base_t(uint16_t((p.id.index() + i) % (csize - 1) + 1)) };
+			if(state.world.commodity_get_artisan_output_amount(cid) > 0.f && valid_artisan_good(state, nation, cid)) {
+				starting_good = cid;
+				break;
+			}
+		}
+		if(starting_good)
+			state.world.province_set_artisan_score(p, starting_good, local_artisans * 2.f);
+	}
 }
 
+// Vanilla pops try to buy their pop type's fixed need bundle outright, with no
+// price/availability-driven reweighting between goods within a tier — so each
+// commodity's weight is a constant 1.0 rather than a daily-optimized value.
 void initialize_needs_weights(sys::state& state, dcon::market_id n) {
 	auto zone = state.world.market_get_zone_from_local_market(n);
 	auto nation = state.world.state_instance_get_nation_from_state_ownership(zone);
 	{
 		state.world.for_each_commodity([&](dcon::commodity_id c) {
-			state.world.market_set_life_needs_weights(n, c, 0.001f);
+			state.world.market_set_life_needs_weights(n, c, 1.0f);
 		});
 	}
 	{
 		state.world.for_each_commodity([&](dcon::commodity_id c) {
-			state.world.market_set_everyday_needs_weights(n, c, 0.001f);
+			state.world.market_set_everyday_needs_weights(n, c, 1.0f);
 		});
 	}
 	{
 		state.world.for_each_commodity([&](dcon::commodity_id c) {
-			state.world.market_set_luxury_needs_weights(n, c, 0.001f);
+			state.world.market_set_luxury_needs_weights(n, c, 1.0f);
 		});
-	}
-}
-
-// todo: make priority different per commodity
-/*
-Need weight allows pops to not promise buying "hopeless" items and avoid generating demand on them
-There is base growth to avoid being stuck at 0
-It's modified by local availability and price
-*/
-float need_weight_change(sys::state& state, dcon::market_id n, dcon::commodity_id c, float current, float base_wage, float priority, float base_amount) {
-	auto budget = economy::price_properties::labor::min + base_wage;
-	auto cost_per_person = base_amount * price(state, n, c) / state.defines.alice_needs_scaling_factor;
-	auto score_price = -cost_per_person / priority / budget;
-	auto score_availability = state.world.market_get_expected_probability_to_buy(n, c);
-	return (score_availability + 0.1f) / (current + 0.01f) + score_price;
-}
-
-// maximize sum of w_i
-// w_i * p_i * c_i = wage
-// 0 <= w_i <= 1
-// eliminate low weights
-
-void rebalance_needs_weights(sys::state& state, dcon::market_id n) {
-	auto zone = state.world.market_get_zone_from_local_market(n);
-	auto nation = state.world.state_instance_get_nation_from_state_ownership(zone);
-	auto capital = state.world.state_instance_get_capital(zone);
-
-	auto wage =
-		state.world.province_get_labor_price(capital, labor::no_education)
-		+ state.world.province_get_labor_price(capital, labor::basic_education)
-		+ state.world.province_get_labor_price(capital, labor::high_education) * 0.5f;
-
-	{
-		auto expected_cost = 0.f;
-		state.world.for_each_commodity([&](dcon::commodity_id c) {
-			auto needed = 0.f;
-			state.world.for_each_pop_type([&](auto t) {
-				needed += state.world.pop_type_get_life_needs(t, c);
-			});
-			needed = needed / float(state.world.pop_type_size());
-
-			auto w = state.world.market_get_life_needs_weights(n, c);
-			auto dw = need_weight_change(state, n, c, w, wage, 1.f, needed);
-			w = std::max(0.f, w + dw * state.defines.alice_need_drift_speed);
-			assert(std::isfinite(w));
-			state.world.market_set_life_needs_weights(n, c, w);
-			expected_cost += w * needed * price(state, n, c) / state.defines.alice_needs_scaling_factor;
-		});
-
-		// scale to wage
-		if(expected_cost > 0.f) {
-			state.world.for_each_commodity([&](dcon::commodity_id c) {
-				auto w = state.world.market_get_life_needs_weights(n, c);
-				w = w / expected_cost * wage;
-				w = std::clamp(w, 0.f, 1.f);
-				state.world.market_set_life_needs_weights(n, c, w);
-			});
-		}
-	}
-
-	{
-		auto expected_cost = 0.f;
-		state.world.for_each_commodity([&](dcon::commodity_id c) {
-			auto needed = 0.f;
-			state.world.for_each_pop_type([&](auto t) {
-				needed += state.world.pop_type_get_everyday_needs(t, c);
-			});
-			needed = needed / float(state.world.pop_type_size());
-
-			auto w = state.world.market_get_everyday_needs_weights(n, c);
-			auto dw = need_weight_change(state, n, c, w, wage, 1.f, needed);
-			w = std::max(0.f, w + dw * state.defines.alice_need_drift_speed);
-			assert(std::isfinite(w));
-			state.world.market_set_everyday_needs_weights(n, c, w);
-			expected_cost += w * needed * price(state, n, c) / state.defines.alice_needs_scaling_factor;
-		});
-
-		// scale to wage
-		if(expected_cost > 0.f) {
-			state.world.for_each_commodity([&](dcon::commodity_id c) {
-				auto w = state.world.market_get_everyday_needs_weights(n, c);
-				w = w / expected_cost * wage;
-				w = std::clamp(w, 0.f, 1.f);
-				state.world.market_set_everyday_needs_weights(n, c, w);
-			});
-		}
-	}
-
-	{
-		auto expected_cost = 0.f;
-		state.world.for_each_commodity([&](dcon::commodity_id c) {
-			auto needed = 0.f;
-			state.world.for_each_pop_type([&](auto t) {
-				needed += state.world.pop_type_get_luxury_needs(t, c);
-			});
-			needed = needed / float(state.world.pop_type_size());
-
-			auto w = state.world.market_get_luxury_needs_weights(n, c);
-			auto dw = need_weight_change(state, n, c, w, wage, 1.f, needed);
-			w = std::max(0.f, w + dw * state.defines.alice_need_drift_speed);
-			assert(std::isfinite(w));
-			state.world.market_set_luxury_needs_weights(n, c, w);
-			expected_cost += w * needed * price(state, n, c) / state.defines.alice_needs_scaling_factor;
-		});
-
-		// scale to wage
-		if(expected_cost > 0.f) {
-			state.world.for_each_commodity([&](dcon::commodity_id c) {
-				auto w = state.world.market_get_luxury_needs_weights(n, c);
-				w = w / expected_cost * wage;
-				w = std::clamp(w, 0.f, 1.f);
-				state.world.market_set_luxury_needs_weights(n, c, w);
-			});
-		}
 	}
 }
 
@@ -827,6 +735,21 @@ void initialize(sys::state& state) {
 					state.world.province_set_rgo_potential(p, c,
 						state.world.province_get_rgo_potential(p, c) + max_size
 					);
+					// Vanilla-style discrete RGO tiers: rgo_max_size holds the current
+					// tier's capacity ceiling (tier 1 = one commodity_get_rgo_workforce
+					// worth of jobs, same "level * base_workforce" shape factories use),
+					// rather than letting rgo_size grow smoothly all the way to
+					// rgo_potential. rgo_potential (terrain/province-area scaled, computed
+					// just above) still caps how many tiers a province can ever reach --
+					// re-derived from the up-to-date accumulated total each time this runs,
+					// so it's correct however many passes this loop makes.
+					{
+						auto workforce_per_level = float(state.world.commodity_get_rgo_workforce(c));
+						if(workforce_per_level > 0.f) {
+							auto final_potential = state.world.province_get_rgo_potential(p, c);
+							state.world.province_set_rgo_max_size(p, c, std::min(workforce_per_level, final_potential));
+						}
+					}
 					state.world.province_set_rgo_efficiency(p, c, 1.f);
 					state.world.province_set_rgo_max_efficiency(p, c, 1.f);
 					state.world.province_set_rgo_target_employment(p, c, main_rgo == c ? pop_amount : 0.f);
@@ -954,21 +877,14 @@ void update_factory_triggered_modifiers(sys::state& state) {
 	});
 }
 
-float subsistence_size(sys::state const& state, dcon::province_id p) {
-	auto rgo_ownership = state.world.province_get_landowners_share(p) + state.world.province_get_capitalists_share(p);
-	return state.world.province_get_rgo_base_size(p) * (1.f - rgo_ownership);
-}
-
+// Vanilla has no subsistence-farming pseudo-employment; an unemployed pop is just unemployed.
 float subsistence_max_pseudoemployment(sys::state& state, dcon::province_id p) {
-	return subsistence_size(state, p) * 1.1f;
+	return 0.f;
 }
 
 void update_local_subsistence_factor(sys::state& state) {
 	province::ve_for_each_land_province(state, [&](auto ids) {
-		auto quality = (ve::to_float(state.world.province_get_life_rating(ids)) - 10.f) / 10.f;
-		quality = ve::max(quality, 0.f) + 0.01f;
-		auto score = (subsistence_factor * quality) + subsistence_score_life * 0.9f;
-		state.world.province_set_subsistence_score(ids, score);
+		state.world.province_set_subsistence_score(ids, 0.f);
 	});
 }
 
@@ -1090,7 +1006,6 @@ void update_pops_employment(sys::state& state) {
 
 
 		ve::apply([&](dcon::province_id p, dcon::nation_id n, float rgo, float primary, float high, float high_accepted) {
-			auto subsistence_employment = 0.f;
 			for(auto pop_location : state.world.province_get_pop_location(p)) {
 				auto pop = pop_location.get_pop();
 
@@ -1099,49 +1014,20 @@ void update_pops_employment(sys::state& state) {
 
 				if(pop.get_poptype() == state.culture_definitions.slaves) {
 					pop_demographics::set_raw_employment(state, pop, rgo);
-					subsistence_employment += pop.get_size() * (1.f - rgo);
 				} else if(pop.get_poptype().get_is_paid_rgo_worker()) {
 					pop_demographics::set_raw_employment(state, pop, rgo);
-					subsistence_employment += pop.get_size() * (1.f - rgo);
 				} else if(pop.get_poptype() == state.culture_definitions.primary_factory_worker) {
 					pop_demographics::set_raw_employment(state, pop, primary);
-					subsistence_employment += pop.get_size() * (1.f - primary);
 				} else if(pop.get_poptype() == state.culture_definitions.secondary_factory_worker) {
-					if(accepted) {
-						pop_demographics::set_raw_employment(state, pop, high_accepted);
-						subsistence_employment += pop.get_size() * (1.f - high_accepted);
-					} else {
-						pop_demographics::set_raw_employment(state, pop, high);
-						subsistence_employment += pop.get_size() * (1.f - high);
-					}
+					pop_demographics::set_raw_employment(state, pop, accepted ? high_accepted : high);
 				} else if(pop.get_poptype() == state.culture_definitions.bureaucrat) {
-					if(accepted) {
-						pop_demographics::set_raw_employment(state, pop, high_accepted);
-						subsistence_employment += pop.get_size() * (1.f - high_accepted);
-					} else {
-						pop_demographics::set_raw_employment(state, pop, high);
-						subsistence_employment += pop.get_size() * (1.f - high);
-					}
+					pop_demographics::set_raw_employment(state, pop, accepted ? high_accepted : high);
 				} else if(pop.get_poptype() == state.culture_definitions.clergy) {
-					if(accepted) {
-						pop_demographics::set_raw_employment(state, pop, high_accepted);
-						subsistence_employment += pop.get_size() * (1.f - high_accepted);
-					} else {
-						pop_demographics::set_raw_employment(state, pop, high);
-						subsistence_employment += pop.get_size() * (1.f - high);
-					}
+					pop_demographics::set_raw_employment(state, pop, accepted ? high_accepted : high);
 				}
 			}
-			state.world.province_set_subsistence_employment(
-				p,
-				std::max(
-					0.f,
-					std::min(
-						subsistence_employment,
-						subsistence_max_pseudoemployment(state, p)
-					)
-				)
-			);
+			// Vanilla has no subsistence-farming pseudo-employment; an unemployed pop is just unemployed.
+			state.world.province_set_subsistence_employment(p, 0.f);
 		}, pids, nation, rgo_workers_employment, primary_workers_employment, high_not_accepted_workers_employment, high_accepted_workers_employment);
 	});
 }
@@ -2110,6 +1996,82 @@ static void set_profile_point(sys::state& state, std::string name) {
 	//printf("%f,%f,%f\n", total_pops.reduce(), total_markets.reduce(), total_nations.reduce());
 
 	// fprintf(pf, (name + ",%llu\n").c_str(), GetTicks());
+}
+
+// TEMPORARY DEBUG INSTRUMENTATION (2026-08-09): companion to
+// economy_production.cpp's debug_log_factory_flow -- appends one CSV row per
+// day per tracked commodity (currently Coal and Iron, Rise of Nations' Steel
+// Factory inputs) to "commodity_supply_log.csv" in the game's working
+// directory, aggregated across every province owned by the player's nation.
+// Meant to answer whether RGO supply is keeping pace with factory demand
+// after a factory-side input-cost spiral showed up in factory_flows_log.csv.
+// Safe to delete once that's resolved -- not meant to be permanent.
+void debug_log_commodity_supply(sys::state& state) {
+	static std::mutex log_mutex;
+	static bool initialized = false;
+	static bool commodities_found = false;
+	static dcon::commodity_id coal_id{};
+	static dcon::commodity_id iron_id{};
+
+	std::lock_guard<std::mutex> lock(log_mutex);
+
+	if(!commodities_found) {
+		state.world.for_each_commodity([&](dcon::commodity_id c) {
+			auto name = text::produce_simple_string(state, state.world.commodity_get_name(c));
+			if(name == "Coal")
+				coal_id = c;
+			else if(name == "Iron")
+				iron_id = c;
+		});
+		commodities_found = true;
+	}
+
+	auto n = state.local_player_nation;
+	if(!n)
+		return;
+
+	std::ofstream file("commodity_supply_log.csv", initialized ? std::ios::app : std::ios::trunc);
+	if(!initialized) {
+		file << "date,commodity,rgo_output,rgo_size,rgo_potential,rgo_target_employment,price,demand,supply\n";
+		initialized = true;
+	}
+
+	auto ymd = state.current_date.to_ymd(state.start_date);
+
+	auto log_one = [&](dcon::commodity_id c, char const* label) {
+		if(!c)
+			return;
+		float total_output = 0.f;
+		float total_size = 0.f;
+		float total_potential = 0.f;
+		float total_target_employment = 0.f;
+		float price_sum = 0.f;
+		float demand_sum = 0.f;
+		float supply_sum = 0.f;
+		int32_t market_count = 0;
+		for(auto prov_own : state.world.nation_get_province_ownership(n)) {
+			auto p = prov_own.get_province();
+			total_output += state.world.province_get_rgo_output(p, c);
+			total_size += state.world.province_get_rgo_size(p, c);
+			total_potential += state.world.province_get_rgo_potential(p, c);
+			total_target_employment += state.world.province_get_rgo_target_employment(p, c);
+		}
+		for(auto state_own : state.world.nation_get_state_ownership(n)) {
+			auto m = state_own.get_state().get_market_from_local_market();
+			price_sum += state.world.market_get_price(m, c);
+			demand_sum += state.world.market_get_demand(m, c);
+			supply_sum += state.world.market_get_supply(m, c);
+			market_count++;
+		}
+		float avg_price = market_count > 0 ? price_sum / float(market_count) : 0.f;
+
+		file << ymd.year << "." << ymd.month << "." << ymd.day << "," << label << ","
+			<< total_output << "," << total_size << "," << total_potential << "," << total_target_employment << ","
+			<< avg_price << "," << demand_sum << "," << supply_sum << "\n";
+	};
+
+	log_one(coal_id, "Coal");
+	log_one(iron_id, "Iron");
 }
 
 void daily_update(sys::state& state, bool presimulation, float presimulation_stage) {
@@ -4350,18 +4312,6 @@ void daily_update(sys::state& state, bool presimulation, float presimulation_sta
 
 	set_profile_point(state, "tariffs");
 
-	// todo: vectorize
-	concurrency::parallel_for(uint32_t(0), state.world.market_size(), [&](auto raw_market_id) {
-		dcon::market_id mid{ dcon::market_id::value_base_t (raw_market_id) };
-		if(!state.world.market_is_valid(mid)) return;
-
-		rebalance_needs_weights(state, mid);
-	});
-
-
-
-	set_profile_point(state, "need weights");
-
 	sanity_check(state);
 
 	// #################
@@ -4604,6 +4554,8 @@ void daily_update(sys::state& state, bool presimulation, float presimulation_sta
 	}
 
 	set_profile_point(state, "random data");
+
+	debug_log_commodity_supply(state);
 
 	sanity_check(state);
 }

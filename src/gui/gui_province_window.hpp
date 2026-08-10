@@ -5,12 +5,6 @@
 
 namespace ui {
 
-enum province_subtab_toggle_signal {
-	economy = 1,
-	tiles = 2,
-	market = 3
-};
-
 class province_window_header;
 class province_view_foreign_details;
 class province_view_statistics;
@@ -32,11 +26,7 @@ private:
 	province_view_statistics* local_details_window = nullptr;
 	province_view_buildings* local_buildings_window = nullptr;
 	province_window_colony* colony_window = nullptr;
-	element_base* economy_window = nullptr;
-	element_base* factories_window = nullptr;
 	element_base* nf_win = nullptr;
-	element_base* tiles_window = nullptr;
-	element_base* market_window = nullptr;
 
 public:
 	void on_create(sys::state& state) noexcept override;
