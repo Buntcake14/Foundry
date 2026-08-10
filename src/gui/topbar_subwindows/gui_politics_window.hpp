@@ -252,16 +252,6 @@ public:
 		}
 		*/
 
-		auto cond_0 = (state.current_date >= state.world.political_party_get_start_date(party)) && (state.current_date <= state.world.political_party_get_end_date(party));
-		if(state.world.political_party_get_trigger(party)) {
-			text::add_line_with_condition(state, contents, "alice_political_party_trigger", cond_0, text::variable_type::date_long_0, state.world.political_party_get_start_date(party),
-				text::variable_type::date_long_1, state.world.political_party_get_end_date(party));
-			ui::trigger_description(state, contents, state.world.political_party_get_trigger(party), trigger::to_generic(state.local_player_nation), trigger::to_generic(state.local_player_nation), -1);
-		} else {
-			text::add_line_with_condition(state, contents, "alice_political_party_no_trigger", cond_0, text::variable_type::date_long_0, state.world.political_party_get_start_date(party),
-				text::variable_type::date_long_1, state.world.political_party_get_end_date(party));
-		}
-
 		// Requirements for changing the party with vanilla texts
 		auto cond_1 = politics::can_appoint_ruling_party(state, state.local_player_nation);
 		text::add_line_with_condition(state, contents, "POLITICS_CANNOT_SET_RULING_PARTY_RULE", cond_1);

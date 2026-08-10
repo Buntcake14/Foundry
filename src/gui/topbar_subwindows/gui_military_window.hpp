@@ -9,16 +9,10 @@
 
 namespace ui {
 
-class military_mob_button : public right_click_button_element_base {
+class military_mob_button : public button_element_base {
 public:
 	void button_action(sys::state& state) noexcept override {
 		command::toggle_mobilization(state, state.local_player_nation);
-	}
-
-	void button_right_action(sys::state& state) noexcept override {
-		auto n = retrieve<dcon::nation_id>(state, parent);
-		command::toggle_mobilization(state, n);
-		command::toggle_mobilization(state, n);
 	}
 
 	void on_update(sys::state& state) noexcept override {
@@ -38,7 +32,6 @@ public:
 		auto n = retrieve<dcon::nation_id>(state, parent);
 		active_modifiers_description(state, contents, n, 0, sys::national_mod_offsets::mobilization_impact, true);
 		active_modifiers_description(state, contents, n, 0, sys::national_mod_offsets::mobilization_size, true);
-		text::add_line(state, contents, "alice_mob_controls");
 	}
 };
 
@@ -162,23 +155,6 @@ public:
 	}
 };
 
-class military_mobilized_is_ai_controlled : public checkbox_button {
-public:
-	bool is_active(sys::state& state) noexcept override {
-		return state.world.nation_get_mobilized_is_ai_controlled(state.local_player_nation);
-	}
-	tooltip_behavior has_tooltip(sys::state& state) noexcept override {
-		return tooltip_behavior::tooltip;
-	}
-	void update_tooltip(sys::state& state, int32_t x, int32_t y, text::columnar_layout& contents) noexcept override {
-		text::add_line(state, contents, "alice_mobilized_is_ai_controlled");
-		text::add_line(state, contents, "alice_ai_controlled_unit");
-	}
-	void button_action(sys::state& state) noexcept override {
-		command::toggle_mobilized_is_ai_controlled(state, state.local_player_nation);
-	}
-};
-
 class military_window : public window_element_base {
 public:
 	void on_create(sys::state& state) noexcept override {
@@ -198,9 +174,6 @@ public:
 		win2->base_data.position = state.ui_defs.gui[state.ui_state.defs_by_name.find(state.lookup_key("navy_pos"))->second.definition].position;
 		state.ui_state.unit_window_navy = win2.get();
 		add_child_to_front(std::move(win2));
-
-		auto miac_btn = make_element_by_type<military_mobilized_is_ai_controlled>(state, state.ui_state.defs_by_name.find(state.lookup_key("alice_military_mobilized_is_ai_controlled"))->second.definition);
-		add_child_to_front(std::move(miac_btn));
 
 		auto build_units_window = make_element_by_type<build_unit_large_window>(state,
 			state.ui_state.defs_by_name.find(state.lookup_key("build_unit_view_large"))->second.definition);

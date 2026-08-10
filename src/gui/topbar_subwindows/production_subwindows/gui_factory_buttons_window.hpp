@@ -246,13 +246,6 @@ class factory_name_sort : public button_element_base {
 			parent->impl_get(state, payload);
 		}
 	}
-	tooltip_behavior has_tooltip(sys::state& state) noexcept override {
-		return tooltip_behavior::position_sensitive_tooltip;
-	}
-	void update_tooltip(sys::state& state, int32_t x, int32_t y, text::columnar_layout& contents) noexcept override {
-		text::add_line(state, contents, "alice_production_name_sort_tip_province");
-		text::add_line(state, contents, "alice_production_name_sort_tip_state");
-	}
 };
 
 class factory_infrastructure_sort : public button_element_base {

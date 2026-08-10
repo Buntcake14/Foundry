@@ -793,14 +793,7 @@ public:
 		} else if(name == "country_name") {
 			return make_element_by_type<generic_name_text<dcon::nation_id>>(state, id);
 		} else if(name == "country_prio") {
-			auto ptr = make_element_by_type<diplomacy_priority_button>(state, id);
-			//
-			auto btn = make_element_by_type<diplomacy_country_interested_in_alliance>(state, "alice_interested_in_alliance");
-			btn->base_data.position = ptr->base_data.position;
-			btn->base_data.position.x -= btn->base_data.size.x;
-			add_child_to_front(std::move(btn));
-			//
-			return ptr;
+			return make_element_by_type<diplomacy_priority_button>(state, id);
 		} else if(name == "country_boss_flag") {
 			return make_element_by_type<nation_overlord_flag>(state, id);
 		} else if(name == "country_prestige") {
@@ -2531,6 +2524,35 @@ public:
 	}
 };
 
+template<typename ActionLogic>
+class diplomacy_fixed_action_button : public button_element_base {
+	ActionLogic logic{};
+public:
+	void on_update(sys::state& state) noexcept override {
+		auto target = retrieve<dcon::nation_id>(state, parent);
+		diplomacy_action_btn_logic* action = &logic;
+		base_data.data.button.txt = action->get_name(state, target);
+		disabled = !action->is_available(state, target);
+		button_element_base::on_reset_text(state);
+	}
+
+	void button_action(sys::state& state) noexcept override {
+		auto target = retrieve<dcon::nation_id>(state, parent);
+		diplomacy_action_btn_logic* action = &logic;
+		action->button_action(state, target, parent);
+	}
+
+	tooltip_behavior has_tooltip(sys::state& state) noexcept override {
+		return tooltip_behavior::variable_tooltip;
+	}
+
+	void update_tooltip(sys::state& state, int32_t x, int32_t y, text::columnar_layout& contents) noexcept override {
+		auto target = retrieve<dcon::nation_id>(state, parent);
+		diplomacy_action_btn_logic* action = &logic;
+		action->update_tooltip(state, x, y, contents, target);
+	}
+};
+
 class diplomacy_window : public generic_tabbed_window<diplomacy_window_tab> {
 private:
 	diplomacy_country_listbox* country_listbox = nullptr;
@@ -2549,11 +2571,20 @@ private:
 	crisis_add_wargoal_window* crisis_add_wargoal_win = nullptr;
 
 	std::vector<diplomacy_greatpower_info*> gp_infos{};
+	std::vector<element_base*> action_buttons{};
 
 	dcon::nation_id facts_nation_id{};
 
 	country_filter_setting filter = country_filter_setting{};
 	country_sort_setting sort = country_sort_setting{};
+
+	template<typename T>
+	void add_action_button(sys::state& state, xy_pair offset) noexcept {
+		auto ptr = make_element_by_type<T>(state, state.ui_state.defs_by_name.find(state.lookup_key("diplomacy_option"))->second.definition);
+		ptr->base_data.position = offset;
+		action_buttons.push_back(ptr.get());
+		add_child_to_front(std::move(ptr));
+	}
 
 public:
 
@@ -2584,9 +2615,40 @@ public:
 				state.ui_defs.gui[state.ui_state.defs_by_name.find(state.lookup_key("diplomacy_actions_pos"))->second.definition].position;
 		xy_pair options_size = state.ui_defs.gui[state.ui_state.defs_by_name.find(state.lookup_key("diplomacy_option"))->second.definition].size;
 
-		auto ptr = make_element_by_type<diplo_actions_listbox>(state, state.ui_state.defs_by_name.find(state.lookup_key("diplomacy_actions_list"))->second.definition);
-		ptr->base_data.position = options_base_offset;
-		add_child_to_front(std::move(ptr));
+		xy_pair options_offset = options_base_offset;
+		add_action_button<diplomacy_action_window<diplomacy_fixed_action_button<diplomacy_action_ally_button>>>(state, options_offset);
+		options_offset.y += options_size.y;
+		add_action_button<diplomacy_action_window<diplomacy_fixed_action_button<diplomacy_action_call_ally_button>>>(state, options_offset);
+		options_offset.y += options_size.y;
+		add_action_button<diplomacy_action_window<diplomacy_fixed_action_button<diplomacy_action_military_access_button>>>(state, options_offset);
+		options_offset.y += options_size.y;
+		add_action_button<diplomacy_action_window<diplomacy_fixed_action_button<diplomacy_action_give_military_access_button>>>(state, options_offset);
+		options_offset.y += options_size.y;
+		add_action_button<diplomacy_action_window<diplomacy_fixed_action_button<diplomacy_action_increase_relations_button>>>(state, options_offset);
+		options_offset.y += options_size.y;
+		add_action_button<diplomacy_action_window<diplomacy_fixed_action_button<diplomacy_action_decrease_relations_button>>>(state, options_offset);
+		options_offset.y += options_size.y;
+		add_action_button<diplomacy_action_window<diplomacy_fixed_action_button<diplomacy_action_war_subisides_button>>>(state, options_offset);
+		options_offset.y += options_size.y;
+		add_action_button<diplomacy_action_window<diplomacy_fixed_action_button<diplomacy_action_declare_war_button>>>(state, options_offset);
+
+		options_offset.x += options_size.x;
+		options_offset.y = options_base_offset.y;
+		add_action_button<diplomacy_action_window<diplomacy_fixed_action_button<diplomacy_action_discredit_button>>>(state, options_offset);
+		options_offset.y += options_size.y;
+		add_action_button<diplomacy_action_window<diplomacy_fixed_action_button<diplomacy_action_expel_advisors_button>>>(state, options_offset);
+		options_offset.y += options_size.y;
+		add_action_button<diplomacy_action_window<diplomacy_fixed_action_button<diplomacy_action_ban_embassy_button>>>(state, options_offset);
+		options_offset.y += options_size.y;
+		add_action_button<diplomacy_action_window<diplomacy_fixed_action_button<diplomacy_action_increase_opinion_button>>>(state, options_offset);
+		options_offset.y += options_size.y;
+		add_action_button<diplomacy_action_window<diplomacy_fixed_action_button<diplomacy_action_decrease_opinion_button>>>(state, options_offset);
+		options_offset.y += options_size.y;
+		add_action_button<diplomacy_action_window<diplomacy_fixed_action_button<diplomacy_action_add_to_sphere_button>>>(state, options_offset);
+		options_offset.y += options_size.y;
+		add_action_button<diplomacy_action_window<diplomacy_fixed_action_button<diplomacy_action_remove_from_sphere_button>>>(state, options_offset);
+		options_offset.y += options_size.y;
+		add_action_button<diplomacy_action_window<diplomacy_fixed_action_button<diplomacy_action_justify_war_button>>>(state, options_offset);
 
 		auto new_win1 = make_element_by_type<diplomacy_action_dialog_window>(state,
 				state.ui_state.defs_by_name.find(state.lookup_key("defaultdiplomacydialog"))->second.definition);

@@ -162,10 +162,10 @@ public:
 };
 
 template<bool B>
-class military_make_leader_button : public right_click_button_element_base {
+class military_make_leader_button : public button_element_base {
 public:
 	void on_create(sys::state& state) noexcept override {
-		right_click_button_element_base::on_create(state);
+		button_element_base::on_create(state);
 		if(B) {
 			set_button_text(state, text::produce_simple_string(state, "alice_mw_create_1"));
 		} else {
@@ -178,25 +178,11 @@ public:
 	void button_action(sys::state& state) noexcept override {
 		command::make_leader(state, state.local_player_nation, B);
 	}
-	void button_right_action(sys::state& state) noexcept override {
-		auto lp = state.world.nation_get_leadership_points(state.local_player_nation);
-		int32_t count = int32_t(lp / state.defines.leader_recruit_cost);
-		for(; count > 0; count--) {
-			command::make_leader(state, state.local_player_nation, B);
-		}
-	}
-
 	tooltip_behavior has_tooltip(sys::state& state) noexcept override {
 		return tooltip_behavior::tooltip;
 	}
 	void update_tooltip(sys::state& state, int32_t x, int32_t y, text::columnar_layout& contents) noexcept override {
 		text::add_line(state, contents, "alice_mw_create_lp", text::variable_type::x, text::fp_two_places{ state.defines.leader_recruit_cost });
-		text::add_line(state, contents, "alice_mw_create_lpb");
-		if(B) {
-			text::add_line(state, contents, "alice_mw_controls_1");
-		} else {
-			text::add_line(state, contents, "alice_mw_controls_2");
-		}
 	}
 };
 

@@ -2759,6 +2759,19 @@ float estimate_factory_consumption(sys::state& state, dcon::commodity_id c, dcon
 	return result;
 }
 
+float estimate_factory_input_demand(sys::state& state, dcon::commodity_id c, dcon::factory_id f) {
+	auto fac = fatten(state.world, f);
+	auto& direct_inputs = fac.get_building_type().get_inputs();
+	auto data = imitate_single_factory_consumption(state, f);
+	for(uint32_t i = 0; i < commodity_set::set_size; ++i) {
+		if(!direct_inputs.commodity_type[i])
+			break;
+		if(direct_inputs.commodity_type[i] == c)
+			return data.consumption.direct_inputs_scale * direct_inputs.commodity_amounts[i];
+	}
+	return 0.0f;
+}
+
 float estimate_factory_consumption(sys::state& state, dcon::commodity_id c, dcon::province_id p) {
 	auto result = 0.f;
 	for(auto location : state.world.province_get_factory_location(p)) {

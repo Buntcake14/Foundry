@@ -86,7 +86,7 @@ public:
 class nation_budget_debt_text : public standard_nation_text {
 public:
 	std::string get_text(sys::state& state, dcon::nation_id nation_id) noexcept override {
-		return text::format_money(nations::get_debt(state, nation_id));
+		return text::format_money(state.world.nation_get_local_loan(nation_id));
 	}
 };
 
@@ -1464,6 +1464,10 @@ public:
 class budget_expenditure_projection_text : public budget_scaled_monetary_value_text {
 public:
 	void put_values(sys::state& state, std::array<float, size_t(budget_slider_target::target_count)>& vals) noexcept override {
+		vals[uint8_t(budget_slider_target::raw)] =
+			economy::estimate_current_domestic_investment(state, state.local_player_nation)
+			+ economy::estimate_overseas_penalty_spending(state, state.local_player_nation)
+				* float(state.world.nation_get_overseas_spending(state.local_player_nation)) / 100.0f;
 		vals[uint8_t(budget_slider_target::construction_stock)] =
 				economy::estimate_construction_spending(state, state.local_player_nation);
 		vals[uint8_t(budget_slider_target::army_stock)] = economy::estimate_land_spending(state, state.local_player_nation);
@@ -1475,9 +1479,9 @@ public:
 			economy::national_budget::estimate_pop_payouts_by_income_type(state, state.local_player_nation, culture::income_type::administration);
 		vals[uint8_t(budget_slider_target::military)] =
 			economy::national_budget::estimate_pop_payouts_by_income_type(state, state.local_player_nation, culture::income_type::military);
-		vals[uint8_t(budget_slider_target::domestic_investment)] = economy::estimate_max_domestic_investment(state, state.local_player_nation);
+		vals[uint8_t(budget_slider_target::domestic_investment)] = 0.0f;
 		vals[uint8_t(budget_slider_target::subsidies)] = state.world.nation_get_subsidies_spending(state.local_player_nation);
-		vals[uint8_t(budget_slider_target::overseas)] = economy::estimate_overseas_penalty_spending(state, state.local_player_nation);
+		vals[uint8_t(budget_slider_target::overseas)] = 0.0f;
 		vals[uint8_t(budget_slider_target::stockpile_filling)] = economy::estimate_stockpile_filling_spending(state, state.local_player_nation);
 		vals[uint8_t(budget_slider_target::interest)] = economy::interest_payment(state, state.local_player_nation);
 	}
@@ -1487,6 +1491,10 @@ class budget_balance_projection_text : public budget_scaled_monetary_value_text 
 public:
 	void put_values(sys::state& state, std::array<float, size_t(budget_slider_target::target_count)>& vals) noexcept override {
 		// income
+		vals[uint8_t(budget_slider_target::raw)] =
+			-economy::estimate_current_domestic_investment(state, state.local_player_nation)
+			- economy::estimate_overseas_penalty_spending(state, state.local_player_nation)
+				* float(state.world.nation_get_overseas_spending(state.local_player_nation)) / 100.0f;
 		vals[uint8_t(budget_slider_target::poor_tax)] = 0.0f;
 		vals[uint8_t(budget_slider_target::middle_tax)] = 0.0f;
 		vals[uint8_t(budget_slider_target::rich_tax)] = 0.0f;
@@ -1508,9 +1516,9 @@ public:
 		vals[uint8_t(budget_slider_target::admin)] = -economy::national_budget::estimate_pop_payouts_by_income_type(state, state.local_player_nation, culture::income_type::administration);
 		vals[uint8_t(budget_slider_target::military)] = -economy::national_budget::estimate_pop_payouts_by_income_type(state, state.local_player_nation, culture::income_type::military);
 		vals[uint8_t(budget_slider_target::subsidies)] = -state.world.nation_get_subsidies_spending(state.local_player_nation);
-		vals[uint8_t(budget_slider_target::overseas)] = -economy::estimate_overseas_penalty_spending(state, state.local_player_nation);
+		vals[uint8_t(budget_slider_target::overseas)] = 0.0f;
 		vals[uint8_t(budget_slider_target::stockpile_filling)] = -economy::estimate_stockpile_filling_spending(state, state.local_player_nation);
-		vals[uint8_t(budget_slider_target::domestic_investment)] = -economy::estimate_max_domestic_investment(state, state.local_player_nation);
+		vals[uint8_t(budget_slider_target::domestic_investment)] = 0.0f;
 		// balance
 		vals[uint8_t(budget_slider_target::diplomatic_interest)] = economy::estimate_diplomatic_balance(state, state.local_player_nation);
 		vals[uint8_t(budget_slider_target::interest)] = -economy::interest_payment(state, state.local_player_nation);
@@ -1541,49 +1549,109 @@ public:
 	}
 };
 
-class budget_take_loan_window : public window_element_base {
+struct loan_slider_value { int32_t percent = 20; };
+struct loan_amount_request { float amount = 0.0f; };
+struct loan_commit_request { };
+
+class budget_loan_slider : public scrollbar {
 public:
-	std::unique_ptr<element_base> make_child(sys::state& state, std::string_view name, dcon::gui_def_id id) noexcept override {
-		if(name == "bg") {
-			return make_element_by_type<image_element_base>(state, id);
-		} else if(name == "take_loan_label") {
-			return make_element_by_type<simple_text_element_base>(state, id);
-		} else if(name == "ok") {
-			return make_element_by_type<button_element_base>(state, id);
-		} else if(name == "cancel") {
-			return make_element_by_type<generic_close_button>(state, id);
-		} else if(name == "money_value") {
-			return make_element_by_type<simple_text_element_base>(state, id);
-		} /*else if(name == "money_slider") {
-			return nullptr;
-		}*/
-		else {
-			return nullptr;
+	void on_create(sys::state& state) noexcept override {
+		scrollbar::on_create(state);
+		update_raw_value(state, 20);
+	}
+	void on_value_change(sys::state& state, int32_t value) noexcept override {
+		if(parent) {
+			Cyto::Any payload = loan_slider_value{ std::clamp(value, 0, 100) };
+			parent->impl_get(state, payload);
+			parent->impl_on_update(state);
 		}
 	}
 };
 
-class budget_repay_loan_window : public window_element_base {
+class budget_loan_amount_text : public simple_text_element_base {
+public:
+	void on_update(sys::state& state) noexcept override {
+		loan_amount_request request{};
+		Cyto::Any payload = request;
+		if(parent && parent->impl_get(state, payload) == message_result::consumed)
+			set_text(state, text::format_money(any_cast<loan_amount_request>(payload).amount));
+	}
+};
+
+class budget_loan_ok_button : public button_element_base {
+public:
+	void button_action(sys::state& state) noexcept override {
+		if(parent) {
+			Cyto::Any payload = loan_commit_request{};
+			parent->impl_get(state, payload);
+		}
+	}
+};
+
+template<bool Taking>
+class budget_loan_window : public window_element_base {
+	int32_t selected_percent = 20;
+
+	float maximum_amount(sys::state& state) const noexcept {
+		auto nation = state.local_player_nation;
+		if constexpr(Taking) {
+			return std::max(0.0f, economy::max_loan(state, nation) - state.world.nation_get_local_loan(nation));
+		} else {
+			return std::max(0.0f, std::min(state.world.nation_get_stockpiles(nation, economy::money),
+				state.world.nation_get_local_loan(nation)));
+		}
+	}
+
 public:
 	std::unique_ptr<element_base> make_child(sys::state& state, std::string_view name, dcon::gui_def_id id) noexcept override {
 		if(name == "bg") {
 			return make_element_by_type<image_element_base>(state, id);
-		} else if(name == "repay_loan_label") {
+		} else if(name == "take_loan_label" || name == "repay_loan_label") {
 			return make_element_by_type<simple_text_element_base>(state, id);
 		} else if(name == "ok") {
-			return make_element_by_type<button_element_base>(state, id);
+			return make_element_by_type<budget_loan_ok_button>(state, id);
 		} else if(name == "cancel") {
 			return make_element_by_type<generic_close_button>(state, id);
 		} else if(name == "money_value") {
-			return make_element_by_type<simple_text_element_base>(state, id);
-		} /*else if(name == "money_slider") {
-			return nullptr;
-		}*/
-		else {
-			return nullptr;
+			return make_element_by_type<budget_loan_amount_text>(state, id);
+		} else if(name == "money_slider") {
+			return make_element_by_type<budget_loan_slider>(state, id);
 		}
+		return nullptr;
+	}
+
+	message_result get(sys::state& state, Cyto::Any& payload) noexcept override {
+		if(payload.holds_type<loan_slider_value>()) {
+			selected_percent = any_cast<loan_slider_value>(payload).percent;
+			return message_result::consumed;
+		} else if(payload.holds_type<loan_amount_request>()) {
+			auto request = any_cast<loan_amount_request>(payload);
+			request.amount = maximum_amount(state) * float(selected_percent) / 100.0f;
+			payload.emplace<loan_amount_request>(request);
+			return message_result::consumed;
+		} else if(payload.holds_type<loan_commit_request>()) {
+			auto nation = state.local_player_nation;
+			auto amount = maximum_amount(state) * float(selected_percent) / 100.0f;
+			if(amount > 0.0f) {
+				auto treasury = state.world.nation_get_stockpiles(nation, economy::money);
+				auto debt = state.world.nation_get_local_loan(nation);
+				if constexpr(Taking) {
+					state.world.nation_set_stockpiles(nation, economy::money, treasury + amount);
+					state.world.nation_set_local_loan(nation, debt + amount);
+				} else {
+					state.world.nation_set_stockpiles(nation, economy::money, treasury - amount);
+					state.world.nation_set_local_loan(nation, debt - amount);
+				}
+			}
+			set_visible(state, false);
+			return message_result::consumed;
+		}
+		return window_element_base::get(state, payload);
 	}
 };
+
+using budget_take_loan_window = budget_loan_window<true>;
+using budget_repay_loan_window = budget_loan_window<false>;
 
 class tax_list_pop_type_icon : public opaque_element_base {
 public:
@@ -2004,37 +2072,6 @@ public:
 		win101->set_visible(state, false);
 		add_child_to_front(std::move(win101));
 
-		{
-			auto elm = make_element_by_type<enable_debt_toggle>(state, state.ui_state.defs_by_name.find(state.lookup_key("alice_debt_checkbox"))->second.definition);
-			add_child_to_front(std::move(elm));
-		}
-
-		{
-			auto elm = make_element_by_type<domestic_investment_slider>(state, state.ui_state.defs_by_name.find(state.lookup_key("alice_domestic_investment_slider"))->second.definition);
-			add_child_to_front(std::move(elm));
-		}
-		{
-			auto elm = make_element_by_type<simple_text_element_base>(state, state.ui_state.defs_by_name.find(state.lookup_key("alice_domestic_investment_label"))->second.definition);
-			add_child_to_front(std::move(elm));
-		}
-		{
-			auto elm = make_element_by_type<domestic_investment_estimated_text>(state, state.ui_state.defs_by_name.find(state.lookup_key("alice_domestic_investment_value"))->second.definition);
-			add_child_to_front(std::move(elm));
-		}
-
-		{
-			auto elm = make_element_by_type<overseas_maintenance_slider>(state, state.ui_state.defs_by_name.find(state.lookup_key("alice_overseas_maintenance_slider"))->second.definition);
-			add_child_to_front(std::move(elm));
-		}
-		{
-			auto elm = make_element_by_type<simple_text_element_base>(state, state.ui_state.defs_by_name.find(state.lookup_key("alice_overseas_maintenance_label"))->second.definition);
-			add_child_to_front(std::move(elm));
-		}
-		{
-			auto elm = make_element_by_type<overseas_maintenance_estimated_text>(state, state.ui_state.defs_by_name.find(state.lookup_key("alice_overseas_maintenance_value"))->second.definition);
-			add_child_to_front(std::move(elm));
-		}
-
 		set_visible(state, false);
 	}
 
@@ -2059,18 +2096,6 @@ public:
 			return make_element_by_type<nation_budget_debt_text>(state, id);
 		} else if(name == "interest_val") {
 			return make_element_by_type<nation_budget_interest_text>(state, id);
-		} else if(name == "tab_takenloans") {
-			return make_element_by_type<invisible_element>(state, id);
-		} else if(name == "tab_givenloans") {
-			return make_element_by_type<invisible_element>(state, id);
-		} else if(name == "givenloans_text") {
-			return make_element_by_type<invisible_element>(state, id);
-		} else if(name == "take_loan") {
-			return make_element_by_type<invisible_element>(state, id);
-		} else if(name == "repay_loan") {
-			return make_element_by_type<invisible_element>(state, id);
-		} else if(name == "gunboat_alert") {
-			return make_element_by_type<invisible_element>(state, id);
 		} else if(name == "chart_debt") {
 			return make_element_by_type<debt_piechart>(state, id);
 		} else if(name == "debt_listbox") {

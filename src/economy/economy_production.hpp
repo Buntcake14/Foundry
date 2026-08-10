@@ -144,6 +144,8 @@ bool labor_shortage(sys::state& state, int32_t c, dcon::province_id);
 
 // FACTORIES
 
+float estimate_factory_consumption(sys::state& state, dcon::commodity_id c, dcon::factory_id f);
+float estimate_factory_input_demand(sys::state& state, dcon::commodity_id c, dcon::factory_id f);
 float estimate_factory_consumption(sys::state& state, dcon::commodity_id c, dcon::province_id p);
 float estimate_factory_consumption(sys::state& state, dcon::commodity_id c, dcon::state_instance_id s);
 float estimate_factory_consumption(sys::state& state, dcon::commodity_id c, dcon::nation_id n);

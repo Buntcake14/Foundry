@@ -194,6 +194,22 @@ void process_dialog_boxes(sys::state& state) {
 			}
 		}
 
+		// Direct replies to the local player's war diplomacy must be surfaced.
+		// Older Alice settings and the ally-call source-only mapping could leave
+		// these responses as log-only (or ignored), making them appear unanswered.
+		if(c6->target == state.local_player_nation) {
+			switch(base_type) {
+			case message_base_type::peace_accepted:
+			case message_base_type::peace_rejected:
+			case message_base_type::ally_called_accepted:
+			case message_base_type::ally_called_declined:
+				settings_bits |= message_response::popup;
+				break;
+			default:
+				break;
+			}
+		}
+
 		if((settings_bits & message_response::log) && state.ui_state.msg_log_window) {
 			static_cast<ui::message_log_window*>(state.ui_state.msg_log_window)->messages.push_back(*c6);
 		}

@@ -37,9 +37,14 @@ bool is_console_command(command_type t) {
 	return uint8_t(t) == 255;
 }
 // This overload will broadcast the command to all clients in MP and SP, if is_host_broadcast_command is true
-void add_to_command_queue(sys::state& state, command_data& p) {
+void add_to_command_queue(sys::state& state, command_data& p, bool defer_validation = false) {
 #ifndef NDEBUG
-	assert(command::can_perform_command(state, p));
+	// Some UI transactions enqueue dependent commands (for example: create a
+	// peace offer, add its terms, then send it). Those later commands cannot be
+	// validated until the earlier command has executed. The command processor
+	// still validates them in order before execution.
+	if(!defer_validation)
+		assert(command::can_perform_command(state, p));
 #endif
 
 	switch(p.header.type) {
@@ -3665,7 +3670,7 @@ void add_to_peace_offer(sys::state& state, dcon::nation_id source, dcon::wargoal
 	command_data p{ command_type::add_peace_offer_term, state.local_player_id };
 	auto data = offer_wargoal_data{ goal };
 	p << data;
-	add_to_command_queue(state, p);
+	add_to_command_queue(state, p, true);
 
 }
 bool can_add_to_peace_offer(sys::state& state, dcon::nation_id source, dcon::wargoal_id goal) {
@@ -3826,7 +3831,7 @@ void execute_add_to_crisis_peace_offer(sys::state& state, dcon::nation_id source
 
 void send_peace_offer(sys::state& state, dcon::nation_id source) {
 	command_data p{ command_type::send_peace_offer, state.local_player_id };
-	add_to_command_queue(state, p);
+	add_to_command_queue(state, p, true);
 
 }
 bool can_send_peace_offer(sys::state& state, dcon::nation_id source) {

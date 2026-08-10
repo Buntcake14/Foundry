@@ -733,6 +733,10 @@ void state::render() { // called to render the frame may (and should) delay retu
 	if(ownership_update) {
 		map_state.map_data.update_borders_mesh();
 		map_state.request_fresh_border_index = true;
+		// Ownership can change while the game is paused (for example, when a
+		// nation is released). Refresh the active map mode immediately instead
+		// of waiting for the next simulation/UI update.
+		map_mode::update_map_mode(*this);
 	}
 
 	if (

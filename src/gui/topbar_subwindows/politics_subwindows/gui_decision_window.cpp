@@ -95,35 +95,6 @@ public:
 	}
 };
 
-class decision_ai_will_do : public button_element_base {
-public:
-	tooltip_behavior has_tooltip(sys::state& state) noexcept override {
-		return tooltip_behavior::variable_tooltip;
-	}
-
-	void update_tooltip(sys::state& state, int32_t x, int32_t y, text::columnar_layout& contents) noexcept override {
-		auto id = retrieve<dcon::decision_id>(state, parent);
-		text::add_line(state, contents, "alice_ai_decision");
-		auto mkey = state.world.decision_get_ai_will_do(id);
-		if(mkey)
-			multiplicative_value_modifier_description(state, contents, mkey, trigger::to_generic(state.local_player_nation), trigger::to_generic(state.local_player_nation), -1);
-	}
-};
-
-class decision_potential : public button_element_base {
-public:
-	tooltip_behavior has_tooltip(sys::state& state) noexcept override {
-		return tooltip_behavior::variable_tooltip;
-	}
-
-	void update_tooltip(sys::state& state, int32_t x, int32_t y, text::columnar_layout& contents) noexcept override {
-		auto id = retrieve<dcon::decision_id>(state, parent);
-		auto potential = state.world.decision_get_potential(id);
-		if(potential)
-			trigger_description(state, contents, potential, trigger::to_generic(state.local_player_nation), trigger::to_generic(state.local_player_nation), -1);
-	}
-};
-
 class make_decision : public button_element_base {
 public:
 	sound::audio_instance& get_click_sound(sys::state& state) noexcept override {
@@ -302,15 +273,6 @@ public:
 		} else if(name == "decision_desc") {
 			return make_element_by_type<decision_desc>(state, id);
 		} else if(name == "requirements") {
-			// Extra button to tell if AI will do
-#ifndef NDebug
-			auto btn1 = make_element_by_type<decision_ai_will_do>(state, id);
-			btn1->base_data.position.x -= btn1->base_data.size.x * 2;
-			add_child_to_front(std::move(btn1));
-#endif
-			auto btn2 = make_element_by_type<decision_potential>(state, id);
-			btn2->base_data.position.x -= btn2->base_data.size.x;
-			add_child_to_front(std::move(btn2));
 			return make_element_by_type<decision_requirements>(state, id);
 		} else if(name == "ignore_checkbox") {
 			return make_element_by_type<ignore_checkbox>(state, id);

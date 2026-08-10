@@ -141,20 +141,6 @@ guiTypes = {
 		}
 		
 	}
-	iconType = {
-			name = "original_defender"
-			position = { x = 410 y = 0 }
-			extends = "diplomacy_war_info"
-			spriteType = "GFX_flag_tiny"
-	}
-	iconType = {
-			name = "original_attacker"
-			position = { x = 157 y = 0 }
-			extends = "diplomacy_war_info"
-			spriteType = "GFX_flag_tiny"
-			
-	}
-
 			
 	iconType = {
         name = "gfx_storage_unit_types"
@@ -4871,155 +4857,6 @@ guiTypes = {
 		}
 	}
 
-	checkboxType = {
-		name = "alice_debt_checkbox"
-		position = { 165 490 }
-		quadTextureSprite = "GFX_checkbox_default"
-	}
-
-	instantTextBoxType = {
-		name = "alice_domestic_investment_label"
-		text = "domestic_investment_label"
-		position = { 38 580 }
-		font = "vic_18_black"
-		borderSize = { 0 0 }
-		maxsize = { 146 18 }
-		orientation = "UPPER_LEFT"
-		format = left
-	}
-	instantTextBoxType = {
-		name = "alice_domestic_investment_value"
-		text = "0.0"
-		position = { 418 580 }
-		font = "vic_18_black"
-		borderSize = { 0 0 }
-		maxsize = { 60 18 }
-		orientation = "UPPER_LEFT"
-		format = right
-	}
-	scrollbarType = {
-		name = "alice_domestic_investment_slider"	
-		slider = "slider"
-		track = "track"
-		leftbutton = "up"
-		rightbutton = "down"
-		size = { 220 20 }
-		position = { 198 580 }
-		priority = 100			
-		minValue = 0
-		maxValue = 100
-		stepSize = 1
-		startValue = 0
-		horizontal = 1
-		useRangeLimit = yes
-		rangeLimitMin = 0
-		rangeLimitMax = 100
-		rangeLimitMinIcon = "min"
-		rangeLimitMaxIcon = "max"
-		guiButtonType = {
-			name = "slider"	
-			quadTextureSprite = "GFX_slider_circle"
-			position = { 0 0 }
-		}
-		guiButtonType = {
-			name = "track"
-			quadTextureSprite = "GFX_bg_horizontal_slider_220wide"
-			position = { 0 0 }
-		}
-		guiButtonType = {
-			name = "up"
-			quadTextureSprite = "GFX_slider_left"
-			position = { 0 0 }
-		}
-		guiButtonType = {
-			name = "down"
-			quadTextureSprite = "GFX_slider_right"
-			position = { 0 220 }
-		}
-		iconType = {
-			name = "min"
-			spriteType = "GFX_scroll_limit"
-			position = { 0 0 }
-		}
-		iconType = {
-			name = "max"
-			spriteType = "GFX_scroll_limit2"
-			position = { 0 0 }
-		}
-	}
-    
-    
-    instantTextBoxType = {
-		name = "alice_overseas_maintenance_label"
-		text = "BUDGET_OVERSEAS"
-		position = { 38 598 }
-		font = "vic_18_black"
-		borderSize = { 0 0 }
-		maxsize = { 146 18 }
-		orientation = "UPPER_LEFT"
-		format = left
-	}
-	instantTextBoxType = {
-		name = "alice_overseas_maintenance_value"
-		text = "0.0"
-		position = { 418 598 }
-		font = "vic_18_black"
-		borderSize = { 0 0 }
-		maxsize = { 60 18 }
-		orientation = "UPPER_LEFT"
-		format = right
-	}
-	scrollbarType = {
-		name = "alice_overseas_maintenance_slider"	
-		slider = "slider"
-		track = "track"
-		leftbutton = "up"
-		rightbutton = "down"
-		size = { 220 20 }
-		position = { 198 598 }
-		priority = 100			
-		minValue = 0
-		maxValue = 100
-		stepSize = 1
-		startValue = 0
-		horizontal = 1
-		useRangeLimit = yes
-		rangeLimitMin = 0
-		rangeLimitMax = 100
-		rangeLimitMinIcon = "min"
-		rangeLimitMaxIcon = "max"
-		guiButtonType = {
-			name = "slider"	
-			quadTextureSprite = "GFX_slider_circle"
-			position = { 0 0 }
-		}
-		guiButtonType = {
-			name = "track"
-			quadTextureSprite = "GFX_bg_horizontal_slider_220wide"
-			position = { 0 0 }
-		}
-		guiButtonType = {
-			name = "up"
-			quadTextureSprite = "GFX_slider_left"
-			position = { 0 0 }
-		}
-		guiButtonType = {
-			name = "down"
-			quadTextureSprite = "GFX_slider_right"
-			position = { 0 220 }
-		}
-		iconType = {
-			name = "min"
-			spriteType = "GFX_scroll_limit"
-			position = { 0 0 }
-		}
-		iconType = {
-			name = "max"
-			spriteType = "GFX_scroll_limit2"
-			position = { 0 0 }
-		}
-	}
-
 	windowType = {
 		name = "alice_macro_builder"
 		position = { 420 400 }
@@ -5210,11 +5047,6 @@ guiTypes = {
 		quadTextureSprite = "GFX_checkbox_default"	
 	}
 	guiButtonType = {
-		name = "alice_military_mobilized_is_ai_controlled"
-		position = { 379 559 }
-		quadTextureSprite = "GFX_checkbox_default"
-	}
-	guiButtonType = {
 		name = "alice_interested_in_alliance"
 		position = { 0 0 }
 		quadTextureSprite = "GFX_checkbox_default"	
@@ -5316,20 +5148,6 @@ guiTypes = {
 		buttonText = "Test"
 		clicksound = click
 	}
-    
-    windowType = {
-        name = "table_production_methods"
-        position = { 80 60 }	
-        size = { 800 540 }
-        
-        listboxType = {
-            name = "table_production_methods_body"
-            position = { 0 40 }	
-            size = { 800 500 }
-        }
-        
-        extends = "country_production"
-    }
     
     windowType = {
 		name = "alice_country_trade"
@@ -6034,26 +5852,6 @@ guiTypes = {
 		format = centre
 	}
 
-	checkboxType = {
-		name = "run_conference_checkbox"
-		position = { x= 347 y = 471 }
-		quadTextureSprite = "GFX_checkbox_default"
-		extends = "DeclareWarDialog"
-	}
-		
-	instantTextBoxType = {
-		name = "run_conferences_text"
-		position = { x = 340 y = 474 }
-		textureFile = ""
-		font = "vic_18"
-		borderSize = {x = 0 y = 0}
-		text = "DIPLO_RUN_CONFERENCE"	
-		maxWidth = 200
-		maxHeight = 20
-		format = centre
-		extends = "DeclareWarDialog"
-	}
-
 	guiButtonType = {
 		name = "crisis_add_wg"
 		position = { x = 10 y = 110 }
@@ -6236,120 +6034,6 @@ guiTypes = {
         Orientation = "UPPER_LEFT"
         buttonText = ""
         buttonFont = "vic_22_black"
-    }
-	listboxType = {
-		name = "diplomacy_actions_list"
-		position = { x=677 y =395 }
-        size = { 320 216 }
-	}
-	windowType = {
-		name = "diplomacy_actions_list_entry"
-		position = { x=0 y=0 }	
-		size = { x=320 y=24 }
-		horizontalBorder = "0"
-		orientation="UPPER_LEFT"
-
-		guiButtonType = {
-				position = { x=0 y=0 }	
-				size = { x=160 y=24 }
-				name = "action_option_1"
-				quadTextureSprite = "GFX_button_thin_160"
-				buttonFont = "vic_18_black"
-				Orientation = "UPPER_LEFT"
-				clicksound = click
-		}
-
-		guiButtonType = {
-				position = { x=160 y=0 }	
-				size = { x=160 y=24 }
-				name = "action_option_2"
-				quadTextureSprite = "GFX_button_thin_160"
-				buttonFont = "vic_18_black"
-				Orientation = "UPPER_LEFT"
-				clicksound = click
-		}
-	}
-
-	windowType = {
-		name = "factory_refit_window"
-		position = { x=320 y=-80 }	
-		size = { x=240 y=490 }
-		horizontalBorder = "0"
-		orientation="UPPER_LEFT"
-
-		iconType =
-		{
-			name ="factory_refit_window_bg"
-			spriteType = "bg-factory-type"
-			position = { x= 0 y = 0 }
-			Orientation = "UPPER_LEFT"
-		}
-			
-		listboxType = 	{
-			name ="factory_refit_type_list"
-			position = { x = 6 y = 10 }
-			backGround=""
-			size = { x=230 y =490 }
-			Orientation = "UPPER_LEFT"
-			spacing = 1
-			scrollbartype = "standardlistbox_slider"
-			borderSize = {x = 0 y = 0}
-		}
-	}
-
-	windowType = {
-		name = "factory_refit_type_item"
-		position = { x=0 y=0 }	
-		size = { x=220 y=40 }
-		horizontalBorder = "0"
-		orientation="UPPER_LEFT"
-		
-		iconType =	{
-			name ="factory_type_icon"
-			spriteType = "GFX_resources"
-			position = { x= 0 y = 3 }
-		}
-	
-		guiButtonType = {
-			name = "factory_type_select"
-			position = { x = 35 y = 0 }
-			size = { x=180 y=40 }
-			quadTextureSprite ="GFX_diplo_wargoal_button"
-			buttonFont = "vic_18_black"
-			buttonText = "Test"
-			clicksound = click
-		}
-	}
-
-	guiButtonType = {
-		name = "factory_refit_button"
-		position = { x = 60 y = 15 }
-		quadTextureSprite ="GFX_unit_upgrade_button"
-		extends="factory_info"
-	}
-
-	iconType = {
-			name = "nation_icon_religion"
-			spriteType = "GFX_icon_religion"
-			position = { x = 300 y = 195 }
-			Orientation = "UPPER_LEFT"
-			extends = "diplomacy_country_facts"
-	}
-
-	iconType = {
-        name = "industry_size_icon"
-        spriteType = "GFX_budget_ind_sup_icon"
-        position = { x= 32 y = 233 }
-		Orientation = "UPPER_LEFT"
-		extends="diplomacy_country_facts"
-    }
-
-	iconType = {
-        name = "trade_size_icon"
-        spriteType = "GFX_budget_nat_stock_icon"
-        position = { x= 55 y = 233 }
-		Orientation = "UPPER_LEFT"
-		extends="diplomacy_country_facts"
     }
 	guiButtonType = {
         name = "move_siege_order"
