@@ -33,6 +33,7 @@ struct level_definition {
 	dcon::modifier_id modifier;
 	economy::commodity_set cost;
 	int16_t construction_time = 0;
+	int16_t building_capacity = 0;
 	float rgo_output_penalty = 0.f;
 	bool unlocks_factories = false;
 	bool unlocks_admin_buildings = false;
@@ -60,5 +61,13 @@ bool province_unlocks_admin_buildings(sys::state& state, dcon::province_id p);
 // province's resource-extraction land, scaled by the urban center's current
 // level -- read directly by economy.cpp's RGO size calculation.
 float province_urban_rgo_penalty(sys::state& state, dcon::province_id p);
+
+// Urban building space is independent of visual era. The completed Urban
+// Center level supplies capacity; each existing/new factory site reserves one
+// point in the first implementation. Factory level upgrades do not consume an
+// additional point yet.
+int32_t province_urban_building_capacity(sys::state& state, dcon::province_id p);
+int32_t province_used_urban_building_capacity(sys::state& state, dcon::province_id p);
+bool province_has_urban_building_capacity(sys::state& state, dcon::province_id p, int32_t required = 1);
 
 }

@@ -5,13 +5,32 @@ set -euo pipefail
 V2_DIR="/mnt/3efc8a63-8689-4f23-a294-632f170f151c/SteamLibrary/steamapps/common/Victoria 2"
 FOUNDRY_DIR="/home/seth/Documents/Projects/Foundry"
 
+# Keep both executables current. The launcher starts AliceIncremental for the
+# game itself, so rebuilding only launch_alice can pair new GUI files with stale
+# C++ element names and cause null UI-child crashes.
+cmake --build "$FOUNDRY_DIR/build" --target AliceIncremental launch_alice -j2
+
 # Project Alice loads these GUI definitions from the Victoria 2 working
 # directory, not from the build tree. Synchronize only the files maintained by
 # this UI restoration work; other runtime assets may intentionally differ.
 cmake -E copy_if_different "$FOUNDRY_DIR/assets/alice.gui" "$V2_DIR/assets/alice.gui"
 cmake -E copy_if_different "$FOUNDRY_DIR/assets/alice.gfx" "$V2_DIR/assets/alice.gfx"
 cmake -E copy_if_different "$FOUNDRY_DIR/assets/alice_menubar.gui" "$V2_DIR/assets/alice_menubar.gui"
+cmake -E copy_if_different "$FOUNDRY_DIR/assets/foundry_project_icons.png" "$V2_DIR/assets/foundry_project_icons.png"
 cmake -E copy_if_different "$FOUNDRY_DIR/assets/foundry_urban_density.png" "$V2_DIR/assets/foundry_urban_density.png"
+cmake -E copy_if_different "$FOUNDRY_DIR/assets/foundry_urban_center_bg.png" "$V2_DIR/assets/foundry_urban_center_bg.png"
+cmake -E copy_if_different "$FOUNDRY_DIR/assets/foundry_urban_density_inset.png" "$V2_DIR/assets/foundry_urban_density_inset.png"
+cmake -E copy_if_different "$FOUNDRY_DIR/assets/foundry_urban_density_fitted.png" "$V2_DIR/assets/foundry_urban_density_fitted.png"
+cmake -E copy_if_different "$FOUNDRY_DIR/assets/foundry_urban_center_bg_v2.png" "$V2_DIR/assets/foundry_urban_center_bg_v2.png"
+cmake -E copy_if_different "$FOUNDRY_DIR/assets/foundry_urban_center_bg_v3.png" "$V2_DIR/assets/foundry_urban_center_bg_v3.png"
+cmake -E copy_if_different "$FOUNDRY_DIR/assets/foundry_urban_center_bg_v4.png" "$V2_DIR/assets/foundry_urban_center_bg_v4.png"
+cmake -E copy_if_different "$FOUNDRY_DIR/assets/foundry_urban_center_bg_v5.png" "$V2_DIR/assets/foundry_urban_center_bg_v5.png"
+cmake -E copy_if_different "$FOUNDRY_DIR/assets/foundry_urban_center_bg_v6.png" "$V2_DIR/assets/foundry_urban_center_bg_v6.png"
+cmake -E copy_if_different "$FOUNDRY_DIR/assets/foundry_urban_center_bg_v7.png" "$V2_DIR/assets/foundry_urban_center_bg_v7.png"
+cmake -E copy_if_different "$FOUNDRY_DIR/assets/foundry_urban_subheader.png" "$V2_DIR/assets/foundry_urban_subheader.png"
+cmake -E copy_if_different "$FOUNDRY_DIR/assets/foundry_urban_subheader_wide.png" "$V2_DIR/assets/foundry_urban_subheader_wide.png"
+cmake -E copy_if_different "$FOUNDRY_DIR/assets/foundry_urban_stats_box.png" "$V2_DIR/assets/foundry_urban_stats_box.png"
+cmake -E copy_if_different "$FOUNDRY_DIR/assets/foundry_urban_stats_box_v2.png" "$V2_DIR/assets/foundry_urban_stats_box_v2.png"
 
 # Foundry is the base game, not a Victoria 2 mod. Keep Foundry-owned Production
 # UI definitions and graphics in the base runtime so they load with no mod

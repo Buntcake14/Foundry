@@ -16,7 +16,9 @@ public:
 		auto capacity = economy::national_construction_capacity(state, state.local_player_nation);
 		auto active = economy::active_civil_construction_projects(state, state.local_player_nation);
 		auto queued = economy::queued_civil_construction_projects(state, state.local_player_nation);
+		auto stockpiling = economy::stockpiling_civil_construction_projects(state, state.local_player_nation);
 		set_text(state, "Construction Capacity: " + text::format_float(capacity.total, 1)
+			+ "     Stockpiling: " + std::to_string(stockpiling)
 			+ "     Active: " + std::to_string(active)
 			+ "     Queued: " + std::to_string(queued));
 	}
@@ -38,7 +40,7 @@ public:
 		add_breakdown("Total after local urban and infrastructure modifiers", capacity.total);
 		auto box = text::open_layout_box(contents, 0);
 		text::add_unparsed_text_to_layout_box(state, contents, box,
-			"Each capacity point supports one civil project at normal speed. A fractional remainder partially supports the next project; later projects wait in the queue.");
+			"Projects may stockpile goods without using construction capacity. Once fully supplied, each capacity point supports one civil project at normal speed. A fractional remainder partially supports the next project; later supplied projects wait in the queue.");
 		text::close_layout_box(contents, box);
 		box = text::open_layout_box(contents, 0);
 		text::add_unparsed_text_to_layout_box(state, contents, box,
@@ -211,6 +213,7 @@ public:
 		economy::commodity_set needed_commodities{};
 		bool private_project = false;
 		float capacity_share = 0.f;
+		float build_progress = 0.f;
 		if(std::holds_alternative<dcon::province_building_construction_id>(content)) {
 			factory_icon->set_visible(state, false);
 			building_icon->set_visible(state, true);
@@ -234,6 +237,7 @@ public:
 			needed_commodities = state.economy_definitions.building_definitions[int32_t(type)].cost;
 
 			satisfied_commodities = fat_id.get_purchased_goods();
+			build_progress = fat_id.get_build_progress();
 		} else if(std::holds_alternative<dcon::factory_construction_id>(content)) {
 			factory_icon->set_visible(state, true);
 			building_icon->set_visible(state, false);
@@ -247,6 +251,7 @@ public:
 			name_text->set_text(state, text::produce_simple_string(state, fat_id.get_type().get_name()));
 			needed_commodities = fat_id.get_type().get_construction_costs();
 			satisfied_commodities = fat_id.get_purchased_goods();
+			build_progress = fat_id.get_build_progress();
 
 			float factory_mod = economy::factory_build_cost_multiplier(state, state.local_player_nation, fat_id.get_province(), fat_id.get_is_pop_project());
 			float refit_discount = (fat_id.get_refit_target()) ? state.defines.alice_factory_refit_cost_modifier : 1.0f;
@@ -268,21 +273,33 @@ public:
 			name_text->set_text(state, "Urban Center Level " + std::to_string(int32_t(current_level) + 1));
 			auto& definition = state.world.civic_building_type_get_levels(project.type)[current_level];
 			needed_commodities = definition.cost;
-			auto progress = std::clamp(
-				state.world.province_get_civic_building_progress(project.province, project.type.index()), 0.f, 1.f);
-			for(uint32_t i = 0; i < economy::commodity_set::set_size; ++i)
-				satisfied_commodities.commodity_amounts[i] = needed_commodities.commodity_amounts[i] * progress;
+			satisfied_commodities = state.world.province_get_civic_building_purchased_goods(
+				project.province, project.type.index());
+			build_progress = state.world.province_get_civic_building_progress(
+				project.province, project.type.index());
 		}
 		if(funder_text)
 			funder_text->set_text(state, private_project ? "Private" : "Government");
 		if(capacity_status_text) {
-			if(capacity_share <= 0.f)
-				capacity_status_text->set_text(state, "Queued");
+			bool goods_ready = true;
+			for(uint32_t i = 0; i < economy::commodity_set::set_size; ++i) {
+				if(!needed_commodities.commodity_type[i]) break;
+				if(satisfied_commodities.commodity_amounts[i] + 0.0001f < needed_commodities.commodity_amounts[i]) {
+					goods_ready = false;
+					break;
+				}
+			}
+			if(!goods_ready)
+				capacity_status_text->set_text(state, "Acquiring Goods");
+			else if(capacity_share <= 0.f)
+				capacity_status_text->set_text(state, "Supplied - Queued");
 			else if(capacity_share >= 0.999f)
-				capacity_status_text->set_text(state, "Active");
+				capacity_status_text->set_text(state,
+					"Building " + text::format_percentage(std::clamp(build_progress, 0.f, 1.f), 0));
 			else
 				capacity_status_text->set_text(state,
-					std::to_string(int32_t(capacity_share * 100.f + 0.5f)) + "% Capacity");
+					"Building " + text::format_percentage(std::clamp(build_progress, 0.f, 1.f), 0)
+					+ " (" + std::to_string(int32_t(capacity_share * 100.f + 0.5f)) + "% Capacity)");
 		}
 
 		if(input_listbox) {

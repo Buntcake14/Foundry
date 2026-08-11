@@ -51,6 +51,62 @@ public:
 	}
 };
 
+class urban_center_capacity_piechart : public piechart<dcon::province_id> {
+public:
+	void on_update(sys::state& state) noexcept override {
+		auto province = retrieve<dcon::province_id>(state, parent);
+		auto capacity = civic_buildings::province_urban_building_capacity(state, province);
+		auto used = std::min(civic_buildings::province_used_urban_building_capacity(state, province), capacity);
+		distribution.clear();
+		if(capacity <= 0)
+			return;
+
+		auto used_slices = uint8_t(std::clamp<int32_t>(
+			int32_t(std::round(float(used) * float(resolution) / float(capacity))), 0, resolution));
+		auto free_slices = uint8_t(resolution - used_slices);
+		if(used_slices)
+			distribution.emplace_back(dcon::province_id{0}, float(used) / float(capacity));
+		if(free_slices)
+			distribution.emplace_back(dcon::province_id{1}, float(capacity - used) / float(capacity));
+		for(auto& entry : distribution)
+			entry.slices = entry.key.index() == 0 ? used_slices : free_slices;
+
+		size_t offset = 0;
+		for(auto const& entry : distribution) {
+			auto const used_color = entry.key.index() == 0;
+			for(size_t i = 0; i < entry.slices; ++i, ++offset) {
+				data_texture.data[offset * channels] = used_color ? uint8_t(112) : uint8_t(199);
+				data_texture.data[offset * channels + 1] = used_color ? uint8_t(35) : uint8_t(184);
+				data_texture.data[offset * channels + 2] = used_color ? uint8_t(58) : uint8_t(132);
+			}
+		}
+		data_texture.data_updated = true;
+	}
+
+	void update_tooltip(sys::state& state, int32_t x, int32_t y,
+			text::columnar_layout& contents) noexcept override {
+		auto province = retrieve<dcon::province_id>(state, parent);
+		auto capacity = civic_buildings::province_urban_building_capacity(state, province);
+		if(capacity <= 0) {
+			auto box = text::open_layout_box(contents);
+			text::add_unparsed_text_to_layout_box(state, contents, box,
+				"No building capacity. Construct an Urban Center to create the first building slot.");
+			text::close_layout_box(contents, box);
+			return;
+		}
+		piechart<dcon::province_id>::update_tooltip(state, x, y, contents);
+	}
+
+	void populate_tooltip(sys::state& state, dcon::province_id key, float percentage,
+			text::columnar_layout& contents) noexcept override {
+		auto box = text::open_layout_box(contents);
+		text::add_unparsed_text_to_layout_box(state, contents, box,
+			std::string(key.index() == 0 ? "Used capacity: " : "Free capacity: ")
+			+ text::format_percentage(percentage, 0));
+		text::close_layout_box(contents, box);
+	}
+};
+
 class urban_center_upgrade_button : public button_element_base {
 public:
 	void on_update(sys::state& state) noexcept override {
@@ -92,7 +148,10 @@ public:
 };
 
 class urban_center_detail_window : public window_element_base {
-	simple_text_element_base* level_text = nullptr;
+	simple_text_element_base* level_value = nullptr;
+	simple_text_element_base* era_text = nullptr;
+	simple_text_element_base* capacity_value = nullptr;
+	urban_center_progress_bar* construction_progress = nullptr;
 	simple_text_element_base* progress_text = nullptr;
 	std::array<simple_text_element_base*, economy::commodity_set::set_size> goods_text{};
 public:
@@ -104,15 +163,33 @@ public:
 			return make_element_by_type<urban_center_close_button>(state, id);
 		if(name == "density_image")
 			return make_element_by_type<urban_center_density_image>(state, id);
-		if(name == "urban_title" || name == "goods_header")
+		if(name == "urban_title" || name == "goods_header" || name == "capacity_chart_label"
+				|| name == "level_label" || name == "capacity_label")
 			return make_element_by_type<simple_text_element_base>(state, id);
-		if(name == "level_text") {
+		if(name == "capacity_chart")
+			return make_element_by_type<urban_center_capacity_piechart>(state, id);
+		if(name == "capacity_overlay" || name == "goods_header_background" || name == "stats_background")
+			return make_element_by_type<image_element_base>(state, id);
+		if(name == "level_value") {
 			auto ptr = make_element_by_type<simple_text_element_base>(state, id);
-			level_text = ptr.get();
+			level_value = ptr.get();
 			return ptr;
 		}
-		if(name == "construction_progress")
-			return make_element_by_type<urban_center_progress_bar>(state, id);
+		if(name == "era_text") {
+			auto ptr = make_element_by_type<simple_text_element_base>(state, id);
+			era_text = ptr.get();
+			return ptr;
+		}
+		if(name == "capacity_value") {
+			auto ptr = make_element_by_type<simple_text_element_base>(state, id);
+			capacity_value = ptr.get();
+			return ptr;
+		}
+		if(name == "construction_progress") {
+			auto ptr = make_element_by_type<urban_center_progress_bar>(state, id);
+			construction_progress = ptr.get();
+			return ptr;
+		}
 		if(name == "progress_text") {
 			auto ptr = make_element_by_type<simple_text_element_base>(state, id);
 			progress_text = ptr.get();
@@ -137,12 +214,38 @@ public:
 			return;
 		auto level = state.world.province_get_civic_building_level(province, type.index());
 		auto max_level = state.world.civic_building_type_get_level_count(type);
-		level_text->set_text(state, "URBAN CENTER LEVEL " + std::to_string(level)
-			+ " / " + std::to_string(max_level));
-		auto progress = state.world.province_get_civic_building_progress(province, type.index());
-		progress_text->set_text(state, progress > 0.f
-			? "CONSTRUCTION: " + text::format_percentage(progress, 0)
-			: "NO CONSTRUCTION IN PROGRESS");
+		level_value->set_text(state, std::to_string(level) + " / " + std::to_string(max_level));
+		auto year = state.current_date.to_ymd(state.start_date).year;
+		std::string era = year < 1820 ? "GEORGIAN ERA"
+			: year < 1870 ? "EARLY INDUSTRIAL ERA"
+			: year < 1914 ? "HIGH INDUSTRIAL ERA"
+			: year < 1945 ? "INTERWAR ERA" : "MODERN ERA";
+		era_text->set_text(state, era + "  (VISUAL STYLE)");
+		auto capacity = civic_buildings::province_urban_building_capacity(state, province);
+		auto used = civic_buildings::province_used_urban_building_capacity(state, province);
+		capacity_value->set_text(state, std::to_string(used) + " / " + std::to_string(capacity));
+		auto constructing = civic_buildings::upgrade_in_progress(state, province, type);
+		bool goods_ready = constructing;
+		if(constructing && level < max_level) {
+			auto const& next = state.world.civic_building_type_get_levels(type)[level];
+			auto const& purchased = state.world.province_get_civic_building_purchased_goods(province, type.index());
+			for(uint32_t i = 0; i < economy::commodity_set::set_size; ++i) {
+				if(!next.cost.commodity_type[i]) break;
+				if(purchased.commodity_amounts[i] + 0.0001f < next.cost.commodity_amounts[i]) {
+					goods_ready = false;
+					break;
+				}
+			}
+		}
+		if(construction_progress)
+			construction_progress->set_visible(state, constructing && goods_ready);
+		if(progress_text) {
+			progress_text->set_visible(state, !constructing || !goods_ready);
+			if(!constructing)
+				progress_text->set_text(state, "NO CONSTRUCTION IN PROGRESS");
+			else if(!goods_ready)
+				progress_text->set_text(state, "ACQUIRING CONSTRUCTION GOODS");
+		}
 
 		for(auto* row : goods_text)
 			if(row) row->set_text(state, "");
@@ -153,13 +256,13 @@ public:
 			auto commodity = next.cost.commodity_type[i];
 			if(!commodity || !goods_text[i])
 				break;
-			auto market = state.world.state_instance_get_market_from_local_market(
-				state.world.province_get_state_membership(province));
-			auto satisfaction = state.world.market_get_actual_probability_to_buy(market, commodity);
 			auto amount = next.cost.commodity_amounts[i];
+			auto purchased = constructing
+				? state.world.province_get_civic_building_purchased_goods(province, type.index()).commodity_amounts[i]
+				: 0.f;
 			goods_text[i]->set_text(state, text::get_commodity_name_with_icon(state, commodity)
-				+ "   " + std::to_string(int32_t(amount)) + " required   "
-				+ text::format_percentage(satisfaction, 0) + " available");
+				+ "   " + text::format_float(purchased, 1) + " / " + text::format_float(amount, 1)
+				+ " stockpiled");
 		}
 	}
 };

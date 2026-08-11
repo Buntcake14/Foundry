@@ -34,6 +34,7 @@ float civil_construction_capacity_share(sys::state& state, dcon::province_buildi
 float civil_construction_capacity_share(sys::state& state, civic_construction_project construction);
 int32_t active_civil_construction_projects(sys::state& state, dcon::nation_id nation);
 int32_t queued_civil_construction_projects(sys::state& state, dcon::nation_id nation);
+int32_t stockpiling_civil_construction_projects(sys::state& state, dcon::nation_id nation);
 
 float factory_construction_progress(sys::state& state, dcon::factory_construction_id construction);
 

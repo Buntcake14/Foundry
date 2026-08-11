@@ -666,6 +666,8 @@ bool can_begin_factory_building_construction(sys::state& state, dcon::nation_id 
 		// Requires an urban center to have unlocked factory construction in this province
 		if(!civic_buildings::province_unlocks_factories(state, location))
 			return false;
+		if(!civic_buildings::province_has_urban_building_capacity(state, location))
+			return false;
 		// Disallow building in colonies unless define flag is set
 		if(economy::is_colony(state, sid) && !economy::can_build_factory_type_in_colony(state, sid, type))
 			return false;

@@ -1,5 +1,11 @@
 #94723 <-- DO NOT REMOVE ... the file system tests are looking for this
 
+add_executable(foundry_market_prototype_tests
+	"${PROJECT_SOURCE_DIR}/tests/foundry_market_prototype_tests.cpp"
+)
+target_include_directories(foundry_market_prototype_tests PRIVATE "${PROJECT_SOURCE_DIR}/src")
+add_test(NAME foundry_market_prototype_tests COMMAND foundry_market_prototype_tests)
+
 add_executable(tests_project "${PROJECT_SOURCE_DIR}/tests/test_main.cpp"
 	"${PROJECT_SOURCE_DIR}/src/gui/alice_ui.cpp"
 	"${PROJECT_SOURCE_DIR}/src/map/map_state.cpp"

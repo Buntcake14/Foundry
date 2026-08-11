@@ -4923,7 +4923,9 @@ construction_status province_building_construction(sys::state& state, dcon::prov
 				total += required;
 				purchased += std::min(current, required);
 			}
-			return construction_status{ total > 0.0f ? purchased / total : 0.0f, true };
+				auto goods_progress = total > 0.0f ? purchased / total : 1.0f;
+				return construction_status{
+					goods_progress >= 0.9999f ? pb_con.get_build_progress() : goods_progress, true };
 		}
 	}
 	return construction_status{ 0.0f, false };
@@ -5179,7 +5181,7 @@ void resolve_constructions(sys::state& state) {
 		assert(0 <= int32_t(t) && int32_t(t) < int32_t(economy::max_building_types));
 		auto& base_cost = state.economy_definitions.building_definitions[int32_t(t)].cost;
 		auto& current_purchased = state.world.province_building_construction_get_purchased_goods(c);
-		bool all_finished = true;
+		bool all_finished = state.world.province_building_construction_get_build_progress(c) >= 1.f;
 
 		for(uint32_t j = 0; j < commodity_set::set_size && all_finished; ++j) {
 			if(base_cost.commodity_type[j]) {
@@ -5261,7 +5263,8 @@ void resolve_constructions(sys::state& state) {
 		float factory_mod = factory_build_cost_multiplier(state, n, c.get_province(), c.get_is_pop_project());
 
 		if(!state.world.factory_construction_get_is_pop_project(c)) {
-			bool all_finished = true;
+			bool all_finished = (n == state.local_player_nation && state.cheat_data.instant_industry)
+				|| state.world.factory_construction_get_build_progress(c) >= 1.f;
 			if(!(n == state.local_player_nation && state.cheat_data.instant_industry)) {
 				for(uint32_t j = 0; j < commodity_set::set_size && all_finished; ++j) {
 					if(base_cost.commodity_type[j]) {
@@ -5289,7 +5292,8 @@ void resolve_constructions(sys::state& state) {
 				state.world.delete_factory_construction(c);
 			}
 		} else {
-			bool all_finished = true;
+			bool all_finished = (n == state.local_player_nation && state.cheat_data.instant_industry)
+				|| state.world.factory_construction_get_build_progress(c) >= 1.f;
 			if(!(n == state.local_player_nation && state.cheat_data.instant_industry)) {
 				for(uint32_t j = 0; j < commodity_set::set_size && all_finished; ++j) {
 					if(base_cost.commodity_type[j]) {

@@ -1836,6 +1836,16 @@ object {
 		tag{ save }
 	}
 	property {
+		name{ civic_building_active }
+		type{ array{int32_t}{uint8_t} }
+		tag{ save }
+	}
+	property {
+		name{ civic_building_purchased_goods }
+		type{ array{int32_t}{economy::commodity_set} }
+		tag{ save }
+	}
+	property {
 		name{ population_year_ago }
 		type{ float }
 		tag{ save }
@@ -5218,6 +5228,11 @@ relationship{
 		type{ bitfield }
 		tag{ save }
 	}
+	property{
+		name{ build_progress }
+		type{ float }
+		tag{ save }
+	}
 }
 
 relationship{
@@ -5264,6 +5279,11 @@ relationship{
 	property{
 		name{ refit_target }
 		type{ factory_type_id }
+		tag{ save }
+	}
+	property{
+		name{ build_progress }
+		type{ float }
 		tag{ save }
 	}
 }
@@ -6241,5 +6261,4 @@ load_save{
 	only_objects{mp_data}
 	only_properties{mp_data}
 }
-
 

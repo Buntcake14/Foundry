@@ -42,6 +42,7 @@ void civic_buildings_file::result(std::string_view name, civic_building_definiti
 		stored.requirement = parsed.requirement;
 		stored.modifier = parsed.modifier_id_;
 		stored.construction_time = int16_t(parsed.time);
+		stored.building_capacity = int16_t(std::clamp(parsed.building_capacity, 0, 32767));
 		stored.rgo_output_penalty = parsed.rgo_output_penalty;
 		stored.unlocks_factories = parsed.unlocks_factories;
 		stored.unlocks_admin_buildings = parsed.unlocks_admin_buildings;

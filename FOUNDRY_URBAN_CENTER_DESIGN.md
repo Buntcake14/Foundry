@@ -1,5 +1,9 @@
 # Foundry Urban Centers
 
+Implementation note: the reusable geometry, raster, GUI/C++ binding, build,
+cache, and testing lessons from this window are documented in
+[`docs/FOUNDRY_UI_WINDOW_GUIDE.md`](docs/FOUNDRY_UI_WINDOW_GUIDE.md).
+
 Urban centers are government-planned provincial projects spanning Foundry's
 1760–1960 timeline. They are not factories and they are not an abstract
 national construction sector. They represent the long-lived physical and
@@ -52,3 +56,15 @@ Historical starting levels must be seeded from scenario data or a one-time
 scenario-generation process. They must not be inferred and granted every day.
 This lets 1760, 1836, and later bookmarks represent historically different
 urban networks without free automatic development during play.
+# Universal Two-Stage Construction
+
+All permanent buildings use the same two-stage project lifecycle:
+
+1. **Acquiring goods:** the project purchases and reserves its complete construction recipe. Purchased materials remain attached to that project through market shortages, pauses, and save/load cycles.
+2. **Under construction:** only after every required commodity is stockpiled does physical construction begin. Build progress then advances for the building's configured construction time, modified by the share of national construction capacity assigned to the project.
+
+The building becomes operational only when both stages are complete. Factories, factory upgrades and refits, railroads, forts, naval bases, and civic buildings such as Urban Centers all follow this rule. Queued projects do not advance either stage until they receive construction capacity.
+
+Goods acquisition does not consume construction capacity. Any authorized project may reserve materials while other projects are being built. Once fully supplied, it enters the physical construction queue; it may remain `Supplied - Queued` indefinitely until national capacity becomes available.
+
+The Projects UI must always distinguish `Acquiring Goods`, `Supplied - Queued`, and `Building`, show actual reserved/required quantities for every commodity, and show physical build percentage only during the second stage.

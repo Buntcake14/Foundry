@@ -709,10 +709,41 @@ spriteTypes = {
 		name = "GFX_foundry_project_icons"
 		texturefile = "assets\\foundry_project_icons.png"
 		noOfFrames = 7
+		norefcount = yes
+		transparencecheck = yes
 	}
 	spriteType = {
 		name = "GFX_foundry_urban_density"
-		texturefile = "assets\\foundry_urban_density.png"
+		texturefile = "assets\\foundry_urban_density_fitted.png"
+		noOfFrames = 9
+	}
+	spriteType = {
+		name = "GFX_foundry_urban_center_bg"
+		texturefile = "assets\\foundry_urban_center_bg_v7.png"
+		noOfFrames = 1
+	}
+	spriteType = {
+		name = "GFX_foundry_urban_subheader"
+		texturefile = "assets\\foundry_urban_subheader_wide.png"
+		noOfFrames = 1
+	}
+	spriteType = {
+		name = "GFX_foundry_urban_stats_box"
+		texturefile = "assets\\foundry_urban_stats_box_v2.png"
+		noOfFrames = 1
+	}
+	progressbartype = {
+		name = "GFX_foundry_urban_progress"
+		color = { 0.0 0.5 0.0 }
+		colortwo = { 1.0 0.0 0.0 }
+		textureFile1 = "gfx\\interface\\investrail_progress2.dds"
+		textureFile2 = "gfx\\interface\\investrail_progress1.dds"
+		size = { x = 99 y = 6 }
+		effectFile = "gfx\\FX\\progress.fx"
+	}
+	spriteType = {
+		name = "GFX_foundry_urban_density_inset"
+		texturefile = "assets\\foundry_urban_density_inset.png"
 		noOfFrames = 9
 	}
 }

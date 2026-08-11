@@ -11,6 +11,7 @@
 #include "gui_element_base.hpp"
 #include "gui_templates.hpp"
 #include "constants_ui.hpp"
+#include "foundry_transport_shadow.hpp"
 #define STB_IMAGE_WRITE_IMPLEMENTATION 1
 #include "stb_image_write.h"
 
@@ -138,7 +139,9 @@ void ui::console_edit::on_edit_command(sys::state& state, edit_command command, 
 
 void ui::console_edit::on_text(sys::state& state, char32_t ch) noexcept {
 	if(ch == u'`' || ch == u'\\') {
-		ui::console_window::show_toggle(state);
+		// Console visibility is controlled by the key-down hotkey. Treat the
+		// corresponding text event only as a character to discard; toggling here
+		// makes one physical key press open and immediately close the window.
 		return;
 	}
 	edit_box_element_base::on_text(state, ch);
@@ -1197,6 +1200,25 @@ int32_t* f_dump_econ(fif::state_stack& s, int32_t* p, fif::environment* e) {
 
 	return p + 2;
 }
+
+int32_t* f_market_shadow(fif::state_stack& s, int32_t* p, fif::environment* e) {
+	if(fif::typechecking_mode(e->mode)) {
+		if(!fif::typechecking_failed(e->mode)) s.pop_main();
+		return p + 2;
+	}
+
+	auto state_global = fif::get_global_var(*e, "state-ptr");
+	auto* state = (sys::state*)(state_global->data);
+	dcon::commodity_id commodity;
+	commodity.value = dcon::commodity_id::value_base_t(s.main_data_back(0));
+	s.pop_main();
+
+	auto seed = state->map_state.selected_province;
+	if(!seed && state->local_player_nation) seed = state->world.nation_get_capital(state->local_player_nation);
+	auto report = economy::foundry_transport::run_live_shadow(*state, seed, commodity, 5);
+	log_to_console(*state, state->ui_state.console_window, simple_fs::utf8_to_utf16(report));
+	return p + 2;
+}
 int32_t* f_provid(fif::state_stack& s, int32_t* p, fif::environment* e) {
 	if(fif::typechecking_mode(e->mode)) {
 		if(fif::typechecking_failed(e->mode))
@@ -1552,6 +1574,7 @@ void ui::initialize_console_fif_environment(sys::state& state) {
 
 	auto nation_id_type = state.fif_environment->dict.types.find("nation_id")->second;
 	auto prov_id_type = state.fif_environment->dict.types.find("province_id")->second;
+	auto commodity_id_type = state.fif_environment->dict.types.find("commodity_id")->second;
 
 	fif::add_import("clear", nullptr, f_clear, {}, {}, * state.fif_environment);
 	fif::add_import("fps", nullptr, f_fps, { fif::fif_bool }, {}, * state.fif_environment);
@@ -1584,6 +1607,7 @@ void ui::initialize_console_fif_environment(sys::state& state) {
 	fif::add_import("add-days", nullptr, f_add_days, { fif::fif_i32 }, {}, * state.fif_environment);
 	fif::add_import("save-map", nullptr, f_save_map, { fif::fif_i32 }, {}, * state.fif_environment);
 	fif::add_import("dump-econ", nullptr, f_dump_econ, {  }, {}, * state.fif_environment);
+	fif::add_import("market-shadow", nullptr, f_market_shadow, { commodity_id_type }, {}, *state.fif_environment);
 	fif::add_import("provid", nullptr, f_provid, { fif::fif_bool }, {}, * state.fif_environment);
 	fif::add_import("ui-debug", nullptr, f_uidebug, { fif::fif_bool }, {}, *state.fif_environment);
 	fif::add_import("fire-event", nullptr, f_fire_event, { nation_id_type, fif::fif_i32 }, {}, * state.fif_environment);

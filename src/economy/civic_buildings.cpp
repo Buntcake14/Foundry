@@ -8,11 +8,14 @@ void initialize_size_of_dcon_arrays(sys::state& state) {
 	auto count = int32_t(state.world.civic_building_type_size());
 	state.world.province_resize_civic_building_level(count);
 	state.world.province_resize_civic_building_progress(count);
+	state.world.province_resize_civic_building_active(count);
+	state.world.province_resize_civic_building_purchased_goods(count);
 }
 
 bool upgrade_in_progress(sys::state& state, dcon::province_id province, dcon::civic_building_type_id type) {
 	return province && type
-		&& state.world.province_get_civic_building_progress(province, type.index()) > 0.f;
+		&& (state.world.province_get_civic_building_active(province, type.index()) != 0
+			|| state.world.province_get_civic_building_progress(province, type.index()) > 0.f);
 }
 
 bool can_begin_upgrade(sys::state& state, dcon::nation_id nation, dcon::province_id province,
@@ -37,9 +40,9 @@ bool can_begin_upgrade(sys::state& state, dcon::nation_id nation, dcon::province
 }
 
 void begin_upgrade(sys::state& state, dcon::province_id province, dcon::civic_building_type_id type) {
-	// A tiny positive sentinel distinguishes a newly-started project from idle
-	// without granting a visible amount of free construction progress.
-	state.world.province_set_civic_building_progress(province, type.index(), 0.000001f);
+	state.world.province_set_civic_building_active(province, type.index(), uint8_t(1));
+	state.world.province_set_civic_building_progress(province, type.index(), 0.f);
+	state.world.province_set_civic_building_purchased_goods(province, type.index(), economy::commodity_set{});
 }
 
 void advance_upgrade(sys::state& state, dcon::province_id province, dcon::civic_building_type_id type,
@@ -50,6 +53,7 @@ void advance_upgrade(sys::state& state, dcon::province_id province, dcon::civic_
 	auto level_count = state.world.civic_building_type_get_level_count(type);
 	if(current_level >= level_count) {
 		state.world.province_set_civic_building_progress(province, type.index(), 0.f);
+		state.world.province_set_civic_building_active(province, type.index(), uint8_t(0));
 		return;
 	}
 	auto progress = state.world.province_get_civic_building_progress(province, type.index()) + progress_delta;
@@ -63,6 +67,8 @@ void advance_upgrade(sys::state& state, dcon::province_id province, dcon::civic_
 		sys::remove_modifier_from_province(state, province, levels[current_level - 1].modifier);
 	state.world.province_set_civic_building_level(province, type.index(), uint8_t(current_level + 1));
 	state.world.province_set_civic_building_progress(province, type.index(), 0.f);
+	state.world.province_set_civic_building_active(province, type.index(), uint8_t(0));
+	state.world.province_set_civic_building_purchased_goods(province, type.index(), economy::commodity_set{});
 	if(levels[current_level].modifier)
 		sys::add_modifier_to_province(state, province, levels[current_level].modifier, sys::date{});
 }
@@ -81,13 +87,16 @@ void update_leveling(sys::state& state) {
 			auto owner = state.world.province_get_nation_from_province_ownership(p);
 			if(!owner)
 				return;
-			auto progress = state.world.province_get_civic_building_progress(p, type.id.index());
-			if(progress <= 0.f)
+			if(!upgrade_in_progress(state, p, type.id))
 				return;
+			auto progress = state.world.province_get_civic_building_progress(p, type.id.index());
 
 			auto cur_level = state.world.province_get_civic_building_level(p, type.id.index());
-			if(cur_level >= level_count)
+			if(cur_level >= level_count) {
+				state.world.province_set_civic_building_active(p, type.id.index(), uint8_t(0));
+				state.world.province_set_civic_building_progress(p, type.id.index(), 0.f);
 				return;
+			}
 
 			if(progress >= 1.f)
 				advance_upgrade(state, p, type.id, 0.000001f);
@@ -137,6 +146,37 @@ float province_urban_rgo_penalty(sys::state& state, dcon::province_id p) {
 		penalty += levels[cur_level - 1].rgo_output_penalty;
 	}
 	return std::clamp(penalty, 0.0f, 1.0f);
+}
+
+int32_t province_urban_building_capacity(sys::state& state, dcon::province_id p) {
+	int32_t capacity = 0;
+	for(auto type : state.world.in_civic_building_type) {
+		if(!type.get_is_urban_center())
+			continue;
+		auto level = state.world.province_get_civic_building_level(p, type.id.index());
+		if(level == 0)
+			continue;
+		auto& levels = type.get_levels();
+		capacity += levels[std::min<uint8_t>(level, type.get_level_count()) - 1].building_capacity;
+	}
+	return capacity;
+}
+
+int32_t province_used_urban_building_capacity(sys::state& state, dcon::province_id p) {
+	int32_t used = int32_t(state.world.province_get_factory_location(p).end()
+		- state.world.province_get_factory_location(p).begin());
+	for(auto construction : state.world.province_get_factory_construction(p)) {
+		// A new factory occupies a site immediately so parallel orders cannot
+		// overbook the final slot. Upgrades/refits retain their existing site.
+		if(!construction.get_is_upgrade() && !construction.get_refit_target())
+			++used;
+	}
+	return used;
+}
+
+bool province_has_urban_building_capacity(sys::state& state, dcon::province_id p, int32_t required) {
+	return province_used_urban_building_capacity(state, p) + std::max(0, required)
+		<= province_urban_building_capacity(state, p);
 }
 
 }

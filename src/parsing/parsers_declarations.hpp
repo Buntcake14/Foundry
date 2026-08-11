@@ -1235,6 +1235,7 @@ struct civic_building_level {
 	dcon::modifier_id modifier_id_;
 	commodity_array cost;
 	int32_t time = 0;
+	int32_t building_capacity = 0;
 	float rgo_output_penalty = 0.0f;
 	bool unlocks_factories = false;
 	bool unlocks_admin_buildings = false;

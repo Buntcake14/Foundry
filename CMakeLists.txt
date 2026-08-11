@@ -90,6 +90,7 @@ list(APPEND ALICE_INCREMENTAL_SOURCES_LIST_ECONOMY
 	"${PROJECT_SOURCE_DIR}/src/economy/economy.cpp"
 	"${PROJECT_SOURCE_DIR}/src/economy/economy_pops.cpp"
 	"${PROJECT_SOURCE_DIR}/src/economy/economy_trade_routes.cpp"
+	"${PROJECT_SOURCE_DIR}/src/economy/foundry_transport_shadow.cpp"
 	"${PROJECT_SOURCE_DIR}/src/economy/economy_government.cpp"
 	"${PROJECT_SOURCE_DIR}/src/economy/economy_production.cpp"
 	"${PROJECT_SOURCE_DIR}/src/economy/construction.cpp"
