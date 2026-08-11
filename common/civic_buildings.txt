@@ -1,0 +1,62 @@
+# Foundry base content. Urban centers are explicit government projects;
+# historical starting levels will be seeded in a later content pass.
+
+urban_center = {
+	is_urban_center = yes
+
+	level = {
+		time = 360
+		cost = { cement = 20 lumber = 15 steel = 5 }
+		rgo_output_penalty = 0.02
+		unlocks_factories = yes
+	}
+	level = {
+		time = 540
+		cost = { cement = 50 lumber = 30 steel = 15 }
+		rgo_output_penalty = 0.04
+		unlocks_factories = yes
+		unlocks_admin_buildings = yes
+	}
+	level = {
+		time = 720
+		cost = { cement = 100 steel = 60 machine_parts = 10 }
+		rgo_output_penalty = 0.06
+		unlocks_factories = yes
+		unlocks_admin_buildings = yes
+	}
+	level = {
+		time = 900
+		cost = { cement = 180 steel = 120 machine_parts = 20 }
+		rgo_output_penalty = 0.09
+		unlocks_factories = yes
+		unlocks_admin_buildings = yes
+	}
+	level = {
+		time = 1080
+		cost = { cement = 300 steel = 220 machine_parts = 40 }
+		rgo_output_penalty = 0.12
+		unlocks_factories = yes
+		unlocks_admin_buildings = yes
+	}
+	level = {
+		time = 1260
+		cost = { cement = 450 steel = 350 machine_parts = 60 electric_gear = 40 }
+		rgo_output_penalty = 0.14
+		unlocks_factories = yes
+		unlocks_admin_buildings = yes
+	}
+	level = {
+		time = 1440
+		cost = { cement = 650 steel = 500 machine_parts = 90 electric_gear = 100 telephones = 30 }
+		rgo_output_penalty = 0.16
+		unlocks_factories = yes
+		unlocks_admin_buildings = yes
+	}
+	level = {
+		time = 1800
+		cost = { cement = 900 steel = 750 machine_parts = 140 electric_gear = 180 telephones = 80 }
+		rgo_output_penalty = 0.18
+		unlocks_factories = yes
+		unlocks_admin_buildings = yes
+	}
+}

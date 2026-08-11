@@ -6073,4 +6073,105 @@ instantTextBoxType = {
 	fixedsize = yes
 	Orientation = "UPPER_LEFT"
 }
+
+guiButtonType = {
+	name = "foundry_urban_center_button"
+	position = { 205 39 }
+	quadTextureSprite = "GFX_button_standard_144"
+	buttonText = "BUILD URBAN CENTER"
+	buttonFont = "vic_18_black"
+	Orientation = "UPPER_LEFT"
+	clicksound = click
+}
+
+windowType = {
+	name = "foundry_urban_center_window"
+	position = { 380 0 }
+	size = { 380 490 }
+	moveable = 0
+	fullScreen = no
+	Orientation = "UPPER_LEFT"
+
+	iconType = {
+		name = "background"
+		spriteType = "GFX_provinceview_bg"
+		position = { 0 -19 }
+		Orientation = "UPPER_LEFT"
+	}
+	guiButtonType = {
+		name = "close_button"
+		quadTextureSprite = "GFX_main_close_button"
+		position = { 374 -16 }
+		Orientation = "UPPER_LEFT"
+	}
+	instantTextBoxType = {
+		name = "urban_title"
+		position = { 14 12 }
+		font = "vic_22"
+		text = "URBAN CENTER"
+		maxWidth = 340
+		maxHeight = 20
+		format = centre
+		fixedsize = yes
+	}
+	iconType = {
+		name = "density_image"
+		spriteType = "GFX_foundry_urban_density"
+		position = { 0 45 }
+		Orientation = "UPPER_LEFT"
+	}
+	instantTextBoxType = {
+		name = "level_text"
+		position = { 16 155 }
+		font = "vic_22_black"
+		text = "URBAN CENTER LEVEL 0 / 8"
+		maxWidth = 348
+		maxHeight = 20
+		format = centre
+		fixedsize = yes
+	}
+	iconType = {
+		name = "construction_progress"
+		spriteType = "GFX_investrail_progress"
+		position = { 28 182 }
+		Orientation = "UPPER_LEFT"
+	}
+	instantTextBoxType = {
+		name = "progress_text"
+		position = { 16 207 }
+		font = "vic_18_black"
+		text = "NO CONSTRUCTION IN PROGRESS"
+		maxWidth = 348
+		maxHeight = 18
+		format = centre
+		fixedsize = yes
+	}
+	guiButtonType = {
+		name = "upgrade_button"
+		position = { 90 230 }
+		quadTextureSprite = "GFX_button_standard_200"
+		buttonText = "BUILD URBAN CENTER"
+		buttonFont = "vic_18_black"
+		Orientation = "UPPER_LEFT"
+		clicksound = click
+	}
+	instantTextBoxType = {
+		name = "goods_header"
+		position = { 18 273 }
+		font = "vic_18_black"
+		text = "NEXT LEVEL CONSTRUCTION GOODS"
+		maxWidth = 344
+		maxHeight = 18
+		format = centre
+		fixedsize = yes
+	}
+	instantTextBoxType = { name = "goods_0" position = { 24 300 } font = "vic_18_black" text = "" maxWidth = 332 maxHeight = 18 format = left fixedsize = yes }
+	instantTextBoxType = { name = "goods_1" position = { 24 322 } font = "vic_18_black" text = "" maxWidth = 332 maxHeight = 18 format = left fixedsize = yes }
+	instantTextBoxType = { name = "goods_2" position = { 24 344 } font = "vic_18_black" text = "" maxWidth = 332 maxHeight = 18 format = left fixedsize = yes }
+	instantTextBoxType = { name = "goods_3" position = { 24 366 } font = "vic_18_black" text = "" maxWidth = 332 maxHeight = 18 format = left fixedsize = yes }
+	instantTextBoxType = { name = "goods_4" position = { 24 388 } font = "vic_18_black" text = "" maxWidth = 332 maxHeight = 18 format = left fixedsize = yes }
+	instantTextBoxType = { name = "goods_5" position = { 24 410 } font = "vic_18_black" text = "" maxWidth = 332 maxHeight = 18 format = left fixedsize = yes }
+	instantTextBoxType = { name = "goods_6" position = { 24 432 } font = "vic_18_black" text = "" maxWidth = 332 maxHeight = 18 format = left fixedsize = yes }
+	instantTextBoxType = { name = "goods_7" position = { 24 454 } font = "vic_18_black" text = "" maxWidth = 332 maxHeight = 18 format = left fixedsize = yes }
+}
 }

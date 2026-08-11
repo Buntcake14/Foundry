@@ -574,6 +574,26 @@ void execute_begin_province_building_construction(sys::state& state, dcon::natio
 	new_rr.set_type(uint8_t(type));
 }
 
+void begin_civic_building_construction(sys::state& state, dcon::nation_id source, dcon::province_id p,
+		dcon::civic_building_type_id type) {
+	command_data command{command_type::begin_civic_building_construction, state.local_player_id};
+	auto data = civic_building_data{p, type};
+	command << data;
+	add_to_command_queue(state, command);
+}
+
+bool can_begin_civic_building_construction(sys::state& state, dcon::nation_id source, dcon::province_id p,
+		dcon::civic_building_type_id type) {
+	return state.current_scene.game_in_progress
+		&& civic_buildings::can_begin_upgrade(state, source, p, type);
+}
+
+void execute_begin_civic_building_construction(sys::state& state, dcon::nation_id source, dcon::province_id p,
+		dcon::civic_building_type_id type) {
+	if(can_begin_civic_building_construction(state, source, p, type))
+		civic_buildings::begin_upgrade(state, p, type);
+}
+
 
 void cancel_factory_building_construction(sys::state& state, dcon::nation_id source, dcon::province_id location, dcon::factory_type_id type) {
 	command_data p{ command_type::cancel_factory_building_construction, state.local_player_id };
@@ -6413,6 +6433,13 @@ bool can_perform_command(sys::state& state, command_data& c) {
 				data.type);
 	}
 
+	case command_type::begin_civic_building_construction:
+	{
+		auto& data = c.get_payload<command::civic_building_data>();
+		return can_begin_civic_building_construction(state, source, data.location,
+				data.type);
+	}
+
 	case command_type::war_subsidies:
 	{
 		auto& data = c.get_payload<command::diplo_action_data>();
@@ -7173,6 +7200,13 @@ void execute_command(sys::state& state, command_data& c) {
 	{
 		auto& data = c.get_payload<province_building_data>();
 		execute_begin_province_building_construction(state, source_nation, data.location,
+				data.type);
+		break;
+	}
+	case command_type::begin_civic_building_construction:
+	{
+		auto& data = c.get_payload<civic_building_data>();
+		execute_begin_civic_building_construction(state, source_nation, data.location,
 				data.type);
 		break;
 	}

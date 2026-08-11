@@ -9,7 +9,9 @@ FOUNDRY_DIR="/home/seth/Documents/Projects/Foundry"
 # directory, not from the build tree. Synchronize only the files maintained by
 # this UI restoration work; other runtime assets may intentionally differ.
 cmake -E copy_if_different "$FOUNDRY_DIR/assets/alice.gui" "$V2_DIR/assets/alice.gui"
+cmake -E copy_if_different "$FOUNDRY_DIR/assets/alice.gfx" "$V2_DIR/assets/alice.gfx"
 cmake -E copy_if_different "$FOUNDRY_DIR/assets/alice_menubar.gui" "$V2_DIR/assets/alice_menubar.gui"
+cmake -E copy_if_different "$FOUNDRY_DIR/assets/foundry_urban_density.png" "$V2_DIR/assets/foundry_urban_density.png"
 
 # Foundry is the base game, not a Victoria 2 mod. Keep Foundry-owned Production
 # UI definitions and graphics in the base runtime so they load with no mod
@@ -18,6 +20,7 @@ cmake -E copy_if_different "$FOUNDRY_DIR/assets/alice_menubar.gui" "$V2_DIR/asse
 cmake -E copy_if_different "$FOUNDRY_DIR/mod/Rise of Nations/interface/country_production.gui" "$V2_DIR/interface/country_production.gui"
 cmake -E copy_if_different "$FOUNDRY_DIR/mod/Rise of Nations/interface/country_production.gfx" "$V2_DIR/interface/country_production.gfx"
 cmake -E copy_if_different "$FOUNDRY_DIR/mod/Rise of Nations/gfx/interface/foundry_project_icons.png" "$V2_DIR/gfx/interface/foundry_project_icons.png"
+cmake -E copy_if_different "$FOUNDRY_DIR/common/civic_buildings.txt" "$V2_DIR/common/civic_buildings.txt"
 
 cd "$V2_DIR"
 export LD_LIBRARY_PATH="$FOUNDRY_DIR/build/dependencies/luajit/luajit-prefix/lib:${LD_LIBRARY_PATH:-}"

@@ -710,4 +710,9 @@ spriteTypes = {
 		texturefile = "assets\\foundry_project_icons.png"
 		noOfFrames = 7
 	}
+	spriteType = {
+		name = "GFX_foundry_urban_density"
+		texturefile = "assets\\foundry_urban_density.png"
+		noOfFrames = 9
+	}
 }

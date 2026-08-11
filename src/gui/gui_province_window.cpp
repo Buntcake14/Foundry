@@ -20,8 +20,190 @@
 #include "alice_ui.hpp"
 #include "economy.hpp"
 #include "economy_production.hpp"
+#include "civic_buildings.hpp"
 
 namespace ui {
+
+static dcon::civic_building_type_id foundry_urban_center_type(sys::state& state) noexcept {
+	for(auto type : state.world.in_civic_building_type)
+		if(type.get_is_urban_center())
+			return type.id;
+	return {};
+}
+
+class urban_center_density_image : public image_element_base {
+public:
+	void on_update(sys::state& state) noexcept override {
+		auto province = retrieve<dcon::province_id>(state, parent);
+		auto type = foundry_urban_center_type(state);
+		frame = type ? std::clamp<int32_t>(
+			state.world.province_get_civic_building_level(province, type.index()), 0, 8) : 0;
+	}
+};
+
+class urban_center_progress_bar : public progress_bar {
+public:
+	void on_update(sys::state& state) noexcept override {
+		auto province = retrieve<dcon::province_id>(state, parent);
+		auto type = foundry_urban_center_type(state);
+		progress = type ? std::clamp(
+			state.world.province_get_civic_building_progress(province, type.index()), 0.f, 1.f) : 0.f;
+	}
+};
+
+class urban_center_upgrade_button : public button_element_base {
+public:
+	void on_update(sys::state& state) noexcept override {
+		auto province = retrieve<dcon::province_id>(state, parent);
+		auto type = foundry_urban_center_type(state);
+		if(!type) {
+			disabled = true;
+			return;
+		}
+		auto level = state.world.province_get_civic_building_level(province, type.index());
+		auto max_level = state.world.civic_building_type_get_level_count(type);
+		if(civic_buildings::upgrade_in_progress(state, province, type))
+			set_button_text(state, "CONSTRUCTION IN PROGRESS");
+		else if(level >= max_level)
+			set_button_text(state, "MAXIMUM LEVEL");
+		else if(level == 0)
+			set_button_text(state, "BUILD URBAN CENTER");
+		else
+			set_button_text(state, "UPGRADE URBAN CENTER");
+		disabled = !command::can_begin_civic_building_construction(
+			state, state.local_player_nation, province, type);
+	}
+
+	void button_action(sys::state& state) noexcept override {
+		auto province = retrieve<dcon::province_id>(state, parent);
+		auto type = foundry_urban_center_type(state);
+		if(type && command::can_begin_civic_building_construction(
+				state, state.local_player_nation, province, type))
+			command::begin_civic_building_construction(
+				state, state.local_player_nation, province, type);
+	}
+};
+
+class urban_center_close_button : public button_element_base {
+public:
+	void button_action(sys::state& state) noexcept override {
+		parent->set_visible(state, false);
+	}
+};
+
+class urban_center_detail_window : public window_element_base {
+	simple_text_element_base* level_text = nullptr;
+	simple_text_element_base* progress_text = nullptr;
+	std::array<simple_text_element_base*, economy::commodity_set::set_size> goods_text{};
+public:
+	std::unique_ptr<element_base> make_child(sys::state& state, std::string_view name,
+			dcon::gui_def_id id) noexcept override {
+		if(name == "background")
+			return make_element_by_type<opaque_element_base>(state, id);
+		if(name == "close_button")
+			return make_element_by_type<urban_center_close_button>(state, id);
+		if(name == "density_image")
+			return make_element_by_type<urban_center_density_image>(state, id);
+		if(name == "urban_title" || name == "goods_header")
+			return make_element_by_type<simple_text_element_base>(state, id);
+		if(name == "level_text") {
+			auto ptr = make_element_by_type<simple_text_element_base>(state, id);
+			level_text = ptr.get();
+			return ptr;
+		}
+		if(name == "construction_progress")
+			return make_element_by_type<urban_center_progress_bar>(state, id);
+		if(name == "progress_text") {
+			auto ptr = make_element_by_type<simple_text_element_base>(state, id);
+			progress_text = ptr.get();
+			return ptr;
+		}
+		if(name == "upgrade_button")
+			return make_element_by_type<urban_center_upgrade_button>(state, id);
+		for(uint32_t i = 0; i < goods_text.size(); ++i) {
+			if(name == "goods_" + std::to_string(i)) {
+				auto ptr = make_element_by_type<simple_text_element_base>(state, id);
+				goods_text[i] = ptr.get();
+				return ptr;
+			}
+		}
+		return nullptr;
+	}
+
+	void on_update(sys::state& state) noexcept override {
+		auto province = retrieve<dcon::province_id>(state, parent);
+		auto type = foundry_urban_center_type(state);
+		if(!type)
+			return;
+		auto level = state.world.province_get_civic_building_level(province, type.index());
+		auto max_level = state.world.civic_building_type_get_level_count(type);
+		level_text->set_text(state, "URBAN CENTER LEVEL " + std::to_string(level)
+			+ " / " + std::to_string(max_level));
+		auto progress = state.world.province_get_civic_building_progress(province, type.index());
+		progress_text->set_text(state, progress > 0.f
+			? "CONSTRUCTION: " + text::format_percentage(progress, 0)
+			: "NO CONSTRUCTION IN PROGRESS");
+
+		for(auto* row : goods_text)
+			if(row) row->set_text(state, "");
+		if(level >= max_level)
+			return;
+		auto const& next = state.world.civic_building_type_get_levels(type)[level];
+		for(uint32_t i = 0; i < goods_text.size(); ++i) {
+			auto commodity = next.cost.commodity_type[i];
+			if(!commodity || !goods_text[i])
+				break;
+			auto market = state.world.state_instance_get_market_from_local_market(
+				state.world.province_get_state_membership(province));
+			auto satisfaction = state.world.market_get_actual_probability_to_buy(market, commodity);
+			auto amount = next.cost.commodity_amounts[i];
+			goods_text[i]->set_text(state, text::get_commodity_name_with_icon(state, commodity)
+				+ "   " + std::to_string(int32_t(amount)) + " required   "
+				+ text::format_percentage(satisfaction, 0) + " available");
+		}
+	}
+};
+
+class province_urban_center_button : public button_element_base {
+public:
+	void on_update(sys::state& state) noexcept override {
+		auto type = foundry_urban_center_type(state);
+		set_visible(state, bool(type));
+		disabled = !type;
+		set_button_text(state, "URBAN CENTER");
+	}
+
+	void button_action(sys::state& state) noexcept override {
+		auto province_window = static_cast<province_view_window*>(state.ui_state.province_window);
+		if(province_window)
+			province_window->toggle_urban_center(state);
+	}
+
+	tooltip_behavior has_tooltip(sys::state&) noexcept override {
+		return tooltip_behavior::variable_tooltip;
+	}
+
+	void update_tooltip(sys::state& state, int32_t, int32_t,
+			text::columnar_layout& contents) noexcept override {
+		auto province = retrieve<dcon::province_id>(state, parent);
+		auto type = foundry_urban_center_type(state);
+		if(!type)
+			return;
+		auto level = state.world.province_get_civic_building_level(province, type.index());
+		auto max_level = state.world.civic_building_type_get_level_count(type);
+		{
+			auto box = text::open_layout_box(contents);
+			text::add_unparsed_text_to_layout_box(state, contents, box,
+				"Urban Center Level " + std::to_string(level) + " / " + std::to_string(max_level));
+			text::close_layout_box(contents, box);
+		}
+		text::add_line_break_to_layout(state, contents);
+		auto box = text::open_layout_box(contents);
+		text::add_unparsed_text_to_layout_box(state, contents, box,
+			"Open the Urban Center details, construction, and goods window.");
+		text::close_layout_box(contents, box);
+	}
+};
 class land_rally_point : public button_element_base {
 public:
 	void on_update(sys::state& state) noexcept override {
@@ -2520,6 +2702,8 @@ std::unique_ptr<element_base> province_view_window::make_child(sys::state& state
 		ptr->set_visible(state, false);
 		nf_win = ptr.get();
 		return ptr;
+	} else if(name == "foundry_urban_center_button") {
+		return make_element_by_type<province_urban_center_button>(state, id);
 	} else {
 		return nullptr;
 	}
@@ -2530,11 +2714,22 @@ void province_view_window::on_create(sys::state& state) noexcept {
 	window_element_base::on_create(state);
 	state.ui_state.province_window = this;
 	set_visible(state, false);
+	auto urban_button = make_element_by_type<province_urban_center_button>(state, "foundry_urban_center_button");
+	add_child_to_front(std::move(urban_button));
+	auto urban_window = make_element_by_type<urban_center_detail_window>(state, "foundry_urban_center_window");
+	urban_window->set_visible(state, false);
+	urban_center_window = urban_window.get();
+	add_child_to_front(std::move(urban_window));
 	//
 	auto ptr = make_element_by_type<build_unit_province_window>(state, "build_unit_view");
 	state.ui_state.build_province_unit_window = ptr.get();
 	add_child_to_front(std::move(ptr));
 
+}
+
+void province_view_window::toggle_urban_center(sys::state& state) {
+	if(urban_center_window)
+		urban_center_window->set_visible(state, !urban_center_window->is_visible());
 }
 
 message_result province_view_window::get(sys::state& state, Cyto::Any& payload) noexcept {
@@ -2569,6 +2764,8 @@ void province_view_window::set_active_province(sys::state& state, dcon::province
 		else
 			impl_on_update(state);
 	} else {
+		if(urban_center_window)
+			urban_center_window->set_visible(state, false);
 		set_visible(state, false);
 	}
 }

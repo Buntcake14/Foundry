@@ -126,6 +126,7 @@ enum class command_type : uint8_t {
 		toggle_production_directive = 114,
 		load_saved_game = 115,
 		change_naval_unit_type = 116,
+		begin_civic_building_construction = 117,
 
 
 		// network
@@ -196,6 +197,11 @@ struct save_game_data {
 struct province_building_data {
 	dcon::province_id location;
 	economy::province_building_type type;
+};
+
+struct civic_building_data {
+	dcon::province_id location;
+	dcon::civic_building_type_id type;
 };
 
 struct factory_building_data {
@@ -730,6 +736,7 @@ constexpr enum_array<command_type, command_handler> command_type_handlers = {
 	{ command_type::switch_embargo_status, command_handler{ sizeof(command::diplo_action_data), sizeof(command::diplo_action_data), &command_handler::true_is_host_receive_command, &command_handler::true_is_host_broadcast_command } },
 	{ command_type::revoke_trade_rights, command_handler{ sizeof(command::diplo_action_data), sizeof(command::diplo_action_data), &command_handler::true_is_host_receive_command, &command_handler::true_is_host_broadcast_command } },
 	{ command_type::toggle_local_administration, command_handler{ sizeof(command::generic_location_data), sizeof(command::generic_location_data), &command_handler::true_is_host_receive_command, &command_handler::true_is_host_broadcast_command } },
+	{ command_type::begin_civic_building_construction, command_handler{ sizeof(command::civic_building_data), sizeof(command::civic_building_data), &command_handler::true_is_host_receive_command, &command_handler::true_is_host_broadcast_command } },
 	{ command_type::stop_army_movement, command_handler{ sizeof(command::stop_army_movement_data), sizeof(command::stop_army_movement_data), &command_handler::true_is_host_receive_command, &command_handler::true_is_host_broadcast_command } },
 	{ command_type::stop_navy_movement, command_handler{ sizeof(command::stop_navy_movement_data), sizeof(command::stop_navy_movement_data), &command_handler::true_is_host_receive_command, &command_handler::true_is_host_broadcast_command } },
 	{ command_type::command_units, command_handler{ sizeof(command::command_units_data), sizeof(command::command_units_data), &command_handler::true_is_host_receive_command, &command_handler::true_is_host_broadcast_command } },
@@ -790,6 +797,8 @@ bool can_decrease_relations(sys::state& state, dcon::nation_id source, dcon::nat
 
 void begin_province_building_construction(sys::state& state, dcon::nation_id source, dcon::province_id p, economy::province_building_type type);
 bool can_begin_province_building_construction(sys::state& state, dcon::nation_id source, dcon::province_id p, economy::province_building_type type);
+void begin_civic_building_construction(sys::state& state, dcon::nation_id source, dcon::province_id p, dcon::civic_building_type_id type);
+bool can_begin_civic_building_construction(sys::state& state, dcon::nation_id source, dcon::province_id p, dcon::civic_building_type_id type);
 
 void begin_factory_building_construction(sys::state& state, dcon::nation_id source, dcon::province_id location, dcon::factory_type_id type, bool is_upgrade, dcon::factory_type_id refit_target = dcon::factory_type_id{});
 bool can_begin_factory_building_construction(sys::state& state, dcon::nation_id source, dcon::province_id location, dcon::factory_type_id type, bool is_upgrade, dcon::factory_type_id refit_target = dcon::factory_type_id{});
@@ -1239,4 +1248,3 @@ void execute_network_inactivity_ping(sys::state& state, dcon::nation_id source, 
 
 
 } // namespace command
-

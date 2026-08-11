@@ -20,10 +20,18 @@ struct construction_capacity_breakdown {
 	float total = 0.f;
 };
 
+struct civic_construction_project {
+	dcon::province_id province{};
+	dcon::civic_building_type_id type{};
+	bool operator==(civic_construction_project const& other) const = default;
+	bool operator!=(civic_construction_project const& other) const = default;
+};
+
 construction_capacity_breakdown local_construction_capacity(sys::state& state, dcon::province_id province);
 construction_capacity_breakdown national_construction_capacity(sys::state& state, dcon::nation_id nation);
 float civil_construction_capacity_share(sys::state& state, dcon::factory_construction_id construction);
 float civil_construction_capacity_share(sys::state& state, dcon::province_building_construction_id construction);
+float civil_construction_capacity_share(sys::state& state, civic_construction_project construction);
 int32_t active_civil_construction_projects(sys::state& state, dcon::nation_id nation);
 int32_t queued_civil_construction_projects(sys::state& state, dcon::nation_id nation);
 

@@ -10,6 +10,7 @@ class province_view_foreign_details;
 class province_view_statistics;
 class province_view_buildings;
 class province_window_colony;
+class urban_center_detail_window;
 
 class province_terrain_image : public opaque_element_base {
 public:
@@ -27,12 +28,14 @@ private:
 	province_view_buildings* local_buildings_window = nullptr;
 	province_window_colony* colony_window = nullptr;
 	element_base* nf_win = nullptr;
+	urban_center_detail_window* urban_center_window = nullptr;
 
 public:
 	void on_create(sys::state& state) noexcept override;
 	std::unique_ptr<element_base> make_child(sys::state& state, std::string_view name, dcon::gui_def_id id) noexcept override;
 	message_result get(sys::state& state, Cyto::Any& payload) noexcept override;
 	void set_active_province(sys::state& state, dcon::province_id map_province);
+	void toggle_urban_center(sys::state& state);
 	void on_update(sys::state& state) noexcept override;
 	friend class province_national_focus_button;
 };

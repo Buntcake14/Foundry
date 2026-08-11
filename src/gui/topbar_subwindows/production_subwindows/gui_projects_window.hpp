@@ -6,6 +6,7 @@
 #include "gui_production_enum.hpp"
 #include "economy_stats.hpp"
 #include "construction.hpp"
+#include "civic_buildings.hpp"
 
 namespace ui {
 
@@ -46,7 +47,8 @@ public:
 	}
 };
 
-typedef std::variant< dcon::province_building_construction_id, dcon::factory_construction_id> production_project_data;
+typedef std::variant<dcon::province_building_construction_id, dcon::factory_construction_id,
+	economy::civic_construction_project> production_project_data;
 
 struct production_project_input_data {
 	dcon::commodity_id cid{};
@@ -141,6 +143,9 @@ class production_project_info : public listbox_row_element_base<production_proje
 		} else if(std::holds_alternative<dcon::factory_construction_id>(content)) {
 			auto fat_id = dcon::fatten(state.world, std::get<dcon::factory_construction_id>(content));
 			return fat_id.get_province().get_state_membership().id;
+		} else if(std::holds_alternative<economy::civic_construction_project>(content)) {
+			auto project = std::get<economy::civic_construction_project>(content);
+			return state.world.province_get_state_membership(project.province);
 		}
 		return dcon::state_instance_id{};
 	}
@@ -249,6 +254,24 @@ public:
 			for(uint32_t i = 0; i < economy::commodity_set::set_size; ++i) {
 				needed_commodities.commodity_amounts[i] *= factory_mod * refit_discount;
 			}
+		} else if(std::holds_alternative<economy::civic_construction_project>(content)) {
+			auto project = std::get<economy::civic_construction_project>(content);
+			capacity_share = economy::civil_construction_capacity_share(state, project);
+			private_project = false;
+			factory_icon->set_visible(state, true);
+			building_icon->set_visible(state, false);
+			auto it = state.ui_state.gfx_by_name.find(state.lookup_key("GFX_foundry_project_icons"));
+			if(it != state.ui_state.gfx_by_name.end())
+				factory_icon->base_data.data.image.gfx_object = it->second;
+			factory_icon->frame = 5;
+			auto current_level = state.world.province_get_civic_building_level(project.province, project.type.index());
+			name_text->set_text(state, "Urban Center Level " + std::to_string(int32_t(current_level) + 1));
+			auto& definition = state.world.civic_building_type_get_levels(project.type)[current_level];
+			needed_commodities = definition.cost;
+			auto progress = std::clamp(
+				state.world.province_get_civic_building_progress(project.province, project.type.index()), 0.f, 1.f);
+			for(uint32_t i = 0; i < economy::commodity_set::set_size; ++i)
+				satisfied_commodities.commodity_amounts[i] = needed_commodities.commodity_amounts[i] * progress;
 		}
 		if(funder_text)
 			funder_text->set_text(state, private_project ? "Private" : "Government");
@@ -312,6 +335,13 @@ public:
 				[&](dcon::province_building_construction_id id) {
 					row_contents.push_back(production_project_data(id));
 				});
+		state.world.nation_for_each_province_ownership(state.local_player_nation, [&](auto ownership) {
+			auto province = state.world.province_ownership_get_province(ownership);
+			for(auto type : state.world.in_civic_building_type)
+				if(civic_buildings::upgrade_in_progress(state, province, type.id))
+					row_contents.push_back(production_project_data(
+						economy::civic_construction_project{province, type.id}));
+		});
 		update(state);
 	}
 };

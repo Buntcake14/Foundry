@@ -670,6 +670,32 @@ float civil_construction_capacity_share_impl(sys::state& state, dcon::nation_id 
 		remaining = std::max(0.f, remaining - 1.f);
 	});
 
+	if(found)
+		return result;
+
+	state.world.nation_for_each_province_ownership(nation, [&](auto ownership) {
+		if(found)
+			return;
+		auto province = state.world.province_ownership_get_province(ownership);
+		if(state.world.province_get_nation_from_province_control(province) != nation)
+			return;
+		for(auto type : state.world.in_civic_building_type) {
+			if(found)
+				break;
+			if(!civic_buildings::upgrade_in_progress(state, province, type.id))
+				continue;
+			auto share = std::clamp(remaining, 0.f, 1.f);
+			if constexpr(std::is_same_v<TargetT, civic_construction_project>) {
+				if(target.province == province && target.type == type.id) {
+					result = share;
+					found = true;
+					break;
+				}
+			}
+			remaining = std::max(0.f, remaining - 1.f);
+		}
+	});
+
 	return result;
 }
 
@@ -683,6 +709,11 @@ float civil_construction_capacity_share(sys::state& state, dcon::province_buildi
 	return civil_construction_capacity_share_impl(state, state.world.province_building_construction_get_nation(construction), construction);
 }
 
+float civil_construction_capacity_share(sys::state& state, civic_construction_project construction) {
+	auto nation = state.world.province_get_nation_from_province_ownership(construction.province);
+	return civil_construction_capacity_share_impl(state, nation, construction);
+}
+
 int32_t active_civil_construction_projects(sys::state& state, dcon::nation_id nation) {
 	int32_t count = 0;
 	state.world.nation_for_each_factory_construction_as_nation(nation, [&](auto id) {
@@ -692,6 +723,13 @@ int32_t active_civil_construction_projects(sys::state& state, dcon::nation_id na
 	state.world.nation_for_each_province_building_construction_as_nation(nation, [&](auto id) {
 		if(civil_construction_capacity_share(state, id) > 0.f)
 			++count;
+	});
+	state.world.nation_for_each_province_ownership(nation, [&](auto ownership) {
+		auto province = state.world.province_ownership_get_province(ownership);
+		for(auto type : state.world.in_civic_building_type)
+			if(civic_buildings::upgrade_in_progress(state, province, type.id)
+					&& civil_construction_capacity_share(state, civic_construction_project{province, type.id}) > 0.f)
+				++count;
 	});
 	return count;
 }
@@ -707,6 +745,13 @@ int32_t queued_civil_construction_projects(sys::state& state, dcon::nation_id na
 		auto details = explain_province_building_construction(state, id);
 		if(details.can_be_advanced && civil_construction_capacity_share(state, id) <= 0.f)
 			++count;
+	});
+	state.world.nation_for_each_province_ownership(nation, [&](auto ownership) {
+		auto province = state.world.province_ownership_get_province(ownership);
+		for(auto type : state.world.in_civic_building_type)
+			if(civic_buildings::upgrade_in_progress(state, province, type.id)
+					&& civil_construction_capacity_share(state, civic_construction_project{province, type.id}) <= 0.f)
+				++count;
 	});
 	return count;
 }
@@ -883,6 +928,76 @@ void populate_state_construction_demand(
 	}
 }
 
+void populate_civic_construction_demand(sys::state& state, civic_construction_project construction,
+		float& budget, float budget_limit) {
+	auto owner = state.world.province_get_nation_from_province_ownership(construction.province);
+	if(!owner || state.world.province_get_nation_from_province_control(construction.province) != owner
+			|| !civic_buildings::upgrade_in_progress(state, construction.province, construction.type))
+		return;
+	auto capacity_share = civil_construction_capacity_share(state, construction);
+	if(capacity_share <= 0.f)
+		return;
+	auto current_level = state.world.province_get_civic_building_level(construction.province, construction.type.index());
+	auto level_count = state.world.civic_building_type_get_level_count(construction.type);
+	if(current_level >= level_count)
+		return;
+	auto& definition = state.world.civic_building_type_get_levels(construction.type)[current_level];
+	auto progress = state.world.province_get_civic_building_progress(construction.province, construction.type.index());
+	auto construction_time = float(std::max<int16_t>(1, definition.construction_time));
+	auto market = state.world.state_instance_get_market_from_local_market(
+		state.world.province_get_state_membership(construction.province));
+	for(uint32_t i = 0; i < commodity_set::set_size; ++i) {
+		auto cid = definition.cost.commodity_type[i];
+		if(!cid) break;
+		auto remaining = definition.cost.commodity_amounts[i] * std::max(0.f, 1.f - progress);
+		if(remaining <= 0.f) continue;
+		auto local_price = price(state, market, cid);
+		auto budget_amount = std::min(budget_limit, budget) / (local_price + 0.001f);
+		auto daily_amount = definition.cost.commodity_amounts[i] / construction_time * capacity_share;
+		auto amount = std::min(remaining, std::min(budget_amount, daily_amount));
+		auto satisfaction = state.world.market_get_actual_probability_to_buy(market, cid);
+		budget = std::max(0.f, budget - amount * local_price * satisfaction);
+		register_construction_demand(state, market, cid, amount);
+	}
+}
+
+void advance_civic_construction(sys::state& state, civic_construction_project construction) {
+	auto owner = state.world.province_get_nation_from_province_ownership(construction.province);
+	if(!owner || state.world.province_get_nation_from_province_control(construction.province) != owner
+			|| !civic_buildings::upgrade_in_progress(state, construction.province, construction.type))
+		return;
+	auto capacity_share = civil_construction_capacity_share(state, construction);
+	if(capacity_share <= 0.f)
+		return;
+	auto current_level = state.world.province_get_civic_building_level(construction.province, construction.type.index());
+	auto& definition = state.world.civic_building_type_get_levels(construction.type)[current_level];
+	auto construction_time = float(std::max<int16_t>(1, definition.construction_time));
+	auto market = state.world.state_instance_get_market_from_local_market(
+		state.world.province_get_state_membership(construction.province));
+	float delivered_ratio = 1.f;
+	bool has_cost = false;
+	for(uint32_t i = 0; i < commodity_set::set_size; ++i) {
+		auto cid = definition.cost.commodity_type[i];
+		if(!cid) break;
+		has_cost = true;
+		auto planned = definition.cost.commodity_amounts[i] / construction_time * capacity_share;
+		auto available = state.world.market_get_construction_demand(market, cid);
+		if(planned > 0.f)
+			delivered_ratio = std::min(delivered_ratio, std::clamp(available / planned, 0.f, 1.f));
+	}
+	if(!has_cost)
+		delivered_ratio = 1.f;
+	for(uint32_t i = 0; i < commodity_set::set_size; ++i) {
+		auto cid = definition.cost.commodity_type[i];
+		if(!cid) break;
+		auto planned = definition.cost.commodity_amounts[i] / construction_time * capacity_share;
+		auto& available = state.world.market_get_construction_demand(market, cid);
+		available = std::max(0.f, available - planned * delivered_ratio);
+	}
+	civic_buildings::advance_upgrade(state, construction.province, construction.type,
+		capacity_share / construction_time * delivered_ratio);
+}
+
 
 void populate_construction_consumption(sys::state& state) {
 	reset_construction_demand(state);
@@ -944,6 +1059,17 @@ void populate_construction_consumption(sys::state& state) {
 			going_constructions.get(owner) += 1;
 		}
 	};
+	state.world.for_each_province([&](dcon::province_id province) {
+		auto owner = state.world.province_get_nation_from_province_ownership(province);
+		if(!owner || state.world.province_get_nation_from_province_control(province) != owner)
+			return;
+		for(auto type : state.world.in_civic_building_type) {
+			auto project = civic_construction_project{province, type.id};
+			if(civic_buildings::upgrade_in_progress(state, province, type.id)
+					&& civil_construction_capacity_share(state, project) > 0.f)
+				going_constructions.get(owner) += 1;
+		}
+	});
 
 
 	for(auto lc : state.world.in_province_land_construction) {
@@ -978,6 +1104,19 @@ void populate_construction_consumption(sys::state& state) {
 		float budget_limit = total_budget.get(owner) / float(std::max(1, going_constructions.get(owner)));
 		populate_state_construction_demand(state, c, base_budget, budget_limit);
 	}
+	state.world.for_each_province([&](dcon::province_id province) {
+		auto owner = state.world.province_get_nation_from_province_ownership(province);
+		if(!owner || state.world.province_get_nation_from_province_control(province) != owner)
+			return;
+		for(auto type : state.world.in_civic_building_type) {
+			auto project = civic_construction_project{province, type.id};
+			if(!civic_buildings::upgrade_in_progress(state, province, type.id))
+				continue;
+			float& base_budget = current_budget.get(owner);
+			float budget_limit = total_budget.get(owner) / float(std::max(1, going_constructions.get(owner)));
+			populate_civic_construction_demand(state, project, base_budget, budget_limit);
+		}
+	});
 }
 
 int32_t count_ongoing_constructions(sys::state& state, dcon::nation_id n) {
@@ -1445,6 +1584,14 @@ void advance_construction(sys::state& state, dcon::nation_id n, float total_spen
 	for(auto c : state.world.nation_get_factory_construction(n)) {
 		advance_factory_construction(state, c);
 	}
+	state.world.nation_for_each_province_ownership(n, [&](auto ownership) {
+		auto province = state.world.province_ownership_get_province(ownership);
+		if(state.world.province_get_nation_from_province_control(province) != n)
+			return;
+		for(auto type : state.world.in_civic_building_type)
+			if(civic_buildings::upgrade_in_progress(state, province, type.id))
+				advance_civic_construction(state, civic_construction_project{province, type.id});
+	});
 }
 
 // this function partly emulates demand generated by nations

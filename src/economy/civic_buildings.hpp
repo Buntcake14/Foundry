@@ -41,6 +41,14 @@ struct level_definition {
 void initialize_size_of_dcon_arrays(sys::state& state);
 void update_leveling(sys::state& state);
 
+// Government-controlled lifecycle. Progress == 0 is idle; a positive value
+// marks an explicitly started project until it reaches completion.
+bool can_begin_upgrade(sys::state& state, dcon::nation_id nation, dcon::province_id province,
+	dcon::civic_building_type_id type);
+void begin_upgrade(sys::state& state, dcon::province_id province, dcon::civic_building_type_id type);
+bool upgrade_in_progress(sys::state& state, dcon::province_id province, dcon::civic_building_type_id type);
+void advance_upgrade(sys::state& state, dcon::province_id province, dcon::civic_building_type_id type, float progress_delta);
+
 // True once any is_urban_center civic building in this province has reached a
 // level whose unlocks_factories/unlocks_admin_buildings flag is set. New
 // factory construction and (once a real admin-building system exists) admin
