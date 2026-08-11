@@ -1950,6 +1950,15 @@ void production_window::hide_sub_windows(sys::state& state) noexcept {
 void production_window::on_create(sys::state& state) noexcept {
 	generic_tabbed_window::on_create(state);
 
+	{
+		auto capacity = make_element_by_type<foundry_construction_capacity_text>(state, "foundry_construction_capacity");
+		if(capacity) {
+			capacity->set_visible(state, false);
+			project_elements.push_back(capacity.get());
+			add_child_to_front(std::move(capacity));
+		}
+	}
+
 	// All filters enabled by default
 	commodity_filters.resize(state.world.commodity_size(), true);
 

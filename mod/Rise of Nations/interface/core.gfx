@@ -89,7 +89,6 @@ spriteTypes = {
 		norefcount = yes
 		transparencecheck = yes
 	}
-
 	textSpriteType = {
 		name = "ToolTip"
 		texturefile = "gfx\\interface\\tiles_dialog.dds"

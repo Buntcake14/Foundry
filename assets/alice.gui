@@ -6061,4 +6061,16 @@ guiTypes = {
         buttonFont = "vic_22_black"
 		extends="sup_buttons_window"
     }
+
+instantTextBoxType = {
+	name = "foundry_construction_capacity"
+	position = { 40 48 }
+	font = "vic_18_black"
+	text = ""
+	maxWidth = 700
+	maxHeight = 16
+	format = left
+	fixedsize = yes
+	Orientation = "UPPER_LEFT"
+}
 }

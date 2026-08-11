@@ -8,6 +8,25 @@ struct state;
 
 namespace economy {
 
+// Foundry's population-derived civil construction capacity.  This is exposed
+// to the UI first; project throttling is layered on only after the values have
+// been play-tested across countries of different sizes.
+struct construction_capacity_breakdown {
+	float unskilled = 0.f;
+	float skilled = 0.f;
+	float educated = 0.f;
+	float urban_multiplier = 1.f;
+	float infrastructure_multiplier = 1.f;
+	float total = 0.f;
+};
+
+construction_capacity_breakdown local_construction_capacity(sys::state& state, dcon::province_id province);
+construction_capacity_breakdown national_construction_capacity(sys::state& state, dcon::nation_id nation);
+float civil_construction_capacity_share(sys::state& state, dcon::factory_construction_id construction);
+float civil_construction_capacity_share(sys::state& state, dcon::province_building_construction_id construction);
+int32_t active_civil_construction_projects(sys::state& state, dcon::nation_id nation);
+int32_t queued_civil_construction_projects(sys::state& state, dcon::nation_id nation);
+
 float factory_construction_progress(sys::state& state, dcon::factory_construction_id construction);
 
 

@@ -55,6 +55,13 @@ spriteTypes = {
 		texturefile = "gfx\\interface\\prod_railroad_icon.dds"
 	}
 	spriteType = {
+		name = "GFX_foundry_project_icons"
+		texturefile = "gfx\\interface\\foundry_project_icons.png"
+		noOfFrames = 7
+		norefcount = yes
+		transparencecheck = yes
+	}
+	spriteType = {
 		name = "GFX_prod_investment_bg"
 		texturefile = "gfx\\interface\\prod_investment_bg.dds"
 	}

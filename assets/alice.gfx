@@ -705,4 +705,9 @@ spriteTypes = {
         texturefile = "assets\\markettiles.png"
         noOfFrames = 4
 	}
+	spriteType = {
+		name = "GFX_foundry_project_icons"
+		texturefile = "assets\\foundry_project_icons.png"
+		noOfFrames = 7
+	}
 }

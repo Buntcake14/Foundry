@@ -1103,7 +1103,7 @@ guiTypes = {
 			font = "vic_22"
 			text = "675"	
 			maxWidth = 60
-			maxHeight = 32	
+			maxHeight = 32
 			format = left
 		}
 		
@@ -1192,7 +1192,7 @@ guiTypes = {
 			font = "vic_22"
 			text = "675"	
 			maxWidth = 60
-			maxHeight = 32	
+			maxHeight = 32
 			format = left
 		}
 		
@@ -1740,14 +1740,14 @@ guiTypes = {
 		
 		iconType = {
 			name = "project_icon"
-			spriteType = "GFX_resources"
+			spriteType = "GFX_foundry_project_icons"
 			position = { x = 205 y = 8 }
 			Orientation = "UPPER_LEFT"
 		}
 		
 		iconType = {
 			name = "infra"
-			spriteType = "GFX_prod_railroad_icon"
+			spriteType = "GFX_foundry_project_icons"
 			position = { x = 205 y = 8 }
 			Orientation = "UPPER_LEFT"
 		}
@@ -1791,11 +1791,21 @@ guiTypes = {
 		
 		instantTextBoxType = { 
 			name = "pop_amount"
-			position = { x = 889 y = 9 }
-			font = "vic_22_black"
+			position = { x = 865 y = 1 }
+			font = "vic_18_black"
 			text = "amount"	
-			maxWidth = 50
-			maxHeight = 16	
+			maxWidth = 95
+			maxHeight = 14	
+			format = left
+		}
+
+		instantTextBoxType = {
+			name = "capacity_status"
+			position = { x = 865 y = 17 }
+			font = "vic_18_black"
+			text = ""
+			maxWidth = 95
+			maxHeight = 14
 			format = left
 		}
 		
@@ -1812,7 +1822,7 @@ guiTypes = {
 	windowType = {
 		name = "goods_need_template"
 		backGround = ""
-		size = { x = 33  y = 31 }
+		size = { x = 50  y = 31 }
 		moveable = 0
 		dontRender = ""
 		horizontalBorder = "0"
@@ -1823,7 +1833,7 @@ guiTypes = {
 		iconType = {
 			name = "goods_type"
 			spriteType = "GFX_resources"
-			position = { x = 16 y = 0 }
+			position = { x = 13 y = 0 }
 		}	
 		
 		instantTextBoxType = { 
@@ -1831,9 +1841,9 @@ guiTypes = {
 			position = { x = 0 y = 0 }
 			font = "vic_18"
 			text = "amount"	
-			maxWidth = 60
-			maxHeight = 32	
-			format = left
+			maxWidth = 50
+			maxHeight = 32
+			format = center
 		}
 	}
 	

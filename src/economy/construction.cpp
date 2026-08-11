@@ -4,8 +4,56 @@
 #include "text.hpp"
 #include "money.hpp"
 #include "province.hpp"
+#include "civic_buildings.hpp"
+#include <type_traits>
 
 namespace economy {
+
+construction_capacity_breakdown local_construction_capacity(sys::state& state, dcon::province_id province) {
+	construction_capacity_breakdown result;
+	if(!province)
+		return result;
+
+	// Labor supplies are persons available to the province labor market.  The
+	// divisors turn them into readable construction points while retaining the
+	// central design rule: population and skills, not an abstract construction
+	// building, determine how much can be built.
+	result.unskilled = state.world.province_get_labor_supply(province, labor::no_education) / 100'000.f * 0.5f;
+	result.skilled = state.world.province_get_labor_supply(province, labor::basic_education) / 50'000.f;
+	result.educated = (state.world.province_get_labor_supply(province, labor::high_education)
+		+ state.world.province_get_labor_supply(province, labor::high_education_and_accepted)) / 100'000.f * 0.5f;
+
+	uint8_t urban_level = 0;
+	for(auto type : state.world.in_civic_building_type) {
+		if(type.get_is_urban_center())
+			urban_level = std::max(urban_level, state.world.province_get_civic_building_level(province, type.id.index()));
+	}
+	auto railroad_level = state.world.province_get_building_level(province, uint8_t(province_building_type::railroad));
+	result.urban_multiplier = 1.f + 0.15f * float(urban_level);
+	result.infrastructure_multiplier = 1.f + 0.05f * float(railroad_level);
+	result.total = (result.unskilled + result.skilled + result.educated)
+		* result.urban_multiplier * result.infrastructure_multiplier;
+	return result;
+}
+
+construction_capacity_breakdown national_construction_capacity(sys::state& state, dcon::nation_id nation) {
+	construction_capacity_breakdown result;
+	if(!nation)
+		return result;
+
+	state.world.nation_for_each_province_ownership(nation, [&](auto ownership) {
+		auto local = local_construction_capacity(state, state.world.province_ownership_get_province(ownership));
+		result.unskilled += local.unskilled;
+		result.skilled += local.skilled;
+		result.educated += local.educated;
+		result.total += local.total;
+	});
+	// National components are sums of already-modified local capacity, so these
+	// multipliers are informationally neutral at this scope.
+	result.urban_multiplier = 1.f;
+	result.infrastructure_multiplier = 1.f;
+	return result;
+}
 
 void build_land_unit_construction_tooltip(
 	sys::state& state,
@@ -460,6 +508,9 @@ void advance_province_building_construction(
 	dcon::province_building_construction_id construction
 ) {
 	auto details = explain_province_building_construction(state, construction);
+	auto capacity_share = civil_construction_capacity_share(state, construction);
+	if(capacity_share <= 0.f)
+		return;
 	assert(0 <= int32_t(details.building_type) && int32_t(details.building_type) < int32_t(economy::max_building_types));
 	auto& base_cost = state.economy_definitions.building_definitions[int32_t(details.building_type)].cost;
 	assert(state.world.province_building_construction_is_valid(construction) && "Invalid write incoming!");
@@ -478,15 +529,15 @@ void advance_province_building_construction(
 		auto required = base_cost.commodity_amounts[i] * details.cost_multiplier;
 		if(current >= required)
 			continue;
-		auto amount = required / details.construction_time;
+		auto amount = required / details.construction_time * capacity_share;
 		if(details.is_pop_project) {
 			auto& source_private = state.world.market_get_private_construction_demand(details.market, base_cost.commodity_type[i]);
-			auto delta = std::clamp(required / details.construction_time, 0.f, source_private);
+			auto delta = std::clamp(amount, 0.f, source_private);
 			current_purchased.commodity_amounts[i] += delta;
 			state.world.market_set_private_construction_demand(details.market, base_cost.commodity_type[i], source_private - delta);
 		} else {
 			auto& source_national = state.world.market_get_construction_demand(details.market, base_cost.commodity_type[i]);
-			auto delta = std::clamp(required / details.construction_time, 0.f, source_national);
+			auto delta = std::clamp(amount, 0.f, source_national);
 			current_purchased.commodity_amounts[i] += delta;
 			state.world.market_set_construction_demand(details.market, base_cost.commodity_type[i], source_national - delta);
 		}
@@ -502,6 +553,8 @@ void populate_province_building_construction_demand(
 	auto details = explain_province_building_construction(state, construction);
 	if(!details.can_be_advanced) return;
 	if(details.is_pop_project) return;
+	auto capacity_share = civil_construction_capacity_share(state, construction);
+	if(capacity_share <= 0.f) return;
 
 	assert(0 <= int32_t(details.building_type) && int32_t(details.building_type) < int32_t(economy::max_building_types));
 	auto& base_cost = state.economy_definitions.building_definitions[int32_t(details.building_type)].cost;
@@ -515,7 +568,7 @@ void populate_province_building_construction_demand(
 		if(current >= required) continue;
 		auto local_price = price(state, details.market, cid);
 		auto can_purchase_budget = std::min(budget_limit, budget) / (local_price + 0.001f);
-		auto can_purchase_construction = required / details.construction_time;
+		auto can_purchase_construction = required / details.construction_time * capacity_share;
 		auto can_purchase = std::min(can_purchase_budget, can_purchase_construction);
 		auto satisfaction = state.world.market_get_actual_probability_to_buy(details.market, cid);
 		budget = std::max(0.f, budget - can_purchase * local_price * satisfaction);
@@ -563,6 +616,99 @@ factory_construction_data explain_factory_building_construction(
 		.refit_target = refit_target
 	};
 	return result;
+}
+
+namespace {
+
+// Civil projects consume capacity in the same deterministic order used by the
+// Projects list: factories first, then provincial buildings. One full capacity
+// point sustains one project at its normal Victoria II construction rate; a
+// fractional remainder advances the next project proportionally.
+template<typename TargetT>
+float civil_construction_capacity_share_impl(sys::state& state, dcon::nation_id nation, TargetT target) {
+	if(!nation)
+		return 0.f;
+
+	float remaining = std::max(0.f, national_construction_capacity(state, nation).total);
+	float result = 0.f;
+	bool found = false;
+
+	state.world.nation_for_each_factory_construction_as_nation(nation, [&](dcon::factory_construction_id id) {
+		if(found)
+			return;
+		auto details = explain_factory_building_construction(state, id);
+		if(!details.can_be_advanced)
+			return;
+		auto share = std::clamp(remaining, 0.f, 1.f);
+		if constexpr(std::is_same_v<TargetT, dcon::factory_construction_id>) {
+			if(id == target) {
+				result = share;
+				found = true;
+				return;
+			}
+		}
+		remaining = std::max(0.f, remaining - 1.f);
+	});
+
+	if(found)
+		return result;
+
+	state.world.nation_for_each_province_building_construction_as_nation(nation, [&](dcon::province_building_construction_id id) {
+		if(found)
+			return;
+		auto details = explain_province_building_construction(state, id);
+		if(!details.can_be_advanced)
+			return;
+		auto share = std::clamp(remaining, 0.f, 1.f);
+		if constexpr(std::is_same_v<TargetT, dcon::province_building_construction_id>) {
+			if(id == target) {
+				result = share;
+				found = true;
+				return;
+			}
+		}
+		remaining = std::max(0.f, remaining - 1.f);
+	});
+
+	return result;
+}
+
+}
+
+float civil_construction_capacity_share(sys::state& state, dcon::factory_construction_id construction) {
+	return civil_construction_capacity_share_impl(state, state.world.factory_construction_get_nation(construction), construction);
+}
+
+float civil_construction_capacity_share(sys::state& state, dcon::province_building_construction_id construction) {
+	return civil_construction_capacity_share_impl(state, state.world.province_building_construction_get_nation(construction), construction);
+}
+
+int32_t active_civil_construction_projects(sys::state& state, dcon::nation_id nation) {
+	int32_t count = 0;
+	state.world.nation_for_each_factory_construction_as_nation(nation, [&](auto id) {
+		if(civil_construction_capacity_share(state, id) > 0.f)
+			++count;
+	});
+	state.world.nation_for_each_province_building_construction_as_nation(nation, [&](auto id) {
+		if(civil_construction_capacity_share(state, id) > 0.f)
+			++count;
+	});
+	return count;
+}
+
+int32_t queued_civil_construction_projects(sys::state& state, dcon::nation_id nation) {
+	int32_t count = 0;
+	state.world.nation_for_each_factory_construction_as_nation(nation, [&](auto id) {
+		auto details = explain_factory_building_construction(state, id);
+		if(details.can_be_advanced && civil_construction_capacity_share(state, id) <= 0.f)
+			++count;
+	});
+	state.world.nation_for_each_province_building_construction_as_nation(nation, [&](auto id) {
+		auto details = explain_province_building_construction(state, id);
+		if(details.can_be_advanced && civil_construction_capacity_share(state, id) <= 0.f)
+			++count;
+	});
+	return count;
 }
 
 
@@ -670,6 +816,9 @@ void advance_factory_construction(
 	dcon::factory_construction_id construction
 ) {
 	auto details = explain_factory_building_construction(state, construction);
+	auto capacity_share = civil_construction_capacity_share(state, construction);
+	if(capacity_share <= 0.f)
+		return;
 	auto base_cost =
 		details.refit_target
 		? calculate_factory_refit_goods_cost(
@@ -688,12 +837,12 @@ void advance_factory_construction(
 
 		if(details.is_pop_project) {
 			auto& source_private = state.world.market_get_private_construction_demand(details.market, base_cost.commodity_type[i]);
-			auto delta = std::clamp(required / details.construction_time, 0.f, source_private);
+			auto delta = std::clamp(required / details.construction_time * capacity_share, 0.f, source_private);
 			current_purchased.commodity_amounts[i] += delta;
 			state.world.market_set_private_construction_demand(details.market, base_cost.commodity_type[i], source_private - delta);
 		} else {
 			auto& source_national = state.world.market_get_construction_demand(details.market, base_cost.commodity_type[i]);
-			auto delta = std::clamp(required / details.construction_time, 0.f, source_national);
+			auto delta = std::clamp(required / details.construction_time * capacity_share, 0.f, source_national);
 			current_purchased.commodity_amounts[i] += delta;
 			state.world.market_set_construction_demand(details.market, base_cost.commodity_type[i], source_national - delta);
 		}
@@ -709,6 +858,8 @@ void populate_state_construction_demand(
 	auto details = explain_factory_building_construction(state, construction);
 	if(!details.can_be_advanced) return;
 	if(details.is_pop_project) return;
+	auto capacity_share = civil_construction_capacity_share(state, construction);
+	if(capacity_share <= 0.f) return;
 
 	auto base_cost = details.refit_target
 		? calculate_factory_refit_goods_cost(
@@ -724,7 +875,7 @@ void populate_state_construction_demand(
 		if(current >= required) continue;
 		auto local_price = price(state, details.market, cid);
 		auto can_purchase_budget = std::min(budget_limit, budget) / (local_price + 0.001f);
-		auto can_purchase_construction = required / details.construction_time;
+		auto can_purchase_construction = required / details.construction_time * capacity_share;
 		auto can_purchase = std::min(can_purchase_budget, can_purchase_construction);
 		auto satisfaction = state.world.market_get_actual_probability_to_buy(details.market, cid);
 		budget = std::max(0.f, budget - can_purchase * local_price * satisfaction);
@@ -782,13 +933,14 @@ void populate_construction_consumption(sys::state& state) {
 	});
 	for(auto c : state.world.in_province_building_construction) {
 		auto owner = c.get_nation().id;
-		if(owner && c.get_province().get_nation_from_province_ownership() == c.get_province().get_nation_from_province_control() && !c.get_is_pop_project()) {
+		if(owner && c.get_province().get_nation_from_province_ownership() == c.get_province().get_nation_from_province_control()
+				&& !c.get_is_pop_project() && civil_construction_capacity_share(state, c) > 0.f) {
 			going_constructions.get(owner) += 1;
 		}
 	};
 	for(auto c : state.world.in_factory_construction) {
 		auto owner = c.get_nation().id;
-		if(owner && !c.get_is_pop_project()) {
+		if(owner && !c.get_is_pop_project() && civil_construction_capacity_share(state, c) > 0.f) {
 			going_constructions.get(owner) += 1;
 		}
 	};
@@ -863,7 +1015,8 @@ int32_t count_ongoing_constructions(sys::state& state, dcon::nation_id n) {
 		auto spending_scale = state.world.nation_get_spending_level(owner);
 		auto local_zone = c.get_province().get_state_membership();
 		auto market = state.world.state_instance_get_market_from_local_market(local_zone);
-		if(owner && c.get_province().get_nation_from_province_ownership() == c.get_province().get_nation_from_province_control() && !c.get_is_pop_project()) {
+		if(owner && c.get_province().get_nation_from_province_ownership() == c.get_province().get_nation_from_province_control()
+				&& !c.get_is_pop_project() && civil_construction_capacity_share(state, c) > 0.f) {
 			count++;
 		}
 	}
@@ -874,7 +1027,7 @@ int32_t count_ongoing_constructions(sys::state& state, dcon::nation_id n) {
 		}
 		auto spending_scale = state.world.nation_get_spending_level(owner);
 		auto market = state.world.state_instance_get_market_from_local_market(c.get_province().get_state_membership());
-		if(owner && !c.get_is_pop_project()) {
+		if(owner && !c.get_is_pop_project() && civil_construction_capacity_share(state, c) > 0.f) {
 			count++;
 		}
 	}
@@ -895,6 +1048,8 @@ void populate_explanation_province_construction(
 		if(details.owner != n) continue;
 		if(!details.can_be_advanced) continue;
 		if(details.is_pop_project) continue;
+		auto capacity_share = civil_construction_capacity_share(state, c);
+		if(capacity_share <= 0.f) continue;
 
 		assert(0 <= int32_t(details.building_type) && int32_t(details.building_type) < int32_t(economy::max_building_types));
 		auto& base_cost = state.economy_definitions.building_definitions[int32_t(details.building_type)].cost;
@@ -908,7 +1063,7 @@ void populate_explanation_province_construction(
 			if(current >= required) continue;
 			auto local_price = price(state, details.market, cid);
 			auto can_purchase_budget = std::min(budget_limit_per_project, dedicated_budget) / (local_price + 0.001f);
-			auto can_purchase_construction = required / details.construction_time;
+			auto can_purchase_construction = required / details.construction_time * capacity_share;
 			auto can_purchase = std::min(can_purchase_budget, can_purchase_construction);
 			auto satisfaction = state.world.market_get_actual_probability_to_buy(details.market, cid);
 			auto cost = std::min(dedicated_budget, can_purchase * satisfaction * local_price);
@@ -935,6 +1090,8 @@ void populate_explanation_state_construction(
 		if(details.owner != n) continue;
 		if(!details.can_be_advanced) continue;
 		if(details.is_pop_project) continue;
+		auto capacity_share = civil_construction_capacity_share(state, c);
+		if(capacity_share <= 0.f) continue;
 		auto& base_cost = state.world.factory_type_get_construction_costs(details.building_type);
 		auto& current_purchased = c.get_purchased_goods();
 		float total_cost = 0.f;
@@ -946,7 +1103,7 @@ void populate_explanation_state_construction(
 			if(current >= required) continue;
 			auto local_price = price(state, details.market, cid);
 			auto can_purchase_budget = std::min(budget_limit_per_project, dedicated_budget) / (local_price + 0.001f);
-			auto can_purchase_construction = required / details.construction_time;
+			auto can_purchase_construction = required / details.construction_time * capacity_share;
 			auto can_purchase = std::min(can_purchase_budget, can_purchase_construction);
 			auto satisfaction = state.world.market_get_actual_probability_to_buy(details.market, cid);
 			auto cost = std::min(dedicated_budget, can_purchase * satisfaction * local_price);
@@ -1166,6 +1323,8 @@ void populate_province_building_construction_private_demand(
 	// Rationale for not checking building type: Its an invalid state; should not occur under normal circumstances
 	if(!details.can_be_advanced) return;
 	if(!details.is_pop_project) return;
+	auto capacity_share = civil_construction_capacity_share(state, construction);
+	if(capacity_share <= 0.f) return;
 
 	assert(0 <= int32_t(details.building_type) && int32_t(details.building_type) < int32_t(economy::max_building_types));
 	auto& base_cost = state.economy_definitions.building_definitions[int32_t(details.building_type)].cost;
@@ -1177,7 +1336,8 @@ void populate_province_building_construction_private_demand(
 		auto required = base_cost.commodity_amounts[i] * details.cost_multiplier;
 		if(current >= required) continue;
 		auto& cur_demand = state.world.market_get_private_construction_demand(details.market, cid);
-		state.world.market_set_private_construction_demand(details.market, cid, cur_demand + required / details.construction_time);
+		state.world.market_set_private_construction_demand(details.market, cid,
+			cur_demand + required / details.construction_time * capacity_share);
 	}
 }
 
@@ -1188,6 +1348,8 @@ void populate_state_construction_private_demand(
 	auto details = explain_factory_building_construction(state, construction);
 	if(!details.can_be_advanced) return;
 	if(!details.is_pop_project)	return;
+	auto capacity_share = civil_construction_capacity_share(state, construction);
+	if(capacity_share <= 0.f) return;
 	auto base_cost = details.refit_target
 		? calculate_factory_refit_goods_cost(
 			state, details.owner, details.province, details.building_type, details.refit_target
@@ -1200,7 +1362,8 @@ void populate_state_construction_private_demand(
 		auto required = base_cost.commodity_amounts[i] * details.cost_multiplier;
 		if(current >= required) continue;
 		auto& cur_demand = state.world.market_get_private_construction_demand(details.market, cid);
-		state.world.market_set_private_construction_demand(details.market, cid, cur_demand + required / details.construction_time);
+		state.world.market_set_private_construction_demand(details.market, cid,
+			cur_demand + required / details.construction_time * capacity_share);
 	}
 }
 
