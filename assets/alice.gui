@@ -6084,6 +6084,16 @@ guiButtonType = {
 	clicksound = click
 }
 
+guiButtonType = {
+	name = "foundry_road_button"
+	position = { 55 39 }
+	quadTextureSprite = "GFX_button_standard_144"
+	buttonText = "ROADS"
+	buttonFont = "vic_18_black"
+	Orientation = "UPPER_LEFT"
+	clicksound = click
+}
+
 windowType = {
 	name = "foundry_urban_center_window"
 	position = { 410 0 }

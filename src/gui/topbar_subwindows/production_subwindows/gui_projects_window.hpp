@@ -268,9 +268,13 @@ public:
 			auto it = state.ui_state.gfx_by_name.find(state.lookup_key("GFX_foundry_project_icons"));
 			if(it != state.ui_state.gfx_by_name.end())
 				factory_icon->base_data.data.image.gfx_object = it->second;
-			factory_icon->frame = 5;
+			bool const urban_center = state.world.civic_building_type_get_is_urban_center(project.type);
+			bool const road_network = state.world.civic_building_type_get_is_road_network(project.type);
+			factory_icon->frame = urban_center ? 5 : (road_network ? 0 : 5);
 			auto current_level = state.world.province_get_civic_building_level(project.province, project.type.index());
-			name_text->set_text(state, "Urban Center Level " + std::to_string(int32_t(current_level) + 1));
+			name_text->set_text(state, std::string(urban_center ? "Urban Center Level "
+				: (road_network ? "Road Network Level " : "Civic Building Level "))
+				+ std::to_string(int32_t(current_level) + 1));
 			auto& definition = state.world.civic_building_type_get_levels(project.type)[current_level];
 			needed_commodities = definition.cost;
 			satisfied_commodities = state.world.province_get_civic_building_purchased_goods(

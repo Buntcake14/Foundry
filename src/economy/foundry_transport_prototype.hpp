@@ -31,7 +31,10 @@ struct transport_edge {
 	float capacity = 0.f;
 	float used_capacity = 0.f;
 	float congestion_strength = 1.f;
-	float border_cost = 0.f;
+	// Additive border cost in each direction. The destination/importing
+	// market's policy determines the applicable cost.
+	float border_cost_first_to_second = 0.f;
+	float border_cost_second_to_first = 0.f;
 	bool open = true;
 };
 
@@ -128,10 +131,14 @@ class simulation {
 				if(quantity <= epsilon) break;
 
 				float tariff = 0.f;
+				auto path_market = best.origin;
 				for(auto edge_id : best.path.edges) {
 					auto& edge = edges_[edge_id];
 					edge.used_capacity += quantity;
-					if(markets_[edge.first].country != markets_[edge.second].country) tariff += trade_policy.border_tariff + edge.border_cost;
+					auto next_market = edge.first == path_market ? edge.second : edge.first;
+					if(markets_[edge.first].country != markets_[edge.second].country)
+						tariff += trade_policy.border_tariff + directional_border_cost(edge, path_market, next_market);
+					path_market = next_market;
 				}
 
 				surplus[best.origin] -= quantity;
@@ -168,10 +175,17 @@ class simulation {
 		path_result path;
 	};
 
-	float marginal_edge_cost(transport_edge const& edge, policy trade_policy) const {
+	float directional_border_cost(transport_edge const& edge, size_t from, size_t to) const {
+		if(from == edge.first && to == edge.second) return edge.border_cost_first_to_second;
+		if(from == edge.second && to == edge.first) return edge.border_cost_second_to_first;
+		return 0.f;
+	}
+
+	float marginal_edge_cost(transport_edge const& edge, size_t from, size_t to, policy trade_policy) const {
 		auto utilization = edge.capacity > epsilon ? edge.used_capacity / edge.capacity : 1.f;
 		auto congestion = edge.base_cost * edge.congestion_strength * utilization * utilization;
-		auto tariff = markets_[edge.first].country != markets_[edge.second].country ? trade_policy.border_tariff + edge.border_cost : 0.f;
+		auto tariff = markets_[edge.first].country != markets_[edge.second].country
+			? trade_policy.border_tariff + directional_border_cost(edge, from, to) : 0.f;
 		return edge.base_cost + congestion + tariff;
 	}
 
@@ -195,7 +209,7 @@ class simulation {
 				else if(edge.second == node) next = edge.first;
 				else continue;
 
-				auto next_cost = cost + marginal_edge_cost(edge, trade_policy);
+				auto next_cost = cost + marginal_edge_cost(edge, node, next, trade_policy);
 				if(next_cost + epsilon < paths[next].cost) {
 					paths[next].cost = next_cost;
 					paths[next].edges = paths[node].edges;

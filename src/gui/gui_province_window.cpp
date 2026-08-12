@@ -31,6 +31,57 @@ static dcon::civic_building_type_id foundry_urban_center_type(sys::state& state)
 	return {};
 }
 
+static dcon::civic_building_type_id foundry_road_type(sys::state& state) noexcept {
+	for(auto type : state.world.in_civic_building_type)
+		if(type.get_is_road_network())
+			return type.id;
+	return {};
+}
+
+class province_road_button : public button_element_base {
+public:
+	void on_update(sys::state& state) noexcept override {
+		auto province = retrieve<dcon::province_id>(state, parent);
+		auto type = foundry_road_type(state);
+		if(!type) {
+			disabled = true;
+			set_button_text(state, "ROADS");
+			return;
+		}
+		auto level = state.world.province_get_civic_building_level(province, type.index());
+		auto maximum = state.world.civic_building_type_get_level_count(type);
+		set_button_text(state, "ROADS " + std::to_string(level) + "/" + std::to_string(maximum));
+		disabled = !command::can_begin_civic_building_construction(
+			state, state.local_player_nation, province, type);
+	}
+
+	void button_action(sys::state& state) noexcept override {
+		auto province = retrieve<dcon::province_id>(state, parent);
+		auto type = foundry_road_type(state);
+		if(type && command::can_begin_civic_building_construction(
+				state, state.local_player_nation, province, type))
+			command::begin_civic_building_construction(
+				state, state.local_player_nation, province, type);
+	}
+
+	tooltip_behavior has_tooltip(sys::state&) noexcept override { return tooltip_behavior::variable_tooltip; }
+	void update_tooltip(sys::state& state, int32_t, int32_t, text::columnar_layout& contents) noexcept override {
+		auto province = retrieve<dcon::province_id>(state, parent);
+		auto type = foundry_road_type(state);
+		auto box = text::open_layout_box(contents);
+		if(!type) {
+			text::add_unparsed_text_to_layout_box(state, contents, box, "Road definitions are unavailable.");
+		} else {
+			auto level = state.world.province_get_civic_building_level(province, type.index());
+			auto maximum = state.world.civic_building_type_get_level_count(type);
+			text::add_unparsed_text_to_layout_box(state, contents, box,
+				"Road Network Level " + std::to_string(level) + "/" + std::to_string(maximum)
+				+ "\nGovernment project: improves land transport cost and capacity.");
+		}
+		text::close_layout_box(contents, box);
+	}
+};
+
 class urban_center_density_image : public image_element_base {
 public:
 	void on_update(sys::state& state) noexcept override {
@@ -2819,6 +2870,8 @@ void province_view_window::on_create(sys::state& state) noexcept {
 	set_visible(state, false);
 	auto urban_button = make_element_by_type<province_urban_center_button>(state, "foundry_urban_center_button");
 	add_child_to_front(std::move(urban_button));
+	auto road_button = make_element_by_type<province_road_button>(state, "foundry_road_button");
+	add_child_to_front(std::move(road_button));
 	auto urban_window = make_element_by_type<urban_center_detail_window>(state, "foundry_urban_center_window");
 	urban_window->set_visible(state, false);
 	urban_center_window = urban_window.get();

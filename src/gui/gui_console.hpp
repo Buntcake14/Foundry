@@ -63,6 +63,7 @@ public:
 	std::unique_ptr<element_base> make_child(sys::state& state, std::string_view name, dcon::gui_def_id id) noexcept override;
 	message_result get(sys::state& state, Cyto::Any& payload) noexcept override;
 	void clear_list(sys::state& state) noexcept;
+	void replace_list(sys::state& state, std::string text) noexcept;
 	static void show_toggle(sys::state& state);
 	void on_visible(sys::state& state) noexcept override;
 	void on_hide(sys::state& state) noexcept override;

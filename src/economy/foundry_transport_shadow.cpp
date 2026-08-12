@@ -1,7 +1,10 @@
 #include "foundry_transport_shadow.hpp"
 
 #include "economy_stats.hpp"
+#include "advanced_province_buildings.hpp"
 #include "foundry_transport_prototype.hpp"
+#include "province.hpp"
+#include "province_templates.hpp"
 #include "system_state.hpp"
 #include "text.hpp"
 
@@ -33,6 +36,49 @@ std::string market_name(sys::state const& state, dcon::market_id market) {
 	return text::produce_simple_string(state, state.world.province_get_name(capital));
 }
 
+bool valid_market(sys::state const& state, dcon::market_id market) {
+	return market && size_t(market.index()) < state.world.market_size() && state.world.market_is_valid(market);
+}
+
+dcon::civic_building_type_id road_type(sys::state const& state) {
+	for(auto type : state.world.in_civic_building_type)
+		if(type.get_is_road_network())
+			return type.id;
+	return {};
+}
+
+float market_road_level(sys::state const& state, dcon::market_id market) {
+	auto type = road_type(state);
+	auto zone = state.world.market_get_zone_from_local_market(market);
+	if(!type || !zone || size_t(zone.index()) >= state.world.state_instance_size()) return 0.f;
+	float total = 0.f;
+	float provinces = 0.f;
+	province::for_each_province_in_state_instance(state, zone, [&](dcon::province_id province_id) {
+		if(!province_id || !state.world.province_is_valid(province_id)) return;
+		total += float(state.world.province_get_civic_building_level(province_id, type.index()));
+		provinces += 1.f;
+	});
+	return provinces > 0.f ? total / provinces : 0.f;
+}
+
+float civilian_port_capacity(sys::state const& state, dcon::market_id market) {
+	auto zone = state.world.market_get_zone_from_local_market(market);
+	if(!zone || size_t(zone.index()) >= state.world.state_instance_size()) return 0.f;
+	float capacity = 0.f;
+	province::for_each_province_in_state_instance(state, zone, [&](dcon::province_id province_id) {
+		if(!province_id || !state.world.province_is_valid(province_id) || !state.world.province_get_port_to(province_id)) return;
+		auto port_size = std::max(0.f,
+			state.world.province_get_advanced_province_building_max_private_size(
+				province_id, advanced_province_buildings::list::civilian_ports));
+		auto service = std::clamp(
+			state.world.province_get_service_satisfaction(province_id, services::list::port_capacity), 0.f, 1.f);
+		// Existing coastal settlements retain modest harbor traffic. Developed
+		// civilian ports add substantially more service-backed throughput.
+		capacity += 100.f + port_size * std::max(0.1f, service);
+	});
+	return capacity;
+}
+
 } // namespace
 
 std::string run_live_shadow(
@@ -59,12 +105,13 @@ std::string run_live_shadow(
 	while(!pending.empty() && selected.size() < maximum_markets) {
 		auto market = pending.front();
 		pending.pop();
+		if(!valid_market(state, market)) continue;
 		if(std::find(selected.begin(), selected.end(), market) != selected.end()) continue;
 		selected.push_back(market);
 		state.world.market_for_each_trade_route(market, [&](auto route) {
 			for(int endpoint = 0; endpoint < 2; ++endpoint) {
 				auto other = state.world.trade_route_get_connected_markets(route, endpoint);
-				if(other && local_index[other.index()] < 0) {
+				if(valid_market(state, other) && local_index[size_t(other.index())] < 0) {
 					local_index[other.index()] = int32_t(selected.size());
 					pending.push(other);
 				}
@@ -90,11 +137,12 @@ std::string run_live_shadow(
 	std::vector<bool> route_added(state.world.trade_route_size(), false);
 	for(auto market : selected) {
 		state.world.market_for_each_trade_route(market, [&](auto route) {
-			if(route_added[route.index()]) return;
+			if(!route || size_t(route.index()) >= route_added.size() || route_added[size_t(route.index())]) return;
 			route_added[route.index()] = true;
 			auto first = state.world.trade_route_get_connected_markets(route, 0);
 			auto second = state.world.trade_route_get_connected_markets(route, 1);
-			if(!first || !second || local_index[first.index()] < 0 || local_index[second.index()] < 0) return;
+			if(!valid_market(state, first) || !valid_market(state, second)
+				|| local_index[size_t(first.index())] < 0 || local_index[size_t(second.index())] < 0) return;
 
 			auto sea = state.world.trade_route_get_is_sea_route(route);
 			auto land = state.world.trade_route_get_is_land_route(route);
@@ -105,24 +153,30 @@ std::string run_live_shadow(
 				state.world.market_get_max_throughput(first),
 				state.world.market_get_max_throughput(second)
 			));
+			if(mode == transport_mode::road) {
+				auto roads = 0.5f * (market_road_level(state, first) + market_road_level(state, second));
+				distance /= 1.f + 0.15f * roads;
+				capacity *= 1.f + 0.25f * roads;
+			}
+			if(mode == transport_mode::sea) {
+				capacity = std::min(civilian_port_capacity(state, first), civilian_port_capacity(state, second));
+			}
 			auto first_owner = state.world.state_instance_get_nation_from_state_ownership(state.world.market_get_zone_from_local_market(first));
 			auto second_owner = state.world.state_instance_get_nation_from_state_ownership(state.world.market_get_zone_from_local_market(second));
-			float border_cost = 0.f;
+			float border_cost_first_to_second = 0.f;
+			float border_cost_second_to_first = 0.f;
 			if(first_owner && second_owner && first_owner != second_owner) {
-				auto tariff_rate = 0.5f * (
-					effective_tariff_import_rate(state, first_owner, first)
-					+ effective_tariff_import_rate(state, second_owner, second)
-				);
-				border_cost = tariff_rate * 0.5f * (
-					state.world.market_get_price(first, commodity)
-					+ state.world.market_get_price(second, commodity)
-				);
+				border_cost_first_to_second = effective_tariff_import_rate(state, second_owner, second)
+					* state.world.market_get_price(first, commodity);
+				border_cost_second_to_first = effective_tariff_import_rate(state, first_owner, first)
+					* state.world.market_get_price(second, commodity);
 			}
 
 			shadow.add_edge({
 				size_t(local_index[first.index()]), size_t(local_index[second.index()]), mode,
-				distance * 0.01f, capacity, 0.f, 1.f, border_cost,
-				!state.world.trade_route_get_is_trade_forbidden(route)
+				distance * 0.01f, capacity, 0.f, 1.f,
+				border_cost_first_to_second, border_cost_second_to_first,
+				!state.world.trade_route_get_is_trade_forbidden(route) && capacity > 0.f
 			});
 		});
 	}
@@ -137,7 +191,7 @@ std::string run_live_shadow(
 	report << "Good: " << text::produce_simple_string(state, state.world.commodity_get_name(commodity))
 		<< " | markets: " << selected.size() << " | routes: " << shadow.edges().size()
 		<< " | runtime: " << elapsed.count() << " us\n";
-	report << "Provisional conversion: transport cost = live effective distance x 0.01.\n";
+	report << "Infrastructure: roads reduce land cost and raise land capacity; civilian ports limit sea capacity.\n";
 
 	for(size_t index = 0; index < selected.size(); ++index) {
 		auto const& node = shadow.markets()[index];
@@ -154,7 +208,8 @@ std::string run_live_shadow(
 		auto const& edge = shadow.edges()[index];
 		report << "  route " << index << " " << mode_name(edge.mode)
 			<< " " << shadow.markets()[edge.first].name << " <-> " << shadow.markets()[edge.second].name
-			<< " cost=" << edge.base_cost << " tariff=" << edge.border_cost
+			<< " cost=" << edge.base_cost
+			<< " tariff=" << edge.border_cost_first_to_second << "/" << edge.border_cost_second_to_first
 			<< " used=" << edge.used_capacity << "/" << edge.capacity
 			<< (edge.open ? "" : " CLOSED") << "\n";
 	}

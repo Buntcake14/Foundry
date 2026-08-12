@@ -1248,6 +1248,7 @@ struct civic_building_definition {
 	std::vector<civic_building_level> levels;
 	bool is_urban_center = false;
 	bool is_rgo_level = false;
+	bool is_road_network = false;
 
 	void level(civic_building_level&& value, error_handler& err, int32_t line, scenario_building_context& context);
 	void finish(scenario_building_context&) { }

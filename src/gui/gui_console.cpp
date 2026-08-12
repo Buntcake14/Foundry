@@ -55,6 +55,15 @@ void ui::console_window::clear_list(sys::state& state) noexcept {
 	console_output_list->impl_on_update(state);
 }
 
+void ui::console_window::replace_list(sys::state& state, std::string text) noexcept {
+	console_output_list->raw_text = std::move(text);
+	console_output_list->text_pending = true;
+	// Console commands run while the edit box is still handling keyboard input.
+	// Rebuilding the shared HarfBuzz layout synchronously here can re-enter text
+	// shaping and corrupt HarfBuzz's temporary buffer state. Let the ordinary UI
+	// update pass shape the replacement on the following frame instead.
+}
+
 void ui::console_window::on_visible(sys::state& state) noexcept {
 	//console_output_list->scroll_to_bottom(state);
 	state.ui_state.set_focus_target(state, edit_box);
@@ -64,6 +73,7 @@ void ui::console_window::on_hide(sys::state& state) noexcept {
 }
 
 void ui::console_list::on_update(sys::state & state) noexcept {
+	constexpr size_t maximum_console_history_bytes = 32768;
 	std::string new_content;
 	{
 		std::lock_guard lg{ state.lock_console_strings };
@@ -72,6 +82,11 @@ void ui::console_list::on_update(sys::state & state) noexcept {
 	}
 	if(new_content.size() > 0) {
 		raw_text += new_content;
+		if(raw_text.size() > maximum_console_history_bytes) {
+			auto trim_from = raw_text.find('\n', raw_text.size() - maximum_console_history_bytes);
+			if(trim_from != std::string::npos) raw_text.erase(0, trim_from + 1);
+			else raw_text.erase(0, raw_text.size() - maximum_console_history_bytes);
+		}
 		text_pending = true;
 	}
 	if(text_pending) {
@@ -1216,7 +1231,11 @@ int32_t* f_market_shadow(fif::state_stack& s, int32_t* p, fif::environment* e) {
 	auto seed = state->map_state.selected_province;
 	if(!seed && state->local_player_nation) seed = state->world.nation_get_capital(state->local_player_nation);
 	auto report = economy::foundry_transport::run_live_shadow(*state, seed, commodity, 5);
-	log_to_console(*state, state->ui_state.console_window, simple_fs::utf8_to_utf16(report));
+	// This diagnostic can generate many wrapped lines. Replace the previous
+	// snapshot and rebuild its layout once; clearing and then appending caused
+	// two immediate HarfBuzz passes over the same console layout.
+	auto* console = static_cast<ui::console_window*>(state->ui_state.console_window);
+	console->replace_list(*state, "market-shadow\n" + report + "\n");
 	return p + 2;
 }
 int32_t* f_provid(fif::state_stack& s, int32_t* p, fif::environment* e) {

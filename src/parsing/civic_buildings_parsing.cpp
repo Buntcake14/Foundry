@@ -34,6 +34,7 @@ void civic_buildings_file::result(std::string_view name, civic_building_definiti
 	context.state.world.civic_building_type_set_level_count(new_id, uint8_t(res.levels.size()));
 	context.state.world.civic_building_type_set_is_urban_center(new_id, res.is_urban_center);
 	context.state.world.civic_building_type_set_is_rgo_level(new_id, res.is_rgo_level);
+	context.state.world.civic_building_type_set_is_road_network(new_id, res.is_road_network);
 
 	auto& stored_levels = context.state.world.civic_building_type_get_levels(new_id);
 	for(size_t i = 0; i < res.levels.size(); ++i) {

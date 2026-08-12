@@ -27,11 +27,11 @@ simulation five_market_model(float industrial_local_supply = 10.f, float foreign
 	model.add_market({ "Port State", 0, { 0.f }, { 10.f }, { 10.f } });
 	model.add_market({ "Farm State", 0, { 20.f }, { 20.f }, { 8.f } });
 	model.add_market({ "Foreign Port State", 1, { 100.f }, { 20.f }, { foreign_price } });
-	model.add_edge({ 0, 1, transport_mode::road, 1.f, 25.f, 0.f, 0.f, 0.f, true });
-	model.add_edge({ 0, 3, transport_mode::river, 1.5f, 30.f, 0.f, 1.f, 0.f, true });
-	model.add_edge({ 3, 1, transport_mode::river, 1.5f, 30.f, 0.f, 1.f, 0.f, true });
-	model.add_edge({ 1, 2, transport_mode::rail, 0.5f, 100.f, 0.f, 1.f, 0.f, true });
-	model.add_edge({ 2, 4, transport_mode::sea, 1.f, 100.f, 0.f, 1.f, 0.f, true });
+	model.add_edge({ 0, 1, transport_mode::road, 1.f, 25.f, 0.f, 0.f, 0.f, 0.f, true });
+	model.add_edge({ 0, 3, transport_mode::river, 1.5f, 30.f, 0.f, 1.f, 0.f, 0.f, true });
+	model.add_edge({ 3, 1, transport_mode::river, 1.5f, 30.f, 0.f, 1.f, 0.f, 0.f, true });
+	model.add_edge({ 1, 2, transport_mode::rail, 0.5f, 100.f, 0.f, 1.f, 0.f, 0.f, true });
+	model.add_edge({ 2, 4, transport_mode::sea, 1.f, 100.f, 0.f, 1.f, 0.f, 0.f, true });
 	return model;
 }
 
@@ -46,9 +46,9 @@ void test_capacity_and_congestion() {
 	model.add_market({ "Origin", 0, { 100.f }, { 0.f }, { 4.f } });
 	model.add_market({ "Destination", 0, { 0.f }, { 80.f }, { 10.f } });
 	model.add_market({ "River Junction", 0, { 0.f }, { 0.f }, { 10.f } });
-	model.add_edge({ 0, 1, transport_mode::road, 1.f, 25.f, 0.f, 0.f, 0.f, true });
-	model.add_edge({ 0, 2, transport_mode::river, 2.f, 100.f, 0.f, 0.f, 0.f, true });
-	model.add_edge({ 2, 1, transport_mode::river, 2.f, 100.f, 0.f, 0.f, 0.f, true });
+	model.add_edge({ 0, 1, transport_mode::road, 1.f, 25.f, 0.f, 0.f, 0.f, 0.f, true });
+	model.add_edge({ 0, 2, transport_mode::river, 2.f, 100.f, 0.f, 0.f, 0.f, 0.f, true });
+	model.add_edge({ 2, 1, transport_mode::river, 2.f, 100.f, 0.f, 0.f, 0.f, 0.f, true });
 	auto result = model.clear();
 	require(near(model.edges()[0].used_capacity, 25.f), "road should stop at its shared capacity");
 	bool used_river_path = false;
@@ -62,7 +62,7 @@ void test_rail_reduces_delivered_cost() {
 	simulation model(1);
 	model.add_market({ "Coal State", 0, { 20.f }, { 0.f }, { 4.f } });
 	model.add_market({ "Rail Port", 0, { 0.f }, { 10.f }, { 10.f } });
-	model.add_edge({ 0, 1, transport_mode::rail, 0.5f, 100.f, 0.f, 0.f, 0.f, true });
+	model.add_edge({ 0, 1, transport_mode::rail, 0.5f, 100.f, 0.f, 0.f, 0.f, 0.f, true });
 	auto result = model.clear();
 	float coal_to_port = 1000.f;
 	for(auto const& shipment : result.shipments) {
@@ -103,6 +103,24 @@ void test_tariff_is_part_of_delivered_price() {
 	require(tariff_price >= free_price + 1.999f, "border tariff must increase foreign delivered price");
 }
 
+void test_import_tariff_is_directional() {
+	simulation outward(1);
+	outward.add_market({ "Exporter", 0, { 10.f }, { 0.f }, { 4.f } });
+	outward.add_market({ "High Tariff Importer", 1, { 0.f }, { 10.f }, { 4.f } });
+	outward.add_edge({ 0, 1, transport_mode::road, 1.f, 100.f, 0.f, 0.f, 5.f, 1.f, true });
+	auto outward_result = outward.clear();
+	require(near(outward_result.shipments.front().tariff_cost, 5.f),
+		"first-to-second shipment must use the second market's import tariff");
+
+	simulation inward(1);
+	inward.add_market({ "High Tariff Importer", 1, { 0.f }, { 10.f }, { 4.f } });
+	inward.add_market({ "Exporter", 0, { 10.f }, { 0.f }, { 4.f } });
+	inward.add_edge({ 0, 1, transport_mode::road, 1.f, 100.f, 0.f, 0.f, 5.f, 1.f, true });
+	auto inward_result = inward.clear();
+	require(near(inward_result.shipments.front().tariff_cost, 1.f),
+		"second-to-first shipment must use the first market's import tariff");
+}
+
 } // namespace
 
 int main() {
@@ -112,6 +130,7 @@ int main() {
 	test_nearby_foreign_supplier_can_win();
 	test_closed_border_stops_foreign_trade();
 	test_tariff_is_part_of_delivered_price();
+	test_import_tariff_is_directional();
 	std::cout << "Foundry five-market transport prototype tests passed\n";
 	return EXIT_SUCCESS;
 }

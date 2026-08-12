@@ -316,6 +316,7 @@ civic_building_level
 civic_building_definition
 	is_urban_center       value     bool                           member
 	is_rgo_level          value     bool                           member
+	is_road_network       value     bool                           member
 	level                 group     civic_building_level           member_fn
 
 civic_buildings_file

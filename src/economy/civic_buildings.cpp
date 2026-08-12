@@ -71,6 +71,10 @@ void advance_upgrade(sys::state& state, dcon::province_id province, dcon::civic_
 	state.world.province_set_civic_building_purchased_goods(province, type.index(), economy::commodity_set{});
 	if(levels[current_level].modifier)
 		sys::add_modifier_to_province(state, province, levels[current_level].modifier, sys::date{});
+	// Roads and other transport-facing civic buildings can change the cheapest
+	// paths between markets. Recalculate cached route data after completion.
+	if(state.world.civic_building_type_get_is_road_network(type))
+		state.trade_route_cached_values_out_of_date = true;
 }
 
 // Civic construction is advanced by construction.cpp only after its market

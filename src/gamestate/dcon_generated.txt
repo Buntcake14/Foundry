@@ -585,6 +585,11 @@ object {
 		tag{ scenario }
 	}
 	property{
+		name{ is_road_network }
+		type{ bitfield }
+		tag{ scenario }
+	}
+	property{
 		name{ levels }
 		type{ std::array<civic_buildings::level_definition,civic_buildings::max_levels> }
 		tag{ scenario }
@@ -6261,4 +6266,3 @@ load_save{
 	only_objects{mp_data}
 	only_properties{mp_data}
 }
-

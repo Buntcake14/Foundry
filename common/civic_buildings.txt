@@ -68,3 +68,26 @@ urban_center = {
 		unlocks_admin_buildings = yes
 	}
 }
+
+# Government-built pre-rail transport infrastructure. Roads remain useful
+# after railways arrive by feeding production and population into rail hubs,
+# ports, and neighboring markets.
+road_network = {
+	is_road_network = yes
+	level = {
+		time = 60
+		cost = { lumber = 10 cement = 5 }
+	}
+	level = {
+		time = 60
+		cost = { lumber = 20 cement = 15 }
+	}
+	level = {
+		time = 60
+		cost = { lumber = 25 cement = 35 steel = 10 }
+	}
+	level = {
+		time = 60
+		cost = { cement = 60 steel = 30 machine_parts = 5 }
+	}
+}
