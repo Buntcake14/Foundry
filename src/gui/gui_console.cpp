@@ -1238,6 +1238,255 @@ int32_t* f_market_shadow(fif::state_stack& s, int32_t* p, fif::environment* e) {
 	console->replace_list(*state, "market-shadow\n" + report + "\n");
 	return p + 2;
 }
+
+int32_t* f_market_shadow_wide(fif::state_stack& s, int32_t* p, fif::environment* e) {
+	if(fif::typechecking_mode(e->mode)) {
+		if(!fif::typechecking_failed(e->mode)) s.pop_main();
+		return p + 2;
+	}
+	auto state_global = fif::get_global_var(*e, "state-ptr");
+	auto* state = reinterpret_cast<sys::state*>(state_global->data);
+	dcon::commodity_id commodity;
+	commodity.value = dcon::commodity_id::value_base_t(s.main_data_back(0));
+	s.pop_main();
+	auto seed = state->map_state.selected_province;
+	if(!seed && state->local_player_nation) seed = state->world.nation_get_capital(state->local_player_nation);
+	auto report = economy::foundry_transport::run_live_shadow(*state, seed, commodity, 25);
+	auto* console = static_cast<ui::console_window*>(state->ui_state.console_window);
+	console->replace_list(*state, "market-shadow-wide\n" + report + "\n");
+	return p + 2;
+}
+
+int32_t* f_market_shadow_batch(fif::state_stack&, int32_t* p, fif::environment* e) {
+	if(fif::typechecking_mode(e->mode)) return p + 2;
+	auto state_global = fif::get_global_var(*e, "state-ptr");
+	auto* state = reinterpret_cast<sys::state*>(state_global->data);
+	auto seed = state->map_state.selected_province;
+	if(!seed && state->local_player_nation) seed = state->world.nation_get_capital(state->local_player_nation);
+	auto report = economy::foundry_transport::run_live_shadow_batch(*state, seed, 25, 12);
+	static_cast<ui::console_window*>(state->ui_state.console_window)->replace_list(*state, "market-shadow-batch\n" + report + "\n");
+	return p + 2;
+}
+
+int32_t* f_market_live_audit(fif::state_stack& s, int32_t* p, fif::environment* e) {
+	if(fif::typechecking_mode(e->mode)) {
+		if(!fif::typechecking_failed(e->mode)) s.pop_main();
+		return p + 2;
+	}
+	auto state_global = fif::get_global_var(*e, "state-ptr");
+	auto* state = reinterpret_cast<sys::state*>(state_global->data);
+	dcon::commodity_id commodity;
+	commodity.value = dcon::commodity_id::value_base_t(s.main_data_back(0)); s.pop_main();
+	if(!commodity || !state->world.commodity_is_valid(commodity)) {
+		log_to_console(*state, state->ui_state.console_window, u"Invalid commodity; live audit remains disabled.");
+		state->cheat_data.foundry_market_live_audit = false;
+		return p + 2;
+	}
+	state->cheat_data.foundry_market_live_commodity = commodity;
+	state->cheat_data.foundry_market_live_basket = false;
+	state->cheat_data.foundry_market_live_all_goods = false;
+	state->cheat_data.foundry_market_live_max_markets = 25;
+	state->cheat_data.foundry_market_live_interval_days = 1;
+	state->cheat_data.foundry_market_live_ran_today = false;
+	state->cheat_data.foundry_market_live_runs = 0;
+	state->cheat_data.foundry_market_live_failures = 0;
+	state->cheat_data.foundry_market_live_comparisons = 0;
+	state->cheat_data.foundry_market_live_markets.clear();
+	state->cheat_data.foundry_market_sum_abs_consumption_delta = 0.0;
+	state->cheat_data.foundry_market_sum_abs_unmet_delta = 0.0;
+	state->cheat_data.foundry_market_sum_abs_unsold_delta = 0.0;
+	state->cheat_data.foundry_market_live_audit = true;
+	log_to_console(*state, state->ui_state.console_window,
+		u"Foundry daily live market audit enabled (vanilla remains authoritative).");
+	return p + 2;
+}
+
+int32_t* f_market_live_audit_basket(fif::state_stack&, int32_t* p, fif::environment* e) {
+	if(fif::typechecking_mode(e->mode)) return p + 2;
+	auto* state = reinterpret_cast<sys::state*>(fif::get_global_var(*e, "state-ptr")->data);
+	state->cheat_data.foundry_market_live_basket = true;
+	state->cheat_data.foundry_market_live_all_goods = false;
+	state->cheat_data.foundry_market_live_max_markets = 25;
+	state->cheat_data.foundry_market_live_interval_days = 1;
+	state->cheat_data.foundry_market_live_ran_today = false;
+	state->cheat_data.foundry_market_live_runs = 0;
+	state->cheat_data.foundry_market_live_failures = 0;
+	state->cheat_data.foundry_market_live_comparisons = 0;
+	state->cheat_data.foundry_market_basket_runtime_sum_us = 0;
+	state->cheat_data.foundry_market_live_markets.clear();
+	state->cheat_data.foundry_market_live_audit = true;
+	log_to_console(*state, state->ui_state.console_window,
+		u"Foundry 12-good daily market audit enabled (vanilla remains authoritative).");
+	return p + 2;
+}
+
+int32_t* f_market_live_audit_all(fif::state_stack&, int32_t* p, fif::environment* e) {
+	if(fif::typechecking_mode(e->mode)) return p + 2;
+	auto* state = reinterpret_cast<sys::state*>(fif::get_global_var(*e, "state-ptr")->data);
+	state->cheat_data.foundry_market_live_basket = true;
+	state->cheat_data.foundry_market_live_all_goods = true;
+	state->cheat_data.foundry_market_live_max_markets = 25;
+	state->cheat_data.foundry_market_live_interval_days = 1;
+	state->cheat_data.foundry_market_live_ran_today = false;
+	state->cheat_data.foundry_market_live_runs = 0;
+	state->cheat_data.foundry_market_live_failures = 0;
+	state->cheat_data.foundry_market_live_comparisons = 0;
+	state->cheat_data.foundry_market_basket_runtime_sum_us = 0;
+	state->cheat_data.foundry_market_live_markets.clear();
+	state->cheat_data.foundry_market_live_audit = true;
+	log_to_console(*state, state->ui_state.console_window,
+		u"Foundry all-active-goods audit enabled (vanilla remains authoritative).");
+	return p + 2;
+}
+
+void start_market_scale_audit(sys::state& state, size_t maximum_markets) {
+	state.cheat_data.foundry_market_live_basket = true;
+	state.cheat_data.foundry_market_live_all_goods = true;
+	state.cheat_data.foundry_market_live_max_markets = maximum_markets;
+	// Large state-market solves are deliberately batched. Local production and
+	// vanilla clearing still update daily while the routed comparison refreshes
+	// weekly, matching the intended hybrid economy cadence.
+	state.cheat_data.foundry_market_live_interval_days = maximum_markets > 100 ? 7 : 1;
+	state.cheat_data.foundry_market_live_ran_today = false;
+	state.cheat_data.foundry_market_live_runs = 0;
+	state.cheat_data.foundry_market_live_failures = 0;
+	state.cheat_data.foundry_market_live_comparisons = 0;
+	state.cheat_data.foundry_market_basket_runtime_sum_us = 0;
+	state.cheat_data.foundry_market_live_markets.clear();
+	state.cheat_data.foundry_market_live_audit = true;
+}
+
+int32_t* f_market_live_audit_50(fif::state_stack&, int32_t* p, fif::environment* e) {
+	if(fif::typechecking_mode(e->mode)) return p + 2;
+	auto* state = reinterpret_cast<sys::state*>(fif::get_global_var(*e, "state-ptr")->data);
+	start_market_scale_audit(*state, 50);
+	log_to_console(*state, state->ui_state.console_window, u"Foundry all-goods 50-state-market audit enabled.");
+	return p + 2;
+}
+
+int32_t* f_market_live_audit_100(fif::state_stack&, int32_t* p, fif::environment* e) {
+	if(fif::typechecking_mode(e->mode)) return p + 2;
+	auto* state = reinterpret_cast<sys::state*>(fif::get_global_var(*e, "state-ptr")->data);
+	start_market_scale_audit(*state, 100);
+	log_to_console(*state, state->ui_state.console_window, u"Foundry all-goods 100-state-market audit enabled.");
+	return p + 2;
+}
+
+int32_t* f_market_live_audit_world(fif::state_stack&, int32_t* p, fif::environment* e) {
+	if(fif::typechecking_mode(e->mode)) return p + 2;
+	auto* state = reinterpret_cast<sys::state*>(fif::get_global_var(*e, "state-ptr")->data);
+	start_market_scale_audit(*state, state->world.market_size());
+	log_to_console(*state, state->ui_state.console_window, u"Foundry all-goods reachable-world state-market audit enabled (weekly routing cadence).");
+	return p + 2;
+}
+
+int32_t* f_market_live_audit_off(fif::state_stack&, int32_t* p, fif::environment* e) {
+	if(fif::typechecking_mode(e->mode)) return p + 2;
+	auto state_global = fif::get_global_var(*e, "state-ptr");
+	auto* state = reinterpret_cast<sys::state*>(state_global->data);
+	state->cheat_data.foundry_market_live_audit = false;
+	state->cheat_data.foundry_market_live_ran_today = false;
+	log_to_console(*state, state->ui_state.console_window, u"Foundry daily live market audit disabled.");
+	return p + 2;
+}
+
+int32_t* f_market_live_status(fif::state_stack&, int32_t* p, fif::environment* e) {
+	if(fif::typechecking_mode(e->mode)) return p + 2;
+	auto state_global = fif::get_global_var(*e, "state-ptr");
+	auto* state = reinterpret_cast<sys::state*>(state_global->data);
+	auto status = std::string(state->cheat_data.foundry_market_live_audit ? "ACTIVE" : "OFF")
+		+ " runs=" + std::to_string(state->cheat_data.foundry_market_live_runs)
+		+ " failures=" + std::to_string(state->cheat_data.foundry_market_live_failures);
+	if(state->cheat_data.foundry_market_live_audit)
+		status += " cadence=" + std::to_string(state->cheat_data.foundry_market_live_interval_days) + "d";
+	auto comparisons = state->cheat_data.foundry_market_live_comparisons;
+	if(comparisons && state->cheat_data.foundry_market_live_basket) {
+		auto format = [](double value) { std::ostringstream out; out << std::fixed << std::setprecision(2) << value; return out.str(); };
+		status += " basket goods=" + std::to_string(state->cheat_data.foundry_market_basket_commodities.size());
+		status += state->cheat_data.foundry_market_live_all_goods ? " (all active)" : " (sample)";
+		status += " markets=" + std::to_string(state->cheat_data.foundry_market_live_markets.size());
+		status += "\naggregate delta C/U/S="
+			+ format(state->cheat_data.foundry_market_basket_latest_consumption_delta) + "/"
+			+ format(state->cheat_data.foundry_market_basket_latest_unmet_delta) + "/"
+			+ format(state->cheat_data.foundry_market_basket_latest_unsold_delta);
+		status += "\nconsumption delta raw/industrial="
+			+ format(state->cheat_data.foundry_market_basket_category_delta[0]) + "/"
+			+ format(state->cheat_data.foundry_market_basket_category_delta[1]);
+		status += "\nconsumer/military="
+			+ format(state->cheat_data.foundry_market_basket_category_delta[2]) + "/"
+			+ format(state->cheat_data.foundry_market_basket_category_delta[3]);
+		if(state->cheat_data.foundry_market_basket_worst_commodity)
+			status += "\nworst=" + text::produce_simple_string(*state,
+				state->world.commodity_get_name(state->cheat_data.foundry_market_basket_worst_commodity))
+				+ " delta=" + format(state->cheat_data.foundry_market_basket_worst_delta);
+		status += "\nrouting runtime latest/mean us="
+			+ std::to_string(state->cheat_data.foundry_market_basket_latest_runtime_us) + "/"
+			+ std::to_string(state->cheat_data.foundry_market_basket_runtime_sum_us / comparisons);
+		status += " searches=" + std::to_string(state->cheat_data.foundry_market_basket_latest_path_searches);
+	}
+	if(comparisons && !state->cheat_data.foundry_market_live_basket) {
+		auto format = [](double value) {
+			std::ostringstream out;
+			out << std::fixed << std::setprecision(2) << value;
+			return out.str();
+		};
+		status += "\ndelta routed-vanilla latest C/U/S="
+			+ format(state->cheat_data.foundry_market_latest_consumption_delta) + "/"
+			+ format(state->cheat_data.foundry_market_latest_unmet_delta) + "/"
+			+ format(state->cheat_data.foundry_market_latest_unsold_delta);
+		status += "\nmean absolute delta C/U/S="
+			+ format(state->cheat_data.foundry_market_sum_abs_consumption_delta / comparisons) + "/"
+			+ format(state->cheat_data.foundry_market_sum_abs_unmet_delta / comparisons) + "/"
+			+ format(state->cheat_data.foundry_market_sum_abs_unsold_delta / comparisons);
+		status += "\nlatest consumption routed/vanilla="
+			+ format(state->cheat_data.foundry_market_routed_consumption) + "/"
+			+ format(state->cheat_data.foundry_market_vanilla_consumption);
+	}
+	static_cast<ui::console_window*>(state->ui_state.console_window)->replace_list(*state, "market-live-status\n" + status + "\n");
+	return p + 2;
+}
+
+int32_t* f_add_road(fif::state_stack& s, int32_t* p, fif::environment* e) {
+	if(fif::typechecking_mode(e->mode))
+		return p + 2;
+
+	auto state_global = fif::get_global_var(*e, "state-ptr");
+	auto* state = reinterpret_cast<sys::state*>(state_global->data);
+	auto province = state->map_state.selected_province;
+	if(!province || !state->world.province_is_valid(province)) {
+		log_to_console(*state, state->ui_state.console_window, u"Select a land province first.");
+		return p + 2;
+	}
+
+	dcon::civic_building_type_id road_type;
+	for(auto type : state->world.in_civic_building_type) {
+		if(type.get_is_road_network()) {
+			road_type = type.id;
+			break;
+		}
+	}
+	if(!road_type) {
+		log_to_console(*state, state->ui_state.console_window, u"Road Network definition is unavailable; rebuild the scenario.");
+		return p + 2;
+	}
+
+	auto level = state->world.province_get_civic_building_level(province, road_type.index());
+	auto maximum = state->world.civic_building_type_get_level_count(road_type);
+	if(level >= maximum) {
+		log_to_console(*state, state->ui_state.console_window, u"Selected province already has the maximum road level.");
+		return p + 2;
+	}
+
+	// Development/testing shortcut: install exactly one completed level without
+	// goods, money, queue time, or construction capacity.
+	state->world.province_set_civic_building_level(province, road_type.index(), uint8_t(level + 1));
+	state->world.province_set_civic_building_progress(province, road_type.index(), 0.f);
+	state->world.province_set_civic_building_active(province, road_type.index(), uint8_t(0));
+	state->world.province_set_civic_building_purchased_goods(province, road_type.index(), economy::commodity_set{});
+	state->trade_route_cached_values_out_of_date = true;
+	log_to_console(*state, state->ui_state.console_window, u"Added one Road Network level to the selected province.");
+	return p + 2;
+}
 int32_t* f_provid(fif::state_stack& s, int32_t* p, fif::environment* e) {
 	if(fif::typechecking_mode(e->mode)) {
 		if(fif::typechecking_failed(e->mode))
@@ -1627,6 +1876,17 @@ void ui::initialize_console_fif_environment(sys::state& state) {
 	fif::add_import("save-map", nullptr, f_save_map, { fif::fif_i32 }, {}, * state.fif_environment);
 	fif::add_import("dump-econ", nullptr, f_dump_econ, {  }, {}, * state.fif_environment);
 	fif::add_import("market-shadow", nullptr, f_market_shadow, { commodity_id_type }, {}, *state.fif_environment);
+	fif::add_import("market-shadow-wide", nullptr, f_market_shadow_wide, { commodity_id_type }, {}, *state.fif_environment);
+	fif::add_import("market-shadow-batch", nullptr, f_market_shadow_batch, {}, {}, *state.fif_environment);
+	fif::add_import("market-live-audit", nullptr, f_market_live_audit, { commodity_id_type }, {}, *state.fif_environment);
+	fif::add_import("market-live-audit-basket", nullptr, f_market_live_audit_basket, {}, {}, *state.fif_environment);
+	fif::add_import("market-live-audit-all", nullptr, f_market_live_audit_all, {}, {}, *state.fif_environment);
+	fif::add_import("market-live-audit-50", nullptr, f_market_live_audit_50, {}, {}, *state.fif_environment);
+	fif::add_import("market-live-audit-100", nullptr, f_market_live_audit_100, {}, {}, *state.fif_environment);
+	fif::add_import("market-live-audit-world", nullptr, f_market_live_audit_world, {}, {}, *state.fif_environment);
+	fif::add_import("market-live-audit-off", nullptr, f_market_live_audit_off, {}, {}, *state.fif_environment);
+	fif::add_import("market-live-status", nullptr, f_market_live_status, {}, {}, *state.fif_environment);
+	fif::add_import("add-road", nullptr, f_add_road, {}, {}, *state.fif_environment);
 	fif::add_import("provid", nullptr, f_provid, { fif::fif_bool }, {}, * state.fif_environment);
 	fif::add_import("ui-debug", nullptr, f_uidebug, { fif::fif_bool }, {}, *state.fif_environment);
 	fif::add_import("fire-event", nullptr, f_fire_event, { nation_id_type, fif::fif_i32 }, {}, * state.fif_environment);

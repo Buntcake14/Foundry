@@ -33,8 +33,8 @@ struct transport_edge {
 	float congestion_strength = 1.f;
 	// Additive border cost in each direction. The destination/importing
 	// market's policy determines the applicable cost.
-	float border_cost_first_to_second = 0.f;
-	float border_cost_second_to_first = 0.f;
+	float border_tariff_rate_first_to_second = 0.f;
+	float border_tariff_rate_second_to_first = 0.f;
 	bool open = true;
 };
 
@@ -61,6 +61,7 @@ struct result {
 	std::vector<std::vector<float>> local_consumption;
 	std::vector<std::vector<float>> unmet_demand;
 	std::vector<std::vector<float>> unsold_supply;
+	size_t path_searches = 0;
 };
 
 class simulation {
@@ -70,6 +71,7 @@ class simulation {
 			throw std::invalid_argument("market commodity vectors must match the simulation commodity count");
 		}
 		markets_.push_back(std::move(node));
+		adjacency_.emplace_back();
 		return markets_.size() - 1;
 	}
 
@@ -80,8 +82,11 @@ class simulation {
 		if(edge.base_cost < 0.f || edge.capacity < 0.f) {
 			throw std::invalid_argument("transport edge cost and capacity must be non-negative");
 		}
+		auto edge_id = edges_.size();
 		edges_.push_back(edge);
-		return edges_.size() - 1;
+		adjacency_[edge.first].push_back(edge_id);
+		adjacency_[edge.second].push_back(edge_id);
+		return edge_id;
 	}
 
 	explicit simulation(size_t commodity_count) : commodity_count_(commodity_count) { }
@@ -98,37 +103,58 @@ class simulation {
 
 		for(auto& edge : edges_) edge.used_capacity = 0.f;
 
+		std::vector<std::vector<float>> surplus(commodity_count_, std::vector<float>(markets_.size(), 0.f));
+		std::vector<std::vector<float>> unmet(commodity_count_, std::vector<float>(markets_.size(), 0.f));
+		std::vector<bool> active_commodity(commodity_count_, true);
+		std::vector<search_node> search_nodes(markets_.size());
+		std::vector<queue_item> search_heap;
+		search_heap.reserve(markets_.size() * 2);
 		for(size_t commodity = 0; commodity < commodity_count_; ++commodity) {
-			std::vector<float> surplus(markets_.size(), 0.f);
-			std::vector<float> unmet(markets_.size(), 0.f);
-
 			// Local transactions always happen first and consume no transport.
 			for(size_t market = 0; market < markets_.size(); ++market) {
 				auto local = std::min(markets_[market].supply[commodity], markets_[market].demand[commodity]);
 				output.local_consumption[market][commodity] = local;
-				surplus[market] = markets_[market].supply[commodity] - local;
-				unmet[market] = markets_[market].demand[commodity] - local;
+				surplus[commodity][market] = markets_[market].supply[commodity] - local;
+				unmet[commodity][market] = markets_[market].demand[commodity] - local;
 			}
+		}
 
-			while(true) {
-				candidate best;
-				for(size_t origin = 0; origin < markets_.size(); ++origin) {
-					if(surplus[origin] <= epsilon) continue;
-					auto paths = cheapest_paths(origin, trade_policy);
-					for(size_t destination = 0; destination < markets_.size(); ++destination) {
-						if(origin == destination || unmet[destination] <= epsilon || !std::isfinite(paths[destination].cost)) continue;
-						auto delivered = markets_[origin].price[commodity] + paths[destination].cost;
-						if(!best.valid || delivered < best.delivered_price - epsilon ||
-							(std::abs(delivered - best.delivered_price) <= epsilon && std::pair{origin, destination} < std::pair{best.origin, best.destination})) {
-							best = { true, origin, destination, delivered, paths[destination] };
-						}
-					}
+		// Allocate shared capacity in rounds. Every commodity chooses one best
+		// shipment before any commodity can take a second turn. Dividing each
+		// path's currently available capacity by the remaining contenders keeps
+		// an early commodity from exhausting a contested edge by list order.
+		while(true) {
+			std::vector<candidate> round(commodity_count_);
+			size_t contenders = 0;
+			for(size_t commodity = 0; commodity < commodity_count_; ++commodity) {
+				if(!active_commodity[commodity]) continue;
+				auto& best = round[commodity];
+				best = cheapest_shipment(surplus[commodity], unmet[commodity], commodity, trade_policy,
+					search_nodes, search_heap);
+				++output.path_searches;
+				if(best.valid) ++contenders;
+				else active_commodity[commodity] = false;
+			}
+			if(contenders == 0) break;
+
+			std::vector<size_t> edge_contenders(edges_.size(), 0);
+			std::vector<float> edge_available(edges_.size(), 0.f);
+			for(size_t edge_id = 0; edge_id < edges_.size(); ++edge_id)
+				edge_available[edge_id] = std::max(0.f, edges_[edge_id].capacity - edges_[edge_id].used_capacity);
+			for(auto const& candidate : round) if(candidate.valid)
+				for(auto edge_id : candidate.path.edges) ++edge_contenders[edge_id];
+
+			bool moved_anything = false;
+			for(size_t commodity = 0; commodity < commodity_count_; ++commodity) {
+				auto const& best = round[commodity];
+				if(!best.valid) continue;
+				float fair_capacity = std::numeric_limits<float>::infinity();
+				for(auto edge_id : best.path.edges) {
+					auto divisor = std::max<size_t>(1, edge_contenders[edge_id]);
+					fair_capacity = std::min(fair_capacity, edge_available[edge_id] / float(divisor));
 				}
-
-				if(!best.valid) break;
-				auto available_capacity = path_capacity(best.path.edges);
-				auto quantity = std::min({ surplus[best.origin], unmet[best.destination], available_capacity });
-				if(quantity <= epsilon) break;
+				auto quantity = std::min({ surplus[commodity][best.origin], unmet[commodity][best.destination], fair_capacity });
+				if(quantity <= epsilon) continue;
 
 				float tariff = 0.f;
 				auto path_market = best.origin;
@@ -137,22 +163,28 @@ class simulation {
 					edge.used_capacity += quantity;
 					auto next_market = edge.first == path_market ? edge.second : edge.first;
 					if(markets_[edge.first].country != markets_[edge.second].country)
-						tariff += trade_policy.border_tariff + directional_border_cost(edge, path_market, next_market);
+						tariff += trade_policy.border_tariff
+							+ directional_border_tariff_rate(edge, path_market, next_market)
+								* markets_[path_market].price[commodity];
 					path_market = next_market;
 				}
 
-				surplus[best.origin] -= quantity;
-				unmet[best.destination] -= quantity;
+				surplus[commodity][best.origin] -= quantity;
+				unmet[commodity][best.destination] -= quantity;
 				output.shipments.push_back({
 					commodity, best.origin, best.destination, quantity,
 					markets_[best.origin].price[commodity], best.path.cost - tariff,
 					tariff, best.delivered_price, best.path.edges
 				});
+				moved_anything = true;
 			}
+			if(!moved_anything) break;
+		}
 
+		for(size_t commodity = 0; commodity < commodity_count_; ++commodity) {
 			for(size_t market = 0; market < markets_.size(); ++market) {
-				output.unmet_demand[market][commodity] = unmet[market];
-				output.unsold_supply[market][commodity] = surplus[market];
+				output.unmet_demand[market][commodity] = unmet[commodity][market];
+				output.unsold_supply[market][commodity] = surplus[commodity][market];
 			}
 		}
 
@@ -174,22 +206,91 @@ class simulation {
 		float delivered_price = 0.f;
 		path_result path;
 	};
+	struct search_node {
+		float cost = std::numeric_limits<float>::infinity();
+		size_t origin = std::numeric_limits<size_t>::max();
+		size_t previous = std::numeric_limits<size_t>::max();
+		size_t previous_edge = std::numeric_limits<size_t>::max();
+	};
+	using queue_item = std::pair<float, size_t>;
 
-	float directional_border_cost(transport_edge const& edge, size_t from, size_t to) const {
-		if(from == edge.first && to == edge.second) return edge.border_cost_first_to_second;
-		if(from == edge.second && to == edge.first) return edge.border_cost_second_to_first;
+	candidate cheapest_shipment(std::vector<float> const& surplus, std::vector<float> const& unmet,
+			size_t commodity, policy trade_policy, std::vector<search_node>& paths,
+			std::vector<queue_item>& pending) const {
+		std::fill(paths.begin(), paths.end(), search_node{});
+		pending.clear();
+		auto push = [&](queue_item item) {
+			pending.push_back(item);
+			std::push_heap(pending.begin(), pending.end(), std::greater<queue_item>{});
+		};
+		for(size_t origin = 0; origin < markets_.size(); ++origin) if(surplus[origin] > epsilon) {
+			paths[origin].cost = markets_[origin].price[commodity];
+			paths[origin].origin = origin;
+			push({ paths[origin].cost, origin });
+		}
+		while(!pending.empty()) {
+			std::pop_heap(pending.begin(), pending.end(), std::greater<queue_item>{});
+			auto [cost, node] = pending.back(); pending.pop_back();
+			if(cost > paths[node].cost + epsilon) continue;
+			for(auto edge_id : adjacency_[node]) {
+				auto const& edge = edges_[edge_id];
+				if(!edge.open || edge.capacity - edge.used_capacity <= epsilon) continue;
+				auto next = edge.first == node ? edge.second : edge.first;
+				auto next_cost = cost + marginal_edge_cost(edge, node, next, commodity, trade_policy);
+				if(next_cost + epsilon < paths[next].cost) {
+					paths[next].cost = next_cost;
+					paths[next].origin = paths[node].origin;
+					paths[next].previous = node;
+					paths[next].previous_edge = edge_id;
+					push({ next_cost, next });
+				}
+			}
+		}
+		candidate best;
+		for(size_t destination = 0; destination < markets_.size(); ++destination) {
+			auto const& path = paths[destination];
+			if(unmet[destination] <= epsilon || path.origin == std::numeric_limits<size_t>::max()
+					|| path.origin == destination || !std::isfinite(path.cost)) continue;
+			if(!best.valid || path.cost < best.delivered_price - epsilon
+					|| (std::abs(path.cost - best.delivered_price) <= epsilon
+						&& std::pair{path.origin, destination} < std::pair{best.origin, best.destination})) {
+				std::vector<size_t> edges;
+				auto cursor = destination;
+				while(cursor != path.origin) {
+					auto edge_id = paths[cursor].previous_edge;
+					auto previous = paths[cursor].previous;
+					if(edge_id == std::numeric_limits<size_t>::max()
+							|| previous == std::numeric_limits<size_t>::max()) {
+						edges.clear();
+						break;
+					}
+					edges.push_back(edge_id);
+					cursor = previous;
+				}
+				std::reverse(edges.begin(), edges.end());
+				if(!edges.empty())
+					best = { true, path.origin, destination, path.cost,
+						{ path.cost - markets_[path.origin].price[commodity], std::move(edges) } };
+			}
+		}
+		return best;
+	}
+
+	float directional_border_tariff_rate(transport_edge const& edge, size_t from, size_t to) const {
+		if(from == edge.first && to == edge.second) return edge.border_tariff_rate_first_to_second;
+		if(from == edge.second && to == edge.first) return edge.border_tariff_rate_second_to_first;
 		return 0.f;
 	}
 
-	float marginal_edge_cost(transport_edge const& edge, size_t from, size_t to, policy trade_policy) const {
+	float marginal_edge_cost(transport_edge const& edge, size_t from, size_t to, size_t commodity, policy trade_policy) const {
 		auto utilization = edge.capacity > epsilon ? edge.used_capacity / edge.capacity : 1.f;
 		auto congestion = edge.base_cost * edge.congestion_strength * utilization * utilization;
 		auto tariff = markets_[edge.first].country != markets_[edge.second].country
-			? trade_policy.border_tariff + directional_border_cost(edge, from, to) : 0.f;
+			? trade_policy.border_tariff + directional_border_tariff_rate(edge, from, to) * markets_[from].price[commodity] : 0.f;
 		return edge.base_cost + congestion + tariff;
 	}
 
-	std::vector<path_result> cheapest_paths(size_t origin, policy trade_policy) const {
+	std::vector<path_result> cheapest_paths(size_t origin, size_t commodity, policy trade_policy) const {
 		std::vector<path_result> paths(markets_.size());
 		using queue_item = std::pair<float, size_t>;
 		std::priority_queue<queue_item, std::vector<queue_item>, std::greater<>> pending;
@@ -201,7 +302,7 @@ class simulation {
 			pending.pop();
 			if(cost > paths[node].cost + epsilon) continue;
 
-			for(size_t edge_id = 0; edge_id < edges_.size(); ++edge_id) {
+			for(auto edge_id : adjacency_[node]) {
 				auto const& edge = edges_[edge_id];
 				if(!edge.open || edge.capacity - edge.used_capacity <= epsilon) continue;
 				size_t next;
@@ -209,7 +310,7 @@ class simulation {
 				else if(edge.second == node) next = edge.first;
 				else continue;
 
-				auto next_cost = cost + marginal_edge_cost(edge, node, next, trade_policy);
+				auto next_cost = cost + marginal_edge_cost(edge, node, next, commodity, trade_policy);
 				if(next_cost + epsilon < paths[next].cost) {
 					paths[next].cost = next_cost;
 					paths[next].edges = paths[node].edges;
@@ -233,6 +334,7 @@ class simulation {
 	size_t commodity_count_ = 0;
 	std::vector<market_node> markets_;
 	std::vector<transport_edge> edges_;
+	std::vector<std::vector<size_t>> adjacency_;
 };
 
 } // namespace economy::foundry_transport

@@ -3,6 +3,7 @@
 #include "economy_stats.hpp"
 #include "economy_production.hpp"
 #include "economy_trade_routes.hpp"
+#include "foundry_transport_shadow.hpp"
 #include "construction.hpp"
 #include "demographics.hpp"
 #include "demographics_templates.hpp"
@@ -3113,6 +3114,22 @@ void daily_update(sys::state& state, bool presimulation, float presimulation_sta
 	// ###################
 	// # MARKET CLEARING #
 	// ###################
+	state.cheat_data.foundry_market_live_ran_today = false;
+	auto const audit_interval = std::max<uint8_t>(1, state.cheat_data.foundry_market_live_interval_days);
+	if(state.cheat_data.foundry_market_live_audit
+			&& (uint32_t(state.current_date.value) % uint32_t(audit_interval) == 0)) {
+		++state.cheat_data.foundry_market_live_runs;
+		auto valid = state.cheat_data.foundry_market_live_basket
+			? economy::foundry_transport::run_live_audit_basket(state,
+				state.cheat_data.foundry_market_live_all_goods ? state.world.commodity_size() : size_t(12),
+				state.cheat_data.foundry_market_live_max_markets)
+			: economy::foundry_transport::run_live_audit(state, state.cheat_data.foundry_market_live_commodity);
+		if(!valid) {
+			++state.cheat_data.foundry_market_live_failures;
+			state.cheat_data.foundry_market_live_audit = false;
+			state.console_log("Foundry market live audit failed validation and was automatically disabled.");
+		} else state.cheat_data.foundry_market_live_ran_today = true;
+	}
 
 	/*
 	perform actual consumption / purchasing subject to availability at markets:
@@ -3281,6 +3298,70 @@ void daily_update(sys::state& state, bool presimulation, float presimulation_sta
 				state.world.market_get_stockpile(ids, economy::money) * state.inflation
 		);
 	});
+
+	// Compare the routed shadow with vanilla clearing over exactly the same
+	// regional market sample. This records diagnostics only; vanilla remains
+	// authoritative and no routed transaction is applied to the live economy.
+	if(state.cheat_data.foundry_market_live_ran_today && !state.cheat_data.foundry_market_live_basket
+			&& !state.cheat_data.foundry_market_live_markets.empty()) {
+		auto commodity = state.cheat_data.foundry_market_live_commodity;
+		float vanilla_consumption = 0.f;
+		for(auto market : state.cheat_data.foundry_market_live_markets) {
+			if(!market || !state.world.market_is_valid(market)) continue;
+			vanilla_consumption += std::max(0.f, state.world.market_get_consumption(market, commodity));
+		}
+		vanilla_consumption = std::min(vanilla_consumption, state.cheat_data.foundry_market_baseline_demand);
+		auto vanilla_unmet = std::max(0.f,
+			state.cheat_data.foundry_market_baseline_demand - vanilla_consumption);
+		auto vanilla_unsold = std::max(0.f,
+			state.cheat_data.foundry_market_baseline_supply - vanilla_consumption);
+		state.cheat_data.foundry_market_vanilla_consumption = vanilla_consumption;
+		auto consumption_delta = state.cheat_data.foundry_market_routed_consumption - vanilla_consumption;
+		auto unmet_delta = state.cheat_data.foundry_market_routed_unmet - vanilla_unmet;
+		auto unsold_delta = state.cheat_data.foundry_market_routed_unsold - vanilla_unsold;
+		state.cheat_data.foundry_market_latest_consumption_delta = consumption_delta;
+		state.cheat_data.foundry_market_latest_unmet_delta = unmet_delta;
+		state.cheat_data.foundry_market_latest_unsold_delta = unsold_delta;
+		state.cheat_data.foundry_market_sum_abs_consumption_delta += std::abs(consumption_delta);
+		state.cheat_data.foundry_market_sum_abs_unmet_delta += std::abs(unmet_delta);
+		state.cheat_data.foundry_market_sum_abs_unsold_delta += std::abs(unsold_delta);
+		++state.cheat_data.foundry_market_live_comparisons;
+	}
+	if(state.cheat_data.foundry_market_live_ran_today && state.cheat_data.foundry_market_live_basket
+			&& !state.cheat_data.foundry_market_live_markets.empty()) {
+		float routed_consumption = 0.f, routed_unmet = 0.f, routed_unsold = 0.f;
+		float vanilla_consumption = 0.f, vanilla_unmet = 0.f, vanilla_unsold = 0.f;
+		float worst = 0.f;
+		dcon::commodity_id worst_good;
+		state.cheat_data.foundry_market_basket_category_delta.fill(0.f);
+		for(size_t good = 0; good < state.cheat_data.foundry_market_basket_commodities.size(); ++good) {
+			auto commodity = state.cheat_data.foundry_market_basket_commodities[good];
+			float consumed = 0.f;
+			for(auto market : state.cheat_data.foundry_market_live_markets)
+				if(market && state.world.market_is_valid(market))
+					consumed += std::max(0.f, state.world.market_get_consumption(market, commodity));
+			consumed = std::min(consumed, state.cheat_data.foundry_market_basket_demand[good]);
+			auto unmet = std::max(0.f, state.cheat_data.foundry_market_basket_demand[good] - consumed);
+			auto unsold = std::max(0.f, state.cheat_data.foundry_market_basket_supply[good] - consumed);
+			auto delta = state.cheat_data.foundry_market_basket_consumption[good] - consumed;
+			auto group = sys::commodity_group(state.world.commodity_get_commodity_group(commodity));
+			size_t category = group == sys::commodity_group::raw_material_goods ? 0
+				: group == sys::commodity_group::industrial_goods || group == sys::commodity_group::industrial_and_consumer_goods ? 1
+				: group == sys::commodity_group::consumer_goods ? 2 : 3;
+			state.cheat_data.foundry_market_basket_category_delta[category] += delta;
+			if(std::abs(delta) > std::abs(worst)) { worst = delta; worst_good = commodity; }
+			routed_consumption += state.cheat_data.foundry_market_basket_consumption[good];
+			routed_unmet += state.cheat_data.foundry_market_basket_unmet[good];
+			routed_unsold += state.cheat_data.foundry_market_basket_unsold[good];
+			vanilla_consumption += consumed; vanilla_unmet += unmet; vanilla_unsold += unsold;
+		}
+		state.cheat_data.foundry_market_basket_latest_consumption_delta = routed_consumption - vanilla_consumption;
+		state.cheat_data.foundry_market_basket_latest_unmet_delta = routed_unmet - vanilla_unmet;
+		state.cheat_data.foundry_market_basket_latest_unsold_delta = routed_unsold - vanilla_unsold;
+		state.cheat_data.foundry_market_basket_worst_delta = worst;
+		state.cheat_data.foundry_market_basket_worst_commodity = worst_good;
+		++state.cheat_data.foundry_market_live_comparisons;
+	}
 
 	set_profile_point(state, "clear_market");
 
