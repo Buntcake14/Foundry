@@ -55,5 +55,7 @@ std::string run_live_shadow_batch(
 bool run_live_audit(sys::state& state, dcon::commodity_id commodity);
 bool run_live_audit_basket(sys::state& state, size_t maximum_commodities = 12,
 	size_t maximum_markets = 25);
+bool run_live_access_audit(sys::state& state, size_t maximum_commodities,
+	size_t maximum_markets);
 
 } // namespace economy::foundry_transport

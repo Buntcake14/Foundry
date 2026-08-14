@@ -470,4 +470,125 @@ bool run_live_audit_basket(sys::state& state, size_t maximum_commodities, size_t
 	return true;
 }
 
+bool run_live_access_audit(sys::state& state, size_t maximum_commodities, size_t maximum_markets) {
+	if(!state.local_player_nation) return false;
+	auto seed_province = state.world.nation_get_capital(state.local_player_nation);
+	if(!seed_province || !state.world.province_is_valid(seed_province)) return false;
+	auto seed_state = state.world.province_get_state_membership(seed_province);
+	auto seed_market = seed_state ? state.world.state_instance_get_market_from_local_market(seed_state) : dcon::market_id{};
+	if(!seed_market) return false;
+
+	// Select reachable state markets once. Unlike the exact validation solver,
+	// the access model never searches this graph while allocating commodities.
+	std::vector<int32_t> visited(state.world.market_size(), -1);
+	std::vector<dcon::market_id> markets;
+	std::queue<dcon::market_id> pending;
+	pending.push(seed_market);
+	visited[size_t(seed_market.index())] = 0;
+	while(!pending.empty() && markets.size() < maximum_markets) {
+		auto market = pending.front(); pending.pop();
+		if(!valid_market(state, market) || std::find(markets.begin(), markets.end(), market) != markets.end()) continue;
+		markets.push_back(market);
+		state.world.market_for_each_trade_route(market, [&](auto route) {
+			for(int endpoint = 0; endpoint < 2; ++endpoint) {
+				auto other = state.world.trade_route_get_connected_markets(route, endpoint);
+				if(valid_market(state, other) && visited[size_t(other.index())] < 0) {
+					visited[size_t(other.index())] = int32_t(markets.size());
+					pending.push(other);
+				}
+			}
+		});
+	}
+
+	std::vector<dcon::commodity_id> commodities;
+	state.world.for_each_commodity([&](dcon::commodity_id commodity) {
+		if(!commodity || commodities.size() >= maximum_commodities
+				|| state.world.commodity_get_money_rgo(commodity) || state.world.commodity_get_is_local(commodity)) return;
+		for(auto market : markets) {
+			if(state.world.market_get_supply(market, commodity) > 0.00001f
+					|| state.world.market_get_demand(market, commodity) > 0.00001f) {
+				commodities.push_back(commodity);
+				break;
+			}
+		}
+	});
+	if(markets.empty() || commodities.empty()) return false;
+
+	auto const market_count = markets.size();
+	auto const good_count = commodities.size();
+	std::vector<dcon::nation_id> owners(market_count);
+	std::vector<float> access(market_count, 0.35f);
+	for(size_t m = 0; m < market_count; ++m) {
+		auto zone = state.world.market_get_zone_from_local_market(markets[m]);
+		owners[m] = state.world.state_instance_get_nation_from_state_ownership(zone);
+		auto roads = market_road_level(state, markets[m]);
+		auto ports = civilian_port_capacity(state, markets[m]);
+		// A baseline keeps remote states connected; infrastructure controls how
+		// effectively they compete for the global remainder.
+		access[m] = std::clamp(0.35f + 0.12f * roads + (ports > 0.f ? 0.30f : 0.f), 0.10f, 1.f);
+		if(owners[m]) access[m] /= 1.f + std::max(0.f, effective_tariff_import_rate(state, owners[m], markets[m]));
+	}
+
+	std::vector<std::vector<float>> surplus(good_count, std::vector<float>(market_count));
+	std::vector<std::vector<float>> unmet(good_count, std::vector<float>(market_count));
+	std::vector<float> supply(good_count), demand(good_count), consumption(good_count);
+	auto started = std::chrono::steady_clock::now();
+	for(size_t g = 0; g < good_count; ++g) {
+		for(size_t m = 0; m < market_count; ++m) {
+			auto s = std::max(0.f, state.world.market_get_supply(markets[m], commodities[g]));
+			auto d = std::max(0.f, state.world.market_get_demand(markets[m], commodities[g]));
+			auto local = std::min(s, d);
+			supply[g] += s; demand[g] += d; consumption[g] += local;
+			surplus[g][m] = s - local; unmet[g][m] = d - local;
+		}
+
+		// Tier two: all states belonging to a country share their remaining
+		// domestic supply proportionally. No national-rank ordering is involved.
+		std::vector<float> nation_supply(state.world.nation_size(), 0.f);
+		std::vector<float> nation_demand(state.world.nation_size(), 0.f);
+		for(size_t m = 0; m < market_count; ++m) if(owners[m]) {
+			nation_supply[size_t(owners[m].index())] += surplus[g][m];
+			nation_demand[size_t(owners[m].index())] += unmet[g][m];
+		}
+		for(size_t m = 0; m < market_count; ++m) if(owners[m] && unmet[g][m] > 0.f) {
+			auto n = size_t(owners[m].index());
+			auto available = std::min(nation_supply[n], nation_demand[n]);
+			auto received = nation_demand[n] > 0.f ? available * unmet[g][m] / nation_demand[n] : 0.f;
+			unmet[g][m] -= received; consumption[g] += received;
+		}
+		for(size_t n = 0; n < nation_supply.size(); ++n)
+			nation_supply[n] = std::max(0.f, nation_supply[n] - std::min(nation_supply[n], nation_demand[n]));
+
+		// Tier three: exportable national surplus enters one fair pool. States
+		// receive it proportionally to remaining demand times market access.
+		float global_supply = 0.f, weighted_demand = 0.f;
+		for(auto value : nation_supply) global_supply += value;
+		for(size_t m = 0; m < market_count; ++m) weighted_demand += unmet[g][m] * access[m];
+		if(global_supply > 0.f && weighted_demand > 0.f) {
+			for(size_t m = 0; m < market_count; ++m) {
+				auto received = std::min(unmet[g][m], global_supply * unmet[g][m] * access[m] / weighted_demand);
+				unmet[g][m] -= received; consumption[g] += received;
+			}
+		}
+	}
+	auto elapsed = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - started);
+
+	state.cheat_data.foundry_market_live_markets = std::move(markets);
+	state.cheat_data.foundry_market_basket_commodities = std::move(commodities);
+	state.cheat_data.foundry_market_basket_supply = std::move(supply);
+	state.cheat_data.foundry_market_basket_demand = std::move(demand);
+	state.cheat_data.foundry_market_basket_consumption = std::move(consumption);
+	state.cheat_data.foundry_market_basket_unmet.assign(good_count, 0.f);
+	state.cheat_data.foundry_market_basket_unsold.assign(good_count, 0.f);
+	for(size_t g = 0; g < good_count; ++g) {
+		for(auto value : unmet[g]) state.cheat_data.foundry_market_basket_unmet[g] += value;
+		state.cheat_data.foundry_market_basket_unsold[g] = std::max(0.f,
+			state.cheat_data.foundry_market_basket_supply[g] - state.cheat_data.foundry_market_basket_consumption[g]);
+	}
+	state.cheat_data.foundry_market_basket_latest_runtime_us = elapsed.count();
+	state.cheat_data.foundry_market_basket_latest_path_searches = 0;
+	state.cheat_data.foundry_market_basket_runtime_sum_us += uint64_t(std::max<int64_t>(0, elapsed.count()));
+	return true;
+}
+
 } // namespace economy::foundry_transport

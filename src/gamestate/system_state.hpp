@@ -427,6 +427,7 @@ struct cheat_data_s {
 	bool foundry_market_live_audit = false;
 	bool foundry_market_live_basket = false;
 	bool foundry_market_live_all_goods = false;
+	bool foundry_market_live_access_model = false;
 	size_t foundry_market_live_max_markets = 25;
 	uint8_t foundry_market_live_interval_days = 1;
 	bool foundry_market_live_ran_today = false;

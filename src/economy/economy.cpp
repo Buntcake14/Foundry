@@ -3119,7 +3119,10 @@ void daily_update(sys::state& state, bool presimulation, float presimulation_sta
 	if(state.cheat_data.foundry_market_live_audit
 			&& (uint32_t(state.current_date.value) % uint32_t(audit_interval) == 0)) {
 		++state.cheat_data.foundry_market_live_runs;
-		auto valid = state.cheat_data.foundry_market_live_basket
+		auto valid = state.cheat_data.foundry_market_live_access_model
+			? economy::foundry_transport::run_live_access_audit(state,
+				state.world.commodity_size(), state.cheat_data.foundry_market_live_max_markets)
+			: state.cheat_data.foundry_market_live_basket
 			? economy::foundry_transport::run_live_audit_basket(state,
 				state.cheat_data.foundry_market_live_all_goods ? state.world.commodity_size() : size_t(12),
 				state.cheat_data.foundry_market_live_max_markets)

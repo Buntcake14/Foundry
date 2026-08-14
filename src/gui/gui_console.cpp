@@ -1285,6 +1285,7 @@ int32_t* f_market_live_audit(fif::state_stack& s, int32_t* p, fif::environment* 
 	state->cheat_data.foundry_market_live_commodity = commodity;
 	state->cheat_data.foundry_market_live_basket = false;
 	state->cheat_data.foundry_market_live_all_goods = false;
+	state->cheat_data.foundry_market_live_access_model = false;
 	state->cheat_data.foundry_market_live_max_markets = 25;
 	state->cheat_data.foundry_market_live_interval_days = 1;
 	state->cheat_data.foundry_market_live_ran_today = false;
@@ -1306,6 +1307,7 @@ int32_t* f_market_live_audit_basket(fif::state_stack&, int32_t* p, fif::environm
 	auto* state = reinterpret_cast<sys::state*>(fif::get_global_var(*e, "state-ptr")->data);
 	state->cheat_data.foundry_market_live_basket = true;
 	state->cheat_data.foundry_market_live_all_goods = false;
+	state->cheat_data.foundry_market_live_access_model = false;
 	state->cheat_data.foundry_market_live_max_markets = 25;
 	state->cheat_data.foundry_market_live_interval_days = 1;
 	state->cheat_data.foundry_market_live_ran_today = false;
@@ -1325,6 +1327,7 @@ int32_t* f_market_live_audit_all(fif::state_stack&, int32_t* p, fif::environment
 	auto* state = reinterpret_cast<sys::state*>(fif::get_global_var(*e, "state-ptr")->data);
 	state->cheat_data.foundry_market_live_basket = true;
 	state->cheat_data.foundry_market_live_all_goods = true;
+	state->cheat_data.foundry_market_live_access_model = false;
 	state->cheat_data.foundry_market_live_max_markets = 25;
 	state->cheat_data.foundry_market_live_interval_days = 1;
 	state->cheat_data.foundry_market_live_ran_today = false;
@@ -1342,6 +1345,7 @@ int32_t* f_market_live_audit_all(fif::state_stack&, int32_t* p, fif::environment
 void start_market_scale_audit(sys::state& state, size_t maximum_markets) {
 	state.cheat_data.foundry_market_live_basket = true;
 	state.cheat_data.foundry_market_live_all_goods = true;
+	state.cheat_data.foundry_market_live_access_model = false;
 	state.cheat_data.foundry_market_live_max_markets = maximum_markets;
 	// Large state-market solves are deliberately batched. Local production and
 	// vanilla clearing still update daily while the routed comparison refreshes
@@ -1354,6 +1358,17 @@ void start_market_scale_audit(sys::state& state, size_t maximum_markets) {
 	state.cheat_data.foundry_market_basket_runtime_sum_us = 0;
 	state.cheat_data.foundry_market_live_markets.clear();
 	state.cheat_data.foundry_market_live_audit = true;
+}
+
+int32_t* f_market_access_audit_world(fif::state_stack&, int32_t* p, fif::environment* e) {
+	if(fif::typechecking_mode(e->mode)) return p + 2;
+	auto* state = reinterpret_cast<sys::state*>(fif::get_global_var(*e, "state-ptr")->data);
+	start_market_scale_audit(*state, state->world.market_size());
+	state->cheat_data.foundry_market_live_access_model = true;
+	state->cheat_data.foundry_market_live_interval_days = 1;
+	log_to_console(*state, state->ui_state.console_window,
+		u"Foundry tiered state-access world audit enabled daily (no pathfinding; vanilla remains authoritative).");
+	return p + 2;
 }
 
 int32_t* f_market_live_audit_50(fif::state_stack&, int32_t* p, fif::environment* e) {
@@ -1385,6 +1400,7 @@ int32_t* f_market_live_audit_off(fif::state_stack&, int32_t* p, fif::environment
 	auto state_global = fif::get_global_var(*e, "state-ptr");
 	auto* state = reinterpret_cast<sys::state*>(state_global->data);
 	state->cheat_data.foundry_market_live_audit = false;
+	state->cheat_data.foundry_market_live_access_model = false;
 	state->cheat_data.foundry_market_live_ran_today = false;
 	log_to_console(*state, state->ui_state.console_window, u"Foundry daily live market audit disabled.");
 	return p + 2;
@@ -1399,6 +1415,7 @@ int32_t* f_market_live_status(fif::state_stack&, int32_t* p, fif::environment* e
 		+ " failures=" + std::to_string(state->cheat_data.foundry_market_live_failures);
 	if(state->cheat_data.foundry_market_live_audit)
 		status += " cadence=" + std::to_string(state->cheat_data.foundry_market_live_interval_days) + "d";
+	if(state->cheat_data.foundry_market_live_access_model) status += " model=state-access";
 	auto comparisons = state->cheat_data.foundry_market_live_comparisons;
 	if(comparisons && state->cheat_data.foundry_market_live_basket) {
 		auto format = [](double value) { std::ostringstream out; out << std::fixed << std::setprecision(2) << value; return out.str(); };
@@ -1884,6 +1901,7 @@ void ui::initialize_console_fif_environment(sys::state& state) {
 	fif::add_import("market-live-audit-50", nullptr, f_market_live_audit_50, {}, {}, *state.fif_environment);
 	fif::add_import("market-live-audit-100", nullptr, f_market_live_audit_100, {}, {}, *state.fif_environment);
 	fif::add_import("market-live-audit-world", nullptr, f_market_live_audit_world, {}, {}, *state.fif_environment);
+	fif::add_import("market-access-audit-world", nullptr, f_market_access_audit_world, {}, {}, *state.fif_environment);
 	fif::add_import("market-live-audit-off", nullptr, f_market_live_audit_off, {}, {}, *state.fif_environment);
 	fif::add_import("market-live-status", nullptr, f_market_live_status, {}, {}, *state.fif_environment);
 	fif::add_import("add-road", nullptr, f_add_road, {}, {}, *state.fif_environment);
