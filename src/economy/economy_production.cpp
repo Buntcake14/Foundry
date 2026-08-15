@@ -1325,6 +1325,82 @@ inline float investment_expand_factory_priority(
 void update_production_investement_consumption(
 	sys::state& state
 ) {
+	// Pick at most one shortage-driven RGO tier project per nation. The market's
+	// aggregated histories are exponential moving averages, so this reacts to a
+	// persistent shortage rather than a single bad trading day. Selection is
+	// recomputed daily, but the smoothed signal keeps the winning project stable.
+	auto nation_count = state.world.nation_size();
+	auto commodity_count = state.world.commodity_size();
+	auto utilization_slots = size_t(state.world.province_size()) * size_t(commodity_count);
+	if(state.cheat_data.foundry_rgo_utilization_ema.size() != utilization_slots)
+		state.cheat_data.foundry_rgo_utilization_ema.assign(utilization_slots, -1.f);
+	std::vector<float> historical_supply(nation_count * commodity_count, 0.f);
+	std::vector<float> historical_demand(nation_count * commodity_count, 0.f);
+	for(uint32_t market_index = 0; market_index < state.world.market_size(); ++market_index) {
+		auto market = dcon::market_id{ dcon::market_id::value_base_t(market_index) };
+		auto local_state = state.world.market_get_zone_from_local_market(market);
+		auto nation = state.world.state_instance_get_nation_from_state_ownership(local_state);
+		if(!nation) continue;
+		state.world.for_each_commodity([&](dcon::commodity_id commodity) {
+			auto offset = size_t(nation.index()) * commodity_count + size_t(commodity.index());
+			historical_supply[offset] += std::max(0.f,
+				state.world.market_get_aggregated_supply_history(market, commodity));
+			historical_demand[offset] += std::max(0.f,
+				state.world.market_get_aggregated_demand_history(market, commodity));
+		});
+	}
+	std::vector<dcon::province_id> selected_rgo_province(nation_count);
+	std::vector<dcon::commodity_id> selected_rgo_commodity(nation_count);
+	std::vector<float> selected_rgo_shortage(nation_count, 0.f);
+	std::vector<float> selected_rgo_score(nation_count, -1.f);
+	state.world.for_each_nation([&](dcon::nation_id nation) {
+		if(state.world.nation_get_owned_province_count(nation) == 0) return;
+		state.world.nation_for_each_province_ownership(nation, [&](auto ownership) {
+			auto province = state.world.province_ownership_get_province(ownership);
+			auto local_state = state.world.province_get_state_membership(province);
+			auto market = state.world.state_instance_get_market_from_local_market(local_state);
+			state.world.for_each_commodity([&](dcon::commodity_id commodity) {
+				if(state.world.commodity_get_rgo_amount(commodity) <= 0.f) return;
+				auto current_cap = state.world.province_get_rgo_max_size(province, commodity);
+				auto potential = state.world.province_get_rgo_potential(province, commodity);
+				if(current_cap <= 0.f || potential <= current_cap + 1.f) return;
+				auto size = state.world.province_get_rgo_size(province, commodity);
+				auto utilization = std::clamp(size / current_cap, 0.f, 1.f);
+				auto utilization_offset = size_t(province.index()) * commodity_count + size_t(commodity.index());
+				auto old_utilization_ema = state.cheat_data.foundry_rgo_utilization_ema[utilization_offset];
+				if(old_utilization_ema < 0.f) old_utilization_ema = utilization;
+				auto utilization_trend = utilization - old_utilization_ema;
+				state.cheat_data.foundry_rgo_utilization_ema[utilization_offset]
+					= old_utilization_ema * 0.9f + utilization * 0.1f;
+				auto offset = size_t(nation.index()) * commodity_count + size_t(commodity.index());
+				auto demand = historical_demand[offset];
+				auto shortage = demand > 0.01f
+					? std::clamp((demand - historical_supply[offset]) / demand, 0.f, 1.f) : 0.f;
+				if(shortage < 0.05f) return;
+				// Mature RGOs qualify normally at 90%. A strongly undersupplied RGO
+				// may prepare early from 60% when its utilization is rising rapidly.
+				auto saturated = utilization >= rgo_level_up_utilization_threshold;
+				auto proactive = utilization >= 0.60f && utilization_trend >= 0.02f
+					&& shortage >= 0.10f;
+				if(!saturated && !proactive) return;
+				auto workforce_per_level = float(state.world.commodity_get_rgo_workforce(commodity));
+				auto total_cost = workforce_per_level * rgo_level_up_cost_per_worker;
+				if(state.world.nation_get_private_investment(nation) < total_cost * 0.1f) return;
+				auto median_price = std::max(0.01f, state.world.commodity_get_median_price(commodity));
+				auto price_ratio = state.world.market_get_price(market, commodity) / median_price;
+				auto score = shortage * 100.f + utilization * 35.f
+					+ std::clamp(utilization_trend, 0.f, 0.20f) * 200.f
+					+ std::clamp(price_ratio - 1.f, 0.f, 2.f) * 15.f;
+				if(score > selected_rgo_score[nation.index()]) {
+					selected_rgo_score[nation.index()] = score;
+					selected_rgo_province[nation.index()] = province;
+					selected_rgo_commodity[nation.index()] = commodity;
+					selected_rgo_shortage[nation.index()] = shortage;
+				}
+			});
+		});
+	});
+
 	auto investment_tokens = state.world.nation_make_vectorizable_float_buffer();
 
 	province::for_each_nation_owned_province_parallel_over_nation(state, [&](dcon::nation_id nation, dcon::province_id province) {
@@ -1577,8 +1653,12 @@ void update_production_investement_consumption(
 					auto workforce_per_level = float(state.world.commodity_get_rgo_workforce(c));
 					if(workforce_per_level > 0.f && current_max_size < full_potential - 1.f) {
 						auto utilization = current_max_size > 0.f ? size / current_max_size : 0.f;
-						if(utilization >= rgo_level_up_utilization_threshold) {
-							auto level_up_investment = local_investment * 0.2f;
+						if(selected_rgo_province[nation.index()] == province
+								&& selected_rgo_commodity[nation.index()] == c) {
+							// A deeper persistent shortage commits a larger share of this
+							// RGO's investment, without bypassing affordability or potential.
+							auto level_up_investment = local_investment
+								* (0.2f + 0.5f * selected_rgo_shortage[nation.index()]);
 							auto level_up_total_cost = workforce_per_level * rgo_level_up_cost_per_worker;
 							auto progress = state.world.province_get_rgo_level_progress(province, c) + level_up_investment / level_up_total_cost;
 							if(progress >= 1.f) {

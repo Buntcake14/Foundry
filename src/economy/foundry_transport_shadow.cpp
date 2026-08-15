@@ -11,6 +11,7 @@
 #include <algorithm>
 #include <chrono>
 #include <iomanip>
+#include <numeric>
 #include <queue>
 #include <sstream>
 #include <vector>
@@ -532,6 +533,7 @@ bool run_live_access_audit(sys::state& state, size_t maximum_commodities, size_t
 	std::vector<std::vector<float>> surplus(good_count, std::vector<float>(market_count));
 	std::vector<std::vector<float>> unmet(good_count, std::vector<float>(market_count));
 	std::vector<float> supply(good_count), demand(good_count), consumption(good_count);
+	float local_total = 0.f, domestic_total = 0.f, global_total = 0.f;
 	auto started = std::chrono::steady_clock::now();
 	for(size_t g = 0; g < good_count; ++g) {
 		for(size_t m = 0; m < market_count; ++m) {
@@ -539,6 +541,7 @@ bool run_live_access_audit(sys::state& state, size_t maximum_commodities, size_t
 			auto d = std::max(0.f, state.world.market_get_demand(markets[m], commodities[g]));
 			auto local = std::min(s, d);
 			supply[g] += s; demand[g] += d; consumption[g] += local;
+			local_total += local;
 			surplus[g][m] = s - local; unmet[g][m] = d - local;
 		}
 
@@ -554,7 +557,7 @@ bool run_live_access_audit(sys::state& state, size_t maximum_commodities, size_t
 			auto n = size_t(owners[m].index());
 			auto available = std::min(nation_supply[n], nation_demand[n]);
 			auto received = nation_demand[n] > 0.f ? available * unmet[g][m] / nation_demand[n] : 0.f;
-			unmet[g][m] -= received; consumption[g] += received;
+			unmet[g][m] -= received; consumption[g] += received; domestic_total += received;
 		}
 		for(size_t n = 0; n < nation_supply.size(); ++n)
 			nation_supply[n] = std::max(0.f, nation_supply[n] - std::min(nation_supply[n], nation_demand[n]));
@@ -567,7 +570,7 @@ bool run_live_access_audit(sys::state& state, size_t maximum_commodities, size_t
 		if(global_supply > 0.f && weighted_demand > 0.f) {
 			for(size_t m = 0; m < market_count; ++m) {
 				auto received = std::min(unmet[g][m], global_supply * unmet[g][m] * access[m] / weighted_demand);
-				unmet[g][m] -= received; consumption[g] += received;
+				unmet[g][m] -= received; consumption[g] += received; global_total += received;
 			}
 		}
 	}
@@ -587,6 +590,12 @@ bool run_live_access_audit(sys::state& state, size_t maximum_commodities, size_t
 	}
 	state.cheat_data.foundry_market_basket_latest_runtime_us = elapsed.count();
 	state.cheat_data.foundry_market_basket_latest_path_searches = 0;
+	state.cheat_data.foundry_market_access_local_consumption = local_total;
+	state.cheat_data.foundry_market_access_domestic_consumption = domestic_total;
+	state.cheat_data.foundry_market_access_global_consumption = global_total;
+	state.cheat_data.foundry_market_access_min = *std::min_element(access.begin(), access.end());
+	state.cheat_data.foundry_market_access_max = *std::max_element(access.begin(), access.end());
+	state.cheat_data.foundry_market_access_mean = std::accumulate(access.begin(), access.end(), 0.f) / float(access.size());
 	state.cheat_data.foundry_market_basket_runtime_sum_us += uint64_t(std::max<int64_t>(0, elapsed.count()));
 	return true;
 }

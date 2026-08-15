@@ -442,6 +442,16 @@ struct cheat_data_s {
 	std::vector<float> foundry_market_basket_consumption;
 	std::vector<float> foundry_market_basket_unmet;
 	std::vector<float> foundry_market_basket_unsold;
+	std::vector<float> foundry_market_basket_consumption_delta;
+	std::array<dcon::commodity_id, 5> foundry_market_top_shortage_commodities{};
+	std::array<float, 5> foundry_market_top_shortage_supply{};
+	std::array<float, 5> foundry_market_top_shortage_demand{};
+	std::array<float, 5> foundry_market_top_shortage_consumption{};
+	std::array<float, 5> foundry_market_top_shortage_delta{};
+	size_t foundry_market_top_shortage_count = 0;
+	// Smoothed province/good utilization used by the proactive RGO investor.
+	// Lazily sized to province_count * commodity_count by the economy update.
+	std::vector<float> foundry_rgo_utilization_ema;
 	dcon::commodity_id foundry_market_basket_worst_commodity;
 	float foundry_market_basket_latest_consumption_delta = 0.f;
 	float foundry_market_basket_latest_unmet_delta = 0.f;
@@ -451,6 +461,12 @@ struct cheat_data_s {
 	int64_t foundry_market_basket_latest_runtime_us = 0;
 	uint64_t foundry_market_basket_runtime_sum_us = 0;
 	size_t foundry_market_basket_latest_path_searches = 0;
+	float foundry_market_access_local_consumption = 0.f;
+	float foundry_market_access_domestic_consumption = 0.f;
+	float foundry_market_access_global_consumption = 0.f;
+	float foundry_market_access_min = 0.f;
+	float foundry_market_access_mean = 0.f;
+	float foundry_market_access_max = 0.f;
 	float foundry_market_baseline_supply = 0.f;
 	float foundry_market_baseline_demand = 0.f;
 	float foundry_market_routed_consumption = 0.f;

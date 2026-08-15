@@ -3337,6 +3337,17 @@ void daily_update(sys::state& state, bool presimulation, float presimulation_sta
 		float worst = 0.f;
 		dcon::commodity_id worst_good;
 		state.cheat_data.foundry_market_basket_category_delta.fill(0.f);
+		state.cheat_data.foundry_market_basket_consumption_delta.assign(
+			state.cheat_data.foundry_market_basket_commodities.size(), 0.f);
+		struct shortage_snapshot {
+			dcon::commodity_id commodity;
+			float supply = 0.f;
+			float demand = 0.f;
+			float consumption = 0.f;
+			float delta = 0.f;
+		};
+		std::vector<shortage_snapshot> shortages;
+		shortages.reserve(state.cheat_data.foundry_market_basket_commodities.size());
 		for(size_t good = 0; good < state.cheat_data.foundry_market_basket_commodities.size(); ++good) {
 			auto commodity = state.cheat_data.foundry_market_basket_commodities[good];
 			float consumed = 0.f;
@@ -3347,6 +3358,16 @@ void daily_update(sys::state& state, bool presimulation, float presimulation_sta
 			auto unmet = std::max(0.f, state.cheat_data.foundry_market_basket_demand[good] - consumed);
 			auto unsold = std::max(0.f, state.cheat_data.foundry_market_basket_supply[good] - consumed);
 			auto delta = state.cheat_data.foundry_market_basket_consumption[good] - consumed;
+			state.cheat_data.foundry_market_basket_consumption_delta[good] = delta;
+			// Only rank actual, finite shortages. Some inactive commodities can
+			// carry non-finite diagnostic values; allowing those into std::sort
+			// violates its ordering contract and can push real shortages out of
+			// the displayed top five.
+			if(delta < -0.0001f)
+				shortages.push_back({ commodity,
+					state.cheat_data.foundry_market_basket_supply[good],
+					state.cheat_data.foundry_market_basket_demand[good],
+					state.cheat_data.foundry_market_basket_consumption[good], delta });
 			auto group = sys::commodity_group(state.world.commodity_get_commodity_group(commodity));
 			size_t category = group == sys::commodity_group::raw_material_goods ? 0
 				: group == sys::commodity_group::industrial_goods || group == sys::commodity_group::industrial_and_consumer_goods ? 1
@@ -3363,6 +3384,17 @@ void daily_update(sys::state& state, bool presimulation, float presimulation_sta
 		state.cheat_data.foundry_market_basket_latest_unsold_delta = routed_unsold - vanilla_unsold;
 		state.cheat_data.foundry_market_basket_worst_delta = worst;
 		state.cheat_data.foundry_market_basket_worst_commodity = worst_good;
+		std::sort(shortages.begin(), shortages.end(), [](auto const& a, auto const& b) {
+			return a.delta < b.delta;
+		});
+		state.cheat_data.foundry_market_top_shortage_count = std::min<size_t>(5, shortages.size());
+		for(size_t rank = 0; rank < state.cheat_data.foundry_market_top_shortage_count; ++rank) {
+			state.cheat_data.foundry_market_top_shortage_commodities[rank] = shortages[rank].commodity;
+			state.cheat_data.foundry_market_top_shortage_supply[rank] = shortages[rank].supply;
+			state.cheat_data.foundry_market_top_shortage_demand[rank] = shortages[rank].demand;
+			state.cheat_data.foundry_market_top_shortage_consumption[rank] = shortages[rank].consumption;
+			state.cheat_data.foundry_market_top_shortage_delta[rank] = shortages[rank].delta;
+		}
 		++state.cheat_data.foundry_market_live_comparisons;
 	}
 

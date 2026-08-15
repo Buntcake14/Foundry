@@ -12,6 +12,8 @@
 #include "gui_templates.hpp"
 #include "constants_ui.hpp"
 #include "foundry_transport_shadow.hpp"
+#include "economy_stats.hpp"
+#include "ai_economy.hpp"
 #define STB_IMAGE_WRITE_IMPLEMENTATION 1
 #include "stb_image_write.h"
 
@@ -1440,6 +1442,27 @@ int32_t* f_market_live_status(fif::state_stack&, int32_t* p, fif::environment* e
 			+ std::to_string(state->cheat_data.foundry_market_basket_latest_runtime_us) + "/"
 			+ std::to_string(state->cheat_data.foundry_market_basket_runtime_sum_us / comparisons);
 		status += " searches=" + std::to_string(state->cheat_data.foundry_market_basket_latest_path_searches);
+		if(state->cheat_data.foundry_market_live_access_model) {
+			status += "\nconsumption local/domestic/global="
+				+ format(state->cheat_data.foundry_market_access_local_consumption) + "/"
+				+ format(state->cheat_data.foundry_market_access_domestic_consumption) + "/"
+				+ format(state->cheat_data.foundry_market_access_global_consumption);
+			status += "\nmarket access min/mean/max="
+				+ format(state->cheat_data.foundry_market_access_min) + "/"
+				+ format(state->cheat_data.foundry_market_access_mean) + "/"
+				+ format(state->cheat_data.foundry_market_access_max);
+
+			status += "\ntop shortages S/D/C/delta:";
+			for(size_t rank = 0; rank < state->cheat_data.foundry_market_top_shortage_count; ++rank) {
+				auto commodity = state->cheat_data.foundry_market_top_shortage_commodities[rank];
+				status += "\n" + std::to_string(rank + 1) + ". "
+					+ text::produce_simple_string(*state, state->world.commodity_get_name(commodity)) + " "
+					+ format(state->cheat_data.foundry_market_top_shortage_supply[rank]) + "/"
+					+ format(state->cheat_data.foundry_market_top_shortage_demand[rank]) + "/"
+					+ format(state->cheat_data.foundry_market_top_shortage_consumption[rank]) + "/"
+					+ format(state->cheat_data.foundry_market_top_shortage_delta[rank]);
+			}
+		}
 	}
 	if(comparisons && !state->cheat_data.foundry_market_live_basket) {
 		auto format = [](double value) {
@@ -1460,6 +1483,90 @@ int32_t* f_market_live_status(fif::state_stack&, int32_t* p, fif::environment* e
 			+ format(state->cheat_data.foundry_market_vanilla_consumption);
 	}
 	static_cast<ui::console_window*>(state->ui_state.console_window)->replace_list(*state, "market-live-status\n" + status + "\n");
+	return p + 2;
+}
+
+int32_t* f_rgo_ai_audit(fif::state_stack&, int32_t* p, fif::environment* e) {
+	if(fif::typechecking_mode(e->mode)) return p + 2;
+	auto* state = reinterpret_cast<sys::state*>(fif::get_global_var(*e, "state-ptr")->data);
+	auto nation = state->local_player_nation;
+	if(!nation) {
+		log_to_console(*state, state->ui_state.console_window, u"Select a playable nation before running the RGO AI audit.");
+		return p + 2;
+	}
+
+	struct candidate {
+		dcon::province_id province;
+		dcon::commodity_id commodity;
+		float score = 0.f;
+		float shortage = 0.f;
+		float utilization = 0.f;
+		float price_ratio = 0.f;
+		float tier_room = 0.f;
+		bool labor_available = false;
+	};
+	std::vector<candidate> candidates;
+	state->world.nation_for_each_province_ownership(nation, [&](auto ownership) {
+		auto province = state->world.province_ownership_get_province(ownership);
+		auto local_state = state->world.province_get_state_membership(province);
+		auto market = state->world.state_instance_get_market_from_local_market(local_state);
+		if(!market) return;
+		state->world.for_each_commodity([&](dcon::commodity_id commodity) {
+			if(state->world.commodity_get_rgo_amount(commodity) <= 0.f) return;
+			auto current_cap = state->world.province_get_rgo_max_size(province, commodity);
+			auto potential = state->world.province_get_rgo_potential(province, commodity);
+			if(current_cap <= 0.f || potential <= current_cap + 1.f) return;
+
+			auto national_demand = economy::demand(*state, nation, commodity);
+			auto national_supply = economy::supply(*state, nation, commodity);
+			auto shortage = national_demand > 0.01f
+				? std::clamp((national_demand - national_supply) / national_demand, 0.f, 1.f) : 0.f;
+			if(shortage < 0.02f) return;
+
+			auto size = state->world.province_get_rgo_size(province, commodity);
+			auto utilization = std::clamp(size / current_cap, 0.f, 1.f);
+			auto median_price = std::max(0.01f, state->world.commodity_get_median_price(commodity));
+			auto price_ratio = state->world.market_get_price(market, commodity) / median_price;
+			auto labor_available = ai::province_has_available_workers(*state, province);
+			auto tier_room = std::max(0.f, (potential - current_cap)
+				/ std::max(1.f, float(state->world.commodity_get_rgo_workforce(commodity))));
+
+			auto score = shortage * 100.f
+				+ utilization * 35.f
+				+ std::clamp(price_ratio - 1.f, 0.f, 2.f) * 15.f
+				+ (labor_available ? 5.f : 0.f)
+				+ std::min(tier_room, 4.f);
+			candidates.push_back({ province, commodity, score, shortage, utilization,
+				price_ratio, tier_room, labor_available });
+		});
+	});
+	std::sort(candidates.begin(), candidates.end(), [](auto const& a, auto const& b) {
+		return a.score > b.score;
+	});
+
+	auto format = [](float value) {
+		std::ostringstream out;
+		out << std::fixed << std::setprecision(2) << value;
+		return out.str();
+	};
+	std::string report = "RGO AI RECOMMENDATIONS (read-only; all RGO goods)\n";
+	report += "Nation: " + text::produce_simple_string(*state, text::get_name(*state, nation));
+	report += " candidates=" + std::to_string(candidates.size());
+	if(candidates.empty()) report += "\nNo eligible persistent-shortage upgrades found.";
+	for(size_t rank = 0; rank < std::min<size_t>(12, candidates.size()); ++rank) {
+		auto const& c = candidates[rank];
+		report += "\n" + std::to_string(rank + 1) + ". "
+			+ text::produce_simple_string(*state, state->world.commodity_get_name(c.commodity))
+			+ " - " + text::produce_simple_string(*state, state->world.province_get_name(c.province))
+			+ " score=" + format(c.score)
+			+ " shortage=" + format(c.shortage * 100.f) + "%"
+			+ " used=" + format(c.utilization * 100.f) + "%"
+			+ " price=" + format(c.price_ratio) + "x"
+			+ " labor=" + (c.labor_available ? "yes" : "no")
+			+ " room=" + format(c.tier_room);
+	}
+	static_cast<ui::console_window*>(state->ui_state.console_window)->replace_list(*state,
+		"rgo-ai-audit\n" + report + "\n");
 	return p + 2;
 }
 
@@ -1904,6 +2011,7 @@ void ui::initialize_console_fif_environment(sys::state& state) {
 	fif::add_import("market-access-audit-world", nullptr, f_market_access_audit_world, {}, {}, *state.fif_environment);
 	fif::add_import("market-live-audit-off", nullptr, f_market_live_audit_off, {}, {}, *state.fif_environment);
 	fif::add_import("market-live-status", nullptr, f_market_live_status, {}, {}, *state.fif_environment);
+	fif::add_import("rgo-ai-audit", nullptr, f_rgo_ai_audit, {}, {}, *state.fif_environment);
 	fif::add_import("add-road", nullptr, f_add_road, {}, {}, *state.fif_environment);
 	fif::add_import("provid", nullptr, f_provid, { fif::fif_bool }, {}, * state.fif_environment);
 	fif::add_import("ui-debug", nullptr, f_uidebug, { fif::fif_bool }, {}, *state.fif_environment);
