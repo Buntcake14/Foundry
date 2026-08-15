@@ -1647,6 +1647,16 @@ object {
 		type{ array{commodity_id}{float} }
 		tag{ save }
 	}
+	property{
+		name{ rgo_upgrade_sponsor }
+		type{ array{commodity_id}{uint8_t} }
+		tag{ save }
+	}
+	property{
+		name{ rgo_upgrade_purchased_goods }
+		type{ array{commodity_id}{economy::commodity_set} }
+		tag{ save }
+	}
 
 	property{
 		name{ rgo_potential }

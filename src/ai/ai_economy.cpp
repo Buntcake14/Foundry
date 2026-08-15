@@ -15,6 +15,8 @@
 #include "money.hpp"
 #include "advanced_province_buildings.hpp"
 #include "economy_constants.hpp"
+#include "civic_buildings.hpp"
+#include "commands.hpp"
 
 namespace ai {
 
@@ -222,12 +224,32 @@ void retrieve_list_of_provinces_for_national_construction(sys::state& state, dco
 		}
 	}
 	std::sort(data.begin(), data.end(), [&](auto a, auto b) {
-		auto apop = state.world.province_get_demographics(a, demographics::total);
-		auto bpop = state.world.province_get_demographics(b, demographics::total);
-		auto acontrol = state.world.province_get_control_ratio(a);
-		auto bcontrol = state.world.province_get_control_ratio(b);
-		if(apop * acontrol != bpop * bcontrol)
-			return apop * acontrol > bpop * bcontrol;
+		auto score = [&](dcon::province_id p) {
+			auto population = state.world.province_get_demographics(p, demographics::total);
+			auto literacy = state.world.province_get_demographics(p, demographics::literacy)
+				/ std::max(1.f, population);
+			auto control = state.world.province_get_control_ratio(p);
+			auto workers = state.world.province_get_labor_supply(p, economy::labor::no_education);
+			auto state_instance = state.world.province_get_state_membership(p);
+			auto factories = float(economy::province_factory_count(state, p));
+			auto rail = float(state.world.province_get_building_level(p,
+				uint8_t(economy::province_building_type::railroad)));
+			float roads = 0.f;
+			for(auto type : state.world.in_civic_building_type)
+				if(type.get_is_road_network())
+					roads += float(state.world.province_get_civic_building_level(p, type.id.index()));
+			return std::log1p(std::max(0.f, population)) * 5.f
+				+ std::log1p(std::max(0.f, workers)) * 4.f
+				+ literacy * 20.f + control * 20.f + factories * 10.f
+				+ (roads + rail) * 5.f
+				+ (state.world.nation_get_capital(n) == p ? 30.f : 0.f)
+				+ (state.world.state_instance_get_capital(state_instance) == p ? 12.f : 0.f)
+				- (state.world.province_get_is_colonial(p) ? 100.f : 0.f);
+		};
+		auto ascore = score(a);
+		auto bscore = score(b);
+		if(ascore != bscore)
+			return ascore > bscore;
 		else
 			return a.index() < b.index();
 	});
@@ -259,12 +281,108 @@ bool factory_can_be_upgraded(sys::state& state, dcon::nation_id n, dcon::provinc
 }
 
 bool have_available_slots(sys::state& state, dcon::nation_id n, dcon::province_id p, dcon::factory_type_id ftid) {
-	auto num_factories = economy::province_factory_count(state, p);
-	auto urbanisation = state.world.province_get_advanced_province_building_max_private_size(p, advanced_province_buildings::list::local_cities_and_towns);
-
-	return
-		num_factories < int32_t(state.defines.factories_per_state * urbanisation / economy::factories_per_state_required_city_size)
+	return civic_buildings::province_unlocks_factories(state, p)
+		&& civic_buildings::province_has_urban_building_capacity(state, p)
 		&& economy::do_resource_potentials_allow_construction(state, n, p, ftid);
+}
+
+dcon::civic_building_type_id urban_center_type(sys::state& state) {
+	for(auto type : state.world.in_civic_building_type)
+		if(type.get_is_urban_center())
+			return type.id;
+	return {};
+}
+
+bool nation_has_urban_project(sys::state& state, dcon::nation_id nation, dcon::civic_building_type_id type) {
+	for(auto ownership : state.world.nation_get_province_ownership(nation))
+		if(civic_buildings::upgrade_in_progress(state, ownership.get_province(), type))
+			return true;
+	return false;
+}
+
+float next_urban_center_cost(sys::state& state, dcon::province_id province,
+		dcon::civic_building_type_id type) {
+	auto level = state.world.province_get_civic_building_level(province, type.index());
+	if(level >= state.world.civic_building_type_get_level_count(type))
+		return std::numeric_limits<float>::infinity();
+	auto const& goods = state.world.civic_building_type_get_levels(type)[level].cost;
+	float cost = 0.f;
+	for(uint32_t i = 0; i < economy::commodity_set::set_size && goods.commodity_type[i]; ++i)
+		cost += goods.commodity_amounts[i] * state.world.commodity_get_cost(goods.commodity_type[i]);
+	return cost;
+}
+
+// Urban centers are a government placement decision. A profitable factory
+// intent that cannot fit is the main demand signal; this avoids speculative
+// city spam while allowing the AI to prepare the site the factory actually
+// wants to use.
+bool request_urban_center_for_factory(sys::state& state, dcon::nation_id nation,
+		dcon::province_id province, float available_budget) {
+	auto type = urban_center_type(state);
+	if(!type || nation_has_urban_project(state, nation, type))
+		return false; // conservative first pass: one national urban project at a time
+	if(state.world.province_get_is_colonial(province)
+			|| state.world.province_get_nation_from_province_control(province) != nation)
+		return false;
+	auto population = state.world.province_get_demographics(province, demographics::total);
+	auto control = state.world.province_get_control_ratio(province);
+	if(population < 25'000.f || !province_has_workers(state, province) || control < 0.8f)
+		return false;
+	if(!civic_buildings::can_begin_upgrade(state, nation, province, type))
+		return false;
+	auto cost = next_urban_center_cost(state, province, type);
+	// Keep an emergency reserve: an urban project may use no more than half of
+	// the currently available construction budget.
+	if(!std::isfinite(cost) || available_budget < cost * 2.f)
+		return false;
+	civic_buildings::begin_upgrade(state, province, type);
+	return true;
+}
+
+// A country with no urban center cannot ever offer a valid site to its first
+// factory. Do not make that first city wait for a factory intent that the urban
+// gate itself prevents. Establish exactly one carefully ranked bootstrap hub;
+// subsequent levels remain driven by real factory/capacity pressure above.
+bool request_initial_urban_center(sys::state& state, dcon::nation_id nation,
+		float available_budget) {
+	auto type = urban_center_type(state);
+	if(!type || nation_has_urban_project(state, nation, type))
+		return false;
+	for(auto ownership : state.world.nation_get_province_ownership(nation))
+		if(state.world.province_get_civic_building_level(
+				ownership.get_province(), type.index()) > 0)
+			return false;
+
+	dcon::province_id best{};
+	float best_score = -std::numeric_limits<float>::infinity();
+	for(auto ownership : state.world.nation_get_province_ownership(nation)) {
+		auto province = ownership.get_province();
+		if(state.world.province_get_is_colonial(province)
+				|| state.world.province_get_nation_from_province_control(province) != nation)
+			continue;
+		auto population = state.world.province_get_demographics(province, demographics::total);
+		auto control = state.world.province_get_control_ratio(province);
+		if(population < 15'000.f || control < 0.5f
+				|| !civic_buildings::can_begin_upgrade(state, nation, province, type))
+			continue;
+		auto literacy = state.world.province_get_demographics(province, demographics::literacy)
+			/ std::max(1.f, population);
+		auto local_state = state.world.province_get_state_membership(province);
+		auto score = std::log1p(population) * 10.f + literacy * 20.f
+			+ (state.world.nation_get_capital(nation) == province ? 40.f : 0.f)
+			+ (state.world.state_instance_get_capital(local_state) == province ? 15.f : 0.f);
+		if(score > best_score) {
+			best_score = score;
+			best = province;
+		}
+	}
+	if(!best)
+		return false;
+	auto cost = next_urban_center_cost(state, best, type);
+	if(!std::isfinite(cost) || available_budget < cost * 1.25f)
+		return false;
+	civic_buildings::begin_upgrade(state, best, type);
+	return true;
 }
 
 dcon::factory_id retrieve_existing_factory(sys::state& state, dcon::province_id p, dcon::factory_type_id ftid) {
@@ -281,11 +399,14 @@ inline bool upgrade_is_desired(sys::state& state, dcon::factory_id fac) {
 	return economy::factory_total_employment_score(state, fac) > 0.9f && state.world.factory_get_size(fac) > 5000.f;
 }
 
-inline void new_national_construction(sys::state& state, dcon::nation_id n, dcon::province_id p, dcon::factory_type_id ftid) {
+inline bool new_national_construction(sys::state& state, dcon::nation_id n, dcon::province_id p, dcon::factory_type_id ftid) {
+	if(!command::can_begin_factory_building_construction(state, n, p, ftid, false, {}))
+		return false;
 	auto new_up = fatten(state.world, state.world.force_create_factory_construction(p, n));
 	new_up.set_is_pop_project(false);
 	new_up.set_is_upgrade(false);
 	new_up.set_type(ftid);
+	return true;
 }
 
 inline void new_national_upgrade(sys::state& state, dcon::nation_id n, dcon::province_id p, dcon::factory_type_id ftid) {
@@ -352,11 +473,25 @@ void build_or_upgrade_desired_factories(
 			// else -- try to build -- must have room
 
 			if(have_available_slots(state, n, p, type_selection)) {
-				new_national_construction(state, n, p, type_selection);
-				expenses_accumulator += expected_item_cost;
+				if(new_national_construction(state, n, p, type_selection)) {
+					expenses_accumulator += expected_item_cost;
+					// At 80% occupancy, prepare the next tier before the following
+					// profitable factory intent becomes blocked.
+					auto capacity = civic_buildings::province_urban_building_capacity(state, p);
+					auto used = civic_buildings::province_used_urban_building_capacity(state, p);
+					if(capacity > 0 && used * 5 >= capacity * 4)
+						request_urban_center_for_factory(state, n, p,
+							budget - expenses_accumulator);
+				}
 				continue;
 			} else {
-				// TODO: try to delete a factory here
+				// Preserve the factory intent only when Foundry's urban gate is
+				// what blocked it. Resource-potential, coastal, duplicate, and
+				// political failures must not create an unrelated city project.
+				if(!civic_buildings::province_unlocks_factories(state, p)
+						|| !civic_buildings::province_has_urban_building_capacity(state, p))
+					request_urban_center_for_factory(state, n, p,
+						budget - expenses_accumulator);
 			}
 		}
 	}
@@ -374,8 +509,9 @@ void update_ai_econ_construction(sys::state& state) {
 	constexpr float good_payback_time = 365.f * 4.f;
 
 	for(auto n : state.world.in_nation) {
-		// skip over: non ais, dead nations, and nations that aren't making money
-		if(n.get_owned_province_count() == 0 || !n.get_is_civilized())
+		// Dead nations have no economic decisions. Non-civilized countries still
+		// need towns and cities; civilization gates factories, not urban existence.
+		if(n.get_owned_province_count() == 0)
 			continue;
 
 		if(n.get_is_player_controlled()) {
@@ -388,22 +524,37 @@ void update_ai_econ_construction(sys::state& state) {
 			continue;
 		*/
 
-		// treasury is out budget
+		// treasury is our budget
 		float treasury = n.get_stockpiles(economy::money);
 		float estimated_construction_costs = economy::estimate_construction_spending_from_budget(state, n, std::max(treasury, 1'000'000'000'000.f));
-
-		//if our army is too small, ignore buildings:
-		if(calculate_desired_army_size(state, n) * 0.4f > n.get_active_regiments())
-			continue;
 
 		float budget = treasury * (float)state.world.nation_get_construction_spending(n) / 100.f - estimated_construction_costs * 0.7f;
 		float additional_expenses = 0.f;
 		
 		auto rules = n.get_combined_issue_rules();
 		// Try to build to expand the economy even without a positive budget (since spendings are scaled down)
+		// Bootstrap civic infrastructure before the military-readiness gate. A
+		// nation without any city otherwise cannot produce the factory intent that
+		// was supposed to tell it where its first city belongs. Use treasury for
+		// this one-time solvency test rather than the ordinary monthly construction
+		// remainder: the latter can be negative precisely because a country has no
+		// urban economy yet.
+		if(request_initial_urban_center(state, n, treasury))
+			continue;
+
+		// The bootstrap city above is available to every society. Ordinary factory
+		// and industrial construction below retains the vanilla civilization gate.
+		if(!n.get_is_civilized())
+			continue;
+
 		if(budget < 0.f && state.world.nation_get_construction_spending(n) >= 1.0f) {
 			continue;
 		}
+
+		// If our army is too small, defer ordinary economic expansion. The first
+		// urban hub above is foundational and is allowed through this gate.
+		if(calculate_desired_army_size(state, n) * 0.4f > n.get_active_regiments())
+			continue;
 
 		if((rules & issue_rule::expand_factory) != 0 || (rules & issue_rule::build_factory) != 0) {
 			// prepare a list of states

@@ -452,6 +452,12 @@ struct cheat_data_s {
 	// Smoothed province/good utilization used by the proactive RGO investor.
 	// Lazily sized to province_count * commodity_count by the economy update.
 	std::vector<float> foundry_rgo_utilization_ema;
+	std::vector<dcon::province_id> foundry_rgo_selected_province;
+	std::vector<dcon::commodity_id> foundry_rgo_selected_commodity;
+	std::vector<float> foundry_rgo_selected_shortage;
+	std::vector<float> foundry_rgo_selected_utilization;
+	std::vector<float> foundry_rgo_selected_trend;
+	std::vector<float> foundry_rgo_selected_score;
 	dcon::commodity_id foundry_market_basket_worst_commodity;
 	float foundry_market_basket_latest_consumption_delta = 0.f;
 	float foundry_market_basket_latest_unmet_delta = 0.f;

@@ -1352,9 +1352,40 @@ void update_production_investement_consumption(
 	std::vector<dcon::province_id> selected_rgo_province(nation_count);
 	std::vector<dcon::commodity_id> selected_rgo_commodity(nation_count);
 	std::vector<float> selected_rgo_shortage(nation_count, 0.f);
+	std::vector<float> selected_rgo_utilization(nation_count, 0.f);
+	std::vector<float> selected_rgo_trend(nation_count, 0.f);
 	std::vector<float> selected_rgo_score(nation_count, -1.f);
+	auto rgo_project_money_cost = [&](dcon::province_id province, dcon::commodity_id commodity) {
+		auto market = state.world.state_instance_get_market_from_local_market(
+			state.world.province_get_state_membership(province));
+		auto goods = economy::rgo_upgrade_goods_cost(state, province, commodity);
+		float total = 0.f;
+		for(uint32_t i = 0; i < economy::commodity_set::set_size; ++i) {
+			if(!goods.commodity_type[i]) break;
+			total += goods.commodity_amounts[i]
+				* std::max(0.01f, state.world.market_get_price(market, goods.commodity_type[i]));
+		}
+		return total;
+	};
 	state.world.for_each_nation([&](dcon::nation_id nation) {
-		if(state.world.nation_get_owned_province_count(nation) == 0) return;
+		// Player RGO tiers are entirely player-directed. Neither the national AI
+		// nor private-investor automation may press the upgrade button for them.
+		if(state.world.nation_get_owned_province_count(nation) == 0
+				|| nation == state.local_player_nation
+				|| state.world.nation_get_is_player_controlled(nation)) return;
+		// RGO supply is foundational, but nations must not launch a new tier every
+		// day. Small countries may develop one at a time; larger economies can run
+		// a few in parallel, capped at four regardless of empire size.
+		int32_t active_projects = 0;
+		state.world.nation_for_each_province_ownership(nation, [&](auto ownership) {
+			auto owned_province = state.world.province_ownership_get_province(ownership);
+			state.world.for_each_commodity([&](dcon::commodity_id commodity) {
+				if(economy::rgo_upgrade_in_progress(state, owned_province, commodity))
+					++active_projects;
+			});
+		});
+		auto project_limit = std::clamp(1 + int32_t(state.world.nation_get_owned_province_count(nation)) / 15, 1, 4);
+		if(active_projects >= project_limit) return;
 		state.world.nation_for_each_province_ownership(nation, [&](auto ownership) {
 			auto province = state.world.province_ownership_get_province(ownership);
 			auto local_state = state.world.province_get_state_membership(province);
@@ -1376,16 +1407,23 @@ void update_production_investement_consumption(
 				auto demand = historical_demand[offset];
 				auto shortage = demand > 0.01f
 					? std::clamp((demand - historical_supply[offset]) / demand, 0.f, 1.f) : 0.f;
-				if(shortage < 0.05f) return;
-				// Mature RGOs qualify normally at 90%. A strongly undersupplied RGO
-				// may prepare early from 60% when its utilization is rising rapidly.
-				auto saturated = utilization >= rgo_level_up_utilization_threshold;
-				auto proactive = utilization >= 0.60f && utilization_trend >= 0.02f
-					&& shortage >= 0.10f;
-				if(!saturated && !proactive) return;
-				auto workforce_per_level = float(state.world.commodity_get_rgo_workforce(commodity));
-				auto total_cost = workforce_per_level * rgo_level_up_cost_per_worker;
-				if(state.world.nation_get_private_investment(nation) < total_cost * 0.1f) return;
+				if(shortage < 0.03f) return;
+				// RGO output is the economy's feedstock. Begin normal preparation at
+				// 80% use, move earlier when demand is climbing, and permit emergency
+				// expansion when a severe shortage is already constraining the market.
+				auto normal_pressure = utilization >= 0.80f && shortage >= 0.05f;
+				auto proactive = utilization >= 0.60f && utilization_trend >= 0.005f
+					&& shortage >= 0.08f;
+				auto emergency = utilization >= 0.55f && shortage >= 0.20f;
+				if(!normal_pressure && !proactive && !emergency) return;
+				auto total_cost = rgo_project_money_cost(province, commodity);
+				auto private_can_sponsor = state.world.nation_get_private_investment(nation) >= total_cost;
+				auto government_can_sponsor = state.world.nation_get_construction_spending(nation) > 0
+					// Keep a reserve above the current local-market value of the actual
+					// construction recipe. The old workforce-derived estimate was not
+					// related to what the project buys and rejected most AI countries.
+					&& state.world.nation_get_stockpiles(nation, economy::money) >= total_cost * 1.25f;
+				if(!private_can_sponsor && !government_can_sponsor) return;
 				auto median_price = std::max(0.01f, state.world.commodity_get_median_price(commodity));
 				auto price_ratio = state.world.market_get_price(market, commodity) / median_price;
 				auto score = shortage * 100.f + utilization * 35.f
@@ -1396,10 +1434,18 @@ void update_production_investement_consumption(
 					selected_rgo_province[nation.index()] = province;
 					selected_rgo_commodity[nation.index()] = commodity;
 					selected_rgo_shortage[nation.index()] = shortage;
+					selected_rgo_utilization[nation.index()] = utilization;
+					selected_rgo_trend[nation.index()] = utilization_trend;
 				}
 			});
 		});
 	});
+	state.cheat_data.foundry_rgo_selected_province = selected_rgo_province;
+	state.cheat_data.foundry_rgo_selected_commodity = selected_rgo_commodity;
+	state.cheat_data.foundry_rgo_selected_shortage = selected_rgo_shortage;
+	state.cheat_data.foundry_rgo_selected_utilization = selected_rgo_utilization;
+	state.cheat_data.foundry_rgo_selected_trend = selected_rgo_trend;
+	state.cheat_data.foundry_rgo_selected_score = selected_rgo_score;
 
 	auto investment_tokens = state.world.nation_make_vectorizable_float_buffer();
 
@@ -1655,19 +1701,15 @@ void update_production_investement_consumption(
 						auto utilization = current_max_size > 0.f ? size / current_max_size : 0.f;
 						if(selected_rgo_province[nation.index()] == province
 								&& selected_rgo_commodity[nation.index()] == c) {
-							// A deeper persistent shortage commits a larger share of this
-							// RGO's investment, without bypassing affordability or potential.
-							auto level_up_investment = local_investment
-								* (0.2f + 0.5f * selected_rgo_shortage[nation.index()]);
-							auto level_up_total_cost = workforce_per_level * rgo_level_up_cost_per_worker;
-							auto progress = state.world.province_get_rgo_level_progress(province, c) + level_up_investment / level_up_total_cost;
-							if(progress >= 1.f) {
-								auto new_tier_cap = std::min(full_potential, current_max_size + workforce_per_level);
-								state.world.province_set_rgo_max_size(province, c, new_tier_cap);
-								progress -= 1.f;
+							// Selection now sponsors a real construction project. Goods are
+							// stockpiled first, then it competes for national capacity.
+							if(!economy::rgo_upgrade_in_progress(state, province, c)) {
+								auto investment_threshold = rgo_project_money_cost(province, c);
+								auto sponsor = state.world.nation_get_private_investment(nation) >= investment_threshold
+									? economy::rgo_upgrade_sponsor::private_investors
+									: economy::rgo_upgrade_sponsor::government;
+								economy::begin_rgo_upgrade(state, nation, province, c, sponsor);
 							}
-							state.world.province_set_rgo_level_progress(province, c, progress);
-							actually_spent = actually_spent + level_up_investment;
 						}
 					}
 				}

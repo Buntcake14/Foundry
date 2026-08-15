@@ -803,7 +803,25 @@ void initialize(sys::state& state) {
 	populate_construction_consumption(state);
 
 	state.world.for_each_nation([&](dcon::nation_id n) {
-		state.world.nation_set_stockpiles(n, money, 1000.f);
+		if(state.world.nation_get_owned_province_count(n) == 0) {
+			state.world.nation_set_stockpiles(n, money, 0.f);
+			return;
+		}
+		float population = 0.f;
+		state.world.nation_for_each_province_ownership(n, [&](auto ownership) {
+			population += state.world.province_get_demographics(
+				state.world.province_ownership_get_province(ownership), demographics::total);
+		});
+		// Foundry construction needs a real opening development reserve. A flat
+		// £1,000 made tiny states and continental empires nominally equal, then left
+		// most governments unable to establish their first city after startup
+		// expenses. Population scales sublinearly while territory adds a modest
+		// administrative base; floors and caps keep both minors and giants sane.
+		auto provinces = float(state.world.nation_get_owned_province_count(n));
+		auto starting_treasury = std::clamp(
+			750.f + std::sqrt(std::max(0.f, population)) * 0.75f + provinces * 25.f,
+			1'000.f, 50'000.f);
+		state.world.nation_set_stockpiles(n, money, starting_treasury);
 	});
 
 

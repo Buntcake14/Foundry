@@ -487,6 +487,53 @@ public:
 	}
 };
 
+class province_rgo_upgrade_button : public button_element_base {
+public:
+	void on_update(sys::state& state) noexcept override {
+		auto province = retrieve<dcon::province_id>(state, parent);
+		auto commodity = state.world.province_get_rgo(province);
+		disabled = !economy::can_begin_rgo_upgrade(state, state.local_player_nation, province, commodity,
+			economy::rgo_upgrade_sponsor::government);
+		set_button_text(state, economy::rgo_upgrade_in_progress(state, province, commodity)
+			? "RGO UPGRADING" : "UPGRADE RGO");
+	}
+
+	void button_action(sys::state& state) noexcept override {
+		auto province = retrieve<dcon::province_id>(state, parent);
+		auto commodity = state.world.province_get_rgo(province);
+		economy::begin_rgo_upgrade(state, state.local_player_nation, province, commodity,
+			economy::rgo_upgrade_sponsor::government);
+	}
+
+	tooltip_behavior has_tooltip(sys::state&) noexcept override { return tooltip_behavior::variable_tooltip; }
+	void update_tooltip(sys::state& state, int32_t, int32_t, text::columnar_layout& contents) noexcept override {
+		auto province = retrieve<dcon::province_id>(state, parent);
+		auto commodity = state.world.province_get_rgo(province);
+		auto workforce = float(state.world.commodity_get_rgo_workforce(commodity));
+		auto cap = state.world.province_get_rgo_max_size(province, commodity);
+		auto potential = state.world.province_get_rgo_potential(province, commodity);
+		auto employed = state.world.province_get_rgo_size(province, commodity);
+		auto line = [&](std::string value) {
+			auto box = text::open_layout_box(contents, 0);
+			text::add_unparsed_text_to_layout_box(state, contents, box, value);
+			text::close_layout_box(contents, box);
+		};
+		line("Government-funded RGO upgrade");
+		line("Resource: " + text::produce_simple_string(state, state.world.commodity_get_name(commodity)));
+		line("Current employment: " + text::format_float(employed, 0) + " / " + text::format_float(cap, 0));
+		line("Next capacity: " + text::format_float(std::min(potential, cap + workforce), 0)
+			+ " / " + text::format_float(potential, 0) + " potential");
+		line("Construction: stockpile goods, then 90 days using civil construction capacity.");
+		if(economy::rgo_upgrade_in_progress(state, province, commodity)) {
+			auto sponsor = state.world.province_get_rgo_upgrade_sponsor(province, commodity);
+			line(std::string("Already sponsored by ")
+				+ (sponsor == uint8_t(economy::rgo_upgrade_sponsor::private_investors) ? "private investors." : "the government."));
+		} else if(cap >= potential - 1.f) {
+			line("Cannot upgrade: this province has reached its natural RGO potential.");
+		}
+	}
+};
+
 class province_close_button : public generic_close_button {
 public:
 	void button_action(sys::state& state) noexcept override {
@@ -2869,13 +2916,20 @@ void province_view_window::on_create(sys::state& state) noexcept {
 	state.ui_state.province_window = this;
 	set_visible(state, false);
 	auto urban_button = make_element_by_type<province_urban_center_button>(state, "foundry_urban_center_button");
-	add_child_to_front(std::move(urban_button));
+	if(urban_button)
+		add_child_to_front(std::move(urban_button));
 	auto road_button = make_element_by_type<province_road_button>(state, "foundry_road_button");
-	add_child_to_front(std::move(road_button));
+	if(road_button)
+		add_child_to_front(std::move(road_button));
+	auto rgo_button = make_element_by_type<province_rgo_upgrade_button>(state, "foundry_rgo_upgrade_button");
+	if(rgo_button)
+		add_child_to_front(std::move(rgo_button));
 	auto urban_window = make_element_by_type<urban_center_detail_window>(state, "foundry_urban_center_window");
-	urban_window->set_visible(state, false);
-	urban_center_window = urban_window.get();
-	add_child_to_front(std::move(urban_window));
+	if(urban_window) {
+		urban_window->set_visible(state, false);
+		urban_center_window = urban_window.get();
+		add_child_to_front(std::move(urban_window));
+	}
 	//
 	auto ptr = make_element_by_type<build_unit_province_window>(state, "build_unit_view");
 	state.ui_state.build_province_unit_window = ptr.get();

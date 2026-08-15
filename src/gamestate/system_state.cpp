@@ -2578,6 +2578,8 @@ void state::load_scenario_data(parsers::error_handler& err, sys::year_month_day 
 	world.province_resize_rgo_output_per_worker(world.commodity_size());
 	world.province_resize_rgo_max_size(world.commodity_size());
 	world.province_resize_rgo_level_progress(world.commodity_size());
+	world.province_resize_rgo_upgrade_sponsor(world.commodity_size());
+	world.province_resize_rgo_upgrade_purchased_goods(world.commodity_size());
 	world.province_resize_factory_max_size(world.commodity_size());
 
 	// load province history files
@@ -3251,6 +3253,14 @@ void state::load_scenario_data(parsers::error_handler& err, sys::year_month_day 
 	services::initialize_size_of_dcon_arrays(*this);
 	advanced_province_buildings::initialize_size_of_dcon_arrays(*this);
 	civic_buildings::initialize_size_of_dcon_arrays(*this);
+	// These Foundry RGO construction fields were added after many cached
+	// scenario binaries were created. Scenario deserialization leaves a newly
+	// introduced array at width zero when that field is absent from the file;
+	// the first daily construction pass then indexes it by commodity. Normalize
+	// the dimensions on every scenario load so older scenarios start with empty
+	// (but valid) RGO project state instead of crashing on the first tick.
+	world.province_resize_rgo_upgrade_sponsor(world.commodity_size());
+	world.province_resize_rgo_upgrade_purchased_goods(world.commodity_size());
 
 	world.nation_resize_stockpile_targets(world.commodity_size());
 	world.nation_resize_drawing_on_stockpiles(world.commodity_size());

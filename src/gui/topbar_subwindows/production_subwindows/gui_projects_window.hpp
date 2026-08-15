@@ -50,7 +50,7 @@ public:
 };
 
 typedef std::variant<dcon::province_building_construction_id, dcon::factory_construction_id,
-	economy::civic_construction_project> production_project_data;
+	economy::civic_construction_project, economy::rgo_construction_project> production_project_data;
 
 struct production_project_input_data {
 	dcon::commodity_id cid{};
@@ -148,6 +148,9 @@ class production_project_info : public listbox_row_element_base<production_proje
 		} else if(std::holds_alternative<economy::civic_construction_project>(content)) {
 			auto project = std::get<economy::civic_construction_project>(content);
 			return state.world.province_get_state_membership(project.province);
+		} else if(std::holds_alternative<economy::rgo_construction_project>(content)) {
+			return state.world.province_get_state_membership(
+				std::get<economy::rgo_construction_project>(content).province);
 		}
 		return dcon::state_instance_id{};
 	}
@@ -281,6 +284,22 @@ public:
 				project.province, project.type.index());
 			build_progress = state.world.province_get_civic_building_progress(
 				project.province, project.type.index());
+		} else if(std::holds_alternative<economy::rgo_construction_project>(content)) {
+			auto project = std::get<economy::rgo_construction_project>(content);
+			capacity_share = economy::civil_construction_capacity_share(state, project);
+			private_project = state.world.province_get_rgo_upgrade_sponsor(project.province, project.commodity)
+				== uint8_t(economy::rgo_upgrade_sponsor::private_investors);
+			factory_icon->set_visible(state, true);
+			building_icon->set_visible(state, false);
+			auto it = state.ui_state.gfx_by_name.find(state.lookup_key("GFX_foundry_project_icons"));
+			if(it != state.ui_state.gfx_by_name.end()) factory_icon->base_data.data.image.gfx_object = it->second;
+			factory_icon->frame = 4;
+			name_text->set_text(state, text::produce_simple_string(state,
+				state.world.commodity_get_name(project.commodity)) + " RGO Upgrade");
+			needed_commodities = economy::rgo_upgrade_goods_cost(state, project.province, project.commodity);
+			satisfied_commodities = state.world.province_get_rgo_upgrade_purchased_goods(
+				project.province, project.commodity);
+			build_progress = state.world.province_get_rgo_level_progress(project.province, project.commodity);
 		}
 		if(funder_text)
 			funder_text->set_text(state, private_project ? "Private" : "Government");
@@ -362,6 +381,10 @@ public:
 				if(civic_buildings::upgrade_in_progress(state, province, type.id))
 					row_contents.push_back(production_project_data(
 						economy::civic_construction_project{province, type.id}));
+			for(auto commodity : state.world.in_commodity)
+				if(economy::rgo_upgrade_in_progress(state, province, commodity))
+					row_contents.push_back(production_project_data(
+						economy::rgo_construction_project{province, commodity}));
 		});
 		update(state);
 	}

@@ -670,6 +670,67 @@ static bool civic_goods_ready(sys::state& state, civic_construction_project cons
 	return true;
 }
 
+bool rgo_upgrade_in_progress(sys::state& state, dcon::province_id province, dcon::commodity_id commodity) {
+	return province && commodity && state.world.province_get_rgo_upgrade_sponsor(province, commodity) != 0;
+}
+
+economy::commodity_set rgo_upgrade_goods_cost(sys::state& state, dcon::province_id, dcon::commodity_id) {
+	economy::commodity_set result{};
+	uint32_t slot = 0;
+	auto add_named = [&](std::string_view name, float amount) {
+		if(slot >= economy::commodity_set::set_size) return;
+		for(auto commodity : state.world.in_commodity) {
+			if(state.to_string_view(state.world.commodity_get_name(commodity)) == name) {
+				result.commodity_type[slot] = commodity;
+				result.commodity_amounts[slot] = amount;
+				++slot;
+				return;
+			}
+		}
+	};
+	// Initial Foundry balance. Tools will join this recipe when that good is added.
+	add_named("steel", 5.f);
+	add_named("cement", 15.f);
+	add_named("lumber", 10.f);
+	return result;
+}
+
+bool can_begin_rgo_upgrade(sys::state& state, dcon::nation_id nation, dcon::province_id province,
+		dcon::commodity_id commodity, rgo_upgrade_sponsor sponsor) {
+	if(!nation || !province || !commodity || sponsor == rgo_upgrade_sponsor::none)
+		return false;
+	if(state.world.province_get_nation_from_province_ownership(province) != nation
+			|| state.world.province_get_nation_from_province_control(province) != nation)
+		return false;
+	if(rgo_upgrade_in_progress(state, province, commodity))
+		return false;
+	auto workforce = float(state.world.commodity_get_rgo_workforce(commodity));
+	auto current_cap = state.world.province_get_rgo_max_size(province, commodity);
+	auto potential = state.world.province_get_rgo_potential(province, commodity);
+	return workforce > 0.f && potential > 0.f && current_cap < potential - 1.f;
+}
+
+void begin_rgo_upgrade(sys::state& state, dcon::nation_id nation, dcon::province_id province,
+		dcon::commodity_id commodity, rgo_upgrade_sponsor sponsor) {
+	if(!can_begin_rgo_upgrade(state, nation, province, commodity, sponsor))
+		return;
+	state.world.province_set_rgo_upgrade_sponsor(province, commodity, uint8_t(sponsor));
+	state.world.province_set_rgo_level_progress(province, commodity, 0.f);
+	state.world.province_set_rgo_upgrade_purchased_goods(province, commodity, economy::commodity_set{});
+}
+
+static bool rgo_goods_ready(sys::state& state, rgo_construction_project construction) {
+	if(!rgo_upgrade_in_progress(state, construction.province, construction.commodity))
+		return false;
+	auto cost = rgo_upgrade_goods_cost(state, construction.province, construction.commodity);
+	auto& purchased = state.world.province_get_rgo_upgrade_purchased_goods(construction.province, construction.commodity);
+	for(uint32_t i = 0; i < commodity_set::set_size; ++i) {
+		if(!cost.commodity_type[i]) break;
+		if(purchased.commodity_amounts[i] + 0.0001f < cost.commodity_amounts[i]) return false;
+	}
+	return true;
+}
+
 namespace {
 
 // Civil projects consume capacity in the same deterministic order used by the
@@ -750,6 +811,23 @@ float civil_construction_capacity_share_impl(sys::state& state, dcon::nation_id 
 		}
 	});
 
+	if(found) return result;
+	state.world.nation_for_each_province_ownership(nation, [&](auto ownership) {
+		if(found) return;
+		auto province = state.world.province_ownership_get_province(ownership);
+		if(state.world.province_get_nation_from_province_control(province) != nation) return;
+		for(auto commodity : state.world.in_commodity) {
+			if(!rgo_upgrade_in_progress(state, province, commodity) || !rgo_goods_ready(state, {province, commodity})) continue;
+			auto share = std::clamp(remaining, 0.f, 1.f);
+			if constexpr(std::is_same_v<TargetT, rgo_construction_project>) {
+				if(target.province == province && target.commodity == commodity) {
+					result = share; found = true; return;
+				}
+			}
+			remaining = std::max(0.f, remaining - 1.f);
+		}
+	});
+
 	return result;
 }
 
@@ -764,6 +842,11 @@ float civil_construction_capacity_share(sys::state& state, dcon::province_buildi
 }
 
 float civil_construction_capacity_share(sys::state& state, civic_construction_project construction) {
+	auto nation = state.world.province_get_nation_from_province_ownership(construction.province);
+	return civil_construction_capacity_share_impl(state, nation, construction);
+}
+
+float civil_construction_capacity_share(sys::state& state, rgo_construction_project construction) {
 	auto nation = state.world.province_get_nation_from_province_ownership(construction.province);
 	return civil_construction_capacity_share_impl(state, nation, construction);
 }
@@ -783,6 +866,10 @@ int32_t active_civil_construction_projects(sys::state& state, dcon::nation_id na
 		for(auto type : state.world.in_civic_building_type)
 			if(civic_buildings::upgrade_in_progress(state, province, type.id)
 					&& civil_construction_capacity_share(state, civic_construction_project{province, type.id}) > 0.f)
+				++count;
+		for(auto commodity : state.world.in_commodity)
+			if(rgo_upgrade_in_progress(state, province, commodity)
+					&& civil_construction_capacity_share(state, rgo_construction_project{province, commodity}) > 0.f)
 				++count;
 	});
 	return count;
@@ -809,6 +896,11 @@ int32_t queued_civil_construction_projects(sys::state& state, dcon::nation_id na
 					&& civic_goods_ready(state, civic_construction_project{province, type.id})
 					&& civil_construction_capacity_share(state, civic_construction_project{province, type.id}) <= 0.f)
 				++count;
+		for(auto commodity : state.world.in_commodity) {
+			auto project = rgo_construction_project{province, commodity};
+			if(rgo_upgrade_in_progress(state, province, commodity) && rgo_goods_ready(state, project)
+					&& civil_construction_capacity_share(state, project) <= 0.f) ++count;
+		}
 	});
 	return count;
 }
@@ -832,6 +924,10 @@ int32_t stockpiling_civil_construction_projects(sys::state& state, dcon::nation_
 			if(civic_buildings::upgrade_in_progress(state, province, type.id)
 					&& !civic_goods_ready(state, project))
 				++count;
+		}
+		for(auto commodity : state.world.in_commodity) {
+			auto project = rgo_construction_project{province, commodity};
+			if(rgo_upgrade_in_progress(state, province, commodity) && !rgo_goods_ready(state, project)) ++count;
 		}
 	});
 	return count;
@@ -1078,6 +1174,64 @@ void advance_civic_construction(sys::state& state, civic_construction_project co
 	}
 }
 
+static void populate_rgo_construction_demand(sys::state& state, rgo_construction_project construction,
+		float& budget, float budget_limit) {
+	if(!rgo_upgrade_in_progress(state, construction.province, construction.commodity)) return;
+	auto market = state.world.state_instance_get_market_from_local_market(
+		state.world.province_get_state_membership(construction.province));
+	auto cost = rgo_upgrade_goods_cost(state, construction.province, construction.commodity);
+	auto& purchased = state.world.province_get_rgo_upgrade_purchased_goods(construction.province, construction.commodity);
+	constexpr float stockpile_days = 60.f;
+	for(uint32_t i = 0; i < commodity_set::set_size; ++i) {
+		auto cid = cost.commodity_type[i];
+		if(!cid) break;
+		auto remaining = std::max(0.f, cost.commodity_amounts[i] - purchased.commodity_amounts[i]);
+		if(remaining <= 0.f) continue;
+		auto local_price = price(state, market, cid);
+		auto amount = std::min(remaining, std::min(std::min(budget_limit, budget) / (local_price + 0.001f),
+			cost.commodity_amounts[i] / stockpile_days));
+		auto satisfaction = state.world.market_get_actual_probability_to_buy(market, cid);
+		budget = std::max(0.f, budget - amount * local_price * satisfaction);
+		register_construction_demand(state, market, cid, amount);
+	}
+}
+
+static void advance_rgo_construction(sys::state& state, rgo_construction_project construction) {
+	if(!rgo_upgrade_in_progress(state, construction.province, construction.commodity)) return;
+	auto market = state.world.state_instance_get_market_from_local_market(
+		state.world.province_get_state_membership(construction.province));
+	auto cost = rgo_upgrade_goods_cost(state, construction.province, construction.commodity);
+	auto& purchased = state.world.province_get_rgo_upgrade_purchased_goods(construction.province, construction.commodity);
+	constexpr float stockpile_days = 60.f;
+	for(uint32_t i = 0; i < commodity_set::set_size; ++i) {
+		auto cid = cost.commodity_type[i];
+		if(!cid) break;
+		auto planned = cost.commodity_amounts[i] / stockpile_days;
+		auto& available = state.world.market_get_construction_demand(market, cid);
+		auto remaining = std::max(0.f, cost.commodity_amounts[i] - purchased.commodity_amounts[i]);
+		auto delivered = std::min(remaining, std::min(planned, available));
+		purchased.commodity_amounts[i] += delivered;
+		available = std::max(0.f, available - delivered);
+	}
+	if(!rgo_goods_ready(state, construction)) return;
+	auto share = civil_construction_capacity_share(state, construction);
+	if(share <= 0.f) return;
+	constexpr float build_days = 90.f;
+	auto progress = state.world.province_get_rgo_level_progress(construction.province, construction.commodity) + share / build_days;
+	if(progress >= 1.f) {
+		auto workforce = float(state.world.commodity_get_rgo_workforce(construction.commodity));
+		auto potential = state.world.province_get_rgo_potential(construction.province, construction.commodity);
+		auto cap = state.world.province_get_rgo_max_size(construction.province, construction.commodity);
+		state.world.province_set_rgo_max_size(construction.province, construction.commodity,
+			std::min(potential, cap + workforce));
+		state.world.province_set_rgo_level_progress(construction.province, construction.commodity, 0.f);
+		state.world.province_set_rgo_upgrade_sponsor(construction.province, construction.commodity, 0);
+		state.world.province_set_rgo_upgrade_purchased_goods(construction.province, construction.commodity, economy::commodity_set{});
+	} else {
+		state.world.province_set_rgo_level_progress(construction.province, construction.commodity, progress);
+	}
+}
+
 
 void populate_construction_consumption(sys::state& state) {
 	reset_construction_demand(state);
@@ -1149,6 +1303,13 @@ void populate_construction_consumption(sys::state& state) {
 					&& civil_construction_capacity_share(state, project) > 0.f)
 				going_constructions.get(owner) += 1;
 		}
+		for(auto commodity : state.world.in_commodity) {
+			auto project = rgo_construction_project{province, commodity};
+			if(rgo_upgrade_in_progress(state, province, commodity)
+					&& state.world.province_get_rgo_upgrade_sponsor(province, commodity) == uint8_t(rgo_upgrade_sponsor::government)
+					&& civil_construction_capacity_share(state, project) > 0.f)
+				going_constructions.get(owner) += 1;
+		}
 	});
 
 
@@ -1195,6 +1356,13 @@ void populate_construction_consumption(sys::state& state) {
 			float& base_budget = current_budget.get(owner);
 			float budget_limit = total_budget.get(owner) / float(std::max(1, going_constructions.get(owner)));
 			populate_civic_construction_demand(state, project, base_budget, budget_limit);
+		}
+		for(auto commodity : state.world.in_commodity) {
+			if(state.world.province_get_rgo_upgrade_sponsor(province, commodity) != uint8_t(rgo_upgrade_sponsor::government))
+				continue;
+			float& base_budget = current_budget.get(owner);
+			float budget_limit = total_budget.get(owner) / float(std::max(1, going_constructions.get(owner)));
+			populate_rgo_construction_demand(state, {province, commodity}, base_budget, budget_limit);
 		}
 	});
 }
@@ -1590,6 +1758,26 @@ void populate_private_construction_consumption(sys::state& state) {
 	for(auto c : state.world.in_factory_construction) {
 		populate_state_construction_private_demand(state, c);
 	}
+	state.world.for_each_province([&](dcon::province_id province) {
+		if(state.world.province_get_nation_from_province_ownership(province)
+				!= state.world.province_get_nation_from_province_control(province)) return;
+		auto market = state.world.state_instance_get_market_from_local_market(
+			state.world.province_get_state_membership(province));
+		for(auto commodity : state.world.in_commodity) {
+			if(state.world.province_get_rgo_upgrade_sponsor(province, commodity)
+					!= uint8_t(rgo_upgrade_sponsor::private_investors)) continue;
+			auto cost = rgo_upgrade_goods_cost(state, province, commodity);
+			auto& purchased = state.world.province_get_rgo_upgrade_purchased_goods(province, commodity);
+			for(uint32_t i = 0; i < commodity_set::set_size; ++i) {
+				auto cid = cost.commodity_type[i];
+				if(!cid) break;
+				auto remaining = std::max(0.f, cost.commodity_amounts[i] - purchased.commodity_amounts[i]);
+				if(remaining <= 0.f) continue;
+				auto& demand = state.world.market_get_private_construction_demand(market, cid);
+				state.world.market_set_private_construction_demand(market, cid, demand + remaining / 60.f);
+			}
+		}
+	});
 }
 
 // this function handles refund logic for construction demand:
@@ -1667,6 +1855,9 @@ void advance_construction(sys::state& state, dcon::nation_id n, float total_spen
 		for(auto type : state.world.in_civic_building_type)
 			if(civic_buildings::upgrade_in_progress(state, province, type.id))
 				advance_civic_construction(state, civic_construction_project{province, type.id});
+		for(auto commodity : state.world.in_commodity)
+			if(rgo_upgrade_in_progress(state, province, commodity))
+				advance_rgo_construction(state, {province, commodity});
 	});
 }
 

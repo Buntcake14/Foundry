@@ -27,11 +27,29 @@ struct civic_construction_project {
 	bool operator!=(civic_construction_project const& other) const = default;
 };
 
+enum class rgo_upgrade_sponsor : uint8_t { none = 0, government = 1, private_investors = 2 };
+
+struct rgo_construction_project {
+	dcon::province_id province{};
+	dcon::commodity_id commodity{};
+	bool operator==(rgo_construction_project const& other) const = default;
+	bool operator!=(rgo_construction_project const& other) const = default;
+};
+
+bool rgo_upgrade_in_progress(sys::state& state, dcon::province_id province, dcon::commodity_id commodity);
+bool can_begin_rgo_upgrade(sys::state& state, dcon::nation_id nation, dcon::province_id province,
+	dcon::commodity_id commodity, rgo_upgrade_sponsor sponsor);
+void begin_rgo_upgrade(sys::state& state, dcon::nation_id nation, dcon::province_id province,
+	dcon::commodity_id commodity, rgo_upgrade_sponsor sponsor);
+economy::commodity_set rgo_upgrade_goods_cost(sys::state& state, dcon::province_id province,
+	dcon::commodity_id commodity);
+
 construction_capacity_breakdown local_construction_capacity(sys::state& state, dcon::province_id province);
 construction_capacity_breakdown national_construction_capacity(sys::state& state, dcon::nation_id nation);
 float civil_construction_capacity_share(sys::state& state, dcon::factory_construction_id construction);
 float civil_construction_capacity_share(sys::state& state, dcon::province_building_construction_id construction);
 float civil_construction_capacity_share(sys::state& state, civic_construction_project construction);
+float civil_construction_capacity_share(sys::state& state, rgo_construction_project construction);
 int32_t active_civil_construction_projects(sys::state& state, dcon::nation_id nation);
 int32_t queued_civil_construction_projects(sys::state& state, dcon::nation_id nation);
 int32_t stockpiling_civil_construction_projects(sys::state& state, dcon::nation_id nation);

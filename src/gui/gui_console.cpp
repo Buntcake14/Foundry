@@ -13,6 +13,7 @@
 #include "constants_ui.hpp"
 #include "foundry_transport_shadow.hpp"
 #include "economy_stats.hpp"
+#include "construction.hpp"
 #include "ai_economy.hpp"
 #define STB_IMAGE_WRITE_IMPLEMENTATION 1
 #include "stb_image_write.h"
@@ -1570,6 +1571,340 @@ int32_t* f_rgo_ai_audit(fif::state_stack&, int32_t* p, fif::environment* e) {
 	return p + 2;
 }
 
+int32_t* f_rgo_ai_world_audit(fif::state_stack&, int32_t* p, fif::environment* e) {
+	if(fif::typechecking_mode(e->mode)) return p + 2;
+	auto* state = reinterpret_cast<sys::state*>(fif::get_global_var(*e, "state-ptr")->data);
+	struct activity {
+		dcon::nation_id nation;
+		dcon::province_id province;
+		dcon::commodity_id commodity;
+		float shortage = 0.f;
+		float utilization = 0.f;
+		float trend = 0.f;
+		float score = 0.f;
+		float progress = 0.f;
+	};
+	std::vector<activity> active;
+	for(uint32_t nation_index = 0;
+			nation_index < state->cheat_data.foundry_rgo_selected_province.size(); ++nation_index) {
+		auto province = state->cheat_data.foundry_rgo_selected_province[nation_index];
+		auto commodity = state->cheat_data.foundry_rgo_selected_commodity[nation_index];
+		if(!province || !commodity) continue;
+		auto nation = dcon::nation_id{ dcon::nation_id::value_base_t(nation_index) };
+		active.push_back({ nation, province, commodity,
+			state->cheat_data.foundry_rgo_selected_shortage[nation_index],
+			state->cheat_data.foundry_rgo_selected_utilization[nation_index],
+			state->cheat_data.foundry_rgo_selected_trend[nation_index],
+			state->cheat_data.foundry_rgo_selected_score[nation_index],
+			state->world.province_get_rgo_level_progress(province, commodity) });
+	}
+	std::sort(active.begin(), active.end(), [](auto const& a, auto const& b) {
+		return a.score > b.score;
+	});
+	auto format = [](float value) {
+		std::ostringstream out;
+		out << std::fixed << std::setprecision(2) << value;
+		return out.str();
+	};
+	std::string report = "RGO AI WORLD ACTIVITY (actual selections) active=" + std::to_string(active.size());
+	for(size_t rank = 0; rank < std::min<size_t>(24, active.size()); ++rank) {
+		auto const& a = active[rank];
+		report += "\n" + std::to_string(rank + 1) + ". "
+			+ text::produce_simple_string(*state, text::get_name(*state, a.nation)) + ": "
+			+ text::produce_simple_string(*state, state->world.commodity_get_name(a.commodity))
+			+ " - " + text::produce_simple_string(*state, state->world.province_get_name(a.province))
+			+ " score=" + format(a.score)
+			+ " short=" + format(a.shortage * 100.f) + "%"
+			+ " used=" + format(a.utilization * 100.f) + "%"
+			+ " trend=" + format(a.trend * 100.f) + "pp"
+			+ " progress=" + format(a.progress * 100.f) + "%";
+	}
+	static_cast<ui::console_window*>(state->ui_state.console_window)->replace_list(*state,
+		"rgo-ai-world-audit\n" + report + "\n");
+	return p + 2;
+}
+
+int32_t* f_rgo_government_audit(fif::state_stack&, int32_t* p, fif::environment* e) {
+	if(fif::typechecking_mode(e->mode)) return p + 2;
+	auto* state = reinterpret_cast<sys::state*>(fif::get_global_var(*e, "state-ptr")->data);
+	struct entry {
+		dcon::nation_id nation{};
+		dcon::province_id province{};
+		dcon::commodity_id commodity{};
+		float goods_fraction = 0.f;
+		float progress = 0.f;
+		float capacity = 0.f;
+	};
+	std::vector<entry> projects;
+	std::vector<int32_t> nation_counts(state->world.nation_size(), 0);
+	int32_t private_projects = 0;
+	state->world.for_each_province([&](dcon::province_id province) {
+		auto nation = state->world.province_get_nation_from_province_ownership(province);
+		if(!nation) return;
+		for(auto commodity : state->world.in_commodity) {
+			auto sponsor = state->world.province_get_rgo_upgrade_sponsor(province, commodity);
+			if(sponsor == uint8_t(economy::rgo_upgrade_sponsor::private_investors)) {
+				++private_projects;
+				continue;
+			}
+			if(sponsor != uint8_t(economy::rgo_upgrade_sponsor::government)) continue;
+			auto cost = economy::rgo_upgrade_goods_cost(*state, province, commodity);
+			auto& purchased = state->world.province_get_rgo_upgrade_purchased_goods(province, commodity);
+			float acquired = 0.f;
+			float required = 0.f;
+			for(uint32_t i = 0; i < economy::commodity_set::set_size; ++i) {
+				if(!cost.commodity_type[i]) break;
+				required += cost.commodity_amounts[i];
+				acquired += std::min(cost.commodity_amounts[i], purchased.commodity_amounts[i]);
+			}
+			projects.push_back({nation, province, commodity,
+				required > 0.f ? acquired / required : 1.f,
+				state->world.province_get_rgo_level_progress(province, commodity),
+				economy::civil_construction_capacity_share(*state, {province, commodity})});
+			if(size_t(nation.index()) < nation_counts.size()) ++nation_counts[nation.index()];
+		}
+	});
+	std::sort(projects.begin(), projects.end(), [](entry const& a, entry const& b) {
+		if(a.nation != b.nation) return a.nation.index() < b.nation.index();
+		return a.progress > b.progress;
+	});
+	auto pct = [](float v) { return text::format_float(std::clamp(v, 0.f, 1.f) * 100.f, 0) + "%"; };
+	std::string report = "RGO GOVERNMENT FUNDING WORLD AUDIT government=" + std::to_string(projects.size())
+		+ " private=" + std::to_string(private_projects);
+	if(projects.empty()) report += "\nNo government-funded RGO upgrades are currently active.";
+	for(size_t i = 0; i < std::min<size_t>(40, projects.size()); ++i) {
+		auto const& project = projects[i];
+		std::string status = project.goods_fraction < 0.999f ? "stockpiling"
+			: (project.capacity <= 0.f ? "supplied-queued" : "building");
+		report += "\n" + std::to_string(i + 1) + ". "
+			+ text::produce_simple_string(*state, text::get_name(*state, project.nation)) + ": "
+			+ text::produce_simple_string(*state, state->world.commodity_get_name(project.commodity)) + " - "
+			+ text::produce_simple_string(*state, state->world.province_get_name(project.province))
+			+ " status=" + status + " goods=" + pct(project.goods_fraction)
+			+ " build=" + pct(project.progress)
+			+ " capacity=" + text::format_float(project.capacity * 100.f, 0) + "%";
+	}
+	if(projects.size() > 40) report += "\n..." + std::to_string(projects.size() - 40) + " additional projects omitted.";
+	static_cast<ui::console_window*>(state->ui_state.console_window)->replace_list(*state,
+		"rgo-government-audit\n" + report + "\n");
+	return p + 2;
+}
+
+int32_t* f_urban_ai_audit(fif::state_stack&, int32_t* p, fif::environment* e) {
+	if(fif::typechecking_mode(e->mode)) return p + 2;
+	auto* state = reinterpret_cast<sys::state*>(fif::get_global_var(*e, "state-ptr")->data);
+	auto nation = state->local_player_nation;
+	if(!nation) return p + 2;
+	dcon::civic_building_type_id urban_type{};
+	dcon::civic_building_type_id road_type{};
+	for(auto type : state->world.in_civic_building_type) {
+		if(type.get_is_urban_center()) urban_type = type.id;
+		if(type.get_is_road_network()) road_type = type.id;
+	}
+	struct candidate {
+		dcon::province_id province{};
+		float score = 0.f;
+		float population = 0.f;
+		float literacy = 0.f;
+		float control = 0.f;
+		int32_t level = 0;
+		int32_t used = 0;
+		int32_t capacity = 0;
+		int32_t factories = 0;
+		int32_t factory_projects = 0;
+		int32_t roads = 0;
+		int32_t rail = 0;
+		bool capital = false;
+		bool state_capital = false;
+		bool workers = false;
+		bool colonial = false;
+		bool already_building = false;
+	};
+	std::vector<candidate> candidates;
+	state->world.nation_for_each_province_ownership(nation, [&](auto ownership) {
+		auto province = state->world.province_ownership_get_province(ownership);
+		if(state->world.province_get_nation_from_province_control(province) != nation) return;
+		auto population = state->world.province_get_demographics(province, demographics::total);
+		auto literacy = state->world.province_get_demographics(province, demographics::literacy)
+			/ std::max(1.f, population);
+		auto control = state->world.province_get_control_ratio(province);
+		auto state_instance = state->world.province_get_state_membership(province);
+		auto factories = int32_t(state->world.province_get_factory_location(province).end()
+			- state->world.province_get_factory_location(province).begin());
+		auto factory_projects = int32_t(state->world.province_get_factory_construction(province).end()
+			- state->world.province_get_factory_construction(province).begin());
+		auto level = urban_type ? int32_t(state->world.province_get_civic_building_level(province, urban_type.index())) : 0;
+		auto capacity = civic_buildings::province_urban_building_capacity(*state, province);
+		auto used = civic_buildings::province_used_urban_building_capacity(*state, province);
+		auto roads = road_type ? int32_t(state->world.province_get_civic_building_level(province, road_type.index())) : 0;
+		auto rail = int32_t(state->world.province_get_building_level(province,
+			uint8_t(economy::province_building_type::railroad)));
+		auto capital = state->world.nation_get_capital(nation) == province;
+		auto state_capital = state->world.state_instance_get_capital(state_instance) == province;
+		auto workers = ai::province_has_workers(*state, province);
+		auto colonial = state->world.province_get_is_colonial(province);
+		auto pressure = capacity <= 0 ? (workers ? 1.f : 0.f)
+			: std::clamp(float(used + factory_projects) / float(std::max(1, capacity)), 0.f, 1.5f);
+		float score = std::min(50.f, std::log1p(std::max(0.f, population)) * 4.f)
+			+ literacy * 15.f + control * 10.f + pressure * 30.f
+			+ float(factories + factory_projects) * 8.f + float(roads + rail) * 4.f
+			+ (workers ? 10.f : 0.f) + (capital ? 30.f : 0.f) + (state_capital ? 12.f : 0.f)
+			- (colonial ? 40.f : 0.f);
+		candidates.push_back({province, score, population, literacy, control, level, used, capacity,
+			factories, factory_projects, roads, rail, capital, state_capital, workers, colonial,
+			urban_type && civic_buildings::upgrade_in_progress(*state, province, urban_type)});
+	});
+	std::sort(candidates.begin(), candidates.end(), [](candidate const& a, candidate const& b) {
+		if(a.score != b.score) return a.score > b.score;
+		return a.province.index() < b.province.index();
+	});
+	std::string report = "URBAN CENTER AI AUDIT (read-only; proposed Foundry ranking)\nNation: "
+		+ text::produce_simple_string(*state, text::get_name(*state, nation))
+		+ " candidates=" + std::to_string(candidates.size())
+		+ "\nLIVE RULES: profitable factory intent requests an urban center when factory unlock/capacity blocks it;"
+		  " one national urban project at a time, 25K population, 5K workers, 80% control, non-colonial, 2x cost reserve."
+		  " Existing hubs prepare the next tier at 80% slot use.";
+	for(size_t i = 0; i < std::min<size_t>(12, candidates.size()); ++i) {
+		auto const& c = candidates[i];
+		std::string reason = c.capacity <= 0 ? "needs-first-city"
+			: (c.used + c.factory_projects >= c.capacity ? "capacity-full" : "growth-hub");
+		if(c.capital) reason += ",national-capital";
+		else if(c.state_capital) reason += ",state-capital";
+		if(c.factories + c.factory_projects > 0) reason += ",industry-present";
+		if(c.roads + c.rail > 0) reason += ",infrastructure";
+		if(c.colonial) reason += ",colonial-penalty";
+		report += "\n" + std::to_string(i + 1) + ". "
+			+ text::produce_simple_string(*state, state->world.province_get_name(c.province))
+			+ " score=" + text::format_float(c.score, 1)
+			+ " reason=" + reason
+			+ " urban=" + std::to_string(c.level)
+			+ " slots=" + std::to_string(c.used) + "/" + std::to_string(c.capacity)
+			+ " factories=" + std::to_string(c.factories) + "+" + std::to_string(c.factory_projects)
+			+ " pop=" + text::prettify(int32_t(c.population))
+			+ " literacy=" + text::format_percentage(c.literacy, 0)
+			+ " roads/rail=" + std::to_string(c.roads) + "/" + std::to_string(c.rail)
+			+ (c.already_building ? " BUILDING" : "");
+	}
+	static_cast<ui::console_window*>(state->ui_state.console_window)->replace_list(*state,
+		"urban-ai-audit\n" + report + "\n");
+	return p + 2;
+}
+
+int32_t* f_urban_ai_world_audit(fif::state_stack&, int32_t* p, fif::environment* e) {
+	if(fif::typechecking_mode(e->mode)) return p + 2;
+	auto* state = reinterpret_cast<sys::state*>(fif::get_global_var(*e, "state-ptr")->data);
+	dcon::civic_building_type_id urban_type{};
+	for(auto type : state->world.in_civic_building_type)
+		if(type.get_is_urban_center()) {
+			urban_type = type.id;
+			break;
+		}
+	std::string report = "URBAN CENTER AI WORLD ACTIVITY (actual projects)";
+	int32_t active = 0;
+	int32_t ai_nations = 0;
+	int32_t uncivilized = 0;
+	int32_t already_has_city = 0;
+	int32_t no_eligible_site = 0;
+	int32_t affordable_bootstrap = 0;
+	int32_t insufficient_treasury = 0;
+	std::vector<std::string> blocked_examples;
+	if(urban_type) {
+		for(auto nation : state->world.in_nation) {
+			if(!nation.get_owned_province_count() || nation.get_is_player_controlled()) continue;
+			++ai_nations;
+			if(!nation.get_is_civilized()) ++uncivilized;
+			bool has_city = false;
+			bool has_project = false;
+			for(auto ownership : nation.get_province_ownership()) {
+				auto province = ownership.get_province();
+				if(state->world.province_get_civic_building_level(province, urban_type.index()) > 0)
+					has_city = true;
+				if(!civic_buildings::upgrade_in_progress(*state, province, urban_type)) continue;
+				has_project = true;
+				++active;
+				auto level = state->world.province_get_civic_building_level(province, urban_type.index());
+				auto progress = state->world.province_get_civic_building_progress(province, urban_type.index());
+				auto& purchased = state->world.province_get_civic_building_purchased_goods(province, urban_type.index());
+				auto const& definition = state->world.civic_building_type_get_levels(urban_type)[level];
+				float bought = 0.f;
+				float required = 0.f;
+				for(uint32_t i = 0; i < economy::commodity_set::set_size && definition.cost.commodity_type[i]; ++i) {
+					required += definition.cost.commodity_amounts[i];
+					bought += std::min(purchased.commodity_amounts[i], definition.cost.commodity_amounts[i]);
+				}
+				auto goods = required > 0.f ? bought / required : 1.f;
+				auto status = progress > 0.f ? "building" : (goods >= 0.999f ? "supplied-queued" : "stockpiling");
+				report += "\n" + text::produce_simple_string(*state, text::get_name(*state, nation.id))
+					+ " - " + text::produce_simple_string(*state, state->world.province_get_name(province))
+					+ " level " + std::to_string(int32_t(level)) + "->" + std::to_string(int32_t(level) + 1)
+					+ " " + status + " goods=" + text::format_percentage(goods, 0)
+					+ " build=" + text::format_percentage(progress, 0);
+			}
+			if(has_project) continue;
+			if(has_city) {
+				++already_has_city;
+				continue;
+			}
+
+			dcon::province_id best{};
+			float best_population = 0.f;
+			for(auto ownership : nation.get_province_ownership()) {
+				auto province = ownership.get_province();
+				auto population = state->world.province_get_demographics(province, demographics::total);
+				if(state->world.province_get_is_colonial(province)
+						|| state->world.province_get_nation_from_province_control(province) != nation
+						|| population < 15'000.f
+						|| state->world.province_get_control_ratio(province) < 0.5f
+						|| !civic_buildings::can_begin_upgrade(*state, nation, province, urban_type))
+					continue;
+				if(population > best_population) {
+					best = province;
+					best_population = population;
+				}
+			}
+			if(!best) {
+				++no_eligible_site;
+				if(blocked_examples.size() < 8)
+					blocked_examples.push_back(text::produce_simple_string(*state, text::get_name(*state, nation.id))
+						+ ": no eligible site");
+				continue;
+			}
+			auto level = state->world.province_get_civic_building_level(best, urban_type.index());
+			auto const& goods = state->world.civic_building_type_get_levels(urban_type)[level].cost;
+			float cost = 0.f;
+			for(uint32_t i = 0; i < economy::commodity_set::set_size && goods.commodity_type[i]; ++i)
+				cost += goods.commodity_amounts[i] * state->world.commodity_get_cost(goods.commodity_type[i]);
+			auto treasury = nation.get_stockpiles(economy::money);
+			if(treasury >= cost * 1.25f) {
+				++affordable_bootstrap;
+				if(blocked_examples.size() < 8)
+					blocked_examples.push_back(text::produce_simple_string(*state, text::get_name(*state, nation.id))
+						+ ": ELIGIBLE at " + text::produce_simple_string(*state, state->world.province_get_name(best))
+						+ " treasury=" + text::format_money(treasury) + " reserve=" + text::format_money(cost * 1.25f));
+			} else {
+				++insufficient_treasury;
+				if(blocked_examples.size() < 8)
+					blocked_examples.push_back(text::produce_simple_string(*state, text::get_name(*state, nation.id))
+						+ ": insufficient treasury=" + text::format_money(treasury)
+						+ " reserve=" + text::format_money(cost * 1.25f));
+			}
+		}
+	}
+	if(active == 0) report += "\nNo AI-funded urban projects are active.";
+	report += "\nActive=" + std::to_string(active)
+		+ " AI nations=" + std::to_string(ai_nations)
+		+ " uncivilized=" + std::to_string(uncivilized)
+		+ " already-city=" + std::to_string(already_has_city)
+		+ " no-site=" + std::to_string(no_eligible_site)
+		+ " affordable-waiting=" + std::to_string(affordable_bootstrap)
+		+ " cash-blocked=" + std::to_string(insufficient_treasury);
+	if(!urban_type) report += "\nBLOCKER: Urban Center definition is unavailable.";
+	for(auto const& example : blocked_examples) report += "\n" + example;
+	static_cast<ui::console_window*>(state->ui_state.console_window)->replace_list(*state,
+		"urban-ai-world-audit\n" + report + "\n");
+	return p + 2;
+}
+
 int32_t* f_add_road(fif::state_stack& s, int32_t* p, fif::environment* e) {
 	if(fif::typechecking_mode(e->mode))
 		return p + 2;
@@ -1609,6 +1944,40 @@ int32_t* f_add_road(fif::state_stack& s, int32_t* p, fif::environment* e) {
 	state->world.province_set_civic_building_purchased_goods(province, road_type.index(), economy::commodity_set{});
 	state->trade_route_cached_values_out_of_date = true;
 	log_to_console(*state, state->ui_state.console_window, u"Added one Road Network level to the selected province.");
+	return p + 2;
+}
+
+int32_t* f_foundry_help(fif::state_stack&, int32_t* p, fif::environment* e) {
+	if(fif::typechecking_mode(e->mode)) return p + 2;
+	auto* state = reinterpret_cast<sys::state*>(fif::get_global_var(*e, "state-ptr")->data);
+	std::string report =
+		"FOUNDRY COMMANDS (also documented in docs/FOUNDRY_CONSOLE_COMMANDS.md)\n"
+		"Syntax note: commodity comes first, e.g. coal market-shadow\n\n"
+		"MARKET SNAPSHOTS (run once; read-only)\n"
+		"<good> market-shadow - selected province/capital, 5 nearby markets\n"
+		"<good> market-shadow-wide - selected province/capital, 25 markets\n"
+		"market-shadow-batch - 12-good snapshot across 25 markets\n\n"
+		"LIVE MARKET AUDITS (continue while time runs)\n"
+		"<good> market-live-audit - daily single-good comparison\n"
+		"market-live-audit-basket - daily 12-good/25-market comparison\n"
+		"market-live-audit-all - daily all-good/25-market comparison\n"
+		"market-live-audit-50 | market-live-audit-100 - scale test\n"
+		"market-live-audit-world - all markets, weekly routed refresh\n"
+		"market-access-audit-world - daily lightweight state-access model\n"
+		"market-live-status - display current audit and measurements\n"
+		"market-live-audit-off - STOP any live market audit\n\n"
+		"RGO AI (read-only reports)\n"
+		"rgo-ai-audit - current nation's ranked RGO recommendations\n"
+		"rgo-ai-world-audit - actual AI RGO selections worldwide\n"
+		"rgo-government-audit - government-funded RGO projects worldwide\n\n"
+		"URBAN AI (read-only reports)\n"
+		"urban-ai-audit - current nation's ranked urban candidates/rules\n"
+		"urban-ai-world-audit - actual AI urban projects worldwide\n\n"
+		"TEST SHORTCUTS (change game state)\n"
+		"add-road - instantly add one road level to selected province\n\n"
+		"foundry-help - show this list";
+	static_cast<ui::console_window*>(state->ui_state.console_window)->replace_list(*state,
+		"foundry-help\n" + report + "\n");
 	return p + 2;
 }
 int32_t* f_provid(fif::state_stack& s, int32_t* p, fif::environment* e) {
@@ -2012,7 +2381,12 @@ void ui::initialize_console_fif_environment(sys::state& state) {
 	fif::add_import("market-live-audit-off", nullptr, f_market_live_audit_off, {}, {}, *state.fif_environment);
 	fif::add_import("market-live-status", nullptr, f_market_live_status, {}, {}, *state.fif_environment);
 	fif::add_import("rgo-ai-audit", nullptr, f_rgo_ai_audit, {}, {}, *state.fif_environment);
+	fif::add_import("rgo-ai-world-audit", nullptr, f_rgo_ai_world_audit, {}, {}, *state.fif_environment);
+	fif::add_import("rgo-government-audit", nullptr, f_rgo_government_audit, {}, {}, *state.fif_environment);
+	fif::add_import("urban-ai-audit", nullptr, f_urban_ai_audit, {}, {}, *state.fif_environment);
+	fif::add_import("urban-ai-world-audit", nullptr, f_urban_ai_world_audit, {}, {}, *state.fif_environment);
 	fif::add_import("add-road", nullptr, f_add_road, {}, {}, *state.fif_environment);
+	fif::add_import("foundry-help", nullptr, f_foundry_help, {}, {}, *state.fif_environment);
 	fif::add_import("provid", nullptr, f_provid, { fif::fif_bool }, {}, * state.fif_environment);
 	fif::add_import("ui-debug", nullptr, f_uidebug, { fif::fif_bool }, {}, *state.fif_environment);
 	fif::add_import("fire-event", nullptr, f_fire_event, { nation_id_type, fif::fif_i32 }, {}, * state.fif_environment);
