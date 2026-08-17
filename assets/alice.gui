@@ -6234,5 +6234,66 @@ windowType = {
 	instantTextBoxType = { name = "goods_0" position = { 40 431 } font = "vic_18_black" text = "" maxWidth = 344 maxHeight = 18 format = left fixedsize = yes }
 	instantTextBoxType = { name = "goods_1" position = { 40 452 } font = "vic_18_black" text = "" maxWidth = 344 maxHeight = 18 format = left fixedsize = yes }
 	instantTextBoxType = { name = "goods_2" position = { 40 473 } font = "vic_18_black" text = "" maxWidth = 344 maxHeight = 18 format = left fixedsize = yes }
+	guiButtonType = {
+		name = "supply_selector"
+		position = { 80 237 }
+		quadTextureSprite = "GFX_foundry_dropdown_220"
+		buttonText = "AVAILABILITY + PRICE"
+		buttonFont = "vic_18"
+		Orientation = "UPPER_LEFT"
+		clicksound = click
+	}
+	iconType = { name = "supply_popup" spriteType = "GFX_foundry_dropdown_popup_224" position = { 78 265 } Orientation = "UPPER_LEFT" }
+	guiButtonType = { name = "supply_option_0" position = { 80 267 } quadTextureSprite = "GFX_foundry_dropdown_option_220" buttonText = "AVAILABILITY + PRICE" buttonFont = "vic_18_black" Orientation = "UPPER_LEFT" clicksound = click }
+	guiButtonType = { name = "supply_option_1" position = { 80 291 } quadTextureSprite = "GFX_foundry_dropdown_option_220" buttonText = "AVAILABILITY" buttonFont = "vic_18_black" Orientation = "UPPER_LEFT" clicksound = click }
+	guiButtonType = { name = "supply_option_2" position = { 80 315 } quadTextureSprite = "GFX_foundry_dropdown_option_220" buttonText = "PRICE" buttonFont = "vic_18_black" Orientation = "UPPER_LEFT" clicksound = click }
+	instantTextBoxType = { name = "test_slider_value" position = { 70 238 } font = "vic_18_black" text = "PREVIEW INTENSITY   50%" maxWidth = 240 maxHeight = 18 format = centre fixedsize = yes }
+	scrollbarType = {
+		name = "test_slider"
+		slider = "slider"
+		track = "track"
+		leftbutton = "left"
+		rightbutton = "right"
+		position = { 60 265 }
+		size = { 260 20 }
+		minValue = 0
+		maxValue = 100
+		stepSize = 1
+		startValue = 50
+		horizontal = 1
+		guiButtonType = { name = "slider" quadTextureSprite = "GFX_foundry_slider_knob_20" position = { 0 0 } }
+		guiButtonType = { name = "track" quadTextureSprite = "GFX_foundry_slider_track_220" position = { 0 0 } }
+		guiButtonType = { name = "left" quadTextureSprite = "GFX_foundry_slider_left_20" position = { 0 0 } }
+		guiButtonType = { name = "right" quadTextureSprite = "GFX_foundry_slider_right_20" position = { 0 240 } }
+	}
+	checkboxType = { name = "test_checkbox" position = { 58 241 } quadTextureSprite = "GFX_foundry_checkbox_22" }
+	instantTextBoxType = { name = "selection_label_0" position = { 86 243 } font = "vic_18_black" text = "SHOW DETAILS" maxWidth = 180 maxHeight = 18 format = left fixedsize = yes }
+	checkboxType = { name = "test_radio_0" position = { 58 274 } quadTextureSprite = "GFX_foundry_radio_22" }
+	instantTextBoxType = { name = "selection_label_1" position = { 86 276 } font = "vic_18_black" text = "COMPACT" maxWidth = 100 maxHeight = 18 format = left fixedsize = yes }
+	checkboxType = { name = "test_radio_1" position = { 190 274 } quadTextureSprite = "GFX_foundry_radio_22" }
+	instantTextBoxType = { name = "selection_label_2" position = { 218 276 } font = "vic_18_black" text = "EXPANDED" maxWidth = 100 maxHeight = 18 format = left fixedsize = yes }
+	iconType = { name = "test_table_header" spriteType = "GFX_foundry_table_header_320" position = { 30 235 } Orientation = "UPPER_LEFT" }
+	instantTextBoxType = { name = "test_table_header_0" position = { 38 239 } font = "vic_18" text = "PROJECT" maxWidth = 124 maxHeight = 18 format = left fixedsize = yes }
+	instantTextBoxType = { name = "test_table_header_1" position = { 173 239 } font = "vic_18" text = "STATUS" maxWidth = 90 maxHeight = 18 format = left fixedsize = yes }
+	instantTextBoxType = { name = "test_table_header_2" position = { 272 239 } font = "vic_18" text = "COST" maxWidth = 52 maxHeight = 18 format = right fixedsize = yes }
+	listboxType = {
+		name = "test_table"
+		position = { 30 259 }
+		size = { 320 52 }
+		spacing = 0
+		scrollbartype = "standardlistbox_slider"
+		borderSize = { 0 0 }
+		Orientation = "UPPER_LEFT"
+	}
+	iconType = { name = "test_divider" spriteType = "GFX_foundry_divider_320" position = { 30 316 } Orientation = "UPPER_LEFT" }
+	iconType = { name = "test_resource_card" spriteType = "GFX_foundry_resource_card_320" position = { 30 324 } Orientation = "UPPER_LEFT" }
+	instantTextBoxType = { name = "test_resource_icon" position = { 40 339 } font = "vic_22" text = "" maxWidth = 36 maxHeight = 24 format = centre fixedsize = yes }
+	instantTextBoxType = { name = "test_resource_name" position = { 86 330 } font = "vic_18_black" text = "RESOURCE" maxWidth = 156 maxHeight = 18 format = left fixedsize = yes }
+	instantTextBoxType = { name = "test_resource_value" position = { 246 330 } font = "vic_18_black" text = "0 / 0" maxWidth = 72 maxHeight = 18 format = right fixedsize = yes }
+	instantTextBoxType = { name = "test_resource_detail" position = { 86 354 } font = "vic_18_black" text = "STATUS" maxWidth = 226 maxHeight = 18 format = left fixedsize = yes }
+	iconType = { name = "test_action_bar" spriteType = "GFX_foundry_action_bar_340" position = { 20 348 } Orientation = "UPPER_LEFT" }
+	guiButtonType = { name = "test_action_cancel" position = { 38 354 } quadTextureSprite = "GFX_foundry_secondary_button_144" buttonText = "CANCEL" buttonFont = "vic_18" Orientation = "UPPER_LEFT" clicksound = click }
+	guiButtonType = { name = "test_action_apply" position = { 198 354 } quadTextureSprite = "GFX_foundry_primary_button_144" buttonText = "APPLY" buttonFont = "vic_18" Orientation = "UPPER_LEFT" clicksound = click }
+	guiButtonType = { name = "test_notification_button" position = { 90 292 } quadTextureSprite = "GFX_foundry_primary_button_200" buttonText = "SHOW NOTIFICATION" buttonFont = "vic_18" Orientation = "UPPER_LEFT" clicksound = click }
 }
 }

@@ -14,6 +14,7 @@
 #include "construction.hpp"
 #include "economy_trade_routes.hpp"
 #include "gui_piechart_templates.hpp"
+#include "gui_listbox_templates.hpp"
 #include "gui_templates.hpp"
 #include "gui_tooltips.hpp"
 #include "economy_tooltips.hpp"
@@ -205,6 +206,178 @@ enum class urban_center_test_tab : uint8_t {
 	effects
 };
 
+enum class urban_center_supply_view : uint8_t {
+	both,
+	availability,
+	price
+};
+
+struct urban_center_dropdown_toggle { };
+struct urban_center_slider_preview { int32_t value = 50; };
+struct urban_center_radio_selection { uint8_t value = 0; };
+struct urban_center_table_selection { uint8_t value = 0; };
+struct urban_center_table_selection_query { uint8_t value = 0; };
+struct urban_center_notification_show { };
+struct urban_center_action_bar_action { bool apply = false; };
+struct urban_center_action_bar_query { bool dirty = false; };
+struct urban_center_notification_dismiss { };
+
+struct urban_center_table_row_data {
+	uint8_t id = 0;
+	bool operator==(urban_center_table_row_data const& other) const noexcept { return id == other.id; }
+	bool operator!=(urban_center_table_row_data const& other) const noexcept { return id != other.id; }
+};
+
+struct urban_center_table_display_row {
+	std::string_view project;
+	std::string_view status;
+	std::string_view cost;
+	bool disabled;
+};
+
+static constexpr std::array<urban_center_table_display_row, 6> urban_center_table_rows{{
+	{"URBAN CENTER", "READY", "120", false},
+	{"RAILROAD", "BUILDING", "85", false},
+	{"FORT", "QUEUED", "60", false},
+	{"NAVAL BASE", "LOCKED", "--", true},
+	{"ADMINISTRATION", "PLANNED", "95", false},
+	{"WORKSHOP", "READY", "40", false},
+}};
+
+static urban_center_table_display_row urban_center_table_display(uint8_t id) noexcept {
+	return id < urban_center_table_rows.size() ? urban_center_table_rows[id]
+		: urban_center_table_display_row{"", "", "", true};
+}
+
+class urban_center_table_row_button : public button_element_base {
+public:
+	void on_update(sys::state& state) noexcept override {
+		auto row = retrieve<urban_center_table_row_data>(state, parent);
+		auto selected = retrieve<urban_center_table_selection_query>(state, parent).value;
+		disabled = urban_center_table_display(row.id).disabled;
+		frame = disabled ? 3 : selected == row.id ? 2 : 0;
+	}
+
+	void render(sys::state& state, int32_t x, int32_t y) noexcept override {
+		auto row = retrieve<urban_center_table_row_data>(state, parent);
+		auto display = urban_center_table_display(row.id);
+		auto selected = retrieve<urban_center_table_selection_query>(state, parent).value;
+		frame = display.disabled ? 3 : selected == row.id ? 2
+			: this == state.ui_state.under_mouse ? 1 : 0;
+		button_element_base::render(state, x, y);
+	}
+
+	void button_action(sys::state& state) noexcept override {
+		auto row = retrieve<urban_center_table_row_data>(state, parent);
+		if(!urban_center_table_display(row.id).disabled)
+			send(state, parent, urban_center_table_selection{row.id});
+	}
+};
+
+class urban_center_table_cell : public simple_text_element_base {
+public:
+	uint8_t column = 0;
+	void on_update(sys::state& state) noexcept override {
+		auto row = retrieve<urban_center_table_row_data>(state, parent);
+		auto display = urban_center_table_display(row.id);
+		set_text(state, std::string(column == 0 ? display.project : column == 1 ? display.status : display.cost));
+	}
+};
+
+class urban_center_table_row : public listbox_row_element_base<urban_center_table_row_data> {
+public:
+	std::unique_ptr<element_base> make_child(sys::state& state, std::string_view name,
+			dcon::gui_def_id id) noexcept override {
+		if(name == "row_background")
+			return make_element_by_type<urban_center_table_row_button>(state, id);
+		for(uint8_t i = 0; i < 3; ++i) {
+			if(name == "row_cell_" + std::to_string(i)) {
+				auto ptr = make_element_by_type<urban_center_table_cell>(state, id);
+				ptr->column = i;
+				return ptr;
+			}
+		}
+		return nullptr;
+	}
+};
+
+class urban_center_test_table : public listbox_element_base<urban_center_table_row, urban_center_table_row_data> {
+protected:
+	std::string_view get_row_element_name() override { return "foundry_test_table_row"; }
+public:
+	void on_create(sys::state& state) noexcept override {
+		int16_t current_y = 0;
+		int16_t row_height = 0;
+		while(current_y + row_height <= base_data.size.y) {
+			auto row = make_element_by_type<urban_center_table_row>(state, get_row_element_name());
+			row_windows.push_back(row.get());
+			row_height = row->base_data.size.y;
+			row->base_data.position.y += current_y;
+			current_y += row_height;
+			add_child_to_front(std::move(row));
+		}
+		auto scrollbar = make_element_by_type<standard_listbox_scrollbar<urban_center_table_row,
+			urban_center_table_row_data>>(state, "foundry_listbox_slider");
+		list_scrollbar = scrollbar.get();
+		add_child_to_front(std::move(scrollbar));
+		list_scrollbar->scale_to_parent();
+		row_contents = {
+			{0}, {1}, {2}, {3}, {4}, {5},
+		};
+		update(state);
+	}
+
+	void refresh_rows(sys::state& state) noexcept {
+		for(auto* row : row_windows)
+			row->impl_on_update(state);
+	}
+};
+
+class urban_center_test_checkbox : public checkbox_button {
+public:
+	bool active = false;
+
+	bool is_active(sys::state&) noexcept override { return active; }
+	void button_action(sys::state& state) noexcept override {
+		active = !active;
+		impl_on_update(state);
+	}
+};
+
+class urban_center_test_radio : public checkbox_button {
+public:
+	uint8_t choice = 0;
+	bool active = false;
+
+	bool is_active(sys::state&) noexcept override { return active; }
+	void button_action(sys::state& state) noexcept override {
+		send(state, parent, urban_center_radio_selection{choice});
+	}
+};
+
+class urban_center_supply_selector : public button_element_base {
+public:
+	void button_action(sys::state& state) noexcept override {
+		send(state, parent, urban_center_dropdown_toggle{});
+	}
+};
+
+class urban_center_supply_option : public button_element_base {
+public:
+	urban_center_supply_view target = urban_center_supply_view::both;
+
+	void button_action(sys::state& state) noexcept override {
+		send(state, parent, target);
+	}
+};
+
+class urban_center_test_slider : public scrollbar {
+public:
+	void on_value_change(sys::state& state, int32_t value) noexcept override {
+		send(state, parent, urban_center_slider_preview{value});
+	}
+};
+
 class urban_center_status_indicator : public image_element_base {
 public:
 	uint8_t effect_index = 0;
@@ -234,6 +407,108 @@ public:
 	}
 };
 
+class urban_center_notification_close : public button_element_base {
+public:
+	void button_action(sys::state& state) noexcept override {
+		send(state, parent, urban_center_notification_dismiss{});
+	}
+};
+
+class urban_center_test_notification : public window_element_base {
+	image_element_base* background = nullptr;
+	image_element_base* icon = nullptr;
+	simple_text_element_base* title = nullptr;
+	simple_text_element_base* message = nullptr;
+public:
+	std::unique_ptr<element_base> make_child(sys::state& state, std::string_view name,
+			dcon::gui_def_id id) noexcept override {
+		if(name == "notification_background") {
+			auto ptr = make_element_by_type<image_element_base>(state, id);
+			background = ptr.get();
+			return ptr;
+		}
+		if(name == "notification_icon") {
+			auto ptr = make_element_by_type<image_element_base>(state, id);
+			icon = ptr.get();
+			return ptr;
+		}
+		if(name == "notification_title") {
+			auto ptr = make_element_by_type<simple_text_element_base>(state, id);
+			title = ptr.get();
+			return ptr;
+		}
+		if(name == "notification_message") {
+			auto ptr = make_element_by_type<simple_text_element_base>(state, id);
+			message = ptr.get();
+			return ptr;
+		}
+		if(name == "notification_close")
+			return make_element_by_type<urban_center_notification_close>(state, id);
+		return nullptr;
+	}
+
+	message_result get(sys::state& state, Cyto::Any& payload) noexcept override {
+		if(payload.holds_type<urban_center_notification_dismiss>()) {
+			set_visible(state, false);
+			return message_result::consumed;
+		}
+		return window_element_base::get(state, payload);
+	}
+
+	void show_category(sys::state& state, uint8_t category) noexcept {
+		category %= 5;
+		if(background) background->frame = category;
+		if(icon) icon->frame = category == 2 ? 0 : category == 4 ? 1 : category == 3 ? 2 : 3;
+		static constexpr std::array<std::string_view, 5> titles{
+			"INFORMATION", "ECONOMIC UPDATE", "DIPLOMATIC OFFER", "MILITARY ALERT", "CRITICAL WARNING"
+		};
+		static constexpr std::array<std::string_view, 5> messages{
+			"New research is available.",
+			"A construction project has completed.",
+			"Burgundy has proposed a trade agreement.",
+			"Hostile forces have crossed our border.",
+			"Transport capacity has reached its limit."
+		};
+		if(title) title->set_text(state, std::string(titles[category]));
+		if(message) message->set_text(state, std::string(messages[category]));
+		set_visible(state, true);
+	}
+};
+
+class urban_center_notification_test_button : public button_element_base {
+public:
+	void button_action(sys::state& state) noexcept override {
+		send(state, parent, urban_center_notification_show{});
+	}
+};
+
+class urban_center_action_bar_button : public button_element_base {
+public:
+	bool apply = false;
+
+	void on_update(sys::state& state) noexcept override {
+		if(!apply) {
+			disabled = false;
+			return;
+		}
+		auto query = retrieve<urban_center_action_bar_query>(state, parent);
+		disabled = !query.dirty;
+	}
+
+	void button_action(sys::state& state) noexcept override {
+		send(state, parent, urban_center_action_bar_action{apply});
+	}
+
+	tooltip_behavior has_tooltip(sys::state&) noexcept override { return tooltip_behavior::variable_tooltip; }
+	void update_tooltip(sys::state& state, int32_t, int32_t, text::columnar_layout& contents) noexcept override {
+		auto box = text::open_layout_box(contents);
+		text::add_unparsed_text_to_layout_box(state, contents, box, apply
+			? "Apply the pending Supply display preference."
+			: "Discard the pending change and restore the last applied preference.");
+		text::close_layout_box(contents, box);
+	}
+};
+
 class urban_center_detail_window : public generic_tabbed_window<urban_center_test_tab> {
 	simple_text_element_base* level_value = nullptr;
 	simple_text_element_base* era_text = nullptr;
@@ -242,7 +517,40 @@ class urban_center_detail_window : public generic_tabbed_window<urban_center_tes
 	simple_text_element_base* progress_text = nullptr;
 	std::array<simple_text_element_base*, economy::commodity_set::set_size> goods_text{};
 	std::array<urban_center_status_indicator*, 3> effect_status{};
+	urban_center_supply_selector* supply_selector = nullptr;
+	image_element_base* supply_popup = nullptr;
+	std::array<urban_center_supply_option*, 3> supply_options{};
+	urban_center_test_slider* test_slider = nullptr;
+	simple_text_element_base* test_slider_value = nullptr;
+	urban_center_test_checkbox* test_checkbox = nullptr;
+	std::array<urban_center_test_radio*, 2> test_radios{};
+	std::array<simple_text_element_base*, 3> selection_labels{};
+	urban_center_test_table* test_table = nullptr;
+	image_element_base* table_header = nullptr;
+	std::array<simple_text_element_base*, 3> table_headers{};
+	urban_center_supply_view supply_view = urban_center_supply_view::both;
+	bool supply_dropdown_open = false;
+	int32_t slider_preview_value = 50;
+	uint8_t table_selection = 0;
+	urban_center_test_notification* test_notification = nullptr;
+	button_element_base* test_notification_button = nullptr;
+	uint8_t notification_category = 0;
+	image_element_base* test_divider = nullptr;
+	image_element_base* test_resource_card = nullptr;
+	std::array<simple_text_element_base*, 4> test_resource_text{};
+	image_element_base* test_action_bar = nullptr;
+	std::array<urban_center_action_bar_button*, 2> test_action_buttons{};
+	urban_center_supply_view applied_supply_view = urban_center_supply_view::both;
+	urban_center_upgrade_button* upgrade_button = nullptr;
 public:
+	void on_create(sys::state& state) noexcept override {
+		generic_tabbed_window<urban_center_test_tab>::on_create(state);
+		auto popup = make_element_by_type<urban_center_test_notification>(state, "foundry_test_notification");
+		test_notification = popup.get();
+		popup->set_visible(state, false);
+		add_child_to_front(std::move(popup));
+	}
+
 	std::unique_ptr<element_base> make_child(sys::state& state, std::string_view name,
 			dcon::gui_def_id id) noexcept override {
 		if(name == "background")
@@ -258,6 +566,104 @@ public:
 			return make_element_by_type<urban_center_capacity_piechart>(state, id);
 		if(name == "capacity_overlay" || name == "stats_background" || name == "progress_header_background")
 			return make_element_by_type<image_element_base>(state, id);
+		if(name == "supply_selector") {
+			auto ptr = make_element_by_type<urban_center_supply_selector>(state, id);
+			supply_selector = ptr.get();
+			return ptr;
+		}
+		if(name == "supply_popup") {
+			auto ptr = make_element_by_type<image_element_base>(state, id);
+			supply_popup = ptr.get();
+			return ptr;
+		}
+		if(name == "test_slider") {
+			auto ptr = make_element_by_type<urban_center_test_slider>(state, id);
+			test_slider = ptr.get();
+			ptr->update_raw_value(state, slider_preview_value);
+			return ptr;
+		}
+		if(name == "test_slider_value") {
+			auto ptr = make_element_by_type<simple_text_element_base>(state, id);
+			test_slider_value = ptr.get();
+			return ptr;
+		}
+		if(name == "test_checkbox") {
+			auto ptr = make_element_by_type<urban_center_test_checkbox>(state, id);
+			test_checkbox = ptr.get();
+			return ptr;
+		}
+		if(name == "test_notification_button") {
+			auto ptr = make_element_by_type<urban_center_notification_test_button>(state, id);
+			test_notification_button = ptr.get();
+			return ptr;
+		}
+		if(name == "test_action_bar") {
+			auto ptr = make_element_by_type<image_element_base>(state, id);
+			test_action_bar = ptr.get();
+			return ptr;
+		}
+		if(name == "test_action_cancel" || name == "test_action_apply") {
+			auto ptr = make_element_by_type<urban_center_action_bar_button>(state, id);
+			ptr->apply = name == "test_action_apply";
+			test_action_buttons[ptr->apply ? 1 : 0] = ptr.get();
+			return ptr;
+		}
+		if(name == "test_divider" || name == "test_resource_card") {
+			auto ptr = make_element_by_type<image_element_base>(state, id);
+			(name == "test_divider" ? test_divider : test_resource_card) = ptr.get();
+			return ptr;
+		}
+		static constexpr std::array<std::string_view, 4> resource_names{
+			"test_resource_icon", "test_resource_name", "test_resource_value", "test_resource_detail"
+		};
+		for(uint8_t i = 0; i < resource_names.size(); ++i) {
+			if(name == resource_names[i]) {
+				auto ptr = make_element_by_type<simple_text_element_base>(state, id);
+				test_resource_text[i] = ptr.get();
+				return ptr;
+			}
+		}
+		if(name == "test_table") {
+			auto ptr = make_element_by_type<urban_center_test_table>(state, id);
+			test_table = ptr.get();
+			return ptr;
+		}
+		if(name == "test_table_header") {
+			auto ptr = make_element_by_type<image_element_base>(state, id);
+			table_header = ptr.get();
+			return ptr;
+		}
+		for(uint8_t i = 0; i < table_headers.size(); ++i) {
+			if(name == "test_table_header_" + std::to_string(i)) {
+				auto ptr = make_element_by_type<simple_text_element_base>(state, id);
+				table_headers[i] = ptr.get();
+				return ptr;
+			}
+		}
+		for(uint8_t i = 0; i < test_radios.size(); ++i) {
+			if(name == "test_radio_" + std::to_string(i)) {
+				auto ptr = make_element_by_type<urban_center_test_radio>(state, id);
+				ptr->choice = i;
+				ptr->active = i == 0;
+				test_radios[i] = ptr.get();
+				return ptr;
+			}
+		}
+		for(uint8_t i = 0; i < selection_labels.size(); ++i) {
+			if(name == "selection_label_" + std::to_string(i)) {
+				auto ptr = make_element_by_type<simple_text_element_base>(state, id);
+				selection_labels[i] = ptr.get();
+				return ptr;
+			}
+		}
+		for(uint8_t i = 0; i < supply_options.size(); ++i) {
+			if(name == "supply_option_" + std::to_string(i)) {
+				auto ptr = make_element_by_type<urban_center_supply_option>(state, id);
+				ptr->target = static_cast<urban_center_supply_view>(i);
+				supply_options[i] = ptr.get();
+				return ptr;
+			}
+		}
 		if(name == "test_tab_construction" || name == "test_tab_supply" || name == "test_tab_effects") {
 			auto ptr = make_element_by_type<generic_tab_button<urban_center_test_tab>>(state, id);
 			ptr->target = name == "test_tab_construction" ? urban_center_test_tab::construction
@@ -298,8 +704,11 @@ public:
 			progress_text = ptr.get();
 			return ptr;
 		}
-		if(name == "upgrade_button")
-			return make_element_by_type<urban_center_upgrade_button>(state, id);
+		if(name == "upgrade_button") {
+			auto ptr = make_element_by_type<urban_center_upgrade_button>(state, id);
+			upgrade_button = ptr.get();
+			return ptr;
+		}
 		for(uint32_t i = 0; i < goods_text.size(); ++i) {
 			if(name == "goods_" + std::to_string(i)) {
 				auto ptr = make_element_by_type<simple_text_element_base>(state, id);
@@ -313,9 +722,67 @@ public:
 	message_result get(sys::state& state, Cyto::Any& payload) noexcept override {
 		if(payload.holds_type<urban_center_test_tab>()) {
 			active_tab = any_cast<urban_center_test_tab>(payload);
+			supply_dropdown_open = false;
 			// Tab changes are UI actions and must refresh immediately even while the
 			// simulation is paused (the normal daily update will not run then).
 			impl_on_update(state);
+			return message_result::consumed;
+		}
+		if(payload.holds_type<urban_center_dropdown_toggle>()) {
+			supply_dropdown_open = !supply_dropdown_open;
+			impl_on_update(state);
+			return message_result::consumed;
+		}
+		if(payload.holds_type<urban_center_supply_view>()) {
+			supply_view = any_cast<urban_center_supply_view>(payload);
+			supply_dropdown_open = false;
+			impl_on_update(state);
+			return message_result::consumed;
+		}
+		if(payload.holds_type<urban_center_slider_preview>()) {
+			slider_preview_value = any_cast<urban_center_slider_preview>(payload).value;
+			if(test_slider_value)
+				test_slider_value->set_text(state, "PREVIEW INTENSITY   "
+					+ std::to_string(slider_preview_value) + "%");
+			return message_result::consumed;
+		}
+		if(payload.holds_type<urban_center_radio_selection>()) {
+			auto selected = any_cast<urban_center_radio_selection>(payload).value;
+			for(uint8_t i = 0; i < test_radios.size(); ++i) {
+				if(test_radios[i]) {
+					test_radios[i]->active = i == selected;
+					test_radios[i]->impl_on_update(state);
+				}
+			}
+			return message_result::consumed;
+		}
+		if(payload.holds_type<urban_center_table_selection>()) {
+			table_selection = any_cast<urban_center_table_selection>(payload).value;
+			if(test_table) test_table->refresh_rows(state);
+			return message_result::consumed;
+		}
+		if(payload.holds_type<urban_center_table_selection_query>()) {
+			payload.emplace<urban_center_table_selection_query>(urban_center_table_selection_query{table_selection});
+			return message_result::consumed;
+		}
+		if(payload.holds_type<urban_center_notification_show>()) {
+			if(test_notification)
+				test_notification->show_category(state, notification_category++);
+			return message_result::consumed;
+		}
+		if(payload.holds_type<urban_center_action_bar_action>()) {
+			auto action = any_cast<urban_center_action_bar_action>(payload);
+			if(action.apply)
+				applied_supply_view = supply_view;
+			else
+				supply_view = applied_supply_view;
+			impl_on_update(state);
+			return message_result::consumed;
+		}
+		if(payload.holds_type<urban_center_action_bar_query>()) {
+			payload.emplace<urban_center_action_bar_query>(urban_center_action_bar_query{
+				supply_view != applied_supply_view
+			});
 			return message_result::consumed;
 		}
 		return generic_tabbed_window<urban_center_test_tab>::get(state, payload);
@@ -338,7 +805,72 @@ public:
 		auto capacity = civic_buildings::province_urban_building_capacity(state, province);
 		auto used = civic_buildings::province_used_urban_building_capacity(state, province);
 		capacity_value->set_text(state, std::to_string(used) + " / " + std::to_string(capacity));
+		auto supply_active = active_tab == urban_center_test_tab::supply;
+		if(test_action_bar) test_action_bar->set_visible(state, supply_active);
+		for(auto* button : test_action_buttons)
+			if(button) button->set_visible(state, supply_active);
+		if(upgrade_button) upgrade_button->set_visible(state, !supply_active);
+		if(supply_selector) {
+			supply_selector->set_visible(state, supply_active);
+			supply_selector->set_button_text(state,
+				supply_view == urban_center_supply_view::both ? "AVAILABILITY + PRICE"
+				: supply_view == urban_center_supply_view::availability ? "AVAILABILITY"
+				: "PRICE");
+		}
+		if(supply_popup)
+			supply_popup->set_visible(state, supply_active && supply_dropdown_open);
+		for(auto* option : supply_options)
+			if(option) option->set_visible(state, supply_active && supply_dropdown_open);
+		auto effects_active = active_tab == urban_center_test_tab::effects;
+		if(test_slider) test_slider->set_visible(state, effects_active);
+		if(test_slider_value) {
+			test_slider_value->set_visible(state, effects_active);
+				test_slider_value->set_text(state, "PREVIEW INTENSITY   "
+				+ std::to_string(slider_preview_value) + "%");
+		}
+		if(test_notification_button)
+			test_notification_button->set_visible(state, effects_active);
+		auto construction_active = active_tab == urban_center_test_tab::construction;
+		if(test_divider) test_divider->set_visible(state, construction_active);
+		if(test_resource_card) test_resource_card->set_visible(state, construction_active);
+		for(auto* text_element : test_resource_text)
+			if(text_element) text_element->set_visible(state, construction_active);
+		if(test_checkbox) test_checkbox->set_visible(state, false);
+		for(auto* radio : test_radios)
+			if(radio) radio->set_visible(state, false);
+		for(auto* label : selection_labels)
+			if(label) label->set_visible(state, false);
+		if(test_table) test_table->set_visible(state, construction_active);
+		if(table_header) table_header->set_visible(state, construction_active);
+		for(auto* header : table_headers)
+			if(header) header->set_visible(state, construction_active);
 		auto constructing = civic_buildings::upgrade_in_progress(state, province, type);
+		if(construction_active && level < max_level) {
+			auto const& next_level = state.world.civic_building_type_get_levels(type)[level];
+			auto commodity = next_level.cost.commodity_type[0];
+			if(commodity) {
+				auto required = next_level.cost.commodity_amounts[0];
+				auto purchased = constructing
+					? state.world.province_get_civic_building_purchased_goods(province, type.index()).commodity_amounts[0]
+					: 0.f;
+				auto market = dcon::fatten(state.world, province)
+					.get_state_membership().get_market_from_local_market();
+				auto availability = market
+					? std::clamp(economy::demand_satisfaction(state, market, commodity), 0.f, 1.f)
+					: 0.f;
+				if(test_resource_text[0]) test_resource_text[0]->set_text(state,
+					text::get_commodity_name_with_icon(state, commodity));
+				if(test_resource_text[1]) test_resource_text[1]->set_text(state,
+					text::produce_simple_string(state, state.world.commodity_get_name(commodity)));
+				if(test_resource_text[2]) test_resource_text[2]->set_text(state,
+					text::format_float(purchased, 1) + " / " + text::format_float(required, 1));
+				if(test_resource_text[3]) test_resource_text[3]->set_text(state,
+					"STOCKPILE     MARKET AVAILABILITY " + text::format_percentage(availability));
+			}
+		} else if(construction_active) {
+			for(auto* text_element : test_resource_text)
+				if(text_element) text_element->set_text(state, "");
+		}
 		bool goods_ready = constructing;
 		if(constructing && level < max_level) {
 			auto const& next = state.world.civic_building_type_get_levels(type)[level];
@@ -403,9 +935,12 @@ public:
 					? std::clamp(economy::demand_satisfaction(state, market, commodity), 0.f, 1.f)
 					: 0.f;
 				auto price = market ? economy::price(state, market, commodity) : 0.f;
-				goods_text[i]->set_text(state, text::get_commodity_name_with_icon(state, commodity)
-					+ "   " + text::format_percentage(availability)
-					+ " AVAILABLE   " + text::format_money(price));
+				auto value = text::get_commodity_name_with_icon(state, commodity);
+				if(supply_view != urban_center_supply_view::price)
+					value += "   " + text::format_percentage(availability) + " AVAILABLE";
+				if(supply_view != urban_center_supply_view::availability)
+					value += "   " + text::format_money(price);
+				goods_text[i]->set_text(state, value);
 			} else {
 				auto amount = next.cost.commodity_amounts[i];
 				auto purchased = constructing

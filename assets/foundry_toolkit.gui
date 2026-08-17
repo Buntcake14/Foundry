@@ -1,0 +1,50 @@
+guiTypes = {
+	scrollbarType = {
+		name = "foundry_listbox_slider"
+		slider = "foundry_vscroll_thumb"
+		track = "foundry_vscroll_track"
+		leftbutton = "foundry_vscroll_up"
+		rightbutton = "foundry_vscroll_down"
+		size = { 16 16 }
+		position = { 0 0 }
+		priority = 100
+		borderSize = { 16 16 }
+		maxValue = 1
+		minValue = 0
+		stepSize = 1
+		startValue = 0
+		horizontal = 0
+		guiButtonType = { name = "foundry_vscroll_thumb" quadTextureSprite = "GFX_foundry_vscroll_thumb_16" position = { 0 0 } }
+		guiButtonType = { name = "foundry_vscroll_track" quadTextureSprite = "GFX_foundry_vscroll_track_16" position = { 16 16 } }
+		# The extracted source artwork labels the two arrow strips opposite to their
+		# visual direction. Keep the semantic button names/behavior and swap only
+		# the displayed sprites.
+		guiButtonType = { parent = "foundry_vscroll_thumb" name = "foundry_vscroll_up" quadTextureSprite = "GFX_foundry_vscroll_down_16" position = { 0 0 } }
+		guiButtonType = { parent = "foundry_vscroll_thumb" name = "foundry_vscroll_down" quadTextureSprite = "GFX_foundry_vscroll_up_16" position = { 0 120 } }
+	}
+
+	windowType = {
+		name = "foundry_test_table_row"
+		position = { 0 0 }
+		size = { 302 26 }
+		moveable = 0
+		Orientation = "UPPER_LEFT"
+		guiButtonType = { name = "row_background" position = { 0 0 } quadTextureSprite = "GFX_foundry_table_row_302" buttonFont = "vic_18_black" Orientation = "UPPER_LEFT" clicksound = click }
+		instantTextBoxType = { name = "row_cell_0" position = { 8 4 } font = "vic_18_black" text = "" maxWidth = 124 maxHeight = 18 format = left fixedsize = yes }
+		instantTextBoxType = { name = "row_cell_1" position = { 143 4 } font = "vic_18_black" text = "" maxWidth = 90 maxHeight = 18 format = left fixedsize = yes }
+		instantTextBoxType = { name = "row_cell_2" position = { 242 4 } font = "vic_18_black" text = "" maxWidth = 52 maxHeight = 18 format = right fixedsize = yes }
+	}
+
+	windowType = {
+		name = "foundry_test_notification"
+		position = { 20 -104 }
+		size = { 340 92 }
+		moveable = 0
+		Orientation = "UPPER_LEFT"
+		iconType = { name = "notification_background" spriteType = "GFX_foundry_notification_340" position = { 0 0 } Orientation = "UPPER_LEFT" }
+		iconType = { name = "notification_icon" spriteType = "GFX_foundry_status_indicators_24" position = { 20 18 } Orientation = "UPPER_LEFT" }
+		instantTextBoxType = { name = "notification_title" position = { 54 13 } font = "vic_18" text = "INFORMATION" maxWidth = 246 maxHeight = 20 format = left fixedsize = yes }
+		instantTextBoxType = { name = "notification_message" position = { 54 45 } font = "vic_18" text = "Foundry notification component ready." maxWidth = 266 maxHeight = 36 format = left fixedsize = yes }
+		guiButtonType = { name = "notification_close" quadTextureSprite = "GFX_foundry_close_button_24" position = { 310 8 } Orientation = "UPPER_LEFT" clicksound = click }
+	}
+}

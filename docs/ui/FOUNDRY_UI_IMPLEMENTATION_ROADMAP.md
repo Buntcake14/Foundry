@@ -41,15 +41,47 @@ Each module is both navigation and a small national dashboard. Initial values
 must come from real game state; unavailable future values use intentionally
 empty slots rather than invented data.
 
+## Validated component inventory
+
+The Urban Center laboratory currently contains engine-tested implementations of:
+
+- Primary buttons and close buttons
+- Subtabs and inset/section panels
+- Status indicators and tooltips
+- Progress bars, dropdowns, sliders, checkboxes, and radio buttons
+- Selectable tables/listboxes and the Foundry vertical scrollbar
+- Five-category notification popup (information, economic, diplomatic, military, critical)
+- Ornamental dividers and data-driven resource cards
+
+The resource card is exposed on the laboratory's Construction tab and reads
+the first required commodity directly from the selected province's next Urban
+Center level. It disappears outside its owning tab, confirming reusable cards
+can be scoped cleanly to a content view.
+
+The Supply tab now also hosts the action-bar laboratory: a secondary Cancel
+action and primary Apply action with pending, committed, and disabled states.
+
+Notification testing is exposed from the laboratory's Effects tab. Repeated use
+cycles the semantic categories; each popup supports explicit dismissal.
+
 ## Milestone 3 — Shared production components
 
 Move validated component definitions into a shared Foundry GUI/GFX layer and
 use them for all new windows. Retire temporary test-window definitions after
 the components have production consumers.
 
+Status: underway. `assets/foundry_toolkit.gui` and
+`assets/foundry_toolkit.gfx` are now the shared base-game component layer. The
+validated Foundry scrollbar, table row, notification, secondary action button,
+and footer surface have been migrated there while the Urban Center laboratory
+continues consuming them unchanged.
+
+The shared vertical scrollbar deliberately maps the extracted arrow sprite
+strips to their correct visual directions while retaining semantic up/down
+button behavior.
+
 ## Milestone 4 — Module windows
 
 Rebuild one module at a time using the common toolkit. Preserve functional
 mechanics during migration and remove the superseded Victoria II/Alice window
 only after its Foundry replacement passes playtesting.
-

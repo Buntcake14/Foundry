@@ -1142,9 +1142,12 @@ void display_data::render(
 		glMultiDrawArrays(GL_TRIANGLE_STRIP, river_starts.data(), river_counts.data(), GLsizei(river_starts.size()));
 	}
 
-	// Draw the railroads and city
+	// Project Alice's railroad graph and city-node overlay is intentionally hidden
+	// in Foundry. Infrastructure levels and their gameplay effects remain active;
+	// Foundry will provide its own deliberate road, rail, and urban visualization.
+	constexpr bool render_legacy_railroad_overlay = false;
 
-	if(/*zoom > map::zoom_close && */!railroad_vertices.empty() && state.user_settings.railroads_enabled) {
+	if(render_legacy_railroad_overlay && !railroad_vertices.empty() && state.user_settings.railroads_enabled) {
 		glEnable(GL_BLEND);
 		glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE);
 
@@ -1171,8 +1174,7 @@ void display_data::render(
 		glMultiDrawArrays(GL_TRIANGLE_STRIP, railroad_starts.data(), railroad_counts.data(), GLsizei(railroad_starts.size()));
 	}
 
-	if(//zoom > map::zoom_close &&
-		!city_vertices.empty() && state.user_settings.railroads_enabled) {
+	if(render_legacy_railroad_overlay && !city_vertices.empty() && state.user_settings.railroads_enabled) {
 		glEnable(GL_BLEND);
 		glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE);
 

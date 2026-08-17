@@ -1,0 +1,15 @@
+spriteTypes = {
+	spriteType = {
+		name = "GFX_foundry_action_bar_340"
+		texturefile = "assets\\foundry_ui\\buttons\\foundry_action_bar_340x42_v1.png"
+		noOfFrames = 1
+		transparencecheck = yes
+	}
+	spriteType = {
+		name = "GFX_foundry_secondary_button_144"
+		texturefile = "assets\\foundry_ui\\buttons\\foundry_secondary_button_144x30_v1.png"
+		noOfFrames = 4
+		norefcount = yes
+		transparencecheck = yes
+	}
+}

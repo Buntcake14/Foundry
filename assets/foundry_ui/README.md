@@ -107,3 +107,64 @@ Preserve it so revised crops can be produced without regenerating the artwork.
 - Runtime sprite: `GFX_foundry_urban_progress`
 - First integration: Urban Center construction progress
 - Generator: `tools/ui/generate_foundry_progress_bar.py`
+
+### Tooltip frame — dynamic size
+
+- Runtime implementation: `ui::tool_tip::render`
+- Surface: near-black burgundy with antique-gold outer and inner rules
+- Padding: 16 px around the existing dynamic tooltip layout
+- First integrations: all engine tooltips, including Foundry status indicators
+- The frame is rendered procedurally so variable-sized tooltips remain crisp
+  without stretching a raster border.
+
+### Dropdown / selector — 220 x 28
+
+- Closed-control strip: `controls/foundry_dropdown_220x28_v1.png`
+- Option-row strip: `controls/foundry_dropdown_option_220x24_v1.png`
+- Popup frame: `controls/foundry_dropdown_popup_224x76_v1.png`
+- Frame order: default, hover, pressed, disabled
+- Runtime sprites: `GFX_foundry_dropdown_220`,
+  `GFX_foundry_dropdown_option_220`, and `GFX_foundry_dropdown_popup_224`
+- First integration: temporary Urban Center Supply-tab display selector
+- Generator: `tools/ui/generate_foundry_dropdown.py`
+
+### Horizontal slider — 260 x 20
+
+- Track: `controls/foundry_slider_track_220x20_v1.png`
+- Thumb: `controls/foundry_slider_knob_20x20_v1.png`
+- Step buttons: `controls/foundry_slider_left_20x20_v1.png` and
+  `controls/foundry_slider_right_20x20_v1.png`
+- Interactive frame order: default, hover, pressed, disabled
+- First integration: temporary Urban Center Effects-tab preview control
+- Generator: `tools/ui/generate_foundry_slider.py`
+
+### Checkbox and radio controls — 22 x 22
+
+- Checkbox strip: `controls/foundry_checkbox_22x22_v1.png`
+- Radio strip: `controls/foundry_radio_22x22_v1.png`
+- Frame order: inactive, active; engine color modification supplies hover,
+  pressed, and disabled feedback
+- First integration: temporary Urban Center Construction-tab preview controls
+- Generator: `tools/ui/generate_foundry_selection_controls.py`
+
+### Selectable table — 320 x 24 header, 302 x 26 rows
+
+- Header: `controls/foundry_table_header_320x24_v1.png`
+- Row strip: `controls/foundry_table_row_302x26_v1.png`
+- Row frame order: normal, hover, selected, disabled
+- Supports a fixed header, persistent row selection, disabled entries, mouse-wheel
+  scrolling, and the engine's standard scrollbar
+- First integration: temporary Urban Center Construction-tab project table
+- Generator: `tools/ui/generate_foundry_table.py`
+
+### Vertical list scrollbar — 16 px
+
+- Track: `controls/foundry_vscroll_track_16x16_v1.png`
+- Thumb: `controls/foundry_vscroll_thumb_16x18_v1.png`
+- Step buttons: `controls/foundry_vscroll_up_16x16_v1.png` and
+  `controls/foundry_vscroll_down_16x16_v1.png`
+- Interactive frame order: default, hover, pressed, disabled
+- Foundry lists opt into `foundry_listbox_slider`; legacy Vic2/Alice lists remain
+  untouched
+- First integration: temporary Urban Center Construction-tab project table
+- Generator: `tools/ui/generate_foundry_vertical_scrollbar.py`

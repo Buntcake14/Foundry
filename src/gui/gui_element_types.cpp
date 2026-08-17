@@ -2459,8 +2459,27 @@ void edit_box_element_base::render(sys::state& state, int32_t x, int32_t y) noex
 }
 
 void tool_tip::render(sys::state& state, int32_t x, int32_t y) noexcept {
-	ogl::render_bordered_rect(state, ogl::color_modification::none, 16.0f, float(x), float(y), float(base_data.size.x),
-		float(base_data.size.y), ogl::get_texture_handle(state, definitions::tiles_dialog, true), ui::rotation::upright, false, false);
+	// Foundry tooltips use a dedicated dark Victorian treatment instead of the
+	// imported Alice tiled-dialog texture. Keeping this renderer procedural lets
+	// every variable-sized tooltip share one crisp frame without stretching a
+	// raster border or baking dynamic text into artwork.
+	auto const width = float(base_data.size.x);
+	auto const height = float(base_data.size.y);
+	auto const draw_rect = [&](float px, float py, float w, float h, float r, float g, float b, float a) {
+		if(w > 0.f && h > 0.f)
+			ogl::render_alpha_colored_rect(state, px, py, w, h, r, g, b, a);
+	};
+
+	// Soft offset shadow, near-black burgundy surface, antique-gold outer rule,
+	// and a restrained inner highlight matching the Foundry component library.
+	draw_rect(float(x + 3), float(y + 3), width, height, 0.01f, 0.01f, 0.01f, 0.72f);
+	draw_rect(float(x), float(y), width, height, 0.105f, 0.045f, 0.052f, 0.97f);
+	draw_rect(float(x), float(y), width, 2.f, 0.62f, 0.39f, 0.09f, 1.f);
+	draw_rect(float(x), float(y + height - 2.f), width, 2.f, 0.31f, 0.18f, 0.035f, 1.f);
+	draw_rect(float(x), float(y), 2.f, height, 0.62f, 0.39f, 0.09f, 1.f);
+	draw_rect(float(x + width - 2.f), float(y), 2.f, height, 0.31f, 0.18f, 0.035f, 1.f);
+	draw_rect(float(x + 3), float(y + 3), width - 6.f, 1.f, 0.86f, 0.62f, 0.19f, 0.65f);
+	draw_rect(float(x + 3), float(y + 3), 1.f, height - 6.f, 0.86f, 0.62f, 0.19f, 0.45f);
 	auto black_text = text::is_black_from_font_id(state.ui_state.tooltip_font);
 	for(auto& t : internal_layout.contents) {
 
