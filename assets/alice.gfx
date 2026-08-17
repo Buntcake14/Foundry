@@ -736,14 +736,59 @@ spriteTypes = {
 		name = "GFX_foundry_urban_progress"
 		color = { 0.0 0.5 0.0 }
 		colortwo = { 1.0 0.0 0.0 }
-		textureFile1 = "gfx\\interface\\investrail_progress2.dds"
-		textureFile2 = "gfx\\interface\\investrail_progress1.dds"
-		size = { x = 99 y = 6 }
+		textureFile1 = "assets\\foundry_ui\\controls\\foundry_progress_fill_240x14_v1.png"
+		textureFile2 = "assets\\foundry_ui\\controls\\foundry_progress_empty_240x14_v1.png"
+		size = { x = 240 y = 14 }
 		effectFile = "gfx\\FX\\progress.fx"
 	}
 	spriteType = {
 		name = "GFX_foundry_urban_density_inset"
 		texturefile = "assets\\foundry_urban_density_inset.png"
 		noOfFrames = 9
+	}
+	spriteType = {
+		name = "GFX_foundry_primary_button_200"
+		texturefile = "assets\\foundry_ui\\buttons\\foundry_primary_button_200x48_v1.png"
+		noOfFrames = 4
+		norefcount = yes
+		transparencecheck = yes
+	}
+	spriteType = {
+		name = "GFX_foundry_primary_button_144"
+		texturefile = "assets\\foundry_ui\\buttons\\foundry_primary_button_144x30_v1.png"
+		noOfFrames = 4
+		norefcount = yes
+		transparencecheck = yes
+	}
+	spriteType = {
+		name = "GFX_foundry_close_button_24"
+		texturefile = "assets\\foundry_ui\\buttons\\foundry_close_button_24x24_v1.png"
+		noOfFrames = 4
+		norefcount = yes
+		transparencecheck = yes
+	}
+	spriteType = {
+		name = "GFX_foundry_subtabs_120"
+		texturefile = "assets\\foundry_ui\\tabs\\foundry_subtabs_120x30_v1.png"
+		noOfFrames = 2
+		norefcount = yes
+		transparencecheck = yes
+	}
+	spriteType = {
+		name = "GFX_foundry_inset_panel_250"
+		texturefile = "assets\\foundry_ui\\frames\\foundry_inset_panel_250x66_v1.png"
+		noOfFrames = 1
+	}
+	spriteType = {
+		name = "GFX_foundry_section_header_360"
+		texturefile = "assets\\foundry_ui\\frames\\foundry_section_header_360x28_v1.png"
+		noOfFrames = 1
+	}
+	spriteType = {
+		name = "GFX_foundry_status_indicators_24"
+		texturefile = "assets\\foundry_ui\\icons\\foundry_status_indicators_24x24_v1.png"
+		noOfFrames = 4
+		norefcount = yes
+		transparencecheck = yes
 	}
 }

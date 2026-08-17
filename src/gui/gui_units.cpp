@@ -2507,10 +2507,6 @@ private:
 public:
 	void on_create(sys::state& state) noexcept override {
 		window_element_base::on_create(state);
-		if constexpr(std::is_same_v<T, dcon::army_id>) {
-			auto ptr = make_element_by_type<unit_details_ai_controlled>(state, "alice_enable_ai_controlled");
-			add_child_to_front(std::move(ptr));
-		}
 	}
 
 	std::unique_ptr<element_base> make_child(sys::state& state, std::string_view name, dcon::gui_def_id id) noexcept override {
@@ -2550,29 +2546,13 @@ public:
 				return make_element_by_type< navy_transport_text>(state, id);
 			}
 		} else if(name == "alice_build_up_to_template_window") {
-			if constexpr(std::is_same_v<T, dcon::army_id>) {
-				return make_element_by_type<apply_template_container>(state, id);
-			} else {
-				return make_element_by_type<invisible_element>(state, id);
-			}
+			return make_element_by_type<invisible_element>(state, id);
 		} else if(name == "move_siege_order") {
-			if constexpr(std::is_same_v<T, dcon::army_id>) {
-				return make_element_by_type<move_siege_order_button>(state, id);
-			} else {
-				return make_element_by_type<invisible_element>(state, id);
-			}
+			return make_element_by_type<invisible_element>(state, id);
 		} else if(name == "strategic_redeployment_order") {
-			if constexpr(std::is_same_v<T, dcon::army_id>) {
-				return make_element_by_type<strategic_redeployment_order_button>(state, id);
-			} else {
-				return make_element_by_type<invisible_element>(state, id);
-			}
+			return make_element_by_type<invisible_element>(state, id);
 		} else if(name == "pursue_order") {
-			if constexpr(std::is_same_v<T, dcon::army_id>) {
-				return make_element_by_type<pursue_to_engage_order_button>(state, id);
-			} else {
-				return make_element_by_type<invisible_element>(state, id);
-			}
+			return make_element_by_type<invisible_element>(state, id);
 		} else {
 			return nullptr;
 		}
@@ -3663,8 +3643,6 @@ public:
 
 void mulit_unit_selection_panel::on_create(sys::state& state) noexcept {
 	window_element_base::on_create(state);
-	auto ptr = make_element_by_type<multi_unit_details_ai_controlled>(state, "alice_enable_ai_controlled_multi");
-	add_child_to_front(std::move(ptr));
 }
 std::unique_ptr<element_base> mulit_unit_selection_panel::make_child(sys::state& state, std::string_view name, dcon::gui_def_id id) noexcept {
 	if(name == "desc") {
@@ -4260,7 +4238,10 @@ std::unique_ptr<element_base> army_group_details_window::make_child(sys::state& 
 
 std::unique_ptr<element_base> army_management_window::make_child(sys::state& state, std::string_view name, dcon::gui_def_id id) noexcept {
 	if(name == "new_army_group_button") {
-		return make_element_by_type<new_army_group_button>(state, id);
+		// Project Alice's battle-planner/automated army groups are not part of
+		// the restored Victoria 2 interface. Keep the definition loadable for
+		// save/asset compatibility, but do not expose its entry point.
+		return make_element_by_type<invisible_element>(state, id);
 	} else {
 		return nullptr;
 	}

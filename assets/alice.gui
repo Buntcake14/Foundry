@@ -6077,9 +6077,9 @@ instantTextBoxType = {
 guiButtonType = {
 	name = "foundry_urban_center_button"
 	position = { 205 39 }
-	quadTextureSprite = "GFX_button_standard_144"
+	quadTextureSprite = "GFX_foundry_primary_button_144"
 	buttonText = "BUILD URBAN CENTER"
-	buttonFont = "vic_18_black"
+	buttonFont = "vic_18"
 	Orientation = "UPPER_LEFT"
 	clicksound = click
 }
@@ -6087,19 +6087,19 @@ guiButtonType = {
 guiButtonType = {
 	name = "foundry_road_button"
 	position = { 55 39 }
-	quadTextureSprite = "GFX_button_standard_144"
+	quadTextureSprite = "GFX_foundry_primary_button_144"
 	buttonText = "ROADS"
-	buttonFont = "vic_18_black"
+	buttonFont = "vic_18"
 	Orientation = "UPPER_LEFT"
 	clicksound = click
 }
 
 guiButtonType = {
 	name = "foundry_rgo_upgrade_button"
-	position = { 242 190 }
-	quadTextureSprite = "GFX_button_standard_144"
+	position = { 242 184 }
+	quadTextureSprite = "GFX_foundry_primary_button_144"
 	buttonText = "UPGRADE RGO"
-	buttonFont = "vic_18_black"
+	buttonFont = "vic_18"
 	Orientation = "UPPER_LEFT"
 	clicksound = click
 }
@@ -6120,7 +6120,7 @@ windowType = {
 	}
 	guiButtonType = {
 		name = "close_button"
-		quadTextureSprite = "GFX_main_close_button"
+		quadTextureSprite = "GFX_foundry_close_button_24"
 		position = { 374 -16 }
 		Orientation = "UPPER_LEFT"
 	}
@@ -6142,7 +6142,7 @@ windowType = {
 	}
 	iconType = {
 		name = "stats_background"
-		spriteType = "GFX_foundry_urban_stats_box"
+		spriteType = "GFX_foundry_inset_panel_250"
 		position = { 70 158 }
 		Orientation = "UPPER_LEFT"
 	}
@@ -6199,16 +6199,17 @@ windowType = {
 	instantTextBoxType = { name = "capacity_chart_label" position = { 74 239 } font = "vic_18_black" text = "CAPACITY" maxWidth = 100 maxHeight = 18 format = centre fixedsize = yes }
 	iconType = { name = "capacity_chart" spriteType = "GFX_province_chart" position = { 124 263 } Orientation = "UPPER_LEFT" }
 	iconType = { name = "capacity_overlay" spriteType = "GFX_chart_overlay_small" position = { 93 256 } Orientation = "UPPER_LEFT" }
+	iconType = { name = "progress_header_background" spriteType = "GFX_foundry_section_header_360" position = { 10 316 } Orientation = "UPPER_LEFT" }
 	iconType = {
 		name = "construction_progress"
 		spriteType = "GFX_foundry_urban_progress"
-		position = { 141 332 }
+		position = { 82 323 }
 		Orientation = "UPPER_LEFT"
 	}
 	instantTextBoxType = {
 		name = "progress_text"
 		position = { 16 326 }
-		font = "vic_18_black"
+		font = "vic_18"
 		text = "NO CONSTRUCTION IN PROGRESS"
 		maxWidth = 372
 		maxHeight = 18
@@ -6218,30 +6219,20 @@ windowType = {
 	guiButtonType = {
 		name = "upgrade_button"
 		position = { 102 348 }
-		quadTextureSprite = "GFX_button_standard_200"
+		quadTextureSprite = "GFX_foundry_primary_button_200"
 		buttonText = "BUILD URBAN CENTER"
-		buttonFont = "vic_18_black"
+		buttonFont = "vic_18"
 		Orientation = "UPPER_LEFT"
 		clicksound = click
 	}
-	iconType = {
-		name = "goods_header_background"
-		spriteType = "GFX_foundry_urban_subheader"
-		position = { 10 397 }
-		Orientation = "UPPER_LEFT"
-	}
-	instantTextBoxType = {
-		name = "goods_header"
-		position = { 18 402 }
-		font = "vic_18"
-		text = "NEXT LEVEL CONSTRUCTION GOODS"
-		maxWidth = 380
-		maxHeight = 18
-		format = centre
-		fixedsize = yes
-	}
-	instantTextBoxType = { name = "goods_0" position = { 24 431 } font = "vic_18_black" text = "" maxWidth = 368 maxHeight = 18 format = left fixedsize = yes }
-	instantTextBoxType = { name = "goods_1" position = { 24 452 } font = "vic_18_black" text = "" maxWidth = 368 maxHeight = 18 format = left fixedsize = yes }
-	instantTextBoxType = { name = "goods_2" position = { 24 473 } font = "vic_18_black" text = "" maxWidth = 368 maxHeight = 18 format = left fixedsize = yes }
+	guiButtonType = { name = "test_tab_construction" position = { 10 397 } quadTextureSprite = "GFX_foundry_subtabs_120" buttonText = "CONSTRUCTION" buttonFont = "vic_18" Orientation = "UPPER_LEFT" clicksound = click }
+	guiButtonType = { name = "test_tab_supply" position = { 130 397 } quadTextureSprite = "GFX_foundry_subtabs_120" buttonText = "SUPPLY" buttonFont = "vic_18" Orientation = "UPPER_LEFT" clicksound = click }
+	guiButtonType = { name = "test_tab_effects" position = { 250 397 } quadTextureSprite = "GFX_foundry_subtabs_120" buttonText = "EFFECTS" buttonFont = "vic_18" Orientation = "UPPER_LEFT" clicksound = click }
+	iconType = { name = "effect_status_0" spriteType = "GFX_foundry_status_indicators_24" position = { 14 426 } Orientation = "UPPER_LEFT" }
+	iconType = { name = "effect_status_1" spriteType = "GFX_foundry_status_indicators_24" position = { 14 447 } Orientation = "UPPER_LEFT" }
+	iconType = { name = "effect_status_2" spriteType = "GFX_foundry_status_indicators_24" position = { 14 468 } Orientation = "UPPER_LEFT" }
+	instantTextBoxType = { name = "goods_0" position = { 40 431 } font = "vic_18_black" text = "" maxWidth = 344 maxHeight = 18 format = left fixedsize = yes }
+	instantTextBoxType = { name = "goods_1" position = { 40 452 } font = "vic_18_black" text = "" maxWidth = 344 maxHeight = 18 format = left fixedsize = yes }
+	instantTextBoxType = { name = "goods_2" position = { 40 473 } font = "vic_18_black" text = "" maxWidth = 344 maxHeight = 18 format = left fixedsize = yes }
 }
 }

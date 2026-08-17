@@ -880,45 +880,11 @@ public:
 };
 
 struct open_msg_log_data {};
-struct expand_mapmodes_data {
-	bool expand;
-};
-
-class expand_mapmodes_button : public button_element_base {
-	bool toggle = false;
-public:
-	void button_action(sys::state& state) noexcept override {
-		toggle = !toggle;
-		frame = (toggle) ? 1 : 0;
-		send(state, parent, expand_mapmodes_data{ toggle });
-	}
-};
-
 class minimap_open_message_log_button : public button_element_base {
 public:
 	void button_action(sys::state& state) noexcept override {
 		send(state, parent, open_msg_log_data{});
 		set_visible(state, false);
-	}
-};
-class minimap_open_economy_scene : public button_element_base {
-public:
-	void button_action(sys::state& state) noexcept override {
-		game_scene::switch_scene(state, game_scene::scene_id::in_game_economy_viewer);
-	}
-};
-class minimap_toggle_sun : public button_element_base {
-public:
-	void button_action(sys::state& state) noexcept override {
-		state.map_state.light_on = !state.map_state.light_on;
-		frame = state.map_state.light_on ? 0 : 1;
-	}
-};
-class minimap_toggle_sun_pause : public button_element_base {
-public:
-	void button_action(sys::state& state) noexcept override {
-		state.map_state.light_rotate = !state.map_state.light_rotate;
-		frame = state.map_state.light_rotate ? 1 : 0;
 	}
 };
 class minimap_zoom_in_button : public button_element_base {
@@ -949,8 +915,7 @@ public:
 class minimap_container_window : public window_element_base {
 	const std::string_view mapmode_btn_prefix{"mapmode_"};
 	minimap_open_message_log_button* open_btn = nullptr;
-	bool expand_mapmodes = false;
-	std::array<minimap_mapmode_button*, 45> mapmode_buttons = {};
+	std::array<minimap_mapmode_button*, 23> mapmode_buttons = {};
 public:
 	std::unique_ptr<element_base> make_child(sys::state& state, std::string_view name, dcon::gui_def_id id) noexcept override {
 		if(name == "messagelog_window") {
@@ -966,18 +931,8 @@ public:
 			ptr->base_data.position.y += 1; //nudge
 			open_btn = ptr.get();
 			return ptr;
-		} else if(name == "economy-scene-enter-button") {
-			return make_element_by_type<minimap_open_economy_scene>(state, id);
-		} else if(name == "sun-pause-button") {
-			return make_element_by_type<minimap_toggle_sun_pause>(state, id);
-		} else if(name == "sun-button") {
-			return make_element_by_type<minimap_toggle_sun>(state, id);
 		} else if(name == "menu_button") {
 			return make_element_by_type<minimap_menu_button>(state, id);
-		} else if(name == "button_macro") {
-			return make_element_by_type<minimap_macro_builder_button>(state, id);
-		} else if(name == "button_console") {
-			return make_element_by_type<minimap_console_button>(state, id);
 		} else if(name == "button_goto") {
 			return make_element_by_type<minimap_goto_button>(state, id);
 		} else if(name == "ledger_button") {
@@ -1010,15 +965,9 @@ public:
 			}
 			ptr->target = static_cast<map_mode::mode>(num);
 
-			if(num > 22 && !expand_mapmodes) {
-				ptr->set_visible(state, false);
-			}
-
+			if(num >= mapmode_buttons.size())
+				return make_element_by_type<invisible_element>(state, id);
 			mapmode_buttons[num] = ptr.get();
-			return ptr;
-		}
-		else if(name == "expand_mapmodes_button") {
-			auto ptr = make_element_by_type<expand_mapmodes_button>(state, id);
 			return ptr;
 		}
 		else {
@@ -1036,12 +985,7 @@ public:
 			if(ptr == nullptr) {
 				continue;
 			}
-			if(i > 22 && !expand_mapmodes) {
-				ptr->set_visible(state, false);
-			}
-			else {
-				ptr->set_visible(state, true);
-			}
+			ptr->set_visible(state, true);
 		}
 	}
 
@@ -1054,13 +998,6 @@ public:
 	message_result get(sys::state& state, Cyto::Any& payload) noexcept override {
 		if(payload.holds_type<open_msg_log_data>()) {
 			state.ui_state.msg_log_window->set_visible(state, !state.ui_state.msg_log_window->is_visible());
-			return message_result::consumed;
-		}
-		if(payload.holds_type<expand_mapmodes_data>()) {
-			auto p = any_cast<expand_mapmodes_data>(payload);
-			expand_mapmodes = p.expand;
-			on_update(state);
-
 			return message_result::consumed;
 		}
 		return message_result::unseen;

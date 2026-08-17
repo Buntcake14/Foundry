@@ -814,18 +814,6 @@ void base_event_window::on_create(sys::state& state) noexcept {
 	if(get_pool_slot() == event_pool_slot::province) {
 		image->set_visible(state, false);
 		{
-			auto ptr = make_element_by_type<event_requirements_icon>(state, state.ui_state.defs_by_name.find(state.lookup_key("alice_event_requirements"))->second.definition);
-			ptr->base_data.position.y = int16_t(355);
-			ptr->base_data.position.x += int16_t(ptr->base_data.size.x + 140);
-			add_child_to_front(std::move(ptr));
-		}
-		{
-			auto ptr = make_element_by_type<event_odds_icon>(state, state.ui_state.defs_by_name.find(state.lookup_key("alice_event_odds"))->second.definition);
-			ptr->base_data.position.y = int16_t(355);
-			ptr->base_data.position.x += int16_t(ptr->base_data.size.x * 2 + 140);
-			add_child_to_front(std::move(ptr));
-		}
-		{
 			xy_pair cur_offset = state.ui_defs.gui[state.ui_state.defs_by_name.find(state.lookup_key(get_option_start_element_name()))->second.definition].position;
 			cur_offset.y += 22;
 			auto ptr = make_element_by_type<provincial_event_listbox>(state, state.ui_state.defs_by_name.find(state.lookup_key("alice_povince_event_opts_list"))->second.definition);
@@ -834,18 +822,6 @@ void base_event_window::on_create(sys::state& state) noexcept {
 			add_child_to_front(std::move(ptr));
 		}
 	} else {
-		{
-			auto ptr = make_element_by_type<event_requirements_icon>(state, state.ui_state.defs_by_name.find(state.lookup_key("alice_event_requirements"))->second.definition);
-			ptr->base_data.position.y = 20;
-			ptr->base_data.position.x += ptr->base_data.size.x;
-			add_child_to_front(std::move(ptr));
-		}
-		{
-			auto ptr = make_element_by_type<event_odds_icon>(state, state.ui_state.defs_by_name.find(state.lookup_key("alice_event_odds"))->second.definition);
-			ptr->base_data.position.y = 20;
-			ptr->base_data.position.x += ptr->base_data.size.x * 2;
-			add_child_to_front(std::move(ptr));
-		}
 		xy_pair cur_offset = state.ui_defs.gui[state.ui_state.defs_by_name.find(state.lookup_key(get_option_start_element_name()))->second.definition].position;
 		if(get_pool_slot() == event_pool_slot::country_election) {
 			auto ptr = make_element_by_type<national_election_event_listbox>(state, state.ui_state.defs_by_name.find(state.lookup_key("alice_election_event_opts_list"))->second.definition);

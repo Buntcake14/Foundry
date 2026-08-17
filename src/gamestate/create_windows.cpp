@@ -239,11 +239,9 @@ void create_in_game_windows(sys::state& state) {
 		static_cast<ui::rgo_icon*>(ptr.get())->content = id;
 		state.ui_state.rgos_root->add_child_to_front(std::move(ptr));
 	});
-	province::for_each_land_province(state, [&](dcon::province_id id) {
-		auto ptr = ui::make_element_by_type<ui::province_details_container>(state, "alice_province_values");
-		static_cast<ui::province_details_container*>(ptr.get())->prov = id;
-		state.ui_state.province_details_root->add_child_to_front(std::move(ptr));
-	});
+	// Project Alice's province-details overlay added custom capital, railway,
+	// fort, bank, and university markers directly to the main map. Foundry does
+	// not instantiate it; infrastructure will use Foundry's own map language.
 	{
 		auto new_elm = ui::make_compact_chat_messages_list(state, "chat_list");
 		new_elm->base_data.position.x += 156; // nudge

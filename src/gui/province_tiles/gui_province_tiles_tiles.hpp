@@ -130,8 +130,8 @@ public:
 	}
 
 	void button_action(sys::state& state, province_tile target, ui::element_base* parent) noexcept override {
-		// Switch to economy scene on click
-		game_scene::switch_scene(state, game_scene::scene_id::in_game_economy_viewer);
+		// Foundry keeps this as an informational province tile. Project Alice's
+		// full-screen economy overlay is intentionally not exposed by the base UI.
 	}
 
 	void update_tooltip(sys::state& state, int32_t x, int32_t y, text::columnar_layout& contents, province_tile target) noexcept override {
@@ -255,8 +255,7 @@ public:
 	}
 
 	void button_action(sys::state& state, province_tile target, ui::element_base* parent) noexcept override {
-		// Switch to economy scene on click
-		game_scene::switch_scene(state, game_scene::scene_id::in_game_economy_viewer);
+		// Informational only; do not enter Project Alice's economy overlay.
 	}
 
 	void update_tooltip(sys::state& state, int32_t x, int32_t y, text::columnar_layout& contents, province_tile target) noexcept override {
@@ -809,8 +808,7 @@ public:
 	}
 
 	void button_action(sys::state& state, province_tile target, ui::element_base* parent) noexcept override {
-		// Switch to economy scene on click
-		game_scene::switch_scene(state, game_scene::scene_id::in_game_economy_viewer);
+		// Informational only; do not enter Project Alice's economy overlay.
 	}
 
 	void update_tooltip(sys::state& state, int32_t x, int32_t y, text::columnar_layout& contents, province_tile target) noexcept override {

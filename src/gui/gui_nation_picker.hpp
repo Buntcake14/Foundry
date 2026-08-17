@@ -883,17 +883,18 @@ public:
 		} else if(name == "play_button") {
 			return make_element_by_type<start_game_button>(state, id);
 		} else if(name == "chatlog") {
-			auto ptr = make_element_by_type<nation_alice_readme_text>(state, state.ui_state.defs_by_name.find(state.lookup_key("alice_readme_text"))->second.definition);
-			add_child_to_front(std::move(ptr));
+			// Project Alice used the otherwise-unused lobby chat region for its
+			// readme. Foundry leaves this area clear until its own nation-picker
+			// layout is implemented.
 			return make_element_by_type<invisible_element>(state, id);
 		} else if(name == "observer_button") {
-			return make_element_by_type<observer_button>(state, id);
+			return make_element_by_type<invisible_element>(state, id);
 
 		} else if(name == "gamerules_button") {
-			return make_element_by_type< gamerules_button>(state, id);
+			return make_element_by_type<invisible_element>(state, id);
 		}
 		else if(name == "show_all_saves_setting_container") {
-			return make_element_by_type<show_all_saves_setting_container>(state, id);
+			return make_element_by_type<invisible_element>(state, id);
 		}
 		return nullptr;
 	}

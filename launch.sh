@@ -31,6 +31,20 @@ cmake -E copy_if_different "$FOUNDRY_DIR/assets/foundry_urban_subheader.png" "$V
 cmake -E copy_if_different "$FOUNDRY_DIR/assets/foundry_urban_subheader_wide.png" "$V2_DIR/assets/foundry_urban_subheader_wide.png"
 cmake -E copy_if_different "$FOUNDRY_DIR/assets/foundry_urban_stats_box.png" "$V2_DIR/assets/foundry_urban_stats_box.png"
 cmake -E copy_if_different "$FOUNDRY_DIR/assets/foundry_urban_stats_box_v2.png" "$V2_DIR/assets/foundry_urban_stats_box_v2.png"
+cmake -E make_directory "$V2_DIR/assets/foundry_ui/buttons"
+cmake -E copy_if_different "$FOUNDRY_DIR/assets/foundry_ui/buttons/foundry_primary_button_200x48_v1.png" "$V2_DIR/assets/foundry_ui/buttons/foundry_primary_button_200x48_v1.png"
+cmake -E copy_if_different "$FOUNDRY_DIR/assets/foundry_ui/buttons/foundry_primary_button_144x30_v1.png" "$V2_DIR/assets/foundry_ui/buttons/foundry_primary_button_144x30_v1.png"
+cmake -E copy_if_different "$FOUNDRY_DIR/assets/foundry_ui/buttons/foundry_close_button_24x24_v1.png" "$V2_DIR/assets/foundry_ui/buttons/foundry_close_button_24x24_v1.png"
+cmake -E make_directory "$V2_DIR/assets/foundry_ui/tabs"
+cmake -E copy_if_different "$FOUNDRY_DIR/assets/foundry_ui/tabs/foundry_subtabs_120x30_v1.png" "$V2_DIR/assets/foundry_ui/tabs/foundry_subtabs_120x30_v1.png"
+cmake -E make_directory "$V2_DIR/assets/foundry_ui/frames"
+cmake -E copy_if_different "$FOUNDRY_DIR/assets/foundry_ui/frames/foundry_inset_panel_250x66_v1.png" "$V2_DIR/assets/foundry_ui/frames/foundry_inset_panel_250x66_v1.png"
+cmake -E copy_if_different "$FOUNDRY_DIR/assets/foundry_ui/frames/foundry_section_header_360x28_v1.png" "$V2_DIR/assets/foundry_ui/frames/foundry_section_header_360x28_v1.png"
+cmake -E make_directory "$V2_DIR/assets/foundry_ui/icons"
+cmake -E copy_if_different "$FOUNDRY_DIR/assets/foundry_ui/icons/foundry_status_indicators_24x24_v1.png" "$V2_DIR/assets/foundry_ui/icons/foundry_status_indicators_24x24_v1.png"
+cmake -E make_directory "$V2_DIR/assets/foundry_ui/controls"
+cmake -E copy_if_different "$FOUNDRY_DIR/assets/foundry_ui/controls/foundry_progress_fill_240x14_v1.png" "$V2_DIR/assets/foundry_ui/controls/foundry_progress_fill_240x14_v1.png"
+cmake -E copy_if_different "$FOUNDRY_DIR/assets/foundry_ui/controls/foundry_progress_empty_240x14_v1.png" "$V2_DIR/assets/foundry_ui/controls/foundry_progress_empty_240x14_v1.png"
 
 # Foundry is the base game, not a Victoria 2 mod. Keep Foundry-owned Production
 # UI definitions and graphics in the base runtime so they load with no mod

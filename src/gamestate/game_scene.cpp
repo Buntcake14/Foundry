@@ -777,14 +777,6 @@ void in_game_hotkeys(sys::state& state, sys::virtual_key keycode, sys::key_modif
 			center_on_capital(state, state.local_player_nation);
 		} else if(keycode == sys::virtual_key::TAB) {
 			state.current_scene.open_chat(state);
-		} else if(keycode == sys::virtual_key::Z && state.ui_state.ctrl_held_down) {
-			// Battleplanner scene hotkey
-			switch_scene(state, scene_id::in_game_military);
-		} else if(keycode == sys::virtual_key::N && state.ui_state.ctrl_held_down) {
-			// Economy scene hotkey
-			switch_scene(state, scene_id::in_game_economy_viewer);
-		}else if(keycode == sys::virtual_key::M && state.ui_state.ctrl_held_down) {
-			switch_scene(state, scene_id::in_game_production_view);
 		} else if(keycode == sys::virtual_key::NUMPAD1 || keycode == sys::virtual_key::NUM_1) {
 			ctrl_group = 1;
 		} else if(keycode == sys::virtual_key::NUMPAD2 || keycode == sys::virtual_key::NUM_2) {

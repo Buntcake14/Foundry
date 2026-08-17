@@ -19,6 +19,7 @@
 #include "economy_tooltips.hpp"
 #include "alice_ui.hpp"
 #include "economy.hpp"
+#include "economy_stats.hpp"
 #include "economy_production.hpp"
 #include "civic_buildings.hpp"
 
@@ -198,13 +199,49 @@ public:
 	}
 };
 
-class urban_center_detail_window : public window_element_base {
+enum class urban_center_test_tab : uint8_t {
+	construction,
+	supply,
+	effects
+};
+
+class urban_center_status_indicator : public image_element_base {
+public:
+	uint8_t effect_index = 0;
+
+	tooltip_behavior has_tooltip(sys::state&) noexcept override {
+		return tooltip_behavior::variable_tooltip;
+	}
+
+	void update_tooltip(sys::state& state, int32_t, int32_t,
+			text::columnar_layout& contents) noexcept override {
+		auto box = text::open_layout_box(contents);
+		switch(effect_index) {
+		case 0:
+			text::add_unparsed_text_to_layout_box(state, contents, box,
+				"Urban Center levels provide building slots. Factories reserve one slot when construction begins.");
+			break;
+		case 1:
+			text::add_unparsed_text_to_layout_box(state, contents, box,
+				"Urban Center levels can unlock factory and administration construction in this province.");
+			break;
+		default:
+			text::add_unparsed_text_to_layout_box(state, contents, box,
+				"Urban development consumes resource-extraction land and reduces this province's RGO output.");
+			break;
+		}
+		text::close_layout_box(contents, box);
+	}
+};
+
+class urban_center_detail_window : public generic_tabbed_window<urban_center_test_tab> {
 	simple_text_element_base* level_value = nullptr;
 	simple_text_element_base* era_text = nullptr;
 	simple_text_element_base* capacity_value = nullptr;
 	urban_center_progress_bar* construction_progress = nullptr;
 	simple_text_element_base* progress_text = nullptr;
 	std::array<simple_text_element_base*, economy::commodity_set::set_size> goods_text{};
+	std::array<urban_center_status_indicator*, 3> effect_status{};
 public:
 	std::unique_ptr<element_base> make_child(sys::state& state, std::string_view name,
 			dcon::gui_def_id id) noexcept override {
@@ -214,13 +251,28 @@ public:
 			return make_element_by_type<urban_center_close_button>(state, id);
 		if(name == "density_image")
 			return make_element_by_type<urban_center_density_image>(state, id);
-		if(name == "urban_title" || name == "goods_header" || name == "capacity_chart_label"
+		if(name == "urban_title" || name == "capacity_chart_label"
 				|| name == "level_label" || name == "capacity_label")
 			return make_element_by_type<simple_text_element_base>(state, id);
 		if(name == "capacity_chart")
 			return make_element_by_type<urban_center_capacity_piechart>(state, id);
-		if(name == "capacity_overlay" || name == "goods_header_background" || name == "stats_background")
+		if(name == "capacity_overlay" || name == "stats_background" || name == "progress_header_background")
 			return make_element_by_type<image_element_base>(state, id);
+		if(name == "test_tab_construction" || name == "test_tab_supply" || name == "test_tab_effects") {
+			auto ptr = make_element_by_type<generic_tab_button<urban_center_test_tab>>(state, id);
+			ptr->target = name == "test_tab_construction" ? urban_center_test_tab::construction
+				: name == "test_tab_supply" ? urban_center_test_tab::supply
+				: urban_center_test_tab::effects;
+			return ptr;
+		}
+		for(uint8_t i = 0; i < effect_status.size(); ++i) {
+			if(name == "effect_status_" + std::to_string(i)) {
+				auto ptr = make_element_by_type<urban_center_status_indicator>(state, id);
+				ptr->effect_index = i;
+				effect_status[i] = ptr.get();
+				return ptr;
+			}
+		}
 		if(name == "level_value") {
 			auto ptr = make_element_by_type<simple_text_element_base>(state, id);
 			level_value = ptr.get();
@@ -256,6 +308,17 @@ public:
 			}
 		}
 		return nullptr;
+	}
+
+	message_result get(sys::state& state, Cyto::Any& payload) noexcept override {
+		if(payload.holds_type<urban_center_test_tab>()) {
+			active_tab = any_cast<urban_center_test_tab>(payload);
+			// Tab changes are UI actions and must refresh immediately even while the
+			// simulation is paused (the normal daily update will not run then).
+			impl_on_update(state);
+			return message_result::consumed;
+		}
+		return generic_tabbed_window<urban_center_test_tab>::get(state, payload);
 	}
 
 	void on_update(sys::state& state) noexcept override {
@@ -300,20 +363,58 @@ public:
 
 		for(auto* row : goods_text)
 			if(row) row->set_text(state, "");
-		if(level >= max_level)
+		for(auto* indicator : effect_status)
+			if(indicator) indicator->set_visible(state, active_tab == urban_center_test_tab::effects);
+		if(active_tab == urban_center_test_tab::effects) {
+			auto factory_access = civic_buildings::province_unlocks_factories(state, province);
+			auto admin_access = civic_buildings::province_unlocks_admin_buildings(state, province);
+			auto rgo_penalty = civic_buildings::province_urban_rgo_penalty(state, province);
+			if(effect_status[0]) effect_status[0]->frame = capacity > 0 ? 0 : 3;
+			if(effect_status[1]) effect_status[1]->frame = factory_access && admin_access ? 0 : 1;
+			if(effect_status[2]) effect_status[2]->frame = rgo_penalty > 0.f ? 2 : 3;
+			if(goods_text[0])
+				goods_text[0]->set_text(state, "BUILDING SLOTS   "
+					+ std::string(capacity > 0 ? "+" : "") + std::to_string(capacity)
+					+ "   (" + std::to_string(used) + " USED)");
+			if(goods_text[1])
+				goods_text[1]->set_text(state, "FACTORY / ADMIN ACCESS   "
+					+ std::string(factory_access ? "OPEN" : "LOCKED") + " / "
+					+ std::string(admin_access ? "OPEN" : "LOCKED"));
+			if(goods_text[2])
+				goods_text[2]->set_text(state, "RESOURCE EXTRACTION OUTPUT   "
+					+ std::string(rgo_penalty > 0.f ? "-" : "")
+					+ text::format_percentage(rgo_penalty, 0));
 			return;
+		}
+		if(level >= max_level) {
+			if(goods_text[0])
+				goods_text[0]->set_text(state, "MAXIMUM URBAN CENTER LEVEL REACHED");
+			return;
+		}
 		auto const& next = state.world.civic_building_type_get_levels(type)[level];
+		auto market = dcon::fatten(state.world, province)
+			.get_state_membership().get_market_from_local_market();
 		for(uint32_t i = 0; i < goods_text.size(); ++i) {
 			auto commodity = next.cost.commodity_type[i];
 			if(!commodity || !goods_text[i])
 				break;
-			auto amount = next.cost.commodity_amounts[i];
-			auto purchased = constructing
-				? state.world.province_get_civic_building_purchased_goods(province, type.index()).commodity_amounts[i]
-				: 0.f;
-			goods_text[i]->set_text(state, text::get_commodity_name_with_icon(state, commodity)
-				+ "   " + text::format_float(purchased, 1) + " / " + text::format_float(amount, 1)
-				+ " stockpiled");
+			if(active_tab == urban_center_test_tab::supply) {
+				auto availability = market
+					? std::clamp(economy::demand_satisfaction(state, market, commodity), 0.f, 1.f)
+					: 0.f;
+				auto price = market ? economy::price(state, market, commodity) : 0.f;
+				goods_text[i]->set_text(state, text::get_commodity_name_with_icon(state, commodity)
+					+ "   " + text::format_percentage(availability)
+					+ " AVAILABLE   " + text::format_money(price));
+			} else {
+				auto amount = next.cost.commodity_amounts[i];
+				auto purchased = constructing
+					? state.world.province_get_civic_building_purchased_goods(province, type.index()).commodity_amounts[i]
+					: 0.f;
+				goods_text[i]->set_text(state, text::get_commodity_name_with_icon(state, commodity)
+					+ "   " + text::format_float(purchased, 1) + " / " + text::format_float(amount, 1)
+					+ " STOCKPILED");
+			}
 		}
 	}
 };
@@ -1128,7 +1229,7 @@ public:
 			colony_button = btn.get();
 			return btn;
 		} else if(name == "alice_move_capital") {
-			return make_element_by_type<province_move_capital_button>(state, id);
+			return make_element_by_type<invisible_element>(state, id);
 		} else if(name == "alice_toggle_administration") {
 			// Removed: manual per-province administration toggling overlapped
 			// conceptually with the new urban-center/admin-building system.
@@ -1140,9 +1241,9 @@ public:
 		} else if(name == "province_victory_points") {
 			return make_element_by_type<province_victory_points_text>(state, id);
 		} else if(name == "alice_take_province") {
-			return make_element_by_type<province_take_province_button>(state, id);
+			return make_element_by_type<invisible_element>(state, id);
 		} else if(name == "alice_grant_province") {
-			return make_element_by_type<province_grant_province_button>(state, id);
+			return make_element_by_type<invisible_element>(state, id);
 		} else if(name == "national_focus") {
 			return make_element_by_type<province_national_focus_button>(state, id);
 		} else if(name == "admin_efficiency") {
