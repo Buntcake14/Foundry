@@ -2251,6 +2251,10 @@ bool process_client_outgoing_queue(sys::state& state) {
 
 bool process_server_outgoing_queue(sys::state& state) {
 	// send the commands of the server to all the clients
+	// Exclusive lock: this is the sole choke point for host-mode state mutation (both the
+	// advance_tick path and any other queued command), and webui HTTP handlers take a shared
+	// lock on the same mutex while reading state -- see webui_state_lock's declaration.
+	std::unique_lock<std::shared_mutex> webui_lock(state.webui_state_lock);
 	host_command_wrapper command_buffer;
 	bool command_executed = false;
 	while(state.network_state.server_outgoing_commands.try_dequeue(command_buffer)) {

@@ -311,6 +311,10 @@ int WINAPI wWinMain(HINSTANCE /*hInstance*/, HINSTANCE /*hPrevInstance*/, LPWSTR
 			if(game_state.host_settings.alice_expose_webui != 0) {
 				std::thread web_thread([&]() { webui::init(game_state); });
 				web_thread.detach();
+				std::thread ws_thread([&]() { webui::ws::init(game_state); });
+				ws_thread.detach();
+				std::thread ws_notify_thread([&]() { webui::ws::run_notify_loop(game_state); });
+				ws_notify_thread.detach();
 			}
 		}
 

@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>Foundry — Web UI Phase 1</title>
+	<style>
+		html, body {
+			margin: 0;
+			height: 100%;
+			background: #111;
+			color: #eee;
+			font-family: system-ui, sans-serif;
+			overflow: hidden;
+		}
+		#layout {
+			display: flex;
+			height: 100%;
+		}
+		#map-container {
+			flex: 1;
+			position: relative;
+		}
+		#map-container canvas {
+			display: block;
+		}
+		#panel {
+			width: 320px;
+			flex-shrink: 0;
+			background: #1a1a1a;
+			border-left: 1px solid #333;
+			padding: 12px;
+			overflow-y: auto;
+			box-sizing: border-box;
+		}
+		#panel h2 {
+			margin-top: 0;
+			font-size: 16px;
+		}
+		#panel pre {
+			white-space: pre-wrap;
+			word-break: break-word;
+			font-size: 12px;
+			background: #0d0d0d;
+			padding: 8px;
+			border-radius: 4px;
+		}
+		#status {
+			position: absolute;
+			top: 8px;
+			left: 8px;
+			font-size: 12px;
+			background: rgba(0, 0, 0, 0.6);
+			padding: 4px 8px;
+			border-radius: 4px;
+		}
+		#status .dot {
+			display: inline-block;
+			width: 8px;
+			height: 8px;
+			border-radius: 50%;
+			background: #a33;
+			margin-right: 6px;
+		}
+		#status.connected .dot {
+			background: #3a6;
+		}
+	</style>
+</head>
+<body>
+	<div id="layout">
+		<div id="map-container">
+			<div id="status"><span class="dot"></span><span id="status-text">connecting...</span></div>
+		</div>
+		<div id="panel">
+			<h2>Province</h2>
+			<div id="panel-content">Click a province on the map.</div>
+		</div>
+	</div>
+
+	<script type="importmap">
+	{
+		"imports": {
+			"three": "https://unpkg.com/three@0.169.0/build/three.module.js",
+			"three/addons/": "https://unpkg.com/three@0.169.0/examples/jsm/"
+		}
+	}
+	</script>
+	<script type="module" src="app.js"></script>
+</body>
+</html>

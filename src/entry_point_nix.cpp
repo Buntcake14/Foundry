@@ -3,6 +3,8 @@
 #include "game_scene.hpp"
 #include "parsers_declarations.hpp"
 
+#include "network/webapi/controllers.hpp"
+
 static sys::state game_state;
 struct scenario_file {
 	native_string file_name;
@@ -210,6 +212,7 @@ int main(int argc, char* argv[]) {
 
 	bool headless = false;
 	int headless_speed = 1;
+	bool webui_requested = false;
 
 	//No args provided. Find a vanilla scenario and create one if it does not exist.
 	if(argc <= 1) {
@@ -340,6 +343,10 @@ int main(int argc, char* argv[]) {
 				game_state.network_state.as_v6 = false;
 			} else if(native_string(argv[i]) == NATIVE("-headless")) {
 				headless = true;
+			} else if(native_string(argv[i]) == NATIVE("-webui")) {
+				// Developer convenience: skip having to hand-edit host_settings.json's
+				// alice_expose_webui flag for local testing.
+				webui_requested = true;
 			}
 		}
 	}
@@ -363,6 +370,21 @@ int main(int argc, char* argv[]) {
 
 	game_state.load_user_settings();
 	ui::populate_definitions_map(game_state);
+
+	if(webui_requested) {
+		game_state.host_settings.alice_expose_webui = 1.0f;
+	}
+
+	if(game_state.network_mode == sys::network_mode_type::host) {
+		if(game_state.host_settings.alice_expose_webui != 0) {
+			std::thread web_thread([&]() { webui::init(game_state); });
+			web_thread.detach();
+			std::thread ws_thread([&]() { webui::ws::init(game_state); });
+			ws_thread.detach();
+			std::thread ws_notify_thread([&]() { webui::ws::run_notify_loop(game_state); });
+			ws_notify_thread.detach();
+		}
+	}
 
 	if(headless) {
 		window::emit_error_message("Starting in headless mode.\n", false);
@@ -396,6 +418,7 @@ int main(int argc, char* argv[]) {
 	}
 
 	network::finish(game_state, true);
+	webui::svr.stop();
 
 	return EXIT_SUCCESS;
 }

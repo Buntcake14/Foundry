@@ -13,6 +13,7 @@
 #include "simple_fs.hpp"
 #include "network.hpp"
 #include "demographics.hpp"
+#include "province.hpp"
 
 #include <text.hpp>
 #include "json.hpp"
@@ -22,6 +23,7 @@
 
 #include "jsonlayer.hpp"
 #include "jsonlayer.cpp"
+#include "websocket.hpp"
 
 using json = nlohmann::json;
 
@@ -29,6 +31,19 @@ namespace webui {
 
 // HTTP
 static httplib::Server svr;
+
+// Wraps a route handler with a shared_lock on state.webui_state_lock, so every route is
+// safe-by-construction against the host thread's per-tick/per-command mutation (see
+// webui_state_lock's declaration in system_state.hpp and the exclusive lock taken around
+// process_server_outgoing_queue in network.cpp). New routes should go through this rather
+// than reading state directly.
+template <typename Fn>
+inline auto guarded(sys::state& state, Fn&& fn) {
+	return [&state, fn = std::forward<Fn>(fn)](const httplib::Request& req, httplib::Response& res) {
+		std::shared_lock<std::shared_mutex> read_lock(state.webui_state_lock);
+		fn(req, res);
+	};
+}
 
 inline void init(sys::state& state) noexcept {
 
@@ -41,16 +56,18 @@ inline void init(sys::state& state) noexcept {
 	*/
 
 	svr.Get("/", [](const httplib::Request&, httplib::Response& res) {
-		res.set_content("Homepage", "text/plain");
+		res.set_redirect("/app/");
 	});
 
-	svr.Get("/date", [&](const httplib::Request& req, httplib::Response& res) {
+	svr.set_mount_point("/app", "./web");
+
+	svr.Get("/date", guarded(state, [&](const httplib::Request& req, httplib::Response& res) {
 		json j = format_date(state, state.current_date);
-		res.set_content(j.dump(), "text/plain");
-	});
+		res.set_content(j.dump(), "application/json");
+	}));
 
 
-	svr.Get("/nation/all", [&](const httplib::Request& req, httplib::Response& res) {
+	svr.Get("/nation/all", guarded(state, [&](const httplib::Request& req, httplib::Response& res) {
 		json jlist = json::array();
 
 		for(auto nation : state.world.in_nation) {
@@ -59,11 +76,11 @@ inline void init(sys::state& state) noexcept {
 				jlist.push_back(j);
 			}
 
-		res.set_content(jlist.dump(), "text/plain");
+		res.set_content(jlist.dump(), "application/json");
 
-	});
+	}));
 
-	svr.Get(R"(/nation/(\d+))", [&](const httplib::Request& req, httplib::Response& res) {
+	svr.Get(R"(/nation/(\d+))", guarded(state, [&](const httplib::Request& req, httplib::Response& res) {
 		auto match = req.matches[1];
 		auto nationnum = std::atoi(match.str().c_str());
 
@@ -71,30 +88,30 @@ inline void init(sys::state& state) noexcept {
 
 		auto j = format_nation(state, n);
 
-		res.set_content(j.dump(), "text/plain");
-	});
+		res.set_content(j.dump(), "application/json");
+	}));
 
-	svr.Get(R"(/factory/(\d+))", [&](const httplib::Request& req, httplib::Response& res) {
+	svr.Get(R"(/factory/(\d+))", guarded(state, [&](const httplib::Request& req, httplib::Response& res) {
 		auto match = req.matches[1];
 		auto facnum = std::atoi(match.str().c_str());
 		dcon::factory_id f{ dcon::factory_id::value_base_t(facnum) };
 
 		auto j = format_factory(state, f);
 
-		res.set_content(j.dump(), "text/plain");
-	});
+		res.set_content(j.dump(), "application/json");
+	}));
 
-	svr.Get("/commodity/all", [&](const httplib::Request& req, httplib::Response& res) {
+	svr.Get("/commodity/all", guarded(state, [&](const httplib::Request& req, httplib::Response& res) {
 		json jlist = json::array();
 
 		for(auto commodity : state.world.in_commodity) {
 			jlist.push_back(format_commodity(state, commodity));
 		}
 
-		res.set_content(jlist.dump(), "text/plain");
-	});
+		res.set_content(jlist.dump(), "application/json");
+	}));
 
-	svr.Get("/routes", [&](const httplib::Request& req, httplib::Response& res) {
+	svr.Get("/routes", guarded(state, [&](const httplib::Request& req, httplib::Response& res) {
 		json jlist = json::array();
 
 		for(auto cid : state.world.in_commodity) {
@@ -162,10 +179,10 @@ inline void init(sys::state& state) noexcept {
 			});
 		}
 
-		res.set_content(jlist.dump(), "text/plain");
-	});
+		res.set_content(jlist.dump(), "application/json");
+	}));
 
-	svr.Get(R"(/province/(\d+))", [&](const httplib::Request& req, httplib::Response& res) {
+	svr.Get(R"(/province/(\d+))", guarded(state, [&](const httplib::Request& req, httplib::Response& res) {
 		auto match = req.matches[1];
 		auto provnum = std::atoi(match.str().c_str());
 
@@ -173,10 +190,10 @@ inline void init(sys::state& state) noexcept {
 
 		auto j = format_province(state, p);
 
-		res.set_content(j.dump(), "text/plain");
-	});
+		res.set_content(j.dump(), "application/json");
+	}));
 
-	svr.Get("/province/all", [&](const httplib::Request& req, httplib::Response& res) {
+	svr.Get("/province/all", guarded(state, [&](const httplib::Request& req, httplib::Response& res) {
 		json jlist = json::array();
 
 		for(auto prov : state.world.in_province) {
@@ -184,10 +201,10 @@ inline void init(sys::state& state) noexcept {
 			jlist.push_back(j);
 		}
 
-		res.set_content(jlist.dump(), "text/plain");
-	});
+		res.set_content(jlist.dump(), "application/json");
+	}));
 
-	svr.Get(R"(/state/(\d+))", [&](const httplib::Request& req, httplib::Response& res) {
+	svr.Get(R"(/state/(\d+))", guarded(state, [&](const httplib::Request& req, httplib::Response& res) {
 		auto match = req.matches[1];
 		auto statenum = std::atoi(match.str().c_str());
 
@@ -195,10 +212,10 @@ inline void init(sys::state& state) noexcept {
 
 		auto j = format_state(state, s);
 
-		res.set_content(j.dump(), "text/plain");
-	});
+		res.set_content(j.dump(), "application/json");
+	}));
 
-	svr.Get("/wars", [&](const httplib::Request& req, httplib::Response& res) {
+	svr.Get("/wars", guarded(state, [&](const httplib::Request& req, httplib::Response& res) {
 		json jlist = json::array();
 
 		for(auto war : state.world.in_war) {
@@ -252,10 +269,10 @@ inline void init(sys::state& state) noexcept {
 			jlist.push_back(j);
 		}
 
-		res.set_content(jlist.dump(), "text/plain");
-	});
+		res.set_content(jlist.dump(), "application/json");
+	}));
 
-	svr.Get("/crisis", [&](const httplib::Request& req, httplib::Response& res) {
+	svr.Get("/crisis", guarded(state, [&](const httplib::Request& req, httplib::Response& res) {
 		json j = json::object();
 
 		j["attacker"] = format_nation(state, state.crisis_attacker);
@@ -299,23 +316,23 @@ inline void init(sys::state& state) noexcept {
 		j["attacker_wargoals"] = jawgslist;
 		j["defender_wargoals"] = jdwgslist;
 
-		res.set_content(j.dump(), "text/plain");
-	});
+		res.set_content(j.dump(), "application/json");
+	}));
 
-	svr.Get("/unittype/all", [&](const httplib::Request& req, httplib::Response& res) {
+	svr.Get("/unittype/all", guarded(state, [&](const httplib::Request& req, httplib::Response& res) {
 		json jlist = json::array();
 
 		for(uint32_t i = 2; i < state.military_definitions.unit_base_definitions.size(); ++i) {
 			dcon::unit_type_id uid = dcon::unit_type_id{ dcon::unit_type_id::value_base_t(i) };
 			auto j = json::object();
-			
+
 			jlist.push_back(format_unit_type(state, uid));
 		}
 
-		res.set_content(jlist.dump(), "text/plain");
-	});
+		res.set_content(jlist.dump(), "application/json");
+	}));
 
-	svr.Get(R"(/army/all)", [&](const httplib::Request& req, httplib::Response& res) {
+	svr.Get(R"(/army/all)", guarded(state, [&](const httplib::Request& req, httplib::Response& res) {
 
 		auto j = json::array();
 
@@ -323,10 +340,10 @@ inline void init(sys::state& state) noexcept {
 			j.push_back(format_army(state, a));
 		}
 
-		res.set_content(j.dump(), "text/plain");
-	});
+		res.set_content(j.dump(), "application/json");
+	}));
 
-	svr.Get(R"(/navy/all)", [&](const httplib::Request& req, httplib::Response& res) {
+	svr.Get(R"(/navy/all)", guarded(state, [&](const httplib::Request& req, httplib::Response& res) {
 
 		auto j = json::array();
 
@@ -334,10 +351,10 @@ inline void init(sys::state& state) noexcept {
 			j.push_back(format_navy(state, n));
 		}
 
-		res.set_content(j.dump(), "text/plain");
-	});
+		res.set_content(j.dump(), "application/json");
+	}));
 
-	svr.Get(R"(/regiment/(\d+))", [&](const httplib::Request& req, httplib::Response& res) {
+	svr.Get(R"(/regiment/(\d+))", guarded(state, [&](const httplib::Request& req, httplib::Response& res) {
 		auto match = req.matches[1];
 		auto num = std::atoi(match.str().c_str());
 
@@ -345,10 +362,10 @@ inline void init(sys::state& state) noexcept {
 
 		auto j = format_regiment(state, p);
 
-		res.set_content(j.dump(), "text/plain");
-	});
+		res.set_content(j.dump(), "application/json");
+	}));
 
-	svr.Get(R"(/ship/(\d+))", [&](const httplib::Request& req, httplib::Response& res) {
+	svr.Get(R"(/ship/(\d+))", guarded(state, [&](const httplib::Request& req, httplib::Response& res) {
 		auto match = req.matches[1];
 		auto num = std::atoi(match.str().c_str());
 
@@ -356,8 +373,54 @@ inline void init(sys::state& state) noexcept {
 
 		auto j = format_ship(state, p);
 
-		res.set_content(j.dump(), "text/plain");
-	});
+		res.set_content(j.dump(), "application/json");
+	}));
+
+	svr.Get("/map/provinces.png", guarded(state, [&](const httplib::Request& req, httplib::Response& res) {
+		auto root = simple_fs::get_root(state.common_fs);
+		auto map_dir = simple_fs::open_directory(root, NATIVE("map"));
+
+		// Mirrors display_data::load_map_data's own fallback chain (map_data_loading.cpp) so the
+		// browser always sees exactly the file the engine itself loaded, mod overlays included --
+		// deliberately not a blind mount of the map/ directory, which would bypass simple_fs's
+		// virtual mod-overlay filesystem.
+		if(auto f = simple_fs::open_file(map_dir, NATIVE("alice_provinces.png")); f) {
+			auto content = simple_fs::view_contents(*f);
+			res.set_content(reinterpret_cast<const char*>(content.data), size_t(content.file_size), "image/png");
+			return;
+		}
+		if(auto f = simple_fs::open_file(map_dir, NATIVE("provinces.png")); f) {
+			auto content = simple_fs::view_contents(*f);
+			res.set_content(reinterpret_cast<const char*>(content.data), size_t(content.file_size), "image/png");
+			return;
+		}
+		if(auto f = simple_fs::open_file(map_dir, NATIVE("provinces.bmp")); f) {
+			auto content = simple_fs::view_contents(*f);
+			res.set_content(reinterpret_cast<const char*>(content.data), size_t(content.file_size), "image/bmp");
+			return;
+		}
+		res.status = 404;
+	}));
+
+	svr.Get("/map/province_at", guarded(state, [&](const httplib::Request& req, httplib::Response& res) {
+		json j = json::object();
+		if(!req.has_param("x") || !req.has_param("y")) {
+			res.status = 400;
+			return;
+		}
+		auto x = std::atoi(req.get_param_value("x").c_str());
+		auto y = std::atoi(req.get_param_value("y").c_str());
+		auto& map_data = state.map_state.map_data;
+		if(x < 0 || y < 0 || uint32_t(x) >= map_data.size_x || uint32_t(y) >= map_data.size_y) {
+			res.status = 400;
+			return;
+		}
+		uint32_t index = uint32_t(y) * map_data.size_x + uint32_t(x);
+		auto map_id = map_data.province_id_map[index];
+		auto prov = province::from_map_id(map_id);
+		j["province_id"] = prov.index();
+		res.set_content(j.dump(), "application/json");
+	}));
 
 	svr.listen("0.0.0.0", 1234);
 }

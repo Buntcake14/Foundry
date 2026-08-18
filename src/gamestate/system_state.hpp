@@ -1061,6 +1061,13 @@ struct alignas(64) state {
 	std::condition_variable_any game_state_resetting_cv;
 	bool yield_game_state_resetting_lock = false;
 
+	// Unrelated to game_state_resetting_lock above, which only guards full scenario reset/reload.
+	// This guards ordinary per-tick/per-command state mutation (process_server_outgoing_queue in
+	// network.cpp) against concurrent reads from the webui HTTP API thread(s). Host thread takes an
+	// exclusive lock while draining/executing queued commands; webui route handlers take a shared
+	// lock while reading state.
+	std::shared_mutex webui_state_lock;
+
 	// the following functions will be invoked by the window subsystem
 
 	void on_create(); // called once after the window is created and opengl is ready
