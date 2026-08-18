@@ -1,0 +1,16 @@
+spriteTypes = {
+	spriteType = {
+		name = "GFX_topbar_bg"
+		texturefile = "assets\\foundry_ui\\frames\\foundry_topbar_shell_1600x118_v3.png"
+		noOfFrames = 1
+	}
+	spriteType = { name = "GFX_topbar_button_production" texturefile = "assets\\foundry_ui\\frames\\foundry_topbar_module_140x92_v3.png" noOfFrames = 2 }
+	spriteType = { name = "GFX_topbar_button_budget" texturefile = "assets\\foundry_ui\\frames\\foundry_topbar_module_140x92_v3.png" noOfFrames = 2 }
+	spriteType = { name = "GFX_topbar_button_tech" texturefile = "assets\\foundry_ui\\frames\\foundry_topbar_module_140x92_v3.png" noOfFrames = 2 }
+	spriteType = { name = "GFX_topbar_button_politics" texturefile = "assets\\foundry_ui\\frames\\foundry_topbar_module_140x92_v3.png" noOfFrames = 2 }
+	spriteType = { name = "GFX_topbar_button_pops" texturefile = "assets\\foundry_ui\\frames\\foundry_topbar_module_140x92_v3.png" noOfFrames = 2 }
+	spriteType = { name = "GFX_topbar_button_trade" texturefile = "assets\\foundry_ui\\frames\\foundry_topbar_module_140x92_v3.png" noOfFrames = 2 }
+	spriteType = { name = "GFX_topbar_button_diplo" texturefile = "assets\\foundry_ui\\frames\\foundry_topbar_module_140x92_v3.png" noOfFrames = 2 }
+	spriteType = { name = "GFX_topbar_button_military" texturefile = "assets\\foundry_ui\\frames\\foundry_topbar_module_140x92_v3.png" noOfFrames = 2 }
+	spriteType = { name = "GFX_foundry_topbar_button_states" texturefile = "assets\\foundry_ui\\frames\\foundry_topbar_module_140x92_v3.png" noOfFrames = 2 }
+}

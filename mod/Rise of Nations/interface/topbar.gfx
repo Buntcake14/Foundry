@@ -107,42 +107,42 @@ spriteTypes = {
 
 	spriteType = {
 		name = "GFX_topbar_button_production"
-		texturefile = "gfx\\interface\\topbar_button_production.dds"
+		texturefile = "assets\\foundry_ui\\frames\\foundry_topbar_module_140x92_v3.png"
 		noOfFrames = 2
 	}
 	spriteType = {
 		name = "GFX_topbar_button_budget"
-		texturefile = "gfx\\interface\\topbar_button_budget.dds"
+		texturefile = "assets\\foundry_ui\\frames\\foundry_topbar_module_140x92_v3.png"
 		noOfFrames = 2
 	}
 	spriteType = {
 		name = "GFX_topbar_button_tech"
-		texturefile = "gfx\\interface\\topbar_button_tech.dds"
+		texturefile = "assets\\foundry_ui\\frames\\foundry_topbar_module_140x92_v3.png"
 		noOfFrames = 2
 	}
 	spriteType = {
 		name = "GFX_topbar_button_politics"
-		texturefile = "gfx\\interface\\topbar_button_politics.dds"
+		texturefile = "assets\\foundry_ui\\frames\\foundry_topbar_module_140x92_v3.png"
 		noOfFrames = 2
 	}
 	spriteType = {
 		name = "GFX_topbar_button_pops"
-		texturefile = "gfx\\interface\\topbar_button_pops.dds"
+		texturefile = "assets\\foundry_ui\\frames\\foundry_topbar_module_140x92_v3.png"
 		noOfFrames = 2
 	}
 	spriteType = {
 		name = "GFX_topbar_button_trade"
-		texturefile = "gfx\\interface\\topbar_button_trade.dds"
+		texturefile = "assets\\foundry_ui\\frames\\foundry_topbar_module_140x92_v3.png"
 		noOfFrames = 2
 	}
 	spriteType = {
 		name = "GFX_topbar_button_diplo"
-		texturefile = "gfx\\interface\\topbar_button_diplo.dds"
+		texturefile = "assets\\foundry_ui\\frames\\foundry_topbar_module_140x92_v3.png"
 		noOfFrames = 2
 	}
 	spriteType = {
 		name = "GFX_topbar_button_military"
-		texturefile = "gfx\\interface\\topbar_button_military.dds"
+		texturefile = "assets\\foundry_ui\\frames\\foundry_topbar_module_140x92_v3.png"
 		noOfFrames = 2
 	}
 	
@@ -272,8 +272,8 @@ spriteTypes = {
 	
 	maskedShieldType = {
 		name = "GFX_topbarflag"
-		textureFile1 = "gfx\\interface\\topbarflag_shadow.tga"
-		textureFile2 = "gfx\\interface\\topbarflag_mask.tga"
+		textureFile1 = "assets\\foundry_ui\\frames\\foundry_nation_flag_frame_84x84_v1.png"
+		textureFile2 = "assets\\foundry_ui\\frames\\foundry_nation_flag_mask_84x84_v1.png"
 		effectFile = "gfx\\FX\\maskedflag.fx"
 	}
 
@@ -287,11 +287,11 @@ spriteTypes = {
 	
 	spriteType = {
 		name = "GFX_topbar_bg"
-		texturefile = "gfx\\interface\\topbar_bg.dds"
+		texturefile = "assets\\foundry_ui\\frames\\foundry_topbar_shell_1600x118_v3.png"
 	}
 	spriteType = {
 		name = "GFX_topbar_paper"
-		texturefile = "gfx\\interface\\topbar_paper.dds"
+		texturefile = "assets\\bg_transparent.png"
 		transparencecheck = yes
 	}
 	spriteType = {
@@ -301,8 +301,7 @@ spriteTypes = {
 	}
 	spriteType = {
 		name = "GFX_topbar_flag_overlay_trans"
-		texturefile = "gfx\\interface\\topbar_flag_overlay.dds"
-		noOfFrames = 4
+		texturefile = "assets\\bg_transparent.png"
 		allwaystransparent = yes
 	}
 	spriteType = {
@@ -312,22 +311,30 @@ spriteTypes = {
 	}
 	spriteType = {
 		name = "GFX_speed_indicator"
-		texturefile = "gfx\\interface\\speed_indicator.dds"
+		texturefile = "assets\\foundry_ui\\controls\\foundry_time_indicator_24x24_v1.png"
 		noOfFrames = 6
 		transparencecheck = yes
 	}
 
 	spriteType = {
 		name = "GFX_button_speedup"
-		texturefile = "gfx\\interface\\button_speedup.dds"
-		noOfFrames = 1
+		texturefile = "assets\\foundry_ui\\controls\\foundry_time_up_24x24_v1.png"
+		noOfFrames = 2
 		effectFile = "gfx\\FX\\buttonstate.fx"
 		transparencecheck = yes
 	}
 	spriteType = {
 		name = "GFX_button_speeddown"
-		texturefile = "gfx\\interface\\button_speeddown.dds"
-		noOfFrames = 1
+		texturefile = "assets\\foundry_ui\\controls\\foundry_time_down_24x24_v1.png"
+		noOfFrames = 2
+		effectFile = "gfx\\FX\\buttonstate.fx"
+		transparencecheck = yes
+	}
+
+	spriteType = {
+		name = "GFX_foundry_pause"
+		texturefile = "assets\\foundry_ui\\controls\\foundry_time_pause_24x24_v1.png"
+		noOfFrames = 2
 		effectFile = "gfx\\FX\\buttonstate.fx"
 		transparencecheck = yes
 	}
@@ -383,5 +390,3 @@ spriteTypes = {
 	}	
 
 }
-
-

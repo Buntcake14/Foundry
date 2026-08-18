@@ -68,7 +68,9 @@ uint32_t font_size(std::string_view txt) {
 }
 
 uint32_t font_index(std::string_view txt) {
-	if(parsers::has_fixed_prefix_ci(txt.data(), txt.data() + txt.size(), "arial"))
+	if(parsers::has_fixed_prefix_ci(txt.data(), txt.data() + txt.size(), "foundry_title"))
+		return 2;
+	else if(parsers::has_fixed_prefix_ci(txt.data(), txt.data() + txt.size(), "arial"))
 		return 1;
 	else if(parsers::has_fixed_prefix_ci(txt.data(), txt.data() + txt.size(), "fps"))
 		return 1;
@@ -130,7 +132,11 @@ bool is_black_from_font_id(uint16_t id) {
 	return ((id >> 6) & 0x01) != 0;
 }
 font_selection font_index_from_font_id(sys::state& state, uint16_t id) {
-	uint32_t offset = 0;
+	if(auto it = state.font_collection.font_names.find(id); it != state.font_collection.font_names.end()) {
+		auto const name = state.to_string_view(it->second);
+		if(parsers::has_fixed_prefix_ci(name.data(), name.data() + name.size(), "foundry_title"))
+			return font_selection::title_font;
+	}
 	if(((id >> 7) & 0x01) == 0)
 		return font_selection::body_font;
 	else
@@ -431,6 +437,32 @@ void font_manager::change_locale(sys::state& state, dcon::locale_id l) {
 		}
 		state.world.locale_set_resolved_map_font(l, count);
 	}
+	{
+		std::string const fname = "foundry/Cinzel-Variable.ttf";
+		uint16_t count = 0;
+		bool resolved = false;
+		for(auto& fnt : font_array) {
+			if(fnt.file_name == fname) {
+				foundry_title_font_index = count;
+				resolved = true;
+				break;
+			}
+			++count;
+		}
+		if(!resolved) {
+			auto r = simple_fs::get_root(state.common_fs);
+			auto assets = simple_fs::open_directory(r, NATIVE("assets"));
+			auto fonts = simple_fs::open_directory(assets, NATIVE("fonts"));
+			auto ff = simple_fs::open_file(fonts, simple_fs::utf8_to_native(fname));
+			if(!ff)
+				std::abort();
+			font_array.emplace_back();
+			auto content = simple_fs::view_contents(*ff);
+			load_font(font_array.back(), content.data, content.file_size);
+			font_array.back().file_name = fname;
+			foundry_title_font_index = count;
+		}
+	}
 
 	state.reset_locale_pool();
 
@@ -501,6 +533,8 @@ font& font_manager::get_font(sys::state& state, font_selection s) {
 		return font_array[state.world.locale_get_resolved_body_font(current_locale)];
 	case font_selection::header_font:
 		return font_array[state.world.locale_get_resolved_header_font(current_locale)];
+	case font_selection::title_font:
+		return font_array[foundry_title_font_index];
 	}
 }
 
@@ -1533,4 +1567,3 @@ void convert_contour(
 }
 
 } // namespace text
-

@@ -1517,6 +1517,17 @@ And it should do so through a consistent visual language that feels deliberately
 
 # Summary
 
+## Reserved systems for the overhaul
+
+All new province, infrastructure, budget, market, and building layouts must
+allow for the recurring maintenance and selectable operating-method system
+specified in `docs/BUILDING_MAINTENANCE_AND_OPERATING_METHODS.md`. In
+particular, layouts should have reusable places for input fulfillment,
+recurring cost, current method, locked-method reasons, and current versus
+full-supply effects. These should use the toolkit's resource cards, selectors,
+status indicators, and explanatory tooltips rather than ad-hoc widgets.
+
+
 The Foundry GUI system is built around:
 
 **BURGUNDY + GOLD + PARCHMENT**

@@ -3,6 +3,12 @@
 This roadmap turns `FOUNDRY_GUI_TOOLKIT.md` into engine-ready assets and
 reusable GUI elements.
 
+The overhaul must also reserve the maintenance, recurring-cost, supply,
+operating-method, and effective-modifier patterns defined in
+`docs/BUILDING_MAINTENANCE_AND_OPERATING_METHODS.md`. Those fields are part of
+the planned Foundry information architecture even though their mechanics are
+not implemented during the toolkit phase.
+
 ## Milestone 1 — Component test window
 
 Build a development-only Foundry toolkit test window containing:
@@ -40,6 +46,12 @@ Replace the existing topbar frame and navigation with the approved structure:
 Each module is both navigation and a small national dashboard. Initial values
 must come from real game state; unavailable future values use intentionally
 empty slots rather than invented data.
+
+Status: first shell pass underway. The existing F1-F8 navigation bindings are
+preserved while the module frames and terminology move to Foundry. The States
+module is initially a non-functional reserved shell until its production
+window exists. National identity placement and the final live dashboard field
+selection follow the geometry playtest.
 
 ## Validated component inventory
 

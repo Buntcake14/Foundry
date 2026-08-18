@@ -20,7 +20,8 @@ inline constexpr int map_outline_embolden = 4;
 
 enum class font_selection {
 	body_font,
-	header_font
+	header_font,
+	title_font
 };
 
 uint16_t name_into_font_id(sys::state& state, std::string_view text);
@@ -312,6 +313,7 @@ public:
 	FT_Library ft_library;
 private:
 	std::vector<font> font_array;
+	uint16_t foundry_title_font_index = 0;
 	dcon::locale_id current_locale;
 public:
 	map_font mfont;

@@ -1,9 +1,9 @@
 display_name = Français
 script = Latn
 
-body_font = LibreCaslonText-Regular.ttf
+body_font = foundry/Lora-Variable.ttf
 
-header_font = SourceSerif4Subhead-Regular.otf
+header_font = foundry/TitilliumWeb-SemiBold.ttf
 header_feature = smcp
 
 map_font = SourceSerif4Subhead-Regular.otf
