@@ -107,7 +107,7 @@ spriteTypes = {
 
 	spriteType = {
 		name = "GFX_topbar_button_production"
-		texturefile = "assets\\foundry_ui\\frames\\foundry_topbar_module_140x92_v3.png"
+		texturefile = "assets\\foundry_ui\\frames\\foundry_topbar_economy_152x175_v1.png"
 		noOfFrames = 2
 	}
 	spriteType = {
@@ -337,6 +337,11 @@ spriteTypes = {
 		noOfFrames = 2
 		effectFile = "gfx\\FX\\buttonstate.fx"
 		transparencecheck = yes
+	}
+	spriteType = {
+		name = "GFX_foundry_topbar_economy_icon"
+		texturefile = "assets\\foundry_ui\\icons\\foundry_topbar_economy_icon_32x32_v1.png"
+		allwaystransparent = yes
 	}
 	spriteType = {
 		name = "GFX_topbar_production"

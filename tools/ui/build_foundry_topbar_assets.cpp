@@ -48,6 +48,23 @@ static void draw_triangle(std::vector<unsigned char>& image, int width, int heig
 	}
 }
 
+static void draw_gold_line(std::vector<unsigned char>& image, int width, int height,
+		int x0, int y0, int x1, int y1, int radius = 1) {
+	int const dx = std::abs(x1 - x0), sx = x0 < x1 ? 1 : -1;
+	int const dy = -std::abs(y1 - y0), sy = y0 < y1 ? 1 : -1;
+	int error = dx + dy;
+	for(;;) {
+		for(int oy = -radius; oy <= radius; ++oy)
+			for(int ox = -radius; ox <= radius; ++ox)
+				if(ox * ox + oy * oy <= radius * radius + 1)
+					put_pixel(image, width, height, x0 + ox, y0 + oy, 214, 158, 48, 255);
+		if(x0 == x1 && y0 == y1) break;
+		int const twice = 2 * error;
+		if(twice >= dy) { error += dy; x0 += sx; }
+		if(twice <= dx) { error += dx; y0 += sy; }
+	}
+}
+
 static void crop_resize(unsigned char const* src, int sw, int sh, int sx, int sy, int cw, int ch,
 		int dw, int dh, int stride, int xoff, float brightness, std::vector<unsigned char>& dst) {
 	for(int y = 0; y < dh; ++y) {
@@ -71,18 +88,22 @@ static void crop_resize(unsigned char const* src, int sw, int sh, int sx, int sy
 }
 
 int main(int argc, char** argv) {
-	if(argc != 10) return 2;
+	if(argc != 12) return 2;
 	int sw = 0, sh = 0, channels = 0;
 	auto* src = stbi_load(argv[1], &sw, &sh, &channels, 4);
 	if(!src) return 3;
+	int module_width = 0, module_height = 0, module_channels = 0;
+	auto* module_source = stbi_load(argv[2], &module_width, &module_height, &module_channels, 4);
+	if(!module_source || module_width < 2 || module_height < 1) {
+		stbi_image_free(src);
+		return 4;
+	}
 
 	// The source atlas contains a blank identity card on the left and a blank
 	// module card on the right.  Keep all labels/icons in the live GUI, never in
 	// these raster layers, so the artwork can be reused by every module.
-	std::vector<unsigned char> module(280 * 92 * 4);
-	crop_resize(src, sw, sh, 1184, 301, 476, 302, 140, 92, 280, 0, 1.0f, module);
-	crop_resize(src, sw, sh, 1184, 301, 476, 302, 140, 92, 280, 140, 1.10f, module);
-	stbi_write_png(argv[2], 280, 92, 4, module.data(), 280 * 4);
+	// argv[2] is also the verified blank two-frame module atlas. Treat it as an
+	// input; older versions of this tool overwrote it from a stale crop.
 
 	// The shell owns the wider nation identity card.  The remainder is a quiet
 	// burgundy backing strip underneath the individual module sprites.
@@ -156,5 +177,47 @@ int main(int argc, char** argv) {
 	}
 	stbi_write_png(argv[8], 84, 84, 4, flag_frame.data(), 84 * 4);
 	stbi_write_png(argv[9], 84, 84, 4, flag_mask.data(), 84 * 4);
+
+	// Phase 4: keep Economy separate until its reference-accurate geometry has
+	// been validated in game. No example labels or values are baked into this.
+	std::vector<unsigned char> economy(304 * 175 * 4);
+	for(int frame = 0; frame < 2; ++frame) {
+		auto const ox = frame * 152;
+		// Preserve the approved card's ornamental silhouette and corners.
+		crop_resize(src, sw, sh, 33, 371, 171, 166, 152, 175, 304, ox,
+			frame == 0 ? 1.0f : 1.08f, economy);
+		// Remove all mockup-only iconography and values. Live GUI elements occupy
+		// these fields at runtime over a restrained burgundy panel texture.
+		for(int y = 5; y < 170; ++y) {
+			for(int x = 5; x < 147; ++x) {
+				auto const title = y < 49;
+				auto const grain = uint8_t(((x * 13 + y * 7) & 7) / 2);
+				put_pixel(economy, 304, 175, ox + x, y,
+					uint8_t((title ? 61 : 38) + grain + frame * 5),
+					uint8_t((title ? 15 : 10) + grain / 2),
+					uint8_t((title ? 22 : 15) + grain / 2), 255);
+			}
+		}
+		fill_rect(economy, 304, 175, ox + 6, 47, ox + 146, 49, 116, 73, 22, 255);
+	}
+	stbi_write_png(argv[10], 304, 175, 4, economy.data(), 304 * 4);
+
+	// Transparent Foundry Economy emblem, extracted from the approved reference
+	// rather than approximated with primitive lines. The chroma key removes the
+	// burgundy card while retaining the icon's shaded gold detail.
+	std::vector<unsigned char> economy_icon(32 * 32 * 4, 0);
+	crop_resize(src, sw, sh, 356, 82, 39, 39, 32, 32, 32, 0, 1.08f, economy_icon);
+	for(int y = 0; y < 32; ++y) {
+		for(int x = 0; x < 32; ++x) {
+			auto const i = (y * 32 + x) * 4;
+			auto const r = economy_icon[i + 0];
+			auto const g = economy_icon[i + 1];
+			auto const b = economy_icon[i + 2];
+			int const gold = std::min({int(r) - int(b), int(g) - int(b), int(r) - 55});
+			economy_icon[i + 3] = uint8_t(std::clamp(gold * 5, 0, 255));
+		}
+	}
+	stbi_write_png(argv[11], 32, 32, 4, economy_icon.data(), 32 * 4);
+	stbi_image_free(module_source);
 	stbi_image_free(src);
 }

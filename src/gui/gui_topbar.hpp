@@ -20,6 +20,7 @@
 #include "text.hpp"
 #include "gui_event.hpp"
 #include "gui_units.hpp"
+#include "economy_stats.hpp"
 
 namespace ui {
 
@@ -2100,6 +2101,41 @@ public:
 	}
 };
 
+class foundry_topbar_factory_count_text : public simple_text_element_base {
+public:
+	void on_update(sys::state& state) noexcept override {
+		int32_t factories = 0;
+		for(auto ownership : state.world.nation_get_province_ownership(state.local_player_nation))
+			factories += economy::province_factory_count(state, ownership.get_province());
+		set_text(state, "?F" + text::prettify(factories) + "?!");
+	}
+};
+
+class foundry_topbar_workshop_count_text : public simple_text_element_base {
+public:
+	void on_update(sys::state& state) noexcept override {
+		auto artisans = state.world.nation_get_demographics(
+			state.local_player_nation, demographics::to_key(state, state.culture_definitions.artisans));
+		set_text(state, "?F" + text::prettify(int32_t(artisans / economy::artisans_per_employment_unit)) + "?!");
+	}
+};
+
+class foundry_topbar_idle_workers_text : public simple_text_element_base {
+public:
+	void on_update(sys::state& state) noexcept override {
+		float idle = 0.f;
+		for(auto pop_type : { state.culture_definitions.primary_factory_worker,
+				state.culture_definitions.secondary_factory_worker }) {
+			auto total = state.world.nation_get_demographics(
+				state.local_player_nation, demographics::to_key(state, pop_type));
+			auto employed = state.world.nation_get_demographics(
+				state.local_player_nation, demographics::to_employment_key(state, pop_type));
+			idle += std::max(0.f, total - employed);
+		}
+		set_text(state, "?F" + text::prettify(int32_t(idle)) + "?!");
+	}
+};
+
 class topbar_window : public window_element_base {
 private:
 	dcon::nation_id current_nation{};
@@ -2150,6 +2186,12 @@ public:
 			state.ui_state.production_subwindow = state.ui_state.topbar_subwindow = btn->topbar_subwindow = tab.get();
 			state.ui_state.root->add_child_to_back(std::move(tab));
 			return btn;
+		} else if(name == "foundry_economy_factories_value") {
+			return make_element_by_type<foundry_topbar_factory_count_text>(state, id);
+		} else if(name == "foundry_economy_workshops_value") {
+			return make_element_by_type<foundry_topbar_workshop_count_text>(state, id);
+		} else if(name == "foundry_economy_idle_value") {
+			return make_element_by_type<foundry_topbar_idle_workers_text>(state, id);
 		} else if(name == "topbarbutton_budget") {
 			auto btn = make_element_by_type<topbar_budget_tab_button>(state, id);
 

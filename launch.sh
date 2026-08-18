@@ -22,6 +22,8 @@ cmake -E copy_if_different "$FOUNDRY_DIR/assets/foundry_topbar.gfx" "$V2_DIR/ass
 cmake -E copy_if_different "$FOUNDRY_DIR/assets/bg_transparent.png" "$V2_DIR/assets/bg_transparent.png"
 cmake -E copy_if_different "$FOUNDRY_DIR/mod/Rise of Nations/interface/topbar.gfx" "$V2_DIR/interface/topbar.gfx"
 cmake -E copy_if_different "$FOUNDRY_DIR/assets/foundry_ui/frames/foundry_topbar_module_140x92_v3.png" "$V2_DIR/assets/foundry_ui/frames/foundry_topbar_module_140x92_v3.png"
+cmake -E copy_if_different "$FOUNDRY_DIR/assets/foundry_ui/frames/foundry_topbar_economy_152x175_v1.png" "$V2_DIR/assets/foundry_ui/frames/foundry_topbar_economy_152x175_v1.png"
+cmake -E copy_if_different "$FOUNDRY_DIR/assets/foundry_ui/icons/foundry_topbar_economy_icon_32x32_v1.png" "$V2_DIR/assets/foundry_ui/icons/foundry_topbar_economy_icon_32x32_v1.png"
 cmake -E copy_if_different "$FOUNDRY_DIR/assets/foundry_ui/frames/foundry_topbar_shell_1600x118_v3.png" "$V2_DIR/assets/foundry_ui/frames/foundry_topbar_shell_1600x118_v3.png"
 cmake -E copy_if_different "$FOUNDRY_DIR/assets/foundry_ui/frames/foundry_nation_flag_frame_84x84_v1.png" "$V2_DIR/assets/foundry_ui/frames/foundry_nation_flag_frame_84x84_v1.png"
 cmake -E copy_if_different "$FOUNDRY_DIR/assets/foundry_ui/frames/foundry_nation_flag_mask_84x84_v1.png" "$V2_DIR/assets/foundry_ui/frames/foundry_nation_flag_mask_84x84_v1.png"

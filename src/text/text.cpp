@@ -43,6 +43,8 @@ text_color char_to_color(char in) {
 		return text_color::dark_green;
 	case 'I':
 		return text_color::brown;
+	case 'F':
+		return text_color::gold;
 	case '!':
 		return text_color::reset;
 	default:

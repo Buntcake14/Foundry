@@ -70,6 +70,10 @@ uint32_t font_size(std::string_view txt) {
 uint32_t font_index(std::string_view txt) {
 	if(parsers::has_fixed_prefix_ci(txt.data(), txt.data() + txt.size(), "foundry_title"))
 		return 2;
+	else if(parsers::has_fixed_prefix_ci(txt.data(), txt.data() + txt.size(), "foundry_header"))
+		return 2;
+	else if(parsers::has_fixed_prefix_ci(txt.data(), txt.data() + txt.size(), "foundry_body"))
+		return 1;
 	else if(parsers::has_fixed_prefix_ci(txt.data(), txt.data() + txt.size(), "arial"))
 		return 1;
 	else if(parsers::has_fixed_prefix_ci(txt.data(), txt.data() + txt.size(), "fps"))
@@ -136,6 +140,10 @@ font_selection font_index_from_font_id(sys::state& state, uint16_t id) {
 		auto const name = state.to_string_view(it->second);
 		if(parsers::has_fixed_prefix_ci(name.data(), name.data() + name.size(), "foundry_title"))
 			return font_selection::title_font;
+		if(parsers::has_fixed_prefix_ci(name.data(), name.data() + name.size(), "foundry_header"))
+			return font_selection::foundry_header_font;
+		if(parsers::has_fixed_prefix_ci(name.data(), name.data() + name.size(), "foundry_body"))
+			return font_selection::foundry_body_font;
 	}
 	if(((id >> 7) & 0x01) == 0)
 		return font_selection::body_font;
@@ -463,6 +471,42 @@ void font_manager::change_locale(sys::state& state, dcon::locale_id l) {
 			foundry_title_font_index = count;
 		}
 	}
+	{
+		std::string const fname = "foundry/TitilliumWeb-SemiBold.ttf";
+		uint16_t count = 0;
+		for(; count < font_array.size(); ++count)
+			if(font_array[count].file_name == fname) break;
+		if(count == font_array.size()) {
+			auto r = simple_fs::get_root(state.common_fs);
+			auto assets = simple_fs::open_directory(r, NATIVE("assets"));
+			auto fonts = simple_fs::open_directory(assets, NATIVE("fonts"));
+			auto ff = simple_fs::open_file(fonts, simple_fs::utf8_to_native(fname));
+			if(!ff) std::abort();
+			font_array.emplace_back();
+			auto content = simple_fs::view_contents(*ff);
+			load_font(font_array.back(), content.data, content.file_size);
+			font_array.back().file_name = fname;
+		}
+		foundry_header_font_index = count;
+	}
+	{
+		std::string const fname = "foundry/Lora-Variable.ttf";
+		uint16_t count = 0;
+		for(; count < font_array.size(); ++count)
+			if(font_array[count].file_name == fname) break;
+		if(count == font_array.size()) {
+			auto r = simple_fs::get_root(state.common_fs);
+			auto assets = simple_fs::open_directory(r, NATIVE("assets"));
+			auto fonts = simple_fs::open_directory(assets, NATIVE("fonts"));
+			auto ff = simple_fs::open_file(fonts, simple_fs::utf8_to_native(fname));
+			if(!ff) std::abort();
+			font_array.emplace_back();
+			auto content = simple_fs::view_contents(*ff);
+			load_font(font_array.back(), content.data, content.file_size);
+			font_array.back().file_name = fname;
+		}
+		foundry_body_font_index = count;
+	}
 
 	state.reset_locale_pool();
 
@@ -535,6 +579,10 @@ font& font_manager::get_font(sys::state& state, font_selection s) {
 		return font_array[state.world.locale_get_resolved_header_font(current_locale)];
 	case font_selection::title_font:
 		return font_array[foundry_title_font_index];
+	case font_selection::foundry_header_font:
+		return font_array[foundry_header_font_index];
+	case font_selection::foundry_body_font:
+		return font_array[foundry_body_font_index];
 	}
 }
 
@@ -757,8 +805,8 @@ void font_at_size::remake_cache(sys::state& state, font_selection type, stored_g
 		std::abort();
 
 	hb_feature_t feature_buffer[10];
-	auto features = type == font_selection::body_font ? state.world.locale_get_body_font_features(locale)
-		: type == font_selection::header_font ? state.world.locale_get_header_font_features(locale)
+	auto features = (type == font_selection::body_font || type == font_selection::foundry_body_font) ? state.world.locale_get_body_font_features(locale)
+		: (type == font_selection::header_font || type == font_selection::foundry_header_font) ? state.world.locale_get_header_font_features(locale)
 		: state.world.locale_get_map_font_features(locale);
 	for(uint32_t i = 0; i < uint32_t(std::extent_v<decltype(feature_buffer)>) && i < features.size(); ++i) {
 		feature_buffer[i].tag = features[i];
@@ -1015,8 +1063,8 @@ void font_at_size::remake_bidiless_cache(sys::state& state, font_selection type,
 	auto locale = state.font_collection.get_current_locale();
 	
 	hb_feature_t feature_buffer[10];
-	auto features = type == font_selection::body_font ? state.world.locale_get_body_font_features(locale)
-		: type == font_selection::header_font ? state.world.locale_get_header_font_features(locale)
+	auto features = (type == font_selection::body_font || type == font_selection::foundry_body_font) ? state.world.locale_get_body_font_features(locale)
+		: (type == font_selection::header_font || type == font_selection::foundry_header_font) ? state.world.locale_get_header_font_features(locale)
 		: state.world.locale_get_map_font_features(locale);
 	for(uint32_t i = 0; i < uint32_t(std::extent_v<decltype(feature_buffer)>) && i < features.size(); ++i) {
 		feature_buffer[i].tag = features[i];
