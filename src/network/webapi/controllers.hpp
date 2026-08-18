@@ -411,11 +411,24 @@ inline void init(sys::state& state) noexcept {
 		auto x = std::atoi(req.get_param_value("x").c_str());
 		auto y = std::atoi(req.get_param_value("y").c_str());
 		auto& map_data = state.map_state.map_data;
-		if(x < 0 || y < 0 || uint32_t(x) >= map_data.size_x || uint32_t(y) >= map_data.size_y) {
+
+		// The legacy .bmp map-loading path (display_data::load_province_data,
+		// map_data_loading.cpp) pads province_id_map with extra "water" rows above
+		// the real content and scales size_y to raw_image_height * 1.3 -- confirmed
+		// live: size_y=2808 vs the served image's real 2160px height. /map/provinces.png
+		// streams the raw (unpadded) file, so browser click coordinates arrive in
+		// raw-image space and must be shifted down by the same top_free_space offset
+		// load_province_data used when populating the array, or the lookup silently
+		// reads the wrong rows entirely (not just an off-by-a-little error).
+		uint32_t raw_height = uint32_t(float(map_data.size_y) / 1.3f);
+		uint32_t free_space = map_data.size_y > raw_height ? (map_data.size_y - raw_height) : 0;
+		uint32_t top_free_space = (free_space * 3) / 5;
+
+		if(x < 0 || y < 0 || uint32_t(x) >= map_data.size_x || uint32_t(y) >= raw_height) {
 			res.status = 400;
 			return;
 		}
-		uint32_t index = uint32_t(y) * map_data.size_x + uint32_t(x);
+		uint32_t index = (top_free_space + uint32_t(y)) * map_data.size_x + uint32_t(x);
 		auto map_id = map_data.province_id_map[index];
 		auto prov = province::from_map_id(map_id);
 		j["province_id"] = prov.index();

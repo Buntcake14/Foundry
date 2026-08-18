@@ -9,11 +9,14 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 
-// UNVERIFIED without an actual browser: which way the province map image's V
-// texture coordinate lines up with map_data.province_id_map's row indexing
-// (the engine's loader samples PNG rows bottom-up into that array -- see
-// map_data_loading.cpp). If clicking a province returns the wrong one, flip
-// this single constant rather than re-deriving the math.
+// Root cause found 2026-08-18: this was never actually an orientation/flip bug
+// at all. /map/province_at was indexing into the engine's internal province
+// lookup array using raw browser pixel coordinates, but that array is taller
+// than the served image (a legacy padding quirk in Alice's own .bmp map loader
+// scales it by 1.3x) -- so every lookup was reading the wrong rows outright,
+// which happened to look flip-shaped depending on where you clicked. Fixed
+// properly server-side (controllers.hpp's /map/province_at now applies the same
+// offset the engine's own loader does). No client-side flip needed for this.
 const FLIP_Y = false;
 
 const mapContainer = document.getElementById("map-container");
@@ -55,6 +58,10 @@ new THREE.TextureLoader().load("/map/provinces.png", (texture) => {
 	texture.colorSpace = THREE.SRGBColorSpace;
 	texture.magFilter = THREE.NearestFilter; // province colors must stay crisp/exact, no blending
 	texture.minFilter = THREE.NearestFilter;
+	// Three.js's TextureLoader defaults flipY to true (compensating for how
+	// browsers decode images vs. WebGL's texture row order), which was inverting
+	// this map on screen -- confirmed by live testing 2026-08-18.
+	texture.flipY = false;
 
 	textureWidth = texture.image.width;
 	textureHeight = texture.image.height;
