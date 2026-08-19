@@ -1,6 +1,6 @@
 #pragma once
 
-std::vector<uint32_t> get_selected_diplomatic_color(sys::state& state) {
+inline std::vector<uint32_t> get_selected_diplomatic_color(sys::state& state) {
 	/**
 	 * Color:
 	 *	- Yellorange -> Casus belli TODO: How do I get the casus belli?
@@ -128,7 +128,7 @@ std::vector<uint32_t> get_selected_diplomatic_color(sys::state& state) {
 	return prov_color;
 }
 
-std::vector<uint32_t> diplomatic_map_from(sys::state& state) {
+inline std::vector<uint32_t> diplomatic_map_from(sys::state& state) {
 	std::vector<uint32_t> prov_color;
 
 	if(state.map_state.get_selected_province()) {

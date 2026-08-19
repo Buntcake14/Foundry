@@ -7,7 +7,7 @@ struct party_info {
 	uint32_t color;
 };
 
-std::vector<party_info> get_sorted_parties_info(sys::state& state, dcon::province_id prov_id) {
+inline std::vector<party_info> get_sorted_parties_info(sys::state& state, dcon::province_id prov_id) {
 	std::vector<party_info> result;
 
 	state.world.for_each_ideology([&](dcon::ideology_id ideology) {
@@ -22,7 +22,7 @@ std::vector<party_info> get_sorted_parties_info(sys::state& state, dcon::provinc
 	return result;
 }
 
-std::vector<uint32_t> party_loyalty_map_from(sys::state& state) {
+inline std::vector<uint32_t> party_loyalty_map_from(sys::state& state) {
 	uint32_t province_size = state.world.province_size();
 	uint32_t texture_size = province_size + 256 - province_size % 256;
 

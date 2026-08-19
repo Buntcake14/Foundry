@@ -1,6 +1,6 @@
 #pragma once
 
-std::vector<uint32_t> get_global_sphere_color(sys::state& state) {
+inline std::vector<uint32_t> get_global_sphere_color(sys::state& state) {
 
 	uint32_t province_size = state.world.province_size() + 1;
 	uint32_t texture_size = province_size + 256 - province_size % 256;
@@ -32,7 +32,7 @@ std::vector<uint32_t> get_global_sphere_color(sys::state& state) {
 	return prov_color;
 }
 
-std::vector<uint32_t> get_selected_sphere_color(sys::state& state) {
+inline std::vector<uint32_t> get_selected_sphere_color(sys::state& state) {
 	/**
 	 * Color logic
 	 *	- GP -> Green
@@ -163,7 +163,7 @@ std::vector<uint32_t> get_selected_sphere_color(sys::state& state) {
 	return prov_color;
 }
 
-std::vector<uint32_t> sphere_map_from(sys::state& state) {
+inline std::vector<uint32_t> sphere_map_from(sys::state& state) {
 	std::vector<uint32_t> prov_color;
 
 	if(state.map_state.get_selected_province()) {

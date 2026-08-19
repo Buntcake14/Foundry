@@ -1,6 +1,6 @@
 #pragma once
 
-std::vector<uint32_t> get_global_population_color(sys::state& state) {
+inline std::vector<uint32_t> get_global_population_color(sys::state& state) {
 	std::vector<float> prov_population(state.world.province_size() + 1);
 	std::unordered_map<int32_t, float> continent_max_pop = {};
 
@@ -32,7 +32,7 @@ std::vector<uint32_t> get_global_population_color(sys::state& state) {
 	return prov_color;
 }
 
-std::vector<uint32_t> get_national_population_color(sys::state& state) {
+inline std::vector<uint32_t> get_national_population_color(sys::state& state) {
 	auto fat_selected_id = dcon::fatten(state.world, state.map_state.get_selected_province());
 	auto nat_id = fat_selected_id.get_nation_from_province_ownership();
 	if(!bool(nat_id)) {
@@ -71,7 +71,7 @@ std::vector<uint32_t> get_national_population_color(sys::state& state) {
 	return prov_color;
 }
 
-std::vector<uint32_t> population_map_from(sys::state& state) {
+inline std::vector<uint32_t> population_map_from(sys::state& state) {
 	std::vector<uint32_t> prov_color;
 	if(state.map_state.get_selected_province()) {
 		prov_color = get_national_population_color(state);

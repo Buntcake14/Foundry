@@ -1,6 +1,6 @@
 #pragma once
 
-std::vector<uint32_t> rank_map_from(sys::state& state) {
+inline std::vector<uint32_t> rank_map_from(sys::state& state) {
 	// These colors are arbitrary
 	// 1 to 8 -> green #30f233
 	// 9 to 16 -> blue #242fff

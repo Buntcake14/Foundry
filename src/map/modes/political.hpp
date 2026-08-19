@@ -2,7 +2,11 @@
 #include "prng.hpp"
 
 // Give subjects a related political-map color based on their ultimate overlord.
-uint32_t derive_color_from_ol_color(sys::state& state, uint32_t ol_color, dcon::nation_id n) {
+// Both functions in this file are defined directly in this #pragma once header (not just
+// declared), so they must be `inline` -- webapi/controllers.hpp now includes this header from
+// a second translation unit (entry_point_nix.cpp) alongside map_modes.cpp's own include, and a
+// non-inline free function defined in both would be an ODR violation / linker error.
+inline uint32_t derive_color_from_ol_color(sys::state& state, uint32_t ol_color, dcon::nation_id n) {
 	auto base = sys::rgb_to_hsv(ol_color);
 	auto roff = rng::get_random_pair(state, uint32_t(n.index()), uint32_t(n.index()));
 	base.h = fmod(base.h + (float(roff.low & 0x1F) - 15.5f), 360.0f);
@@ -10,7 +14,7 @@ uint32_t derive_color_from_ol_color(sys::state& state, uint32_t ol_color, dcon::
 	base.v = std::clamp(base.v + (float((roff.high >> 4) & 0xFF) / 255.0f) * 0.2f - 0.1f, 0.0f, 1.0f);
 	return sys::hsv_to_rgb(base);
 }
-std::vector<uint32_t> political_map_from(sys::state& state) {
+inline std::vector<uint32_t> political_map_from(sys::state& state) {
 	uint32_t province_size = state.world.province_size();
 	uint32_t texture_size = province_size + 256 - province_size % 256;
 

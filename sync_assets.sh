@@ -101,3 +101,4 @@ cmake -E copy_if_different "$FOUNDRY_DIR/common/civic_buildings.txt" "$V2_DIR/co
 cmake -E make_directory "$V2_DIR/web"
 cmake -E copy_if_different "$FOUNDRY_DIR/web/index.html" "$V2_DIR/web/index.html"
 cmake -E copy_if_different "$FOUNDRY_DIR/web/app.js" "$V2_DIR/web/app.js"
+cmake -E copy_directory "$FOUNDRY_DIR/web/map_assets" "$V2_DIR/web/map_assets"
